@@ -1,0 +1,137 @@
+\documentclass[a4paper]{article}
+
+\newcommand{\triposcourse}{Markov Chains}
+\input{../header.tex}
+\graphicspath{ {./images/} }
+\pgfplotsset{compat=1.17}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\part*{Lecture 1}
+\section{Markov Chains}
+Throughout the note, let $ I $ be a finite or countable set, and any random variables will be defined on the same probability space $ (\Omega, \mathcal{F}, \mathbb{P}) $.
+\subsection{Basics}
+\begin{definition}[Markov Chains]
+    A stochastic process $ X=(X_n)_{n\ge 0} $ is called a \textit{Markov chain} if $ \forall n\ge 0 $ and for all $ x_1,\dots,x_n\in I $, we have 
+    \[
+        \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n, X_{n-1}=x_{n-1}, \dots, X_0=x_0) = \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n).
+    \]
+\end{definition}
+\begin{definition}[Time-homogeneous]
+    A markov chain $X$ is called \textit{time-homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textit{time-inhomogeneous}.
+\end{definition}
+
+\begin{definition}[Stochastic matrix]
+    A matrix $P$ is called a \textit{stochastic matrix} if $ \sum_{y}P(x,y)=1 $.
+\end{definition}
+
+\begin{definition}[Transitional matrix]
+    $P$ be a matrix such that $ P(x,y) = \mathbb{P}(X_1=y|X_0=x), x,y\in I $. P is called the \textit{transitional matrix} of $X$.
+\end{definition}
+
+We see that $P$ is a stochastic matrix.
+
+\begin{remark}
+    The index set of a markov chain needs not to be $\bbN$. It could be $ \{1,\dots,N\} $, where $ N\in \mathbb{N} $.
+\end{remark}
+
+\begin{definition}
+    We say that $X$ is $ \Markov(\lambda,P) $ if $ X_0 $ has distribution $\lambda$ and $ P $ is the transitional matrix of $X$, i.e. 
+    \begin{enumerate}[(i)]
+        \item $ \mathbb{P}(X_0=x_0)=\lambda_{x_0},\ \forall x_0\in I $,
+        \item $ \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n, X_{n-1}=x_{n-1}, \dots, X_0=x_0) = P(x_{n},x_{n+1}) $.
+    \end{enumerate}
+\end{definition}
+\begin{note}
+    We also write $ P(x,y)=P_{xy} $.
+\end{note}
+
+\subsection{Diagrams of Markov chains}
+We usually represent a Markov chain by its \textit{diagram} corresponding to the allowed transitions.
+\begin{example}
+    Let $ \alpha,\beta\in (0,1) $ and consider 
+    \[
+        P = \begin{pmatrix}
+            \alpha & 1-\alpha \\
+            1-\beta & \beta \\
+        \end{pmatrix}.
+    \]
+    The diagram is as follows:
+    \begin{center}
+        \includegraphics[scale=0.07]{markov1.jpeg}
+    \end{center}
+\end{example}
+
+\begin{example}
+    Let $ P = \begin{pmatrix}
+        1/2 & 1/2 & 0 \\
+        1/3 & 1/3 & 1/3 \\
+        1 & 0 & 0 \\
+    \end{pmatrix} $. The diagram is
+    \begin{center}
+        \includegraphics[scale=0.09]{markov2.jpeg}
+    \end{center}
+\end{example}
+
+The next theorem gives the condition for $X$ to be Markov.
+
+\begin{theorem}\label{thm:1.1}
+    The process $X$ is $ \Markov(\lambda,P) $ if and only if $ \forall n\ge 0 $ and for all $ x_0,\dots,x_n\in I $, we have 
+    \[
+        \mathbb{P}(X_0=x_0,\dots,X_n=x_n) = \lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-1},x_n).
+    \]
+\end{theorem}
+\begin{proof}
+    Suppose $ X $ is $ \Markov(\lambda,P) $. Then 
+    \begin{align*}
+        \mathbb{P}(X_0=x_0,\dots,X_n=x_n) &= \mathbb{P}(X_n=x_n,X_{n-1}=x_{n-1},\dots, X_0=x_0|X_{n-1}=x_{n-1},\dots, X_0=x_0)\\
+        &\quad\cdot \mathbb{P}(X_{n-1}=x_{n-1},\dots, X_0=x_0 )\\
+        &= \mathbb{P}(X_n=x_n|X_{n-1}=x_{n-1},\dots, X_0=x_0)\mathbb{P}(X_{n-1}=x_{n-1},\dots, X_0=x_0 )\\ 
+        &= P(x_{n-1},x_n)\mathbb{P}(X_{n-1}=x_{n-1},\dots, X_0=x_0 )\\ 
+        &=\cdots\\ 
+        &= \mathbb{P}(X_0=x_0) P(x_0,x_1)\cdots P(x_{n-1},x_n)\\ 
+        &= \lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-1},x_n).
+    \end{align*}
+
+    Suppose conversely that $ \forall n\ge 0 $ and for all $ x_0,\dots,x_n\in I $, we have 
+    \[
+        \mathbb{P}(X_0=x_0,\dots,X_n=x_n) = \lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-1},x_n).
+    \]
+    Setting $n=0$ gives $ \mathbb{P}(X_0=x_0)=\lambda_{x_0} $. By definition, consider 
+    \begin{align*}
+        \mathbb{P}(X_n=x_n|X_{n-1}=x_{n-1},\dots, X_0=x_0) &= \frac{\mathbb{P}(X_0=x_0,\dots,X_n=x_n)}{\mathbb{P}(X_0=x_0,\dots,X_{n-1}=x_{n-1})}\\ 
+        &= \frac{\lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-1},x_n)}{\lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-2},x_{n-1})}\\ 
+        &= P(x_{n-1},x_n).\qedhere
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+    For $i\in I$ then $ \delta_i $-mass is defined as 
+    \[
+        \delta_{ij} = 1(i=j) = \begin{cases}
+        1 &\text{if }i=j\\
+        0 &\text{otherwise}\\
+        \end{cases} 
+    \]
+\end{definition}
+Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \forall x_1,\dots,x_n\in I $, 
+\[
+    \mathbb{P}(X_1=x_1,\dots,X_n=x_n) = \prod_{i=1}^{n} \mathbb{P}(X_i=x_i).
+\]
+\begin{definition}
+    A sequence $ (X_n)_{n\ge 0} $ is independent if $ \forall i_1<\cdots<i_k $ and for all $ x_1,\dots,x_k $, 
+    \[
+        \mathbb{P}(X_{i_1}=x_1,\dots,X_{i_k}=x_k) = \prod_{j=1}^{k}\mathbb{P}(X_{i_j}=x_j)
+    \]
+    Let $ X=(X_n),\ Y=(Y_n) $. $X,Y$ are independent if $ \forall k,m $ and $ \forall i_1<\cdots<i_k $, $ \forall j_1<\cdots<j_m $ we have 
+    \begin{align*}
+        &\mathbb{P}(X_{i_1}=x_1,\dots,X_{i_k}=x_k, Y_{j_1}=y_1,\dots,Y_{j_m}=y_m)\\
+        =\;& \mathbb{P}(X_{i_1}=x_1,\dots,X_{i_k}=x_k) \mathbb{P}(Y_{j_1}=y_1,\dots,Y_{j_m}=y_m)
+    \end{align*}
+\end{definition}
+\subsection{Markov property}
+\begin{theorem}[Simple Markov property]\label{thm:simple_markov_property}
+    Suppose $ X $ is $ \Markov(\lambda,P) $ and fix $ M\in \mathbb{N}  $ and $ i\in I $. Conditional on $X_m=i$, the process $ (X_{m+n})_{n\ge 0} $ is $ \Markov(\delta_i, P) $ and it is independent of $ X_0,\dots,X_m $.
+\end{theorem}
+\end{document}

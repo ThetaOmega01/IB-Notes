@@ -1,0 +1,131 @@
+\documentclass[a4paper]{article}
+
+\newcommand{\triposcourse}{Analysis and Topology}
+\input{../header.tex}
+\graphicspath{ {./images/} }
+\pgfplotsset{compat=1.17}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\part*{Lecture 1}
+\section{Uniform convergence and uniform continuity}
+Recall that in $\mathbb{R}$ or $\mathbb{C}$ we write $x_{n} \rightarrow x$ as $n \rightarrow \infty$ if
+\[
+\forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad\left|x_{n}-x\right|<\varepsilon
+\]
+The aim is to define $f_{n} \rightarrow f$ for functions $f_{n}$ and $f$.
+
+\begin{definition}
+    We have a set $S$ and functions $f_{n}: S \rightarrow \mathbb{R}, n \in \mathbb{N}$, and $f: S \rightarrow \mathbb{R}$. Then $f_{n} \rightarrow f$ pointwise on $S$ as $n \rightarrow \infty$ if for every $x \in S$, the real sequence $\left(f_{n}(x)\right)_{n}$ converges to $f(x)$. In symbols:
+    \[
+    \forall x \in S \quad \forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad\left|f_{n}(x)-f(x)\right|<\varepsilon
+    \]
+\end{definition}
+
+\begin{remark}\
+    \begin{enumerate}
+        \item  $N$ can depend on $\varepsilon$ and $x$.
+        \item Can replace $\mathbb{R}$ with $\mathbb{C}$.
+        \item It is possible that $f_{n} \rightarrow f$ pointwise on some subset $T \subset S$. In the definition replace $\forall x \in S$ with $\forall x \in T$.
+        \item The pointwise limit of a sequence of functions $(f_n)$ is unique if it exists.
+    \end{enumerate}
+\end{remark}
+
+\begin{example}\
+    \begin{enumerate}
+        \item $f_{n}(x)=x^{n}$ for $x \in[0,1], n \in \mathbb{N}$.
+        
+        For $0 \leqslant x<1$, we have $f_{n}(x)=x^{n} \rightarrow 0$ as $n \rightarrow \infty$.
+        Also, $f_{n}(1)=1 \rightarrow 1$ as $n \rightarrow \infty$. So $f_{n} \rightarrow f$ pointwise on $[0,1]$, where
+        \[
+        f(x)= \begin{cases}0 & \text { if } 0 \leqslant x<1 \\ 1 & \text { if } x=1\end{cases}
+        \]
+        \item $f_{n}(x)=x^{2} \cdot e^{-n x}$ for $x \in[0, \infty)$, and $n \in \mathbb{N}$. For $x>0$
+        \[
+        0 \leqslant f_{n}(x)=\frac{x^{2}}{e^{n x}}=\frac{x^{2}}{1+n x+\frac{n^{2} x^{2}}{2}+\ldots} \leqslant \frac{x^{2}}{n x}=\frac{x}{n}
+        \]
+        Hence $f_{n}(x) \rightarrow 0$ as $n \rightarrow \infty$. Same is true $x=0$. Thus, $f_{n} \rightarrow 0$ pointwise on $[0, \infty)$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    We are given a set $S$ and functions $f_{n}: S \rightarrow \mathbb{R}, n \in \mathbb{N}$, and $f: S \rightarrow \mathbb{R}$. Then $f_{n} \rightarrow f$ uniformly on $S$ as $n \rightarrow \infty$ if
+    \[
+    \forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad \forall x \in S \quad\left|f_{n}(x)-f(x)\right|<\varepsilon
+    \]
+    \begin{center}
+        \includegraphics[scale=0.11]{at1.jpeg}
+    \end{center}
+\end{definition}
+
+\begin{remark}\
+    \begin{enumerate}
+        \item $ N $ only depends on $\epsilon$!
+        \item Uniform convergence implies pointwise convergence.
+        \item Can replace $\mathbb{R}$ with $\mathbb{C}$ and can restrict to a subset of the domain.
+        \item An equivalent definition of $f_{n} \rightarrow f$ uniformly on $S$ :
+        \[
+        \forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad \sup _{x \in S}\left|f_{n}(x)-f(x)\right|<\varepsilon
+        \]
+        Even shorter: $\sup _{x \in S}\left|f_{n}(x)-f(x)\right| \rightarrow 0$ as $n \rightarrow \infty$
+        \item The uniform limit $f$ if exists is unique.
+    \end{enumerate}
+\end{remark}
+
+\begin{example}
+\begin{enumerate}
+    \item $f_{n}(x)=x^{2} \cdot \mathrm{e}^{-n x}$ for $x \in[0, \infty)$, and $n \in \mathbb{N}$. We saw that $f_{n} \rightarrow f=0$ pointwise on $[0, \infty)$.
+    \[
+    0 \leqslant f_{n}(x)=\frac{x^{2}}{e^{n x}}=\frac{x^{2}}{1+n x+\frac{n^{2} x^{2}}{2}+\ldots} \leqslant \frac{x^{2}}{n x}=\frac{x}{n}
+    \]
+    Thus,
+    \[
+    \sup _{x \in[0, \infty)}\left|f_{n}(x)-f(x)\right|=\sup _{x \in[0, \infty)} f_{n}(x) \leqslant \frac{2}{n^{2}} \rightarrow 0 \quad \text { as } \quad n \rightarrow \infty
+    \]
+    So $f_{n} \rightarrow 0$ uniformly on $[0, \infty)$.
+
+    Could have used differentiation above to find the supremum, but the above method of finding an upper bound is better.
+    \item $f_{n}(x)=x^{n}$ for $x \in[0,1], n \in \mathbb{N}$.
+    We know that $f_{n} \rightarrow f$ pointwise on $[0,1]$, where
+    \[
+        f(x)= \begin{cases}0 & \text { if } 0 \leqslant x<1 \\ 1 & \text { if } x=1\end{cases}.
+    \]
+    Let $\varepsilon=1 / 2$. For any $n \in \mathbb{N}$, setting $x=\varepsilon^{1 / n}$, we have $f_{n}(x)=\varepsilon$, and so $\left|f_{n}(x)-f(x)\right| \geqslant \varepsilon$. So $f_{n} \not \rightarrow  f$ uniformly on $[0,1]$.
+
+    Better: Since $f_{n}(1)=1$ and $f_{n}$ is continuous, there exist $\delta>0$ such that $\left|f_{n}(x)-1\right|<1 / 2$ for $x \in(1-\delta, 1+\delta)$. So for any $x \in[0,1]$ with $1-\delta<x<1$, we have $\left|f_{n}(x)-f(x)\right| \geqslant \varepsilon$.
+\end{enumerate}
+\end{example}
+
+Q: Does $\left(f_{n}\right)$ converge uniformly on $S ?$
+\subsubsection*{Strategy}
+First check if $\left(f_{n}\right)$ converges pointwise on $S$.
+
+If it doesn't, then $\left(f_{n}\right)$ does not converge uniformly on $S$.
+
+If it does, then compute the pointwise limit $f$, and then it remains to check whether
+\[
+\sup _{x \in S}\left|f_{n}(x)-f(x)\right| \rightarrow 0 \quad \text { as } \quad n \rightarrow \infty
+\]
+
+If the above holds, then $f_{n} \rightarrow f$ uniformly on $S$, otherwise $\left(f_{n}\right)$ does not converge uniformly on $S$.
+
+\begin{remark}
+    What does it mean that $f_{n} \not \rightarrow f$ uniformly on $S$? We have to negate the sentence
+    \[
+    \forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad \forall x \in S \quad\left|f_{n}(x)-f(x)\right|<\varepsilon
+    \]
+    The negation is
+    \[
+    \exists \varepsilon>0 \quad \forall N \in \mathbb{N} \quad \exists n \geqslant N \quad \exists x \in S \quad\left|f_{n}(x)-f(x)\right| \geqslant \varepsilon
+    \]
+\end{remark}
+
+The next theorem says that uniform limit of continuous functions is continuous.
+\begin{theorem}\label{thm:1}
+    Let $S$ be a subset of $\mathbb{R}$ or $\mathbb{C}$. Assume $f_{n} \rightarrow f$ uniformly on $S$. If $f_{n}$ is continuous for every $n \in \mathbb{N}$, then $f$ is continuous.
+\end{theorem}
+
+\textsf{\textbf{Idea}}: Given $a \in S$, we want that $f(x) \approx f(a)$ provided $x \approx a$. We first choose large $n$ so that $f_{n}(x) \approx f(x)$ for every $x \in S$. Since $f_{n}$ is continuous, we have $f_{n}(x) \approx f_{n}(a)$ provided $x \approx a$. Thus, if $x \approx a$, then $f(x) \approx f_{n}(x) \approx f_{n}(a) \approx f(a)$.
+
+\end{document}
