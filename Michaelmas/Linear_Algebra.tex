@@ -1,0 +1,108 @@
+\documentclass[a4paper]{article}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\triposcourse}{Linear Algebra}
+\input{../header.tex}
+\graphicspath{ {./images/} }
+\pgfplotsset{compat=1.17}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\part*{Lecture 1}
+\section{Vector Spaces}
+\subsection{Vector spaces and subspaces}
+Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
+
+\begin{definition}[$ \bbF $ Vector Space]
+    An \textit{$ \bbF$ vector space} (or a \textit{vector space over $\bbF$}) is a an abelian group $ (V,+) $ with a function $ \bbF\times V \mapsto V $, defined by $ (\lambda, \bfv) \mapsto \lambda\bfv $, such that 
+    \begin{enumerate}
+        \item $ \lambda(\bfv_1+\bfv_2)=\lambda\bfv_1+\lambda\bfv_2 $,
+        \item $ (\lambda_1+\lambda_2)\bfv = \lambda_1\bfv+\lambda_2\bfv $,
+        \item $ \lambda(\mu\bfv)=(\lambda\mu)\bfv $,
+        \item $ 1\bfv=\bfv $,
+    \end{enumerate}
+    for all $ \lambda,\mu\in \bbF$ and $ \bfv\in V $.
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item $ \bbF^n,\ n\in \mathbb{N}  $ is a vector space.
+        \item $ \bbR^X $, where $X$ is a set, is a vector space.
+        \item $ \mcM_{n,m}(\bbF) $ is a vector space.
+    \end{enumerate}
+\end{example}
+\begin{remark}
+    The axioms imply that $ \forall \bfv\in V,\ 0\cdot\bfv=0 $.
+\end{remark}
+
+\begin{definition}[Subspace]
+    Let $V$ be a vector space on $\bbF$. A subset $U$ of $V$ is a \textit{vector subspace} if 
+    \begin{enumerate}
+        \item $ \mathbf{0}\in U $,
+        \item $ (\bfu_1,\bfu_2)\in U\times U \Rightarrow u_1+u_2\in U $,
+        \item $ (\lambda,\bfu)\in \bbF\times U \Rightarrow \lambda\bfu\in U $.
+    \end{enumerate}
+    Equivalently, $U$ is a subspace of $V$ if 
+    \[
+        \forall (\lambda,\mu)\in \bbF\times \bbF,\ \forall (\bfu,\bfv)\in U\times U,\ \lambda\bfu+\mu\bfv\in U.
+    \]
+    Denote $ U\le V $.
+\end{definition}
+Recall from Vectors and Matrices: the two definitions are equivalent.
+\begin{proposition}
+    Let $ V $ be a vector space over $\bbF$. If $ U\le V $, then $U$ is a vector space over $\bbF$.
+\end{proposition}
+\begin{example}
+    \begin{enumerate}
+        \item $ \mathbb{P}(\bbR)\le \mcC(\bbR)\le \mathbb{R} ^\mathbb{R}  $.
+        \item The set of vectors
+        $$
+        \left\{\begin{pmatrix}x_1 \\ x_2 \\ x_3\end{pmatrix} : x_1, x_2, x_3 \in \bbR, x_1 + x_2 + x_3 = t\right\}
+        $$
+        is a subspace of $\bbR^3$ for $t = 0$ only.
+    \end{enumerate}
+\end{example}
+\begin{proposition}[Intersecting Subspaces]
+    Let $U, W \le V$. Then $U \cap W \le V$.
+\end{proposition}
+\begin{proof}
+    Since $0 \in U$ and $0 \in W$, we have $0 \in U \cap W$. Now if $\lambda_1, \lambda_2 \in \bbF$ and $\bfv_1, \bfv_2 \in U \cap W$, then $\lambda_1 \bfv_1 + \lambda_2 \bfv_2 \in U$ and $V$, and thus is in $U \cap V$. Thus $U \cap W \le V$.
+\end{proof}
+The union of two subspaces is generally \emph{not} a subspace, as it is typically not closed by addition. In fact, the union is only ever a subspace if one of the subspaces is contained in the other. 
+\begin{center}
+    \includegraphics[scale=0.13]{la1.jpeg}
+\end{center}
+
+\begin{definition}[Sum of vector spaces]
+    Let $V$ be a vector space over $\bbF$ and let $U,W\le V$. The \textit{sum} of $U,W$ is defined as 
+    \[
+        U+W  =\left\{ \bfu+\bfw: (\bfu,\bfw)\in U\times W \right\}.
+    \] 
+\end{definition}
+For example, the sum of $x$-axis and $y$-axis is $ \mathbb{R}^{2} $.
+
+\begin{proposition}
+    $U+W\le V$.
+\end{proposition}
+\begin{proposition}
+    $U+W$ is the smallest subspace of $V$ that contains $U,W$.
+\end{proposition}
+\begin{proof}
+    Let $X$ be a subspace of $V$ that contains $U,W$. By closure, $ \bfu+\bfw\in X $ for all $ \bfu\in U,\bfw\in W $, so $ U+W\le X $. Hence it is the smallest subspace.
+\end{proof}
+\subsection{Subspaces and quotient}
+\begin{definition}[Quotient]
+    Let $V$ a vector space over $\bbF$, and let $U \leq V$. The \emph{quotient space} $V/U$ is the abelian group $V/U$ equipped with the scalar multiplication $\bbF \times V/U \rightarrow V/U$, $(\lambda, \bfv + U) \mapsto \lambda \bfv + U$.
+\end{definition}
+The multiplication is well-defined, since if $ \bfv_1+U=\bfv_2+U $ then $ \bfv_1-\bfv_2\in U $, which implies $ \lambda(\bfv_1-\bfv_2) \in U$, and thus $ \lambda\bfv_1+U=\lambda\bfv_2+U\in V/U $.
+\begin{proposition}
+    $V/U$ is a vector space over $\bbF$.
+\end{proposition}
+\begin{proof}
+    Let $ \lambda_1,\lambda_2\in \bbF $ and let $ \bfv_1+U,\bfv_2+U\in V/U $. Note that 
+    \begin{align*}
+        \lambda_1(\bfv_1+U)+\lambda_2(\bfv_2+U) &= (\lambda_1\bfv_1+U)+(\lambda_2\bfv_2+U)\\ 
+        &= \lambda_1\bfv_1+\lambda_2\bfv_2+U\in V/U.\qedhere
+    \end{align*}
+\end{proof}
+\end{document}

@@ -1,0 +1,96 @@
+\documentclass[a4paper]{article}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\triposcourse}{Methods}
+\input{../header.tex}
+\graphicspath{ {./images/} }
+\pgfplotsset{compat=1.17}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\part*{Lecture 1}
+\part{Self-adjoint ODEs}
+\section{Fourier Series}
+\subsection{Periodic functions}
+\begin{definition}
+    A function $f$ is \textit{periodic} if $ f(x+T)=f(x), \forall x $, where $T$ is the period.
+\end{definition}
+\begin{center}
+    \includegraphics[scale=0.1]{methods1.jpeg}
+\end{center}
+Consider the set of functions 
+\[
+    g_n(x) = \cos \left( \frac{n\pi x}{L} \right),\quad h_n(x) = \sin \left( \frac{n\pi x}{L} \right).
+\]
+They are periodic on $ [0,2L] $ with period 2L.
+
+Recall identities
+\[
+    \begin{aligned} \cos (A \pm B) &=\cos A \cos B \mp \sin A \sin B \\ \sin (A \pm B) &=\sin A \cos B \pm \cos A \sin B, \text { and so } \\ \cos A \cos B &=\frac{1}{2}[\cos (A-B)+\cos (A+B)] \\ \sin A \sin B &=\frac{1}{2}[\cos (A-B)-\cos (A+B)] \\ \sin A \cos B &=\frac{1}{2}[\sin (A+B)+\sin (A-B)] \end{aligned}
+\]
+Define an inner product of the set 
+\[
+    \langle f,g \rangle = \int_{0}^{2L} f(x)g(x)\,\mathrm{d}x.
+\]
+\begin{proposition}
+    With this inner product, $g_n,h_n$ are mutually orthogonal on $ [0,2L) $.
+\end{proposition}
+\begin{proof}
+    Check that
+    \[
+        \langle h_n,h_m \rangle = \begin{cases}
+            L\delta_{nm} &\forall n,m\neq 0\\
+            0 & m=0 \lor n=0\\
+            \end{cases} \quad
+            \langle g_n,g_m \rangle = \begin{cases}
+            L \delta_{mn} &n,m\neq 0\\
+            2L \delta_{0n} & m=0\\
+            \end{cases} \quad
+            \langle h_n,g_m \rangle =0.
+    \]
+\end{proof}
+$g_n,h_n$ form a complete orthogonal set, i.e. they span the space of well-behaved periodic functions $ [0,2L) $ and they are linearly independent.
+
+\subsection{Definition of Fourier series}
+We can express any well-behaved periodic function of period 2L as 
+\[
+    f(x) = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right)\tag{$*$}
+\]
+where $a_n,b_n$ are constants such that RHS is convergent for all $x$ where $f$ is continuous. At a discontinuity $x$, the Fourier series approaches the midpoint of upper and lower limits at $x$, i.e. 
+\[
+    \frac{f(x_+)+f(x_-)}{2} = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right).
+\]
+Consider $ \langle h_n,f \rangle  $ and substitute in ($ * $), we get 
+\[
+    \int_{0}^{2L} \sin \left( \frac{n \pi x}{L} \right) f(x) \,\mathrm{d}x = \sum_{m=1}^{\infty}Lb_m \delta_{nm} = Lb_n.
+\]
+Similar for $a_n$. We get
+\[
+    b_{n}=\frac{1}{L} \int_{0}^{2 L} f(x) \sin \left(\frac{n \pi x}{L}\right)\, \rmd x,\quad a_n = \frac{1}{L}\int_{0}^{2L} f(x) \cos \left( \frac{n \pi x}{L} \right) \,\mathrm{d}x.
+\]
+\begin{note}
+    \begin{enumerate}
+        \item $a_n$ includes $n=0$ since $ \frac{1}{2}a_0 $ is the average of $f$, i.e.
+        \[
+            \langle f \rangle = \frac{1}{2L}\int_{0}^{2L} f(x) \,\mathrm{d}x.
+        \]
+        \item Range of integration can be changed as long as it has length $2L$. We usually consider $ \int_{-L}^{L} $.
+        \item Can think of the Fourier series as the decomposition into harmonics. The simplest Fourier series are sines and cosines. e.g. $ \sin (3 \pi x/ L) $ has Fourier series $b_3=1$ and $ b_n=0,n\neq 3 ,a_n=0$.
+    \end{enumerate}
+\end{note}
+\begin{example}[Sawtooth wave]
+    Consider $f(x)=x,x\in [-L,L)$ and periodic elsewhere.
+    \begin{center}
+        \includegraphics[scale=0.1]{methods2.jpeg}
+    \end{center}
+    We have 
+    \begin{align*}
+        a_n &= \frac{1}{L}\int_{-L}^{L} x\cdot \cos \left( \frac{n\pi x}{L} \right) \,\mathrm{d}x=0,\\ 
+        b_n &= \frac{2}{L} \int_{0}^{L} x\cdot \sin \left( \frac{n\pi x}{L} \right) \,\mathrm{d}x = \frac{2L}{n\pi }(-1)^{n+1}.
+    \end{align*}
+    So the Fourier series is 
+    \[
+        f(x) = \frac{2L}{n\pi } \sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin \left( \frac{n\pi x}{L} \right).
+    \]
+\end{example}
+\end{document}
