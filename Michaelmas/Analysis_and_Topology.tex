@@ -10,6 +10,7 @@
 \newpage
 \part*{Lecture 1}
 \section{Uniform convergence and uniform continuity}
+\subsection{Pointwise and uniform convergence}
 Recall that in $\mathbb{R}$ or $\mathbb{C}$ we write $x_{n} \rightarrow x$ as $n \rightarrow \infty$ if
 \[
 \forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad\left|x_{n}-x\right|<\varepsilon
@@ -120,7 +121,9 @@ If the above holds, then $f_{n} \rightarrow f$ uniformly on $S$, otherwise $\lef
     \exists \varepsilon>0 \quad \forall N \in \mathbb{N} \quad \exists n \geqslant N \quad \exists x \in S \quad\left|f_{n}(x)-f(x)\right| \geqslant \varepsilon
     \]
 \end{remark}
-
+\newpage
+\part*{Lecture 2}
+\subsection{Continuity and boundedness}
 The next theorem says that uniform limit of continuous functions is continuous.
 \begin{theorem}\label{thm:1}
     Let $S$ be a subset of $\mathbb{R}$ or $\mathbb{C}$. Assume $f_{n} \rightarrow f$ uniformly on $S$. If $f_{n}$ is continuous for every $n \in \mathbb{N}$, then $f$ is continuous.
@@ -128,4 +131,164 @@ The next theorem says that uniform limit of continuous functions is continuous.
 
 \textsf{\textbf{Idea}}: Given $a \in S$, we want that $f(x) \approx f(a)$ provided $x \approx a$. We first choose large $n$ so that $f_{n}(x) \approx f(x)$ for every $x \in S$. Since $f_{n}$ is continuous, we have $f_{n}(x) \approx f_{n}(a)$ provided $x \approx a$. Thus, if $x \approx a$, then $f(x) \approx f_{n}(x) \approx f_{n}(a) \approx f(a)$.
 
+\begin{proof}
+    Fix $ a\in S, \epsilon>0 $. The goal is to find a $ \delta $ s.t. 
+    \[
+        \forall x\in S\quad |x-a|<\delta \Longrightarrow |f(x)-f(a)|<\epsilon.
+    \]
+    Since $ f_n\to f $ uniformly on $S$, $ \exists n\in \mathbb{N} $ such that 
+    \[
+        \forall x\in S\quad |f_n(x)-f(x)|<\epsilon.
+    \]
+    Since $f_n$ is continuous, $ \exists \delta>0 $, 
+    \[
+        \forall x\in S\quad |x-a|<\delta \Longrightarrow |f_n(x)-f_n(a)|<\epsilon.
+    \]
+    Thus for any $x\in S$, if $ |x-a|<\delta $,
+    \[
+        |f(x)-f(a)|\le |f(x)-f_n(x)|+|f_n(x)-f_n(a)|+|f_n(a)-f(a)|<3\epsilon.\qedhere
+    \]
+\end{proof}
+\begin{remark}
+    \begin{enumerate}
+        \item It is not true for pointwise convergence. A counterexample is $x^n$.
+        \item The result does not extend to differentiability.
+        \item It follows from Theorem 1.1 that $x^{n}$ does not converge uniformly on $[0,1]$.
+        \item The above proof is sometimes called a $3 \varepsilon$-proof.
+        \item $\displaystyle \lim _{x \rightarrow a} \lim _{n \rightarrow \infty} f_{n}(x)=\lim _{x \rightarrow a} f(x)=f(a)=\lim _{n \rightarrow \infty} f_{n}(a)=\lim _{n \rightarrow \infty} \lim _{x \rightarrow a} f_{n}(x)$. i.e. we can \textit{swap limits} for uniformly convergent functions.
+    \end{enumerate}
+\end{remark}
+\begin{lemma}\label{lemma 2}
+    Let $S$ be any set and $f_{n}$ be a bounded function on $S$ for every $n \in \mathbb{N}$. If $f_{n} \rightarrow f$ uniformly on $S$, then $f$ is also bounded on $S$.
+\end{lemma}
+\begin{proof}
+    Fix $n \in \mathbb{N}$ so that $\left|f_{n}(x)-f(x)\right| \leqslant 1$ for every $x \in S$. We can do this, since $f_{n} \rightarrow f$ uniformly on $S$. Since $f_{n}$ is bounded, there is an $M \in \mathbb{R}$ such that $\left|f_{n}(x)\right| \leqslant M$ for every $x \in S$. It follows that for every $x \in S$, we have
+    \[
+    |f(x)| \leqslant\left|f(x)-f_{n}(x)\right|+\left|f_{n}(x)\right| \leqslant 1+M
+    \]
+    Thus, $f$ is bounded by $M+1$.
+\end{proof}
+\subsection{Integrability and differentiability}
+
+Before the next theorem, we recall some definitions and results from Analysis I. Assume $f:[a, b] \rightarrow \mathbb{R}$ is a bounded function. Given a dissection $\mathcal{D}: a=x_{0}<x_{1}<\cdots<x_{n}=b$ of $[a, b]$, the upper and lower sums of $f$ with respect to $\mathcal{D}$ are defined as
+\[
+U_{\mathcal{D}}(f)=\sum_{k=1}^{n}\left(x_{k}-x_{k-1}\right) \sup _{\left[x_{k-1}, x_{k}\right]} f \quad \text { and } \quad L_{\mathcal{D}}(f)=\sum_{k=1}^{n}\left(x_{k}-x_{k-1}\right) \inf _{\left[x_{k-1}, x_{k}\right]} f
+\]
+Riemann's criterion states that $f$ is integrable if and only if for every $\varepsilon>0$ there is a dissection $\mathcal{D}$ of $[a, b]$ such that
+\[
+U_{\mathcal{D}}(f)-L_{\mathcal{D}}(f)=\sum_{k=1}^{n}\left(x_{k}-x_{k-1}\right)\left(\sup _{\left[x_{k-1}, x_{k}\right]} f-\inf _{\left[x_{k-1}, x_{k}\right]} f\right)<\varepsilon
+\]
+An easy exercise shows that for an interval $I \subset[a, b]$ we have
+\[
+\sup _{I} f-\inf _{I} f=\sup _{x, y \in I}(f(x)-f(y))=\sup _{x, y \in l}|f(x)-f(y)|
+\]
+(This quantity is sometimes called the oscillation of $f$ on $I$.)
+
+\begin{theorem}\label{theorem 3}
+    Assume $f_{n}:[a, b] \rightarrow \mathbb{R}$ is Riemann-integrable for every $n \in \mathbb{N}$. If $f_{n} \rightarrow f$ uniformly on $[a, b]$, then $f$ is also Riemann-integrable on $[a, b]$, and moreover
+    \[
+    \int_{a}^{b} f_{n} \rightarrow \int_{a}^{b} f \quad \text { as } n \rightarrow \infty.
+    \]
+\end{theorem}
+\begin{proof}
+    We are going to prove that $f$ is bounded and that it satisfies Riemann's criterion. By definition of integrability, each $f_{n}$ is bounded, and hence so is $f$ by Lemma \ref{lemma 2}.
+    Next, fix $\varepsilon>0$. Since $f_{n} \rightarrow f$ uniformly on $[a, b]$, we can fix $n \in \mathbb{N}$ so that $\left|f_{n}(x)-f(x)\right|<\varepsilon$ for all $x \in[a, b]$. Since $f_{n}$ is integrable, it satisfies Riemann's criterion, so there is a dissection $\mathcal{D}$ of $[a, b]$ such $U_{\mathcal{D}}\left(f_{n}\right)-L_{\mathcal{D}}\left(f_{n}\right)<\varepsilon$. If $I$ is one of the sub-intervals of $\mathcal{D}$, then for any $x, y \in I$ we have
+    \[
+    \begin{aligned}
+    |f(x)-f(y)| & \leqslant\left|f(x)-f_{n}(x)\right|+\left|f_{n}(x)-f_{n}(y)\right|+\left|f_{n}(y)-f(y)\right| \\
+    &<\left|f_{n}(x)-f_{n}(y)\right|+2 \varepsilon
+    \end{aligned}
+    \]
+    It follows that
+    \[
+    \sup _{x, y \in I}|f(x)-f(y)| \leqslant \sup _{x, y \in I}\left|f_{n}(x)-f_{n}(y)\right|+2 \varepsilon
+    \]
+    Multiplying both sides with the length of $I$ and summing over all sub-intervals $I$ of $\mathcal{D}$, we obtain
+    \[
+    U_{\mathcal{D}}(f)-L_{\mathcal{D}}(f) \leqslant U_{\mathcal{D}}\left(f_{n}\right)-L_{\mathcal{D}}\left(f_{n}\right)+2 \varepsilon(b-a)<(2(b-a)+1) \varepsilon.
+    \]
+    So $f$ satisfies Riemann's criterion, and thus, $f$ is integrable.
+    Finally, we estimate
+    \[
+    \left|\int_{a}^{b} f_{n}-\int_{a}^{b} f\right| \leqslant \int_{a}^{b}\left|f_{n}-f\right| \leqslant(b-a) \sup _{[a, b]}\left|f_{n}-f\right| \rightarrow 0 \quad \text { as } n \rightarrow \infty .\qedhere
+    \]
+\end{proof}
+\begin{remark}
+    The conclusion of Theorem \ref{theorem 3} says: $\int_{a}^{b} \lim _{n \rightarrow \infty} f_{n}(x) \mathrm{d} x=\lim _{n \rightarrow \infty} \int_{a}^{b} f_{n}(x) \mathrm{d} x$. i.e. for uniformly convergent functions we can swap limits and integrals.
+\end{remark}
+\begin{corollary}\label{col:4}
+    Let $f_{n}:[a, b] \rightarrow \mathbb{R}$ be an integrable function for each $n \in \mathbb{N}$. If $\sum_{n=1}^{\infty} f_{n}(x)$ converges uniformly on $[a, b]$, then $\sum_{n=1}^{\infty} f_{n}(x)$ defines an integrable function on $[a, b]$, and moreover
+    \[
+    \int_{a}^{b} \sum_{n=1}^{\infty} f_{n}(x) \mathrm{d} x=\sum_{n=1}^{\infty} \int_{a}^{b} f_{n}(x) \mathrm{d} x.
+    \]
+\end{corollary}
+\begin{proof}
+    Define $F_{n}(x)=\sum_{k=1}^{n} f_{k}(x)$ for $x \in[a, b]$ and $n \in \mathbb{N}$. To say that $\sum_{n=1}^{\infty} f_{n}(x)$ converges uniformly on $[a, b]$ means that $\left(F_{n}\right)$ converges uniformly on $[a, b]$. So for each $x \in[a, b]$, the series $\sum_{n=1}^{\infty} f_{n}(x)$ is convergent, and the function $x \mapsto \sum_{n=1}^{\infty} f_{n}(x)$ is the uniform limit of $\left(F_{n}\right)$ on $[a, b]$.
+
+    We know that each $F_{n}$ is integrable and $\int_{a}^{b} F_{n}=\sum_{k=1}^{n} \int_{a}^{b} f_{k}$. So by Theorem 3 , the function $\sum_{n=1}^{\infty} f_{n}(x)$ is integrable and
+    \[
+    \int_{a}^{b} \sum_{n=1}^{\infty} f_{n}(x) \mathrm{d} x=\lim _{n \rightarrow \infty} \int_{a}^{b} F_{n}(x) \mathrm{d} x=\lim _{n \rightarrow \infty} \sum_{k=1}^{n} \int_{a}^{b} f_{k}(x) \mathrm{d} x=\sum_{k=1}^{\infty} \int_{a}^{b} f_{k}(x) \mathrm{d} x.\qedhere
+    \]
+\end{proof}
+\begin{theorem}\label{thm:5}
+    Let $\left(f_{n}\right)$ be a sequence of continuously differentiable functions on $[a, b]$. Assume further that
+    \begin{enumerate}
+        \item $\sum_{n=1}^{\infty} f_{n}^{\prime}(x)$ converges uniformly on $[a, b]$;
+        \item there exists $c \in[a, b]$ such that $\sum_{n=1}^{\infty} f_{n}(c)$ converges.
+    \end{enumerate}
+    Then $\sum_{n=1}^{\infty} f_{n}(x)$ converges uniformly to a continuously differentiable function $f$ on $[a, b]$, and moreover, we have
+    \[
+    f^{\prime}(x)=\sum_{n=1}^{\infty} f_{n}^{\prime}(x) \quad \text { for all } x \in[a, b].
+    \]
+\end{theorem}
+\begin{note}
+    Informally, $\displaystyle \frac{\mathrm{d}}{\mathrm{d}x}\left( \sum_{n=1}^{\infty}f_n(x) \right) = \sum_{n=1}^{\infty}\frac{\mathrm{d}f_n}{\mathrm{d}x}  $. 
+\end{note}
+\begin{proof}
+    Let $g(x)=\sum_{n=1}^{\infty} f_{n}^{\prime}(x)$ for $x \in[a, b]$. Idea: solve the equation $f^{\prime}=g$ with initial condition $f(c)=\sum_{n=1}^{\infty} f_{n}(c)$.
+
+    Since $\sum_{n=1}^{\infty} f_{n}^{\prime}(x)$ converges uniformly to $g(x)$, and since $f_{n}^{\prime}$ is continuous for every $n \in \mathbb{N}$, by Theorem \ref{thm:1}, $ g$ is continuous, and hence integrable. Let $\lambda=\sum_{n=1}^{\infty} f_{n}(c)$ and define
+    \[
+    f(x)=\lambda+\int_{c}^{x} g(t)\, \mathrm{d} t \quad \text { for } x \in[a, b]
+    \]
+    Since $g$ is continuous, by the Fundament Theorem of Calculus (FTC) $f$ is differentiable with $f^{\prime}=g$, and moreover $f(c)=\lambda$. By the FTC we also have
+    \[
+    f_{k}(x)=f_{k}(c)+\int_{c}^{x} f_{k}^{\prime}(t)\, \mathrm{d} t \quad \text { for } x \in[a, b], k \in \mathbb{N}
+    \]
+    Given $\varepsilon>0$, by our assumptions there exists $N \in \mathbb{N}$ such that
+    \[
+    \begin{array}{rll}
+    \displaystyle \left|\lambda-\sum_{k=1}^{n} f_{k}(c)\right| & <\varepsilon & \forall n \geqslant N \\[15pt]
+    \displaystyle \left|g(t)-\sum_{k=1}^{n} f_{k}^{\prime}(t)\right| & <\varepsilon & \forall n \geqslant N \quad \forall t \in[a, b]
+    \end{array}
+    \]
+    It follows that for all $n \geqslant N$ and for all $x \in[a, b]$ we have
+    \[
+    \begin{aligned}
+    \left|f(x)-\sum_{k=1}^{n} f_{k}(x)\right| &=\left|\lambda+\int_{c}^{x} g(t)\, \mathrm{d} t-\sum_{k=1}^{n}\left(f_{k}(c)+\int_{c}^{x} f_{k}^{\prime}(t) \,\mathrm{d} t\right)\right| \\
+    &=\left|\lambda-\sum_{k=1}^{n} f_{k}(c)+\int_{c}^{x}\left(g(t)-\sum_{k=1}^{n} f_{k}^{\prime}(t)\right) \mathrm{d} t\right| \\
+    & \leqslant\left|\lambda-\sum_{k=1}^{n} f_{k}(c)\right|+\left|\int_{c}^{x}\left(g(t)-\sum_{k=1}^{n} f_{k}^{\prime}(t)\right) \mathrm{d} t\right| \\
+    &<\varepsilon+(b-a) \varepsilon.
+    \end{aligned}
+    \]
+    This shows that $\sum_{k=1}^{n} f_{k}(x) \rightarrow f(x)$ uniformly on $[a, b]$. We have already seen that $f$ is differentiable and $f^{\prime}=g$ is continuous.
+\end{proof}
+\newpage
+\part*{Lecture 3}
+\subsection{Uniform Cauchy}
+We recall from Analysis I: a scalar sequence $\left(x_{n}\right)$ is Cauchy if
+\[
+\forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall m, n \geqslant N \quad\left|x_{m}-x_{n}\right|<\varepsilon.
+\]
+The General Principle of Convergence (GPC): every Cauchy sequence is convergent.
+\begin{definition}
+    Let $\left(f_{n}\right)$ be a sequence of scalar functions on a set $S$. We say $\left(f_{n}\right)$ is uniformly Cauchy on $S$ if
+    \[
+    \forall \varepsilon>0 \quad \exists N \in \mathbb{N} \quad \forall m, n \geqslant N \quad \forall x \in S \quad\left|f_{m}(x)-f_{n}(x)\right|<\varepsilon.
+    \]
+\end{definition}
+
+\begin{theorem}[General Principle of Uniform Convergence (GPUC)]\label{thm:6}
+    If $\left(f_{n}\right)$ is a uniformly Cauchy sequence of scalar functions on a set $S$, then $\left(f_{n}\right)$ converges uniformly to some function $f$ on $S$.
+\end{theorem}
 \end{document}
