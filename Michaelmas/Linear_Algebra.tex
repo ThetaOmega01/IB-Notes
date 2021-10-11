@@ -205,7 +205,13 @@ On the other hand, $\bfv_4\notin\langle\{\bfv_1,\bfv_2\}\rangle$, which as one c
     \[
         \sum_{i=n}^{n} \lambda_i-\lambda'_i=0 \Longrightarrow \lambda_i=\lambda_i'
     \]
-    by independence. The other direction is trivial.(TODO)
+    by independence.
+
+    Suppose now that there is a unique decomposition. Then clearly $ \langle (\bfv_i) \rangle =V $. Consider 
+    \[
+        \sum_{i=1}^n\lambda_i\bfv_i=0,\quad \lambda_i\in \mathbb{F}.
+    \]
+    Clearly it is true for $ \lambda_i=0,\forall i $. By uniqueness, this is the only decomposition and thus $ (\bfv_i) $ is a basis.
 \end{proof}
 \begin{lemma}
     If $S$ is a finite set that spans $V$, then a subset of $S$ is a basis of $V$.
