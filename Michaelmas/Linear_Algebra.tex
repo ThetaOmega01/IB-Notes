@@ -105,4 +105,132 @@ The multiplication is well-defined, since if $ \bfv_1+U=\bfv_2+U $ then $ \bfv_1
         &= \lambda_1\bfv_1+\lambda_2\bfv_2+U\in V/U.\qedhere
     \end{align*}
 \end{proof}
+\newpage
+\part*{Lecture 2}
+\subsection{Spans, independence and Steinitz Exchange Lemma}
+\begin{definition}[Span of a Family of Vectors]
+    Let $V$ be a vector space over $\mathbb F$ and $S\subset V$.
+    We define the span of $S$ to be
+    $$\langle S\rangle=\operatorname{span}(S)=\left\{\sum_{i=1}^n\lambda_i\bfs_i:n\in\mathbb N,\lambda_i\in \mathbb F,\bfs_i\in S\right\}$$
+\end{definition}
+That is, $\langle S\rangle$ consists of all possible \textit{finite} linear combination of elements of $S$.
+By convention, $\langle \varnothing\rangle=\{0\}$.
+\begin{remark}
+    $ \langle S \rangle  $ is the smallest vector subspace of $V$ which contains $S$.
+\end{remark}
+\begin{example}
+    \begin{enumerate}
+        \item $V=\mathbb{R}^{3}$,
+        \[
+            S = \left\{\begin{pmatrix}
+                1 \\ 0 \\ 0
+            \end{pmatrix}, \begin{pmatrix}
+                0 \\ 1 \\ 2
+            \end{pmatrix}, \begin{pmatrix}
+                3 \\ -2 \\ -4
+            \end{pmatrix}\right\}.
+        \]
+        Verify that 
+        \[
+            \langle S \rangle = \left\{ \begin{pmatrix}
+                a \\ b \\ 2b
+            \end{pmatrix}:(a,b)\in \mathbb{R} \right\}.
+        \]
+        \item $ V = \mathbb{R}^{n} $, $\bfe_i$ standard basis, then $ V = \langle (\bfe_i)_{1\le i\le n} \rangle  $.
+        \item Let $V=\mathbb R^X$ and $\delta_x:X\to\mathbb R$ be such that $\delta_x(y)=1_{x=y}$.
+        Then $\langle \{\delta_x\}_{x\in\mathbb R}\rangle$ are the set of functions $f\in\mathbb R^X$ that has finite support ($ \operatorname{Supp} f = \{x:f(x)\neq 0\} $).
+    \end{enumerate}
+\end{example}
+\begin{definition}
+    Let $V$ be a vector space over $\mathbb F$ and $S\subset V$.
+    We say $S$ spans $V$ if $\langle S\rangle =V$.
+\end{definition}
+\begin{example}
+    Take $V=\mathbb R^2$, then any set of two non-parallel vectors would span $V$.
+\end{example}
+\begin{definition}
+    A vector space $V$ over $\mathbb F$ is finite dimensional if there is a finite $S\subset V$ that spans $V$.
+\end{definition}
+\begin{example}
+    $V=\mathbb P[x]$, the set of polynomials in $\mathbb R$ and $V_n=\mathbb P_n[x]$, the set of real polynomials with degree $\le n$.
+    Then $V_n=\langle\{1,x,\ldots,x^n\}\rangle$ is finite dimensional, but $V$ is not finite dimensional as any finite set of polynomials must be contained in $V_n$ where $n$ is the maximal degree of polynomials in that set.
+\end{example}
+If $V$ is finite-dimensional, is there a minimal number of vectors in the family required so that the family spans $V$?
+\begin{definition}[(Linear) Independence]
+    Let $V$ be a vector space over $F$.
+    We say $\{\bfv_1,\ldots,\bfv_n\}\subset V$ are (linearly) independent (or is a free family) if for any $\lambda_1,\ldots,\lambda_n\in F$
+    $$\sum_{i=1}^n\lambda_i\bfv_i=0\implies\forall i,\lambda_i=0$$
+    Equivalently, this set is not linearly independent if there exists $\lambda_1,\ldots,\lambda_n\in F$ not all zero such that $\sum_{i=1}^n\lambda_i\bfv_i=0$.
+\end{definition}
+\begin{example}
+Let $V=\mathbb R^3$ and
+$$\bfv_1=(1,0,0)^\top,\bfv_2=(0,1,0)^\top,\bfv_3=(1,1,0)^\top,\bfv_4=(0,1,1)^\top$$
+Then $\{\bfv_1,\bfv_2\}$ is linearly independent.
+Note that $\bfv_3\in\langle\{\bfv_1,\bfv_2\}\rangle$, so $\{\bfv_1,\bfv_2,\bfv_3\}$ is not linearly independent.
+On the other hand, $\bfv_4\notin\langle\{\bfv_1,\bfv_2\}\rangle$, which as one can verify means that $\{\bfv_1,\bfv_2,\bfv_4\}$ is linearly independent.
+\end{example}
+\begin{remark}
+    If the family $\{\bfv_i\}_{1\le i\le n}$ is linearly independent, then none of $\bfv_i$ is zero.
+\end{remark}
+\begin{definition}[Basis]
+    A subset $S\subset V$ is a basis if it is linearly independent and $\langle S\rangle=V$.
+\end{definition}
+\begin{remark}
+    When $S$ spans $V$, we say that $S$ is a generating family of $V$.
+    So a basis is just a linearly independent(we also say free) generating family.
+\end{remark}
+\begin{example}
+    \begin{enumerate}
+        \item Take $V=\mathbb R^n$, then the family $\{\bfe_i\}_{1\le i\le n}$ where $\bfe_i$ is the vector having $1$ at $i^{th}$ entry and zero otherwise is a basis. $ (\bfe_i) $ are called the \textit{canonical basis}.
+        \item Take $V=\mathbb C$ over $\mathbb C$, then $\{a\}$ is a basis for any $a\neq 0$.
+        \item Take also $V=\mathbb C$ but over $\mathbb R$, then $\{1,i\}$ is a basis.
+        \item Take $V=\mathbb P[x]$ be the set of polynomials in $\mathbb R$ and $S=\{x^n:n\ge 0\}$.
+        Then $S$ is a basis.
+        Worth noting that $|S|=\infty$ in this case.
+    \end{enumerate}
+\end{example}
+\begin{lemma}
+    If $V$ is a vector space over $F$, then $\{\bfv_1,\ldots,\bfv_n\}$ is a basis of $V$ if and only if for any vector $\bfv\in V$, there is a unique decomposition
+    $$\bfv=\sum_{i=1}^n\lambda_i\bfv_i,\quad \lambda_i\in \mathbb{F}.$$
+\end{lemma}
+\begin{remark}
+    If the conditions are true, then the tuple $(\lambda_1,\ldots,\lambda_n)$ (ordered via the ordering one chose on $\bfv_i$) is called the coordinate of $\bfv$ in the basis $(\bfv_i)$.
+\end{remark}
+\begin{proof}
+    Suppose $ (\bfv_i) $ is a basis of $V$. This implies that $ \langle \bfv_i \rangle =V $, i.e. 
+    \[
+        \forall \bfv\in V\quad \exists (\lambda_1,\dots,\lambda_n)\in \bbF,\quad \bfv = \sum_{i=1}^{n}\lambda_i\bfv_i.
+    \]
+    Suppose that $ \exists (\lambda_i') $ s.t. the above holds, then 
+    \[
+        \sum_{i=n}^{n} \lambda_i-\lambda'_i=0 \Longrightarrow \lambda_i=\lambda_i'
+    \]
+    by independence. The other direction is trivial.(TODO)
+\end{proof}
+\begin{lemma}
+    If $S$ is a finite set that spans $V$, then a subset of $S$ is a basis of $V$.
+\end{lemma}
+\begin{proof}
+    If $S$ is independent, then we are done.
+    Otherwise, there is some $\lambda\neq 0$ and $\lambda_\bfw$ such that there is $v\in S$ with
+    $$\lambda \bfv+\sum_{\bfw\in S\setminus\{\bfv\}}\lambda_\bfw\bfw=0\implies \bfv=\frac{1}{\lambda}\sum_{\bfw\in S\setminus\{\bfv\}}\lambda_\bfw\bfw\in\langle S\setminus\{\bfv\}\rangle.$$
+    Therefore $S\setminus\{\bfv\}$ also spans $V$.
+    We can repeat this process and, by the well-ordering of $\mathbb N$, will reach a basis.
+\end{proof}
+\begin{theorem}[Steinitz Exchange Lemma]\label{thm:steinitz}
+    Let $V$ be a finite dimensional vector space over $\bbF$. Take $\{\bfv_1,\ldots,\bfv_m\}\subset V$ linearly independent, $\{\bfw_1,\ldots,\bfw_n\}\subset V$ a generating set, then:
+    \begin{enumerate}
+        \item $m\le n$.
+        \item Up to relabeling, $\{\bfv_1,\ldots,\bfv_m,\bfw_{m+1},\ldots,\bfw_n\}$ spans $V$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Suppose $\{\bfv_1,\ldots,\bfv_l,\bfw_{l+1},\ldots,\bfw_n\}$ spans $V$ for some $l<m$, then
+    $$\exists\alpha_i,\beta_i\in \bbF, \bfv_{l+1}=\sum_{i\le l}\alpha_i\bfv_i+\sum_{i>l}\beta_i\bfw_i$$
+    But $\{\bfv_i\}$ is linearly independent, so one of the $\beta_i$ is nonzero.
+    By relabelling $\beta_{l+1}\neq 0$, then $\bfw_{l+1}\in\langle\{\bfv_1,\ldots,\bfv_l,\bfv_{l+1},\bfw_{l+2}\ldots,\bfw_n\}\rangle$, therefore the set of vectors $\{\bfv_1,\ldots,\bfv_l,\bfv_{l+1},\bfw_{l+2}\ldots,\bfw_n\}$ also spans $V$. If we start from 0, we are done after $m$ steps by induction, and thus $m\le n$, and
+    \[
+        \langle \bfv_1,\ldots,\bfv_m,\bfw_{m+1},\ldots,\bfw_n \rangle =V.\qedhere
+    \]
+\end{proof}
 \end{document}

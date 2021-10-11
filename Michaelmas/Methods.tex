@@ -90,7 +90,118 @@ Similar for $a_n$. We get
     \end{align*}
     So the Fourier series is 
     \[
-        f(x) = \frac{2L}{n\pi } \sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin \left( \frac{n\pi x}{L} \right).
+        f(x) = \frac{2L}{\pi } \sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin \left( \frac{n\pi x}{L} \right).
     \]
 \end{example}
+\begin{note}
+    As $n\to \infty$ in Fourier series,
+    \begin{enumerate}
+        \item The FS approximation improves (convergent where continuous).
+        \item FS $ \to 0 $ at $x=L$, i.e. the midpoint of continuity.
+        \item FS has a persistent \textit{overshoot} at $x=L$, which is approximately 9\% and is known as the \textit{Gibbs phenonenon}. See Example Sheet Q5.
+    \end{enumerate}
+\end{note}
+\newpage
+\part*{Lecture 2}
+\subsection{The Dirichlet Conditions and Fourier's Theorem}
+A natural question is then which functions are allowed to have a proper Fourier series.
+Surprisingly, a big, yet hard to precisely characterise, class of functions has a convergent Fourier series that has the desired properties.
+This class even includes some classical counterexamples in analysis.
+As an applied course, we will just look at some of the sufficient conditions.
+\begin{theorem}[Fourier's Theorem]
+    If $f$ is a bounded periodic function with period $2L$ with a finite number of minima, maxima, and discontinuities in $[0,2L)$, then its Fourier series converges to $f$ where it is continuous and converges to the average of the two side limits.
+\end{theorem}
+The conditions in this theorem is known as the Dirichlet conditions.
+\begin{note}
+    \begin{enumerate}
+        \item These conditions are hella weak compared to our conditions for a function to have e.g. a Taylor series.
+        However, pathological functions like $1/x,\sin(1/x),1_{\mathbb R\setminus\mathbb Q}(x)$ are excluded from these conditions.
+        \item The converse is not true, as $\sin(1/x)$ has a Fourier series we desire.
+    \end{enumerate}
+\end{note}
+\begin{proof}
+    See Jeffery \& Jeffery book.
+\end{proof}
+Another subject of interest is the rate of convergence of a Fourier series.
+Perhaps unsurprisingly, it depends on the smoothness of the function.
+\begin{theorem}
+    If $f(x)$ is $p^{th}$ differentiable but $f^{(p)}$ is not continuous, then its Fourier series converges as $O(n^{-(p+1)})$ as $n\to\infty$.
+\end{theorem}
+\begin{example}
+    \begin{enumerate}
+        \item  Consider the square wave
+        $$f(x)=\begin{cases}
+            1\text{, for $0\le x<1$}\\
+            -1\text{, for $-1\le x<0$}
+        \end{cases}$$
+        That extends periodically with period $2$.
+        Then it has a Fourier series
+        $$4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{(2m-1)\pi}$$
+        which, as one can see both from the preceding theorem (with $p=0$) and observation, converges slowly.
+        \item Consider the general ``see-saw'' wave
+        $$f(x)=\begin{cases}
+            x(1-\xi)\text{, for $x\in[0,\xi)$}\\
+            \xi(1-x)\text{, for $x\in[\xi,1)$}
+        \end{cases}$$
+        which extends as an odd periodic function with period $2$.
+        This has Fourier series
+        $$2\sum_{m=1}^\infty\frac{\sin (n\pi\xi)\sin (n\pi x)}{(n\pi)^2}$$
+        which converges with $p=1$ in the preceding theorem.
+        In particular, $\xi=1/2$ gives
+        $$2\sum_{m=1}^\infty(-1)^{m+1}\frac{\sin[(2m-1)\pi x]}{[(2m-1)\pi]^2}$$
+        which can be seen, immediately, that it converges faster than the series in the previous example.
+        \item Take $f(x)=x(1-x)/2$ for $x\in[0,1)$ that extends as an odd periodic function with period $2$.
+        Then its Fourier series is
+        $$4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{[(2m-1)\pi]^3}$$
+        which has $p=2$.
+        \item Take $f(x)=(1-x^2)^2$, then $a_n=O(n^{-4})$.
+    \end{enumerate}
+\end{example}
+Of course, we want to integrate and differentiate a Fourier series term-by-term.
+Integration, as one expect, seldom yields problems as it imposed very few restrictions on the function.
+
+And indeed, we are just going to assume we can integrate any Fourier series term-by-term and they guarantee to yield a smoother function, which satisfies the Dirichlet conditions if the original function does.
+
+Differentiation is more problematic when doing it term-by-term.
+\begin{example}
+    Take the square wave again which is known to have Fourier series
+    $$4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{(2m-1)\pi}$$
+    which, after term-by-term differentiation, yields
+    $$4\sum_{m=1}^\infty\cos[(2m-1)\pi x]$$
+    which is clearly divergent.
+    This is perhaps unsurprising as the original function is not even continuous.
+\end{example}
+\begin{theorem}
+    If $f(x)$ is differentiable and both $f,f^\prime$ satisfy Dirichlet conditions, then we can differentiate the Fourier series of $f$ term-by-term to get the Fourier series of $f^\prime$.
+\end{theorem}
+\begin{example}
+    If we differentiate the see-saw curve with $\xi=1/2$, then we will get an offset of the Fourier series of the square wave with $ \tilde{x}=x+1/2 $.
+\end{example}
+\subsection{Parseval's Theorem}
+There is some interesting relation between the integral of the square of a function and the square of the Fourier coefficients of that function.
+If the function is nice enough to have a nice enough Fourier series, then by orthogonality,
+\begin{align*}
+    \int_0^{2L}f(x)^2\,\mathrm dx&=\int_0^{2L}\left( \frac{a_0}{2}+\sum_{n\ge 1}a_n\cos\frac{n\pi x}{L}+\sum_{n\ge 1}b_n\sin\frac{n\pi x}{L} \right)^2\,\mathrm dx\\
+    &=\int_0^{2L}\left( \frac{a_0^2}{4}+\sum_{n\ge 1}a_n^2\cos^2\frac{n\pi x}{L}+\sum_{n\ge 1}b_n^2\sin^2\frac{n\pi x}{L} \right)\,\mathrm dx\\
+    &=L\left( \frac{a_0^2}{2}+\sum_{n\ge 1}(a_n^2+b_n^2) \right).
+\end{align*}
+This is also called the \textit{completeness relation} as the left hand side would be greater than or equal to the right hand side if any basis functions are missing from the series.
+This is known as Parseval's Theorem.
+\begin{theorem}[Parseval's Theorem]\label{parseval}
+    For a nice enough function $f$ with Fourier coefficients $a_n,b_n$, we have
+    $$\int_0^{2L}f(x)^2\,\mathrm dx=L\left( \frac{a_0^2}{2}+\sum_{n\ge 1}(a_n^2+b_n^2) \right)$$
+\end{theorem}
+\begin{proof}
+    Above.
+\end{proof}
+\begin{example}
+    Consider the sawtooth curve with $f(x)=x,x\in[-L,L)$ with period $2L$.
+    Then Parseval's Theorem reveals that
+    $$\frac{2}{3}L^3=\int_{-L}^Lx^2\,\mathrm dx=L\sum_{n=1}^\infty\frac{4L^2}{n^2\pi^2}=\frac{4L^3}{\pi^2}\sum_{n=1}^\infty\frac{1}{n^2}\implies \sum_{n=1}^\infty\frac{1}{n^2}=\frac{\pi^2}{6}$$
+\end{example}
+\begin{remark}
+    If we think of the integral of the square as $ \langle f,f \rangle = \left\| f \right\| ^2  $, the $ L^2 $ norm, then Parseval's Theorem can be thought of an analog of Pythagoras' Theorem in this space of functions.
+\end{remark}
+\newpage
+\part*{Lecture 3}
 \end{document}
