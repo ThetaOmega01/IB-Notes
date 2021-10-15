@@ -19,21 +19,24 @@ Throughout the note, let $ I $ be a finite or countable set, and any random vari
     \]
 \end{definition}
 \begin{definition}[Time-homogeneous]
-    A markov chain $X$ is called \textit{time-homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textit{time-inhomogeneous}.
+    A Markov chain $X$ is called \textit{time-homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textit{time-inhomogeneous}.
 \end{definition}
-
+We will only be dealing with time-homogeneous Markov chains in this course.
 \begin{definition}[Stochastic matrix]
     A matrix $P$ is called a \textit{stochastic matrix} if $ \sum_{y}P(x,y)=1 $.
 \end{definition}
 
 \begin{definition}[Transitional matrix]
-    $P$ be a matrix such that $ P(x,y) = \mathbb{P}(X_1=y|X_0=x), x,y\in I $. P is called the \textit{transitional matrix} of $X$.
+    $P$ be a matrix such that $ P(x,y) = \mathbb{P}(X_1=y|X_0=x), x,y\in I $. $P$ is called the \textit{transitional matrix} of $X$.
 \end{definition}
 
 We see that $P$ is a stochastic matrix.
 
 \begin{remark}
-    The index set of a markov chain needs not to be $\bbN$. It could be $ \{1,\dots,N\} $, where $ N\in \mathbb{N} $.
+    \begin{enumerate}
+        \item The index set of a markov chain needs not to be $\bbN$. It could be $ \{1,\dots,N\} $, where $ N\in \mathbb{N} $.
+        \item Since $X$ is time-homogeneous, $ P(x,y)=\mathbb{P}(X_1=y|X_0=x)=\mathbb{P}(X_{n+1}=y|X_n=x) $ for all $n$.
+    \end{enumerate}
 \end{remark}
 
 \begin{definition}
@@ -130,8 +133,256 @@ Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \f
         =\;& \mathbb{P}(X_{i_1}=x_1,\dots,X_{i_k}=x_k) \mathbb{P}(Y_{j_1}=y_1,\dots,Y_{j_m}=y_m)
     \end{align*}
 \end{definition}
+
+\newpage
+\part*{Lecture 2}
 \subsection{Markov property}
 \begin{theorem}[Simple Markov property]\label{thm:simple_markov_property}
     Suppose $ X $ is $ \Markov(\lambda,P) $ and fix $ M\in \mathbb{N}  $ and $ i\in I $. Conditional on $X_m=i$, the process $ (X_{m+n})_{n\ge 0} $ is $ \Markov(\delta_i, P) $ and it is independent of $ X_0,\dots,X_m $.
 \end{theorem}
+\begin{proof}
+    We aim to show that $ \forall n $ and $ \forall x_i $, 
+    \[
+        \mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)= \delta_{ix_m}\mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n}).
+    \]
+    We have 
+    \[
+        \mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)= \frac{\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_{m}=x_m)}{\mathbb{P}(X_m=i)}\delta_{ix_m}. \tag{$ * $}
+    \]
+    Note that
+    \begin{align*}
+        &\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m)\\
+        =& \sum_{x_0,\dots,x_{m-1}\in I}\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_0=x_0)\tag{Result in IA Probability}\\ 
+        =& \sum_{x_0,\dots,x_{m-1}\in I} \lambda x_0 \mathbb{P}(X_0,X_1)\cdots  \mathbb{P}(X_{m+n-1},X_{m+n}) \tag{Since $ X \sim \Markov(\lambda,P) $}\\ 
+        =& \mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n})\mathbb{P}(X_m=x_m).
+    \end{align*}
+    Plugging this back into ($ * $) we get 
+    \[
+        \mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)= \delta_{ix_m}\mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n}).
+    \]
+    So this shows that $ (X_{m+n})_{n\ge 0} $ is $ \Markov(\delta_i,P) $ conditioning on $X_m=i$, by theorem \ref{thm:1.1}.
+
+    To show independence, we want to show that if $ m\le i_1<\cdots<i_k,k\in \mathbb{N}  $, then 
+    \begin{align*}
+        &\mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k},X_0=x_0,\dots,X_m=x_m|X_m=i)\tag{$*$}\\ 
+        =\,& \mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k}|X_m=i)\mathbb{P}(X_0=x_0,\dots,X_m=x_m|X_m=i).
+    \end{align*}
+    Note that 
+    \begin{align*}
+        & \mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k},X_0=x_0,\dots,X_m=x_m|X_m=i)\\ 
+        =\,& \frac{\mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k},X_0=x_0,\dots,X_m=x_m)}{\mathbb{P}(X_m=i)}\tag{Assume $ x_m=i $}\\ 
+        =\,& \frac{\lambda_{x_0}P(x_0,x_1)\cdots P(x_{m-1},x_m)\mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k}|X_m=x_m)}{\mathbb{P}(X_m=i)}\tag{Since $ X\sim \Markov(\lambda,P) $}\\ 
+        =\,& \frac{\mathbb{P}(X_0=x_0,\dots,X_m=x_m)}{\bbP(X_m=i)}\mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k}|X_m=i)\\ 
+        =\,& \mathbb{P}(X_{i_1}=x_{m+1},\dots,X_{i_k}=x_{m+k}|X_m=i)\mathbb{P}(X_0=x_0,\dots,X_m=x_m|X_m=i)
+    \end{align*}
+    as expected.
+\end{proof}
+\subsection{Powers of the transitional matrix}
+Suppose $ X \sim \Markov(\lambda,P) $ with values in $I$. If $I$ is finite, then $ P\in \mcM_{|I|\times |I|} $ and we can label the states as $1,\dots,|I|$. If $I$ is infinite, we can label the states by $ \mathbb{N} $. Let $x\in I$ and $n\in \mathbb{N}$. Consider 
+\begin{align*}
+    \mathbb{P}(X_n=x)&= \sum_{x_0,\dots,x_{n-1}\in I}\mathbb{P}(X_n=x,X_{n-1}=x_{n-1},\dots,X_0=x_0)\\ 
+    &= \sum_{x_0,\dots,x_{n-1}\in I} \lambda_{x_0}P(x_0,x_1)\cdots P(x_{n-1},x)\tag{By theorem \ref{thm:1.1}}
+\end{align*}
+We can think of $\lambda$ as a row vector and the above expression becomes $ (\lambda P^n)_x $, where $P^n$ is the $n$th power of $P$. By convention take $P^0=I$.
+
+Let $m,n\in \bbN$. By Simple Markov Property, 
+\[
+    \mathbb{P}(X_{m+n}=y|X_m=x)=\mathbb{P}(X_n=y|X_0=x)=(\delta_x P^n)_y.
+\]
+\begin{notation}
+    We will write for an event $A$: $ \mathbb{P}_i(A) $ for $ \mathbb{P}(A|X_0=i) $. We will write $ p_{ij}(n) $ for the $(i,j)$ element of $P^n$.
+\end{notation}
+We have proved, using these notations, that 
+\begin{theorem}
+    \begin{itemize}
+        \item $ \mathbb{P}(X_n=x)=(\lambda P^n)_x $.
+        \item $ \mathbb{P}(X_{n+m}=y|X_m=x)=\mathbb{P}_x(X_n=y)=p_{xy}(n) $.
+    \end{itemize}
+\end{theorem}
+\begin{example}
+    Take $ P = \begin{pmatrix}
+        \alpha & 1-\alpha \\
+        1-\beta & \beta \\
+    \end{pmatrix}, \alpha,\beta\in (0,1). $
+    Note that 
+    \[
+        p_{11}(n+1) = p_{11}(n)(1-\alpha)+p_{12}(n)\beta.
+    \]
+    Since $P$ is a stochastic matrix, $P_{11}(n)+P_{12}(n)=1 $, and thus 
+    \[
+        p_{11}(n+1)=(1-\alpha-\beta)P_{11}(n)+\beta.
+    \]
+    We can now solve this recursion to get 
+    \[
+        p_{11}(n)=\begin{cases}
+        \frac{\alpha}{\alpha+\beta}\left( 1+(1-\alpha-\beta)^n \right) &\text{if }\alpha+\beta>0\\
+        1 &\text{if }\alpha+\beta=0\\
+        \end{cases} 
+    \]
+\end{example}
+\paragraph*{General procedure for $ P^n $} Suppose $P$ is a $k\times k$ matrix and let $ \lambda_1,\dots,\lambda_k $ be its eigenvalues.
+\begin{enumerate}[(1)]
+    \item \textit{All $ \lambda_i $ are distinct.} Then $P$ is diagonalisable and we can write 
+    \[
+        P = U \begin{pmatrix}
+            \lambda_1&&&0\\ 
+            &\lambda_2&&\\ 
+            &&\ddots&\\ 
+            0&&&\lambda_k
+        \end{pmatrix}U^{-1} \Longrightarrow P^n=U \begin{pmatrix}
+            \lambda^n_1&&&0\\ 
+            &\lambda^n_2&&\\ 
+            &&\ddots&\\ 
+            0&&&\lambda^n_k
+        \end{pmatrix}U^{-1}
+    \]
+    Suppose, for example, that we want to find $p_{11}(n)$. We can write 
+    \[
+        p_{11}(n)=a_1 \lambda_1^n+\cdots + a_k \lambda_k^n,\quad a_1,\dots,a_k \text{ are constants}.
+    \]
+    We can then determine $a_i$ by plugging in small values of $n$ and solve the linear equations.
+
+    Suppose $\lambda_k$ is complex. Also $ \bar{\lambda}_k $ will be an eigenvalue. Write $ \lambda_k=re^{i\theta}, \bar{\lambda}_k=\lambda_{k-1}=re^{-i\theta} $. Since $p_{11}(n)$ is always real, we can write directly
+    \[
+        p_{11}(n)=a_1 \lambda_1^n+\cdots + a_{k-2}\lambda_{k-2}^n+a_{k-1}r^{n}\cos (n\theta)+a_kr^n \sin (n\theta).
+    \]
+    \item \textit{If they are not all distinct}, then say $ \lambda $ appears with multiplicity 2, then we include also the term $ (an+b)\lambda^n $ instead of just $ b\lambda^n $. (Jordan normal form of $P$)
+\end{enumerate}
+\newpage
+\part*{Lecture 3}
+\begin{example}
+	Given the transition matrix
+	$$
+	P = \begin{pmatrix}
+		0 & 1 & 0 \\
+		0 & 1/2 & 1/2 \\ 
+		1/2 & 0 & 1/2
+	\end{pmatrix},
+	$$
+	we want to find $p_{11}(n)$. The eigenvalues are $1, \pm i/2$. We write $\pm i/2 = (\cos \pi/2 \pm i \sin \pi/2)/2$, and thus the general form of $p_{11}(n)$ as
+	$$
+	p_{11}(n) = \alpha + \beta \cdot \left(\frac{1}{2}\right)^n \cos \left(\frac{n \pi}{2}\right) + \gamma \cdot \left(\frac{1}{2}\right)^n \sin\left(\frac{n \pi}{2}\right).
+	$$
+	Plug in $p_{11}(0) = 1$, $p_{11}(1) = 0$ and $p_{11}(2) = 0$ to get
+	$$
+	p_{11}(n) = \frac{1}{5} + \left(\frac{1}{2}\right)^n \left(\frac{4}{5}\cos\left(\frac{n \pi}{2}\right) - \frac{2}{5} \sin \left(\frac{n \pi}{2}\right)\right).
+	$$
+\end{example}
+\section{Classification of chains and states}
+\subsection{Communicating classes}
+\begin{definition}
+    Let $X$ be a Markov chain with transition matrix $P$ and values in $I$. For $x, y \in I$ we say that \emph{$x$ leads to $y$} and write it $x \rightarrow y$ if
+    $$
+    \mathbb{P}(X_n = y \text{ for some }n \ge 0) > 0. 
+    $$
+    We say that $x$ \emph{communicates} with $y$ and write $x \leftrightarrow y$ if $x \rightarrow y$ and $y \rightarrow x$.  
+\end{definition}
+
+\begin{theorem}
+	The following are equivalent: 
+	\begin{enumerate}[label=(\roman*)]
+		\item $x \rightarrow y$;
+		\item There exists a sequence of states $x = x_0, x_1, \dots, x_k = y$ such that 
+		$$P(x_0, x_1)P(x_1, x_2) \cdots P(x_{k - 1}, x_k) > 0;$$
+		\item There exists $n \ge 0$ such that $p_{xy}(n) > 0$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+    ((i) $ \Leftrightarrow $ (iii)) Note that 
+    \[
+        \{X_n=y \text{ for some }n\ge 0\} = \bigcup_{n=0}^{\infty}\{X_n=y\}.
+    \]
+    If $ \mathbb{P}(X_n = y \text{ for some }n \ge 0) > 0 $, then $ \exists n\ge 0 $ such that $ \mathbb{P}_x(X_m=y)=p_{xy}(n)>0 $.
+
+    If $ \exists n\ge 0 $ such that $ p_{xy}(n)>0 $, then 
+    \[
+        \{X_n=y \text{ for some }n\ge 0\}=\mathbb{P}\left( \bigcup_{n=0}^{\infty}\{X_n=y\} \right)>0.
+    \]
+
+    ((ii) $ \Leftrightarrow  $ (iii)) Note that $ p_{xy}(n) = \sum_{x_0,\dots x_{n-1}} P(x,x_1)P(x_1,x_2)\cdots P(x_{n-1},y), $
+    so they are equivalent.
+\end{proof}
+\begin{corollary}
+    $ \leftrightarrow $ is an equivalence relation on $I$.
+\end{corollary}
+\begin{definition}[Communicating Classes]
+	The equivalence classes induced by $\leftrightarrow$ on $I$ are called \emph{communicating classes}.
+
+    A communicating class $C$ is \emph{closed} if $x \in C$ and $x \rightarrow y$ then $y \in C$.
+
+    A matrix $P$ is called \emph{irreducible} if it has a single communicating class, that is, for all $x, y \in I$, $x \leftrightarrow y$. 
+
+    A state $x$ is called \emph{absorbing} if $\{x\}$ is a closed class. 
+\end{definition}
+\subsection{Hitting Times}
+
+\begin{definition}
+	For $A \subseteq I$, we define the r.v. $T_A$ to be the \emph{hitting time} of $A$,
+	$
+	T_A: \Omega \rightarrow \{0, 1, 2, \dots \} \cup \{\infty\},
+	$
+	defined by $T_A(\omega) = \inf\{ n \ge 0: X_n(\omega) \in A\}$, where we take $\inf \varnothing = \infty$.
+
+	The \emph{hitting probability} of $A$ is $h^A: I \rightarrow [0, 1]$ such that $h_i^A = \bbP_i(T_A < \infty)$.
+
+	The \emph{mean hitting time} of $A$ is $k^A: I \rightarrow \mathbb{R} $ with $k_i^A = \bbE_i[T_A] = \sum_{n = 0}^{\infty} n \cdot \bbP_i(T_A = n) + \infty \cdot \bbP_i(T_A = \infty)$.
+\end{definition}
+
+\begin{example}
+	Consider the Markov chain in the diagram below.
+	\begin{center}
+		\begin{tikzpicture}
+		
+		\node[state] (1) {1};
+		\node[state, right=of 1] (2) {2};
+		\node[state, right=of 2] (3) {3};
+		\node[state, right=of 3] (4) {4};
+		
+		\path
+		(2) edge[->,above] node {$\frac{1}{2}$} (1)
+		(2) edge[bend left, ->,above] node {$\frac{1}{2}$} (3)
+		(3) edge[bend left, ->,below] node {$\frac{1}{2}$} (2)
+		(3) edge[->,above] node {$\frac{1}{2}$} (4);
+		\end{tikzpicture}
+		\end{center}
+
+		We take $A = \{4\}$, and want to find $h_2^A = \bbP_2(T_A < \infty)$. We have
+		\begin{align*}
+			h_2^A &= \frac{1}{2}h_1^A +
+			\frac{1}{2}h_3^A =\frac{1}{2}\left( \frac{1}{2}+\frac{1}{2}h_2^A \right) \\
+		\implies h_2^A &= \frac{1}{3}.
+		\end{align*}
+		If instead we took $B = \{1, 4\}$ and wanted to find $k_2^B$, we would get
+		\begin{align*}
+			k_2^B &= 1+\frac{1}{2}k_1^B+\frac{1}{2}k_3^B=\frac{1}{2}\left( 1+\frac{1}{2}k_4^B+\frac{1}{2}k_2^B \right)=\frac{1}{2}\left( 1+\frac{1}{2}k_2^B \right)\\
+	\implies k_2^B &= 2.
+		\end{align*}
+\end{example}
+
+\begin{theorem}
+	Let $A \subseteq I$. The vector $(h_i^A)_{i \in A}$ is the minimal non-negative solution to
+	\begin{align*}
+		h_i^A = \begin{cases}
+			1 &\mbox{if } i  \in A, \\
+			\sum_{j} P(i, j) h_j^A &\mbox{if } i \not \in A,
+		   \end{cases}
+	\end{align*}
+	where minimality means that if $(x_i)_{i \in A}$ is another solution to the linear system, then $x_i \ge h_i^A, \forall i$.
+\end{theorem}
+\begin{proof}
+	First show that $(h_i)$ solves this system. Clearly, if $i\in A$ then $ h_i^A=1 $. Suppose $i\notin A$. Note that 
+    \[
+        \{T_A<\infty\} = \{X_0\in A\} \cup \bigcup_{n=1}^{\infty}\{X_i\notin A \text{ for }0\le i\le n-1, X_n\in A\}.
+    \]
+    By countable additivity of disjoint events,
+    \begin{align*}
+        &\mathbb{P}_i(T_A< \infty) = \mathbb{P}_i(X_0\in A) + \sum_{n=1}^{\infty}\mathbb{P}_i(X_i\notin A \text{ for }0\le i\le n-1, X_n\in A)\\ 
+            &= \sum_{n=1}^{\infty} \sum_{j} \mathbb{P}(X_i\notin A \text{ for }0\le i\le n-1, X_n\in A,X_1=j|X_0=i)\\ 
+            &=\sum_j \mathbb{P}(X_1\in A,X_1=j|X_0=i)+\sum_j \sum_{n=2}^{\infty}\mathbb{P}(X_i\notin A \text{ for }1\le i\le n-1, X_n\in A,X_1=j|X_0=i)\\ 
+            &= \sum_j P(i,j)\mathbb{P}(X_1\in A|X_1=j,X_0=i)\\[-13pt]
+            &\hspace{5em}+\sum_{j}P(i,j)\sum_{n=2}^{\infty}\mathbb{P}(X_i\notin A \text{ for }1\le i\le n-1, X_n\in A|X_1=j,X_0=i)\\ 
+            &= \sum_j P(i,j) \mathbb{P}(X_0\in A|X_0=j)+ \sum_{j}P(i,j) \mathbb{P}(X_i\notin A \text{ for }1 \le i\le n-1, X_n\in A|X_1=j)
+    \end{align*}
+    \centerline{(TO BE FINISHED)}
+\end{proof}
 \end{document}

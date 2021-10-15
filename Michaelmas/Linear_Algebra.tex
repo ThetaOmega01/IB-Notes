@@ -239,4 +239,244 @@ On the other hand, $\bfv_4\notin\langle\{\bfv_1,\bfv_2\}\rangle$, which as one c
         \langle \bfv_1,\ldots,\bfv_m,\bfw_{m+1},\ldots,\bfw_n \rangle =V.\qedhere
     \]
 \end{proof}
+\newpage 
+\part*{Lecture 3}
+\subsection{Basis, Dimension and Direct Sum}
+From the Steinitz Exchange Lemma, we have
+\begin{corollary}\label{dim_well_defined}
+    Let $V$ be a finite dimensional vector space, then any two bases of $V$ have the same cardinality.
+\end{corollary}
+We call this cardinality the \textit{dimension} of $V$, denoted by $ \dim V $ or $ \dim_\bbF V $, to specify the field.
+\begin{corollary}
+    Let $V$ be a vector space with $\dim V=n$, then:
+    \begin{enumerate}
+        \item Any independent set of vectors has size at most $n$.
+        The size is exactly $n$ iff this set is a basis.
+        \item Any spanning set has size at least $n$.
+        The size is exactly $n$ iff this set is a basis.
+    \end{enumerate}
+\end{corollary}
+\begin{proposition}
+    Let $U,W$ be subspaces of $V$.
+    If they are finite dimensional, then so is $U+W$ and
+    $$\dim(U+W)=\dim U+\dim V-\dim(U\cap W)$$
+\end{proposition}
+\begin{proof}
+    Pick a basis $\bfv_1,\ldots,\bfv_l$ of $U\cap W$.
+    Extend it to a basis $\bfv_1,\ldots,\bfv_l,\bfu_1,\ldots,\bfu_m$ of $U$ and a basis $\bfv_1,\ldots,\bfv_l,\bfw_1,\ldots,\bfw_n$ of $W$. Claim that $B=\{\bfv_i\}\cup\{\bfu_i\}\cup\{\bfw_i\}$ is easily a basis of $U+W$.
+    The equality follows.
+
+    Indeed, it is obvious that $B$ is a generating set. To show linear independence, consider 
+    \[
+        \sum_{i=1}^{l}\alpha_i \bfv_i+\sum_{j=1}^{m}\beta_j \bfu_j+\sum_{k=1}^{n}\gamma_k\bfw_k=0.
+    \]
+    Rearrange this to get 
+    \[
+        \sum_{i=1}^{l}\alpha_i \bfv_i+\sum_{j=1}^{m}\beta_j \bfu_j=-\sum_{k=1}^{n}\gamma_k\bfw_k \Longrightarrow \sum_{k=1}^{n}\gamma_k\bfw_k\in U \cap W \Longrightarrow \sum_{k=1}^{n}\gamma_k\bfw_k=\sum_{i=1}^{l}\delta_i\bfv_i.
+    \]
+    Therefore we get 
+    \[
+        \sum_{i=1}^{l}(\alpha_i+\delta_i)\bfv_i+\sum_{j=1}^{m}\beta_j \bfu_j=0 \Longrightarrow \beta_j=0,\alpha_i=-\delta_i.
+    \]
+    Hence the original equation becomes 
+    \[
+        \sum_{i=1}^{l}\alpha_i\bfv_i+\sum_{k=1}^{n}\gamma_k\bfw_k=0 \Longrightarrow \alpha_i=\gamma_k=0.\qedhere
+    \]
+\end{proof}
+\begin{proposition}
+    If $V$ is a finite dimensional vectyor space and $U\le V$, then $U,V/U$ are both finite dimensional and $\dim V=\dim U+\dim V/U$.
+\end{proposition}
+\begin{proof}
+    It is obvious that $U$ is finite dimensional.
+    Choose a basis $\bfu_1,\ldots,\bfu_l$ and extend it to a basis $B=\{\bfu_1,\ldots,\bfu_l,\bfw_{l+1},\ldots,\bfw_n\}$ of $V$. Claim that $B'=\{\bfw_{l+1}+U,\ldots,\bfw_n+U\}$ is a basis of $V/U$ and we are done.
+
+    Indeed, every non-trivial element in $ V/U $ has the form $ \bfv+U $, where $ \bfv\in V \setminus U $. Since $B$ is a basis, there exists $ \alpha_i,l+1\le i\le n $ such that 
+    \[
+        \bfv = \sum_{i=l+1}^{n}\alpha_i\bfw_i.
+    \]
+    Hence $ \bfv+U = \sum_{i=l+1}^{n}\alpha_i(\bfw_i +U)$ and thus $ B' $ generates $V/U$. To show independence, note that 
+    \[
+        \sum_{i=l+1}^{n}\beta_i \bfw_i+U=0 \Longrightarrow \sum_{i=l+1}^{n}\beta_i \bfw_i\in U \Longrightarrow \beta_i=0.\qedhere
+    \]
+\end{proof}
+\begin{remark}
+    If $U$ is a proper subspace of $V$, written $U<V$ (meaning that $U\le V$ and $U\neq V$), then the proposition gives us $\dim V/U\neq \{0\}$, so $\dim U<\dim V$.
+\end{remark}
+\begin{definition}
+    Let $V$ be a vector space and $U,W\le V$.
+    We say $V$ is the \textit{direct sum} of $U,W$, written $V=U\oplus W$, if every element $\bfv\in V$ can be written uniquely as $\bfv=\bfu+\bfw$ for $\bfu\in U,\bfw\in W$.
+    If this happens, then we say $W$ is \textit{a direct complement} of $U$ in $V$.
+\end{definition}
+Note that direct complement is not unique in general.
+\begin{example}
+    Take $U=\mathbb R\times \{0\}$, then both $W=\{0\}\times \mathbb R$ and $W'=\langle\{(1,1)^\top\}\rangle$ are direct complements of $U$.
+\end{example}
+\begin{lemma}\label{equivalence_of_direct_sum}
+    Let $U,W\le V$, then the followings are equivalent:
+    \begin{enumerate}[(i)]
+        \item $V=U\oplus W$.
+        \item $V=U+W$ and $U\cap W=\{0\}$.
+        \item For any basis $B_1$ of $U$ and $B_2$ of $W$, $B=B_1\cup B_2$ is a basis of $V$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    (ii) $\Rightarrow$ (i): Suppose $V=U+W$ and $U\cap W=\{0\}$. Then $ \forall \bfv\in V,\exists (\bfu,\bfw)\in U\times W,\bfv=\bfu+\bfw $. To show uniqueness, suppose $ \bfv=\bfu_1+\bfw_1=\bfu_2+\bfw_2 $. Then $ \bfu_1-\bfu_2=\bfw_1-\bfw_2\in U \cap W=\{0\} $, so $ \bfu_1=\bfu_2,\bfw_1=\bfw_2$.
+
+    (i) $\Rightarrow$ (iii): Let $ B_1,B_2 $ be bases of $U,W$ respectively. Let $ B=B_1 \cup B_2 $. Clearly $ \langle B \rangle =V $. Consider 
+    \[
+        \sum_{\bfu\in B_1}\lambda_{\bfu}\bfu+\sum_{\bfw\in B_2}\lambda_{\bfw}\bfw=0.
+    \]
+    Note that $ \lambda_\bfu=\lambda_\bfw=0 $ is a solution. Since $ V =U\oplus W $, the decomposition is unique so it is the only one, and we have independence.
+
+    (iii) $\Rightarrow$ (ii): Any $\bfv\in V$ can be written as 
+    \[
+        \bfv=\sum_{\bfu\in B_1}\lambda_{\bfu}\bfu+\sum_{\bfw\in B_2}\lambda_{\bfw}\bfw
+    \]
+    so $ V=U+W $. Now let $ \bfv\in U\cap W $, then the above equation implies $\lambda_\bfu=\lambda_\bfw=0 $ and thus $ U\cap W=\{0\} $.
+\end{proof}
+\begin{definition}
+    Let $V_1,\ldots,V_l\le V$, then we define
+    $$\sum_{i=1}^lV_i=\{\bfv_1+\cdots+\bfv_l:\bfv_j\in V_j,1\le j\le l\}$$
+    The sum is direct, i.e.
+    $$\sum_{i=1}^lV_i=\bigoplus_{i=1}^lV_i$$
+    if and only if $\bfv_1+\cdots +\bfv_l=\bfv_1'+\cdots +\bfv_l'$ implies $\bfv_j=\bfv_j'$ for any $1\le j\le l,\bfv_j\in V_j$ and $ \bfv_j'\in V_j $.
+    Equivalently,
+    $$V=\bigoplus_{i=1}^lV_i\iff \forall \bfv\in V,\exists!(\bfv_1,\ldots,\bfv_l)\in V_1\times\cdots\times V_l,\bfv=\sum_{i=1}^l\bfv_i.$$
+\end{definition}
+Lemma \ref{equivalence_of_direct_sum} is then generalized to
+\begin{proposition}
+    The followings are equivalent:
+    \begin{enumerate}
+        \item $\sum_{i=1}^lV_i=\bigoplus_{i=1}^lV_i$
+        \item For any $i$,
+        $V_i\cap\left( \sum_{j\neq i}V_j \right)=\{0\}$
+        \item For any bases $B_i$ of $V_i$, the union $\bigcup_iB_i$ is a basis of $\sum_iV_i$.
+    \end{enumerate}
+\end{proposition}
+\newpage
+\part*{Lecture 4}
+\section{Linear Maps}
+\subsection{Definitions and examples}
+\begin{definition}[Linear Map]
+    Let $V,W$ are vector spaces over $\bbF$, a function $\alpha:V\to W$ is \textit{linear} if for any $\lambda_1,\lambda_2\in \bbF$ and $\bfv_1,\bfv_2\in V$,
+    $$\alpha(\lambda_1\bfv_1+\lambda_2\bfv_2)=\lambda_1\alpha(\bfv_1)+\lambda_2\alpha(\bfv_2).$$
+\end{definition}
+\begin{example}
+    \begin{enumerate}
+        \item Let $M$ be an $m\times n$ matrix, then $\alpha:\mathbb R^n\to\mathbb R^m$ via $x\mapsto Mx$ is a linear map.
+        \item The functional $\alpha:C([0,1])\to C([0,1])$ via
+        $$\alpha[f](x)=\int_0^xf(t)\,\mathrm dt$$
+        is a linear map.
+        \item Fix $x\in[a,b]$, then the evaluation map $\alpha:C([a,b])\to\mathbb R$ via $f\mapsto f(x)$ is a linear map.
+    \end{enumerate}
+\end{example}
+\begin{remark}
+    The identity map is a linear map.
+    Composition of linear maps is also a linear map.
+\end{remark}
+\begin{lemma}
+    Let $V,W$ be vector spaces over $\bbF$ and $B$ a basis for $V$.
+    Let $\alpha_0:B\to W$ be a function, then there is a unique linear map $\alpha:V\to W$ that extends $\alpha_0$. i.e. $\exists \text{ linear }\alpha, \forall\bfv\in B, \alpha_0(\bfv)=\alpha(\bfv) $.
+\end{lemma}
+\begin{proof}
+    For any $(\bfb_i)\in B$, necessarily $\alpha\left(\sum_i\lambda_i\bfb_i\right)=\sum_i\lambda\alpha_0(\bfb_i)$.
+    This is sufficient.
+\end{proof}
+\begin{remark}
+    This lemma is true for infinite dimensional vector spaces as well.
+    Often, to define linear map, we often just define its values on a basis and extend it by this lemma.
+\end{remark}
+\begin{corollary}
+    Two linear maps that agree on a basis are the same.
+\end{corollary}
+\begin{definition}
+    Let $V,W$ be vector spaces over $\bbF$.
+    A linear bijection $\alpha:V\to W$ is an \textit{isomorphism} (of vector spaces).
+    If such a map exists, then we say $V,W$ are isomorphic (as vector spaces), written as $V\cong W$.
+\end{definition}
+\begin{remark}
+    If $\alpha$ is an isomorphism, so is $\alpha^{-1}$.
+\end{remark}
+\begin{lemma}
+    $\cong$ is an equivalence relation on the class of all vector spaces over $\bbF$.
+\end{lemma}
+\begin{proof}
+    $i:V\to V$ is an isomorphism so $ V \cong V $. If $ \alpha:V\to W $ is an isomorphism then so is $ \alpha^{-1} $, and hence $ V \cong W \Rightarrow W \cong V $. If $ \beta:U\to V,\alpha:V\to W $ are isomorphisms, then $ \beta\circ \alpha:U\to W $ is an isomorphism and thus $ U \cong V \land V \cong W \Rightarrow U \cong W $. Hence it is an equivalence relation.
+\end{proof}
+\begin{theorem}
+    If $V$ is a vector space over $\bbF$ of dimension $n$, then $V\cong \bbF^n$.
+\end{theorem}
+\begin{proof}
+    Take a basis $\{\bfb_1,\ldots,\bfb_n\}$ of $V$, then $ \alpha:V\to \bbF^n $, defined by
+    $$\alpha(x_1\bfb_1+\cdots+x_n\bfb_n)=(x_1,\ldots,x_n)^\top$$
+    is an isomorphism.
+\end{proof}
+\begin{remark}
+    Choosing a basis of $V$ is then just equivalent to choosing an isomorphism from $V$ to $\bbF^n$.
+\end{remark}
+\begin{theorem}
+    Let $V,W$ be finite dimensional vector spaces over $\bbF$.
+    Then $V\cong W$ iff $\dim V=\dim W$.
+\end{theorem}
+\begin{proof}
+    Any basis of $V$ induces a basis of $W$ via the isomorphism, so they have the same dimension.
+    Therefore are both isomorphic to $\bbF^n$ where $n=\dim V=\dim W$.
+\end{proof}
+\begin{definition}
+    Let $\alpha:V\to W$ be a linear map.
+    We define the kernel of $\alpha$ to be $\ker\alpha=\{v\in V:\alpha(v)=0\}$ and the image to be $\operatorname{Im}\alpha=\alpha(V)=\{w\in W:\exists v\in V,\alpha(v)=w\}$.
+\end{definition}
+\begin{lemma}
+    $\ker\alpha\le V,\operatorname{Im}\alpha\le W$.
+\end{lemma}
+\begin{example}
+    Take $\alpha:C^\infty(\mathbb R)\to C^\infty(\mathbb R)$ by $\alpha(f)(t)=f^{\prime\prime}(t)+f(t)$.
+    Then $\ker\alpha$ is spanned by $t\mapsto e^t$ and $t\mapsto e^{-t}$ and $\operatorname{Im}\alpha=C^{\infty}(\mathbb R)$.
+\end{example}
+There is a similar result to first isomorphism theorem:
+\begin{theorem}
+    Let $V,W$ be vector spaces over $F$ and $\alpha:V\to W$ be linear, then $V/{\ker\alpha}\cong \operatorname{Im}(\alpha)$ via $\bfv+\ker\alpha\mapsto \alpha(\bfv)$.
+\end{theorem}
+\begin{proof}
+    Let $ \bar{\alpha} $ be the desired isomorphism(to be proved).
+
+    Firstly check that $ \bar{\alpha} $ is well-defined. Indeed, if $ \bfv+\ker \alpha=\bfv'+\ker \alpha $, then $ \bfv-\bfv'\in \ker \alpha $ and thus $ \alpha(\bfv)=\alpha(\bfv')=0 $.
+
+    Next show that $ \bar{\alpha} $ is a bijection. Let $ \bar{\alpha}(\bfv+\ker \alpha)=0 $, then $ \alpha(\bfv)=0 \Rightarrow \bfv+\ker \alpha=0+\ker \alpha $, so it is injective. Given $ \bfw\in \Im \alpha, \exists \bfv\in V $ such that $ \alpha(\bfv)=\bfw =\bar{\alpha}(\bfv+\ker \alpha)$, so it is surjective and hence bijective.
+\end{proof}
+\begin{definition}
+    The rank of $\alpha:V\to W$ is $\rank(\alpha)=\dim\operatorname{Im}\alpha$ and nullity is $\nullity(\alpha)=\dim\ker\alpha$.
+\end{definition}
+Hence in the finite dimensional case, we can rewrite the preceding theorem to get
+\begin{theorem}[Rank-Nullity Theorem]
+    Let $\alpha:V\to W$ be linear where $V$ is finite dimensional.
+    Then $\dim V=\rank(\alpha)+\nullity(\alpha)$.
+\end{theorem}
+\begin{proof}
+    Since $ V/{\ker\alpha}\cong \operatorname{Im}(\alpha) $, we have 
+    \begin{align*}
+        & \dim (U/\ker \alpha)=\dim (\Im \alpha)\\ 
+        \implies & \dim U-\dim \ker \alpha=\dim \Im \alpha\\ 
+        \implies & \dim U = \rank \alpha+ \nullity \alpha.\qedhere
+    \end{align*}
+\end{proof}
+\begin{corollary}[Classification of Isomorphism]
+    Let $V,W$ be finite dimensional vector spaces with $\dim V=\dim W$ and $\alpha:V\to W$ be linear, then the followings are equivalent:
+    \begin{enumerate}[(i)]
+        \item $\alpha$ is injective.
+        \item $\alpha$ is surjective.
+        \item $\alpha$ is an isomorphism.
+    \end{enumerate}
+\end{corollary}
+\begin{example}
+    Consider
+    $$V=\left\{ \begin{pmatrix}
+        x\\
+        y\\
+        z
+    \end{pmatrix}\in\mathbb R^3:x+y+z=0\right\}$$
+    We want to compute $\dim V$.
+    Consider $\alpha:\mathbb R^3\to\mathbb R$ via $(x,y,z)^\top\mapsto x+y+z$, then $r(\alpha)=1$ and $n(\alpha)=V$, so $\dim V=3-1=2$.
+    Geometrically, $V$ is just a plane with normal $(1,1,1)^\top$.
+\end{example}
 \end{document}

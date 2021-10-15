@@ -76,9 +76,9 @@ The aim is to define $f_{n} \rightarrow f$ for functions $f_{n}$ and $f$.
 
 \begin{example}
 \begin{enumerate}
-    \item $f_{n}(x)=x^{2} \cdot \mathrm{e}^{-n x}$ for $x \in[0, \infty)$, and $n \in \mathbb{N}$. We saw that $f_{n} \rightarrow f=0$ pointwise on $[0, \infty)$.
+    \item $f_{n}(x)=x^{2} \cdot e^{-n x}$ for $x \in[0, \infty)$, and $n \in \mathbb{N}$. We saw that $f_{n} \rightarrow f=0$ pointwise on $[0, \infty)$.
     \[
-    0 \leqslant f_{n}(x)=\frac{x^{2}}{e^{n x}}=\frac{x^{2}}{1+n x+\frac{n^{2} x^{2}}{2}+\ldots} \leqslant \frac{x^{2}}{n x}=\frac{x}{n}
+    0 \leqslant f_{n}(x)=\frac{x^{2}}{e^{n x}}=\frac{x^{2}}{1+n x+\frac{n^{2} x^{2}}{2}+\ldots} \leqslant \frac{2}{n^2}
     \]
     Thus,
     \[
@@ -180,7 +180,7 @@ U_{\mathcal{D}}(f)-L_{\mathcal{D}}(f)=\sum_{k=1}^{n}\left(x_{k}-x_{k-1}\right)\l
 \]
 An easy exercise shows that for an interval $I \subset[a, b]$ we have
 \[
-\sup _{I} f-\inf _{I} f=\sup _{x, y \in I}(f(x)-f(y))=\sup _{x, y \in l}|f(x)-f(y)|
+\sup _{I} f-\inf _{I} f=\sup _{x, y \in I}(f(x)-f(y))=\sup _{x, y \in I}|f(x)-f(y)|
 \]
 (This quantity is sometimes called the oscillation of $f$ on $I$.)
 
@@ -192,7 +192,7 @@ An easy exercise shows that for an interval $I \subset[a, b]$ we have
 \end{theorem}
 \begin{proof}
     We are going to prove that $f$ is bounded and that it satisfies Riemann's criterion. By definition of integrability, each $f_{n}$ is bounded, and hence so is $f$ by Lemma \ref{lemma 2}.
-    Next, fix $\varepsilon>0$. Since $f_{n} \rightarrow f$ uniformly on $[a, b]$, we can fix $n \in \mathbb{N}$ so that $\left|f_{n}(x)-f(x)\right|<\varepsilon$ for all $x \in[a, b]$. Since $f_{n}$ is integrable, it satisfies Riemann's criterion, so there is a dissection $\mathcal{D}$ of $[a, b]$ such $U_{\mathcal{D}}\left(f_{n}\right)-L_{\mathcal{D}}\left(f_{n}\right)<\varepsilon$. If $I$ is one of the sub-intervals of $\mathcal{D}$, then for any $x, y \in I$ we have
+    Next, fix $\varepsilon>0$. Since $f_{n} \rightarrow f$ uniformly on $[a, b]$, we can fix $n \in \mathbb{N}$ so that $\left|f_{n}(x)-f(x)\right|<\varepsilon$ for all $x \in[a, b]$. Since $f_{n}$ is integrable, it satisfies Riemann's criterion, so there is a dissection $\mathcal{D}$ of $[a, b]$ such that $U_{\mathcal{D}}\left(f_{n}\right)-L_{\mathcal{D}}\left(f_{n}\right)<\varepsilon$. If $I$ is one of the sub-intervals of $\mathcal{D}$, then for any $x, y \in I$ we have
     \[
     \begin{aligned}
     |f(x)-f(y)| & \leqslant\left|f(x)-f_{n}(x)\right|+\left|f_{n}(x)-f_{n}(y)\right|+\left|f_{n}(y)-f(y)\right| \\
@@ -291,4 +291,276 @@ The General Principle of Convergence (GPC): every Cauchy sequence is convergent.
 \begin{theorem}[General Principle of Uniform Convergence (GPUC)]\label{thm:6}
     If $\left(f_{n}\right)$ is a uniformly Cauchy sequence of scalar functions on a set $S$, then $\left(f_{n}\right)$ converges uniformly to some function $f$ on $S$.
 \end{theorem}
+
+\begin{proof}
+    We first show that $\left(f_{n}\right)$ converges pointwise on $S$. Fix $x \in S$. Given $\varepsilon>0$ since $\left(f_{n}\right)$ is uniformly Cauchy, there exists $N \in \mathbb{N}$ such that
+    \[
+    \forall m, n \geqslant N \quad \forall t \in S \quad\left|f_{m}(t)-f_{n}(t)\right|<\varepsilon.
+    \]
+    In particular, for all $m, n \geqslant N$, we have $\left|f_{m}(x)-f_{n}(x)\right|<\varepsilon$. Thus, $\left(f_{n}(x)\right)_{n=1}^{\infty}$ is a Cauchy sequence, and hence convergent by the GPC. Set $f(x)=\lim _{n \rightarrow \infty} f_{n}(x)$. Doing this for every $x \in S$, we obtain a function $f$ on $S$.
+    We claim that $f_{n} \rightarrow f$ uniformly on $S$. Then we will be done. 
+    
+    Given $\varepsilon>0$, since $\left(f_{n}\right)$ is uniformly Cauchy, there exists $N \in \mathbb{N}$ such that
+    \[
+    \forall m, n \geqslant N \quad \forall x \in S \quad\left|f_{m}(x)-f_{n}(x)\right|<\varepsilon.
+    \]
+    Fix $n \geqslant N$ and $x \in S$. Since $\left|f_{m}(x)-f_{n}(x)\right|<\varepsilon$ for every $m \geqslant N$, letting $m \rightarrow \infty$, we obtain $\left|f(x)-f_{n}(x)\right| \leqslant \varepsilon$. Since this holds for every $n \geqslant N$ and for every $x \in S$, we are done.
+\end{proof}
+\begin{theorem}[The Weierstrass $M$-test]\label{thm:7}
+    Let $\left(f_{n}\right)$ be a sequence of scalar functions on a set $S$. Let $\sum_{n} M_{n}$ be a convergent series of non-negative real numbers. Assume that $\left|f_{n}(x)\right| \leqslant M_{n}$ for every $x \in S$ and $n \in \mathbb{N}$. Then $\sum_{n} f_{n}(x)$ converges uniformly on $S$.
+\end{theorem}
+\begin{proof}
+    Set $F_{n}(x)=\sum_{k=1}^{n} f_{k}(x)$ for $x \in S$ and $n \in \mathbb{N}$. For $n \geqslant m$ and $x \in S$ we have
+    \[
+    \left|F_{m}(x)-F_{n}(x)\right| \leqslant\left|\sum_{k=m+1}^{n} f_{k}(x)\right| \leqslant \sum_{k=m+1}^{n}\left|f_{k}(x)\right| \leqslant \sum_{k=m+1}^{n} M_{k}
+    \]
+    Given $\varepsilon>0$, choose $N \in \mathbb{N}$ such that $\sum_{k=N}^{\infty} M_{k}<\varepsilon$. Then by the above, for every $x \in S$ and every $n \geqslant m \geqslant N$ in $\mathbb{N}$, we have
+    \[
+    \left|F_{m}(x)-F_{n}(x)\right| \leqslant \sum_{k=m+1}^{n} M_{k}<\varepsilon
+    \]
+    So $\left(F_{n}\right)$ is uniformly Cauchy, and hence uniformly convergent by Theorem \ref{thm:6}.
+\end{proof}
+Consider a power series $\sum_{n=0}^{\infty} c_{n}(z-a)^{n}$. Here $\left(c_{n}\right)_{n=0}^{\infty}$ is a complex sequence, a, $z \in \mathbb{C}$. We think of $\left(c_{n}\right)$ and $a$ as fixed, and $z$ as a variable.
+Let $R$ be the radius of convergence of this power series. This means:
+$|z-a|<R \quad \Longrightarrow \quad \sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ converges absolutely, and hence converges, $|z-a|>R \Longrightarrow \sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ diverges.
+
+Denote $D(a, R)=\{z \in \mathbb{C}:|z-a|<R\}$, the open disk of centre $a$ and radius $R$. Consider the function
+\[
+f: D(a, R)  \rightarrow \mathbb{C},\quad
+f(z) =\sum_{n=0}^{\infty} c_{n}(z-a)^{n}.
+\]
+The power series converges pointwise to $f$.
+
+Q: Does the power series converge uniformly inside the radius of convergence?
+
+A: In general, NO.
+
+\begin{example}
+\begin{enumerate}
+    \item $\sum_{n=1}^{\infty} \frac{z^{n}}{n^{2}}$ for $|z|<1$
+    Consider $f_{n}: D(0,1) \rightarrow \mathbb{C}$ define by $f_{n}(z)=z^{n} / n^{2}$. Note that $\left|f_{n}(z)\right| \leqslant 1 / n^{2}$ for all $|z|<1$. Moreover, $\sum_{n=1}^{\infty} \frac{1}{n^{2}}$ converges. Hence by the Weierstrass $M$-test, the power series converges uniformly on $D(0,1)$.
+    
+    \item $\sum_{n=0}^{\infty} z^{n}=\frac{1}{1-z}$ for $|z|<1$.
+    $\left|\sum_{n=0}^{N} z^{n}\right| \leqslant N+1$ for $|z|<1$ and $N \in \mathbb{N} .$ So the partial sum functions are bounded on $D(0,1)$. However, $\frac{1}{1-z}$ is not bounded on $D(0,1)$. By Lemma \ref{lemma 2}, the convergence cannot be uniform on $D(0,1)$.
+    Alternatively,
+    \[
+    \sup _{|z|<1}\left|\sum_{n=0}^{N} z^{n}-\frac{1}{1-z}\right|=\sup _{|z|<1}\left|\frac{z^{N+1}}{1-z}\right|=\infty.
+    \]
+\end{enumerate}
+\end{example}
+\begin{theorem}\label{thm:8}
+    Let $\sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ be a power series with radius of convergence $R$. Then for any $r$ with $0<r<R$, the power series $\sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ converges uniformly on $D(a, r)=\{z \in \mathbb{C}:|z-a|<r\}$
+\end{theorem}
+\begin{proof}
+    Fix $w \in D(a, R)$ with $r<|w-a|<R$. (E.g., $\left.w=a+\frac{r+R}{2} .\right)$ Set $\rho=\frac{r}{|w-a|}$. Since $\sum_{n=0}^{\infty} c_{n}(w-a)^{n}$ converges, we must have $c_{n}(w-a)^{n} \rightarrow 0$ as $n \rightarrow \infty$. It follows that the sequence $\left(c_{n}(w-a)^{n}\right)_{n=0}^{\infty}$ is bounded. Thus, there exists $M \geqslant 0$ such that $\left|c_{n}(w-a)^{n}\right| \leqslant M$ for all $n \geqslant 0$. Now, for any $z \in D(a, r)$ and $n \in \mathbb{N}$, we have
+    \[
+    \left|c_{n}(z-a)^{n}\right|=\left|c_{n}(w-a)^{n}\right| \cdot\left|\frac{(z-a)^{n}}{(w-a)^{n}}\right| \leqslant M \frac{r^{n}}{|(w-a)|^{n}}=M \rho^{n}
+    \]
+    Since $\sum_{n=0}^{\infty} M \rho^{n}$ converges, by Theorem \ref{thm:7}(the Weierstrass $M$-test) the power series $\sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ converges uniformly on $D(a, r)=\{z \in \mathbb{C}:|z-a|<r\}$.
+\end{proof}
+\begin{remark}
+    \begin{enumerate}
+        \item The function $f: D(a, R) \rightarrow \mathbb{C}, f(z)=\sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ is continuous on $D(a, r)$ for any $0<r<R$ being the uniform limit of continuous functions (polynomials). This is by Theorem \ref{thm:1}. Since $D(a, R)=\bigcup_{0<r<R} D(a, r), f$ is continuous on $D(a, R)$.
+        
+        \item  The power series $\sum_{n=1}^{\infty} c_{n} n(z-a)^{n-1}$ also has radius of convergence $R$ (from Analysis I). Hence it converges uniformly on $D(a, r)$ for any $0<r<R$. By an analogue of Theorem \ref{thm:5} we can deduce that $f$ is complex differentiable on $D(a, R)$ and
+        \[
+        f^{\prime}(z)=\frac{\mathrm{d}}{\mathrm{d} z}\left(\sum_{n=0}^{\infty} c_{n}(z-a)^{n}\right)=\sum_{n=1}^{\infty} c_{n} n(z-a)^{n-1}
+        \]
+        See Complex Analysis.
+    
+        \item Given $w \in D(a, R)$, fix $r$ with $|w-a|<r<R$ and $\delta>0$ with $|w-a|+\delta<r$. Then $D(w, \delta) \subset D(a, r) .$ Indeed, given $z \in D(w, \delta)$,
+        \[
+        |z-a| \leqslant|z-w|+|w-a|<\delta+|w-a|<r
+        \]
+        So $z \in D(a, r)$. It follows that the power series $\sum_{n=0}^{\infty} c_{n}(z-a)^{n}$ converges uniformly on $D(w, \delta)$.
+    \end{enumerate}
+\end{remark}
+\begin{definition}
+    A subset $U$ of $\mathbb{C}$ is open if for every $w \in U$ there is a $\delta>0$ such that $D(w, \delta) \subset U$
+\end{definition}
+
+\begin{definition}
+    Let $U$ be an open subset of $\mathbb{C}$. A sequence $\left(f_{n}\right)$ of scalar functions on $U$ converges \textit{locally uniformly} on $U$ if for every $w \in U$ there is a $\delta>0$ such that $D(w, \delta) \subset U$ and $f_{n} \rightarrow f$ uniformly on $D(w, \delta)$
+\end{definition}
+
+\begin{remark}
+    \begin{enumerate}
+        \item We will return to this concept after covering compactness.
+        \item Above we proved that a power series converges locally uniformly inside the radius of convergence.
+    \end{enumerate}
+\end{remark}
+\newpage
+\part*{Lecture 4}
+\subsection{Uniform Continuity}
+We next turn to the topic of Uniform Continuity. We begin by recalling the notion of continuity from Analysis $I$.
+Let $U$ be a subset of $\mathbb{R}$ or $\mathbb{C}$ and let $f$ be a scalar function on $U$. For $x \in U$, we say $f$ is continuous at $x$ if
+\[
+\forall \varepsilon>0 \quad \exists \delta>0 \quad \forall y \in U \quad|y-x|<\delta \Longrightarrow|f(y)-f(x)|<\varepsilon.
+\]
+We say $f$ is continuous on $U$ if $f$ is continuous at $x$ for every $x \in U$, i.e.,
+\[
+    \forall x \in U \quad \forall \varepsilon>0 \quad \exists \delta>0 \quad \forall y \in U \quad|y-x|<\delta \Longrightarrow|f(y)-f(x)|<\varepsilon.
+\]
+\begin{note}
+    $\delta$ depends on $\varepsilon$ and on $x$.
+\end{note}
+
+\begin{definition}
+    Let $U$ be a subset of $\mathbb{R}$ or $\mathbb{C}$ and let $f$ be a scalar function on $U$. We say $f$ is uniformly continuous on $U$ if
+\[
+\forall \varepsilon>0 \quad \exists \delta>0 \quad \forall x, y \in U \quad|y-x|<\delta \Longrightarrow|f(y)-f(x)|<\varepsilon
+\]
+\end{definition}
+
+\begin{note}
+    $\delta$ depends only on $\varepsilon$. So uniform continuity implies continuity.
+\end{note}
+
+\begin{example}
+    \begin{enumerate}
+        \item Consider $f: \mathbb{R} \rightarrow \mathbb{R}, f(x)=2x+17$. Given $\varepsilon>0$, set $\delta=\varepsilon / 2$. Then for every $x, y \in \mathbb{R}$, if $|x-y|<\delta$, then
+        \[
+        |f(x)-f(y)|=2|x-y|<2 \delta=\varepsilon
+        \]
+        So $f$ is uniformly continuous on $\mathbb{R}$.
+        \item Consider $f: \mathbb{R} \rightarrow \mathbb{R}, f(x)=x^{2}$. Given $\varepsilon=1$, we try to find $\delta>0$ that works. Consider any $x>0$ and $y=x+\frac{\delta}{2}$. Then $|x-y|=\delta / 2<\delta$ and
+        \[
+        |f(x)-f(y)|=(x+\delta / 2)^{2}-x^{2}=x \delta+\delta^{2} / 4
+        \]
+        So for any $\delta>0$, if $x=1 / \delta$ and $y=x+\delta / 2$, then $|x-y|<\delta$ but $|f(x)-f(y)|>\varepsilon$. So $f$ is not uniformly continuous, but $f$ is continuous on $\mathbb{R}$.
+    \end{enumerate}
+\end{example}
+
+\begin{note}
+    A function $f$ on a subset $U$ of $\mathbb{R}$ or $\mathbb{C}$ is NOT uniformly continuous if
+    \[
+        \forall \varepsilon>0 \quad \exists \delta>0 \quad \forall x, y \in U \quad|x-y|<\delta \Longrightarrow|f(x)-f(y)|<\varepsilon
+    \]
+    is FALSE, that is
+    \[
+        \exists \varepsilon>0 \quad \forall \delta>0 \quad \exists x, y \in U \quad|x-y|<\delta \text{ and }|f(x)-f(y)| \geqslant \varepsilon
+    \]
+\end{note}
+\begin{theorem}\label{thm:9}
+    Let $f$ be a scalar function on a closed, bounded interval $[a, b]$. If $f$ is continuous on $[a, b]$, then $f$ is uniformly continuous on $[a, b]$. 
+\end{theorem}
+One idea: Let $\varepsilon>0$. For each $x \in[a, b]$ there is a $\delta_{x}>0$ such that if $|y-x|<\delta_{x}$ then $|f(y)-f(x)|<\varepsilon$. We want to take $\delta=\inf _{x} \delta_{x} .$ We might have $\delta=0$. Instead, we work indirectly: argue by contradiction.
+\begin{proof}
+    Assume there is an $\varepsilon>0$ such that
+    \[
+        \forall \delta>0 \quad \exists x, y \in[a, b] \quad|x-y|<\delta \text{ and }|f(x)-f(y)| \geqslant \varepsilon
+    \]
+    In particular, for every $n \in \mathbb{N}$, there exist $x_{n}, y_{n} \in[a, b]$ such that $\left|x_{n}-y_{n}\right|<1 / n$ and $\left|f\left(x_{n}\right)-f\left(y_{n}\right)\right| \geqslant \varepsilon$. By Bolzano-Weierstrass there is a subsequence $\left(x_{k_{n}}\right)_{n}$ of $\left(x_{n}\right)$ that converges to some $x \in[a, b]$. Then
+    \[
+    \left|y_{k_{n}}-x\right| \leqslant\left|y_{k_{n}}-x_{k_{n}}\right|+\left|x_{k_{n}}-x\right| \leqslant 1 / n+\left|x_{k_{n}}-x\right| \rightarrow 0
+    \]
+    Since $f$ is continuous at $x, f\left(x_{k_{n}}\right) \rightarrow f(x)$ and $f\left(y_{k_{n}}\right) \rightarrow f(x)$. Hence $\varepsilon \leqslant\left|f\left(x_{k_{n}}\right)-f\left(y_{k_{n}}\right)\right| \rightarrow|f(x)-f(x)|=0$, which is a contradiction.
+\end{proof}
+\begin{corollary}\label{col:10}
+    Let $f:[a, b] \rightarrow \mathbb{R}$ be a continuous function. Then $f$ is integrable.
+\end{corollary}
+\begin{proof}
+    $f$ is bounded since it is continuous on the closed bounded interval $[a, b]$. It remains to verify Riemann's criterion.
+
+    Given $\varepsilon>0$, since $f$ is uniformly continuous by Theorem \ref{thm:9}, there is a $\delta>0$ such that $|f(x)-f(y)|<\varepsilon$ whenever $|x-y|<\delta$.
+    
+    Next, choose a dissection $\mathcal{D}$ of $[a, b]$ such that every subinterval of $\mathcal{D}$ has length strictly less than $\delta$. (E.g. choose $n$ with $\frac{b-a}{n}<\delta$ and let $\mathcal{D}$ consist of $a+k \frac{b-a}{n}, k=0,1, \ldots, n$.) If $I$ is a subinterval of $\mathcal{D}$, then for all $x, y \in I$, we have $|x-y|<\delta$, and hence $|f(x)-f(y)|<\varepsilon$. It follows that
+    \[
+    \sup _{1} f-\inf _{1} f=\underset{x, y \in I}{\sup }|f(x)-f(y)| \leqslant \varepsilon
+    \]
+    Multiplying both sides by the length of $I$, and summing over all $I$, we obtain
+    \[
+    U_{\mathcal{D}}(f)-L_{\mathcal{D}}(f) \leqslant(b-a) \varepsilon.\qedhere
+    \]
+\end{proof}
+
+\section{Metric Spaces}
+In $\mathbb{R}$ or $\mathbb{C}$, we measure the ``closeness'' of points $x$ and $y$ by the expression $|x-y|$. A frequently used property of this ``distance'' is the triangle-inequality. We will now generalize this concept.
+
+\begin{definition}
+    Let $M$ be a set. A \textit{metric} on $M$ is a function $d: M \times M \rightarrow \mathbb{R}$ satisfying
+    \begin{enumerate}[(i)]
+        \item $\forall x, y \in M, d(x, y) \geqslant 0$ and $d(x, y)=0 \Longleftrightarrow x=y$\hfill (positivity)
+        \item $\forall x, y \in M, d(x, y)=d(y, x)$\hfill (symmetry)
+        \item $\forall x, y, z \in M, d(x, z) \leqslant d(x, y)+d(y, z)$\hfill(triangle-inequality)
+    \end{enumerate}
+    A \textit{metric space} is a pair $(M, d)$, where $M$ is a set and $d$ is a metric on $M$.
+\end{definition}
+\begin{example}
+    \begin{enumerate}
+        \item $M=\mathbb{R}$ or $\mathbb{C},\ d(x, y)=|x-y|$. We refer to this as the usual metric on $M$ and will always be used unless otherwise stated.
+        \item $M=\mathbb{R}^{n}$ or $\mathbb{C}^{n} .$ We define the euclidean norm or euclidean length of a vector $x \in M$ by
+        \[
+        \|x\|=\|x\|_{2}=\left(\sum_{k=1}^{n}\left|x_{k}\right|^{2}\right)^{1 / 2}
+        \]
+        This satisfies the inequality $\|x+y\| \leqslant\|x\|+\|y\|$. It follows that
+        \[
+        d(x, y)=d_{2}(x, y)=\|x-y\|=\left(\sum_{k=1}^{n}\left|x_{k}-y_{k}\right|^{2}\right)^{1 / 2}
+        \]
+        defines a metric on $M$ called the euclidean metric. E.g. we check the triangle-inequality:
+        \[
+        d(a, c)=\|a-c\|=\|a-b+b-c\| \leqslant\|a-b\|+\|b-c\|=d(a, b)+d(b, c).
+        \]
+        The resulting metric space $(M, d)$ is called $n$-dimensional real or complex Euclidean space. $M$ will always be equipped with the Euclidean metric unless otherwise stated. The metric space $(M, d)$ is sometimes denoted by $\ell_{2}^{n}$ and $d_{2}$ is also called the $\ell_{2}$-metric, and $\|\cdot\|_{2}$ is also called $\ell_{2}$-norm.
+        \item $M=\mathbb{R}^{n}$ or $\mathbb{C}^{n} .$ We define the $\ell_{1}$-norm of a vector $x \in M$ by
+        \[
+        \|x\|_{1}=\sum_{k=1}^{n}\left|x_{k}\right|
+        \]
+        and the corresponding metric, called the $\ell_{1}$-metric, is given by
+        \[
+        d_{1}(x, y)=\|x-y\|_{1}=\sum_{k=1}^{n}\left|x_{k}-y_{k}\right|
+        \]
+        The metric space $\left(M, d_{1}\right)$ is denoted by $\ell_{1}^{n}$. It is not hard to see how to generalize this further. For any $1 \leqslant p<\infty$ one can define the $\ell_{p}$-norm by
+        \[
+        \|x\|_{p}=\left(\sum_{k=1}^{n}\left|x_{k}\right|^{p}\right)^{1 / p}
+        \]
+        and the corresponding $\ell_{p}$-metric by $d_{p}(x, y)=\|x-y\|_{p} .$ In this course, we will only deal with $p=1,2$. (For the general case, see Part II Linear Analysis).
+
+        Question: How about $p=\infty ?$
+        \item Letting $p \rightarrow \infty$ in the previous example leads to the $\ell_{\infty}$-norm and to the $\ell_{\infty}$-metric on $M=\mathbb{R}^{n}$ or $\mathbb{C}^{n}:$
+        \[
+        \|x\|_{\infty}=\max _{1 \leqslant k \leqslant n}\left|x_{k}\right|\quad \text {and}\quad d_{\infty}(x, y)=\|x-y\|_{\infty}=\max _{1 \leqslant k \leqslant n}\left|x_{k}-y_{k}\right|
+        \]
+        The metric space $\left(M, d_{\infty}\right)$ is denoted by $\ell_{\infty}^{n}$.
+        \item Let $S$ be a set. We denote by $\ell_{\infty}(S)$ the set of all bounded scalar functions on $S$. We define the $\ell_{\infty}$-norm (or uniform norm, or sup norm) of a function $f \in \ell_{\infty}(S)$ by
+        \[
+        \|f\|=\|f\|_{\infty}=\sup \{|f(x)|: x \in S\}
+        \]
+        (The sup exists since $f$ is bounded: $\exists C \geqslant 0, \forall x \in S,|f(x)| \leqslant C$.) Note that for $f, g \in \ell_{\infty}(S)$ and for any $x \in S$, we have
+        \[
+        |f(x)+g(x)| \leqslant|f(x)|+|g(x)| \leqslant\|f\|+\|g\|
+        \]
+        and hence $\|f+g\| \leqslant\|f\|+\|g\|$. It follows that $d(f, g)=\|f-g\|_{\infty}$ defines a metric, called the uniform metric (or $\ell_{\infty}$-metric) on $\ell_{\infty}(S)$.
+        
+        Note that $\ell_{\infty}^{n}=\ell_{\infty}(\{1,2, \ldots, n\})$. Also, $\ell_{\infty}(\mathbb{N})$ is often denoted simply $\ell_{\infty}$. This is the space of bounded scalar sequences.
+        \item $C[a, b]$ denotes the space of continuous scalar functions on the closed bounded interval $[a, b]$. Let $p=1$ or 2 . We define the $L_{p}$-norm on $C[a, b]$ by
+        \[
+        \|f\|_{p}=\left(\int_{a}^{b}|f(t)|^{p} \mathrm{~d} t\right)^{1 / p} \quad(f \in C[a, b])
+        \]
+        The corresponding metric $d_{p}(f, g)=\|f-g\|_{p}$ is the $L_{p}$-metric on $C[a, b]$. E.g., for $f, g \in C[a, b]$ we have
+        \[
+        \|f+g\|_{1}=\int_{a}^{b}|f+g| \leqslant \int_{a}^{b}|f|+|g|=\int_{a}^{b}|f|+\int_{a}^{b}|g|=\|f\|_{1}+\|g\|_{1}
+        \]
+        which implies the triangle-inequality for $d_{1}$.
+        \item Let $M$ be any set. For $x, y \in M$ we define
+        \[
+        d(x, y)= \begin{cases}0 & \text { if } x=y \\ 1 & \text { if } x \neq y\end{cases}
+        \]
+        This is called the discrete metric on $M$ and $(M, d)$ is a discrete metric space.
+        \item Let $G$ be a group generated by $S \subset G$. Then
+        \[
+        d(x, y)=\min \left\{n: \exists s_{1}, \ldots, s_{n} \in S y=x s_{1} s_{2} \ldots s_{n}\right\}
+        \]
+        is a metric on $G$ (Geometric Group Theory).
+        \item Fix a prime $p$ in $\mathbb{Z}$. For $x, y \in \mathbb{Z}$ write $x-y=p^{n} m$ where $m, n \in \mathbb{Z}, n \geqslant 0$ and $p \nmid m$; then define
+        \[
+        d(x, y)= \begin{cases}0 & \text { if } x=y \\ p^{-n} & \text { if } x \neq y\end{cases}
+        \]
+        This is called the $p$-adic metric (Number Theory). This is in fact an ultrametric which means that for any $x, y, z$ the following holds:
+        \[
+        d(x, z) \leqslant \max \{d(x, y), d(y, z)\}
+        \]
+        which implies the triangle-inequality. A set equipped with an ultrametric is called an ultrametric space.
+    \end{enumerate}
+\end{example}
 \end{document}
