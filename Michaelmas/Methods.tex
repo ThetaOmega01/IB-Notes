@@ -2,6 +2,7 @@
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\triposcourse}{Methods}
 \input{../header.tex}
+\counterwithin{equation}{section}
 \graphicspath{ {./images/} }
 \pgfplotsset{compat=1.17}
 \begin{document}
@@ -37,37 +38,39 @@ Define an inner product of the set
 \end{proposition}
 \begin{proof}
     Check that
-    \[
-        \langle h_n,h_m \rangle = \begin{cases}
+    \begin{align}
+        &\langle h_n,h_m \rangle = \begin{cases}
             L\delta_{nm} &\forall n,m\neq 0\\
             0 & m=0 \lor n=0\\
-            \end{cases} \quad
-            \langle g_n,g_m \rangle = \begin{cases}
+            \end{cases} \\
+            &\langle g_n,g_m \rangle = \begin{cases}
             L \delta_{mn} &n,m\neq 0\\
             2L \delta_{0n} & m=0\\
-            \end{cases} \quad
-            \langle h_n,g_m \rangle =0.
-    \]
+            \end{cases} \\
+            &\langle h_n,g_m \rangle =0
+    \end{align}
 \end{proof}
 $g_n,h_n$ form a complete orthogonal set, i.e. they span the space of well-behaved periodic functions $ [0,2L) $ and they are linearly independent.
 
 \subsection{Definition of Fourier series}
 We can express any well-behaved periodic function of period 2L as 
-\[
-    f(x) = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right)\tag{$*$}
-\]
+\begin{equation}\label{1.eq.4:FS}
+    f(x) = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right)
+\end{equation}
 where $a_n,b_n$ are constants such that RHS is convergent for all $x$ where $f$ is continuous. At a discontinuity $x$, the Fourier series approaches the midpoint of upper and lower limits at $x$, i.e. 
 \[
     \frac{f(x_+)+f(x_-)}{2} = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right).
 \]
-Consider $ \langle h_n,f \rangle  $ and substitute in ($ * $), we get 
+Consider $ \langle h_n,f \rangle  $ and substitute in (1.4), we get 
 \[
     \int_{0}^{2L} \sin \left( \frac{n \pi x}{L} \right) f(x) \,\mathrm{d}x = \sum_{m=1}^{\infty}Lb_m \delta_{nm} = Lb_n.
 \]
 Similar for $a_n$. We get
-\[
-    b_{n}=\frac{1}{L} \int_{0}^{2 L} f(x) \sin \left(\frac{n \pi x}{L}\right)\, \rmd x,\quad a_n = \frac{1}{L}\int_{0}^{2L} f(x) \cos \left( \frac{n \pi x}{L} \right) \,\mathrm{d}x.
-\]
+\begin{equation}
+    \begin{aligned}
+        &b_{n}=\frac{1}{L} \int_{0}^{2 L} f(x) \sin \left(\frac{n \pi x}{L}\right)\, \rmd x\\ &a_n = \frac{1}{L}\int_{0}^{2L} f(x) \cos \left( \frac{n \pi x}{L} \right) \,\mathrm{d}x
+    \end{aligned}
+\end{equation}
 \begin{note}
     \begin{enumerate}
         \item $a_n$ includes $n=0$ since $ \frac{1}{2}a_0 $ is the average of $f$, i.e.
@@ -89,9 +92,9 @@ Similar for $a_n$. We get
         b_n &= \frac{2}{L} \int_{0}^{L} x\cdot \sin \left( \frac{n\pi x}{L} \right) \,\mathrm{d}x = \frac{2L}{n\pi }(-1)^{n+1}.
     \end{align*}
     So the Fourier series is 
-    \[
+    \begin{equation}
         f(x) = \frac{2L}{\pi } \sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin \left( \frac{n\pi x}{L} \right).
-    \]
+    \end{equation}
 \end{example}
 \begin{note}
     As $n\to \infty$ in Fourier series,
@@ -136,7 +139,9 @@ Perhaps unsurprisingly, it depends on the smoothness of the function.
         \end{cases}$$
         That extends periodically with period $2$.
         Then it has a Fourier series
-        $$4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{(2m-1)\pi}$$
+        \begin{equation}
+            f(x)=4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{(2m-1)\pi}
+        \end{equation}
         which, as one can see both from the preceding theorem (with $p=0$) and observation, converges slowly.
         \item Consider the general ``see-saw'' wave
         $$f(x)=\begin{cases}
@@ -145,14 +150,18 @@ Perhaps unsurprisingly, it depends on the smoothness of the function.
         \end{cases}$$
         which extends as an odd periodic function with period $2$.
         This has Fourier series
-        $$2\sum_{m=1}^\infty\frac{\sin (n\pi\xi)\sin (n\pi x)}{(n\pi)^2}$$
+        \begin{equation}
+            f(x)=2\sum_{m=1}^\infty\frac{\sin (n\pi\xi)\sin (n\pi x)}{(n\pi)^2}
+        \end{equation}
         which converges with $p=1$ in the preceding theorem.
         In particular, $\xi=1/2$ gives
         $$2\sum_{m=1}^\infty(-1)^{m+1}\frac{\sin[(2m-1)\pi x]}{[(2m-1)\pi]^2}$$
         which can be seen, immediately, that it converges faster than the series in the previous example.
         \item Take $f(x)=x(1-x)/2$ for $x\in[0,1)$ that extends as an odd periodic function with period $2$.
         Then its Fourier series is
-        $$4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{[(2m-1)\pi]^3}$$
+        \begin{equation}
+            f(x)=4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{[(2m-1)\pi]^3}
+        \end{equation}
         which has $p=2$.
         \item Take $f(x)=(1-x^2)^2$, then $a_n=O(n^{-4})$.
     \end{enumerate}
@@ -189,7 +198,9 @@ This is also called the \textit{completeness relation} as the left hand side wou
 This is known as Parseval's Theorem.
 \begin{theorem}[Parseval's Theorem]\label{parseval}
     For a nice enough function $f$ with Fourier coefficients $a_n,b_n$, we have
-    $$\int_0^{2L}f(x)^2\,\mathrm dx=L\left( \frac{a_0^2}{2}+\sum_{n\ge 1}(a_n^2+b_n^2) \right)$$
+    \begin{equation}
+        \int_0^{2L}f(x)^2\,\mathrm dx=L\left( \frac{a_0^2}{2}+\sum_{n\ge 1}(a_n^2+b_n^2) \right).
+    \end{equation}
 \end{theorem}
 \begin{proof}
     Above.
@@ -205,19 +216,25 @@ This is known as Parseval's Theorem.
 \newpage
 \part*{Lecture 3}
 \subsection{Alternative Fourier Series}
+\paragraph{Fourier sines and cosines.}
 Consider a function $f:[0,L)\to\mathbb R$.
 We can extend $f$ to a periodic function of period $2L$ in two ways:
 \begin{enumerate}
     \item We can require the function to be odd, then $a_n=0$ for all $n$ and
-    $$b_n=\frac{2}{L}\int_0^Lf(x)\sin\frac{n\pi x}{L}\,\mathrm dx$$
+    \begin{equation}
+        b_n=\frac{2}{L}\int_0^Lf(x)\sin\frac{n\pi x}{L}\,\mathrm dx
+    \end{equation}
     and the Fourier series would be $\sum_{n\ge 1}b_n\sin(n\pi x/L)$, which is called a \textit{Fourier sine series}.
     The sawtooth function is an example of this.
     \item We can require the function to be even, then $b_n=0$ for all $n$ and
-    $$a_n=\frac{2}{L}\int_0^Lf(x)\cos\frac{n\pi x}{L}\,\mathrm dx$$
+    \begin{equation}
+        a_n=\frac{2}{L}\int_0^Lf(x)\cos\frac{n\pi x}{L}\,\mathrm dx
+    \end{equation}
     So the Fourier series is $a_0/2+\sum_{n\ge 1}a_n\cos(n\pi x/L)$.
     This is called a \textit{Fourier cosine series}.
     $f(x)=(1-x^2)^2$ is an example (where $L=1$).
 \end{enumerate}
+\paragraph{Complex Fourier series.}
 The actual thing we want is to represent the Fourier series more neatly in terms of exponentials.
 We know that
 $$\cos\frac{n\pi x}{L}=\frac{e^{in\pi x/L}+e^{-in\pi x/L}}{2},\sin\frac{n\pi x}{L}=\frac{e^{in\pi x/L}-e^{-in\pi x/L}}{2i}$$
@@ -227,95 +244,158 @@ $$c_m=\begin{cases}
     (a_{-m}+ib_{-m})/2&\text{for $m<0$}
 \end{cases}$$
 we obtain
-$$\frac{a_0}{2}+\sum_{n=1}^\infty a_n\cos\frac{n\pi x}{L}+\sum_{n=1}^\infty b_n\sin\frac{n\pi x}{L}=\sum_{m=-\infty}^\infty c_me^{im\pi x/L}$$
+\begin{equation}
+    f(x)=\frac{a_0}{2}+\sum_{n=1}^\infty a_n\cos\frac{n\pi x}{L}+\sum_{n=1}^\infty b_n\sin\frac{n\pi x}{L}=\sum_{m=-\infty}^\infty c_me^{im\pi x/L}
+\end{equation}
 Equivalently, if we extend our inner product to the complex functions
 $$\langle f,g\rangle=\int_{-L}^Lf(x)\overline{g(x)}\,\mathrm dx$$
-Then $\langle e^{im\pi x/L},e^{in\pi x/L}\rangle=2L\delta_{mn}$, which means they are orthogonal as well and we can then obtain
-$$c_m=\frac{1}{2L}\langle f(x),e^{im\pi x/L}\rangle=\frac{1}{2L}\int_{-L}^Lf(x)e^{-im\pi x/L}\,\mathrm dx$$
+then we obtain
+\begin{equation}
+    c_m=\frac{1}{2L}\langle f(x),e^{im\pi x/L}\rangle=\frac{1}{2L}\int_{-L}^Lf(x)e^{-im\pi x/L}\,\mathrm dx
+\end{equation}
+because of orthogonality
+\begin{equation}
+    \langle e^{im\pi x/L},e^{in\pi x/L}\rangle= \int_{-L}^{L} e^{-im\pi x/L}e^{in\pi x/L} \,\mathrm{d}x=2L\delta_{mn}
+\end{equation}
 By thinking them as a set of basis of a space of nice-enough functions in the way we did for $\sin$ and $\cos$.
 Parseval's Theorem can then be stated as
 $$\int_{-L}^L|f(x)|^2\,\mathrm dx=2L\sum_{n=-\infty}^\infty|c_n|^2$$
 \subsection{Some Motivations of Fourier Series}
 \begin{definition}
     The complex inner product $\langle\cdot\rangle:\mathbb C^N\times\mathbb C^N\to\mathbb C$ is defined by
-    $$\langle\mathbf{u},\mathbf{v}\rangle=\mathbf{u}^\dagger\mathbf{v}$$
+    \begin{equation}
+        \langle\mathbf{u},\mathbf{v}\rangle=\mathbf{u}^\dagger\mathbf{v}
+    \end{equation}
 \end{definition}
-An $N\times N$  matrix $A$ is self-adjoint (or Hermitian) if
-$$\forall\mathbf{u},\mathbf{v}\in\mathbb C^N,\langle A\mathbf{u},\mathbf{v}\rangle=\langle\mathbf{u},A\mathbf{v}\rangle.$$
+\begin{definition}
+    An $N\times N$  matrix $A$ is \textit{self-adjoint} (or \textit{Hermitian}) if
+    $$\forall\mathbf{u},\mathbf{v}\in\mathbb C^N,\langle A\mathbf{u},\mathbf{v}\rangle=\langle\mathbf{u},A\mathbf{v}\rangle.$$
+\end{definition}
 One can show that this is just saying $A^\dagger=A$.
-It can be shown that $A$ satisfies:
-\begin{enumerate}
-    \item All eigenvalues are real for all $n$.
-    \item Eigenvectors associated with different eigenvalues are orthogonal with respect to $\langle\cdot\rangle$.
-    \item We can rescale to make an orthonormal basis of $\mathbb C^N$ of eigenvectors $\{\mathbf{v}_1,\ldots,\mathbf{v}_N\}$.
-\end{enumerate}
-
-Now, given any $\mathbf{b}$, if we want to solve for $\mathbf{x}$ in $A\mathbf{x}=\mathbf{b}$, then a way to do it is to express $\mathbf{b}=\sum_nb_n\mathbf{v}_n$ and observe that if $\sum_nc_n\mathbf{v}_n$ is a solution then
+It can be shown that
+\begin{proposition}
+    Let $A$ be a self-adjoint matrix. Then the eigenvalues $ \lambda_n $ and eigenvectors $ \bfv_n $ satisfy
+    \begin{equation}
+        A \bfv_n=\lambda_n\bfv_n
+    \end{equation}
+    and hence the followings hold:
+    \begin{enumerate}[(i).]
+        \item All eigenvalues are real for all $n$.
+        \item Eigenvectors associated with different eigenvalues are orthogonal with respect to $\langle\cdot\rangle$.
+        \item We can rescale to make an orthonormal basis of $\mathbb C^N$ of eigenvectors $\{\mathbf{v}_1,\ldots,\mathbf{v}_N\}$.
+    \end{enumerate}
+\end{proposition}
+\paragraph{Recap of solving linear equations.}
+Now, given any $\mathbf{b}$, if we want to solve for $\mathbf{x}$ in
+\begin{equation}
+    A\mathbf{x}=\mathbf{b}
+\end{equation}
+then a way to do it is to express $\mathbf{b}=\sum_nb_n\mathbf{v}_n$ and observe that if $\sum_nc_n\mathbf{v}_n$ is a solution then
 $$\sum_nb_n\mathbf{v}_n=A\left(\sum_{n=1}^Nc_n\mathbf{v}_n\right)=\sum_{n=1}^Nc_n\lambda_n\mathbf{v}_n$$
 where $\lambda_n$ is the eigenvalue associated with $\mathbf{v}_n$.
 So if $A$ is nonsingular, then none of the $\lambda_n$ is zero and we can write $c_n=b_n/\lambda_n$ and get the solution
-$$\mathbf{x}=\sum_{n=1}^N\frac{b_n}{\lambda_n}\mathbf{v}_n$$
+\begin{equation}
+    \mathbf{x}=\sum_{n=1}^N\frac{b_n}{\lambda_n}\mathbf{v}_n
+\end{equation}
 This means we can solve an linear equation if there is a basis consisting of eigenvectors of the matrix.
-We want an analogy of this in solving linear ODEs.
+\paragraph{Analogy to ODEs.}
 Consider the differential operator
 $$\mathcal Ly=-\frac{\mathrm d^2y}{\mathrm dx^2}$$
-and suppose we want to solve $\mathcal Ly=f(x)$ for a function $f(x)$ subject to boundary conditions $y(0)=y(L)=0$.
+and suppose we want to solve
+\begin{equation}
+    \mathcal{L}y = f(x)\quad \text{subject to}\quad y(0)=y(L)=0.
+\end{equation}
 The related eigenvalue problem is then $\mathcal L y_n=\lambda_ny_n$ with $y_n(0)=y_n(L)=0$ which has solutions
-$$y_n(x)=\sin\frac{n\pi x}{L},\lambda_n=\left( \frac{n\pi}{L} \right)^2$$
+\begin{equation}\label{1.eq.21}
+    y_n(x)=\sin\frac{n\pi x}{L},\quad \lambda_n=\left( \frac{n\pi}{L} \right)^2.
+\end{equation}
 So we will want to write
-$$y(x)=\sum_{n=1}^\infty c_n\sin\frac{n\pi x}{L},f(x)=\sum_{n=1}^\infty b_n\sin\frac{n\pi x}{L},b_n=\frac{2}{L}\int_0^Lf(x)\sin\frac{n\pi x}{L}\,\mathrm dx$$
-and ignore every convergence problem.
+\begin{align*}
+    &y(x)=\sum_{n=1}^\infty c_n\sin\frac{n\pi x}{L},\\ 
+    &f(x)=\sum_{n=1}^\infty b_n\sin\frac{n\pi x}{L},\\ 
+    &b_n=\frac{2}{L}\int_0^Lf(x)\sin\frac{n\pi x}{L}\,\mathrm dx,
+\end{align*}
+assuming convergence.
 Then this substitution yields
 $$\sum_{n=1}^\infty b_n\sin\frac{n\pi x}{L}=\mathcal Ly=-\frac{\mathrm d^2y}{\mathrm dx^2}\left( \sum_{n=1}^\infty c_n\sin\frac{n\pi x}{L} \right)=\sum_{n=1}^\infty c_n\left( \frac{n\pi}{L} \right)^2\sin\frac{n\pi x}{L}$$
 Hence, $c_n=b_n(L/(n\pi))^2$ by orthogonality, so we can get a particular solution of the problem in the form
-$$y(x)=\sum_{n=1}^\infty \frac{b_n}{\lambda_n}y_n$$
-which is the analogy we wanted.
+\begin{equation}
+    y(x)=\sum_{n=1}^\infty \frac{b_n}{\lambda_n}y_n = \sum_{n=1}^{\infty}b_n \left( \frac{L}{n\pi} \right)^2 \sin \frac{n\pi x}{L}.
+\end{equation}
 \begin{example}\label{odd_sq_fourier_ode}
-    Let $L=1$ and set $f$ to be the odd square wave with $f(x)=1$ for $x\in[0,1)$.
+    Consider the problem $ \mathcal{L}y=f(x) $ with $L=1$ and set $f$ to be the odd square wave with $f(x)=1$ for $x\in[0,1)$.
     This has Fourier series
-    $$4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{(2m-1)\pi}$$
+    $$f(x)= 4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{(2m-1)\pi}.$$
     So the above discussion instantly yield a solution
     $$y(x)=\sum_{n=1}^\infty \frac{b_n}{\lambda_n}y_n=4\sum_{m=1}^\infty\frac{\sin[(2m-1)\pi x]}{[(2m-1)\pi]^3}$$
-    which is the Fourier series of $y(x)=x(1-x)/2$ on $[0,1)$ extending as an odd periodic function with period $2$.
+    which is the Fourier series of
+    \begin{equation}
+        y(x)=\frac{x(1-x)}{2}\quad \text{on}\quad[0,1)
+    \end{equation}
+    extending as an odd periodic function with period $2$.
 
     Indeed, as one can verifty, if we integrate $\mathcal L y=1$ directly with the appropriate boundary conditions, we can get basically the same solution.
 \end{example}
 \subsection{A Glimpse into Green's Functions}
-Fix $L=1$ and consider an odd function $f$.
+In the problem $ \mathcal{L}y=f(x) $, fix $L=1$ and consider an odd function $f$.
 We have
-\begin{align*}
-    y(x)&=\sum_{n=1}^\infty\frac{b_n}{\lambda_n}\sin(\pi x)\\
-    &=\sum_{n=1}^\infty\frac{2}{(n\pi)^2}\left(\int_0^1f(\xi)\sin(n\pi\xi)\,\mathrm d\xi\right)\sin(n\pi x)\\
-    &=\int_0^12\sum_{n=1}^\infty\frac{\sin(n\pi x)\sin(n\pi\xi)}{(n\pi)^2}f(\xi)\,\mathrm d\xi\\
+\begin{align}
+    y(x)&=\sum_{n=1}^\infty\frac{b_n}{\lambda_n}\sin(\pi x)\nonumber\\
+    &=\sum_{n=1}^\infty\frac{2}{(n\pi)^2}\left(\int_0^1f(\xi)\sin(n\pi\xi)\,\mathrm d\xi\right)\sin(n\pi x)\nonumber\\
+    &=\int_0^12\sum_{n=1}^\infty\frac{\sin(n\pi x)\sin(n\pi\xi)}{(n\pi)^2}f(\xi)\,\mathrm d\xi\tag{Assume swapping limits}\\
     &=\int_0^1G(x,\xi)f(\xi)\,\mathrm d\xi
-\end{align*}
+\end{align}
 where
-$$G(x,\xi)=2\sum_{n=1}^\infty\frac{\sin(n\pi x)\sin(n\pi\xi)}{(n\pi)^2}$$
+\begin{equation}
+    G(x,\xi)=2\sum_{n=1}^\infty\frac{\sin(n\pi x)\sin(n\pi\xi)}{(n\pi)^2}.
+\end{equation}
 It is exactly the general see-saw wave
-$$G(x,\xi)=\begin{cases}
-    x(1-\xi)\text{, for $x\in[0,\xi)$}\\
-    \xi(1-x)\text{, for $x\in[\xi,1)$}
-\end{cases}$$
-This is the Green's function for this ODE $-\rmd^2 y/\rmd x^2 =f(x)$.
+\begin{equation}
+    G(x,\xi)=\begin{cases}
+        x(1-\xi)\text{, for $x\in[0,\xi)$}\\
+        \xi(1-x)\text{, for $x\in[\xi,1)$}
+    \end{cases}
+\end{equation}
+This is the \textit{Green's function} for this ODE $-\rmd^2 y/\rmd x^2 =f(x)$.
 One can actually solve this integral and get what we got in Example \ref{odd_sq_fourier_ode}.
 \newpage
 \part*{Lecture 4}
 \section{Sturm-Liouville Theory}
 \subsection{Review of Second-Order Linear ODEs}
 For a general inhomogeneous ODE $\mathcal Ly=f(x)$ where
-$$\mathcal Ly=\alpha(x)\frac{\mathrm d^2y}{\mathrm dx^2}+\beta(x)\frac{\mathrm dy}{\mathrm dx}+\gamma(x)y$$
-In general, the homogeneous equation $\mathcal Ly=0$ has two linearly independent solutions $y_1,y_2$.
-The complementary function $y_c(x)=Ay_1+By_2$ for constants $A,B$ is then the general solution to $\mathcal Ly=0$ by linearity.
+\begin{equation}
+    \mathcal Ly=\alpha(x)\frac{\mathrm d^2y}{\mathrm dx^2}+\beta(x)\frac{\mathrm dy}{\mathrm dx}+\gamma(x)y
+\end{equation}
+In general, the homogeneous equation
+\begin{equation}
+    \mathcal Ly=0
+\end{equation}
+has two linearly independent solutions $y_1,y_2$.
+The complementary function
+\begin{equation}
+    y_c(x)=Ay_1+By_2
+\end{equation}
+for constants $A,B$ is then the general solution to $\mathcal Ly=0$ by linearity.
 
-If we can find a particular solution (aka particular integral) $y_p$ to $\mathcal Ly=f$, then $y_p+y_c=y_p+Ay_1+By_2$ for $A,B$ constants is the general solution to $\mathcal Ly=f$ again by linearity.
+For the inhomogeneous problem 
+\begin{equation}
+    \mathcal Ly=f(x)
+\end{equation}
+If we can find a particular solution (aka particular integral) $y_p$ to $\mathcal Ly=f$, then
+\begin{equation}
+    y=y_p+y_c=y_p+Ay_1+By_2
+\end{equation}
+for $A,B$ constants is the general solution to $\mathcal Ly=f$ again by linearity.
 Two pieces of boundary data is then needed to determine the constants $A,B$.
 
 There are several types of boundary conditions.
-We sometimes get the Dirichlet condition of specifying the function's value at the endpoints, or the Neumann condition of specifying the derivative's values at the endpoints.
-Sometimes these two types of conditions are mixed.
+\begin{itemize}
+    \item The Dirichlet condition of specifying the function's value at the endpoints, \item The Neumann condition of specifying the derivative's values at the endpoints.
+    \item Mixed conditions of above.
+\end{itemize}
 
 The sort of conditions we often consider are homogeneous conditions, i.e. the function vanishes at the endpoints.
-The reason of it is that it allows the superposition of solutions in a linear DE.
+The reason of it is that it allows the \textit{superposition} of solutions in a linear DE.
 What if we come across a inhomogeneous condition?
 We can use the complementary solution to cancel stuff out.
 
@@ -323,7 +403,9 @@ Sometimes, we specify initial data of the function and its derivative as boundar
 
 Another matter of interest is the general eigenvalue problem.
 To solve $\mathcal Ly=f$ using eigenvalue decompositions like we did previously, we must first solve (subject to boundary conditions) the related eigenvalue problem
-$$\mathcal Ly=\alpha(x)\frac{\mathrm d^2y}{\mathrm dx^2}+\beta(x)\frac{\mathrm dy}{\mathrm dx}+\gamma(x)y=-\lambda\rho(x)y$$
+\begin{equation}
+    \mathcal Ly=\alpha(x)\frac{\mathrm d^2y}{\mathrm dx^2}+\beta(x)\frac{\mathrm dy}{\mathrm dx}+\gamma(x)y=-\lambda\rho(x)y
+\end{equation}
 where $\rho$ is nonegative.
 This form often occurs after seperation of variables in a PDE.
 \subsection{Self-Adjoint Operators}
@@ -331,68 +413,256 @@ This form often occurs after seperation of variables in a PDE.
     For two functions $f,g:[a,b]\to\mathbb C$ we define their inner product to be
     $$\langle f,g\rangle=\int_a^bf^*(x)g(x)\,\mathrm dx$$
 \end{definition}
-We can guarantee to rewrite the original eigenvalue problem into the Sturm-Liouville form, i.e. $\mathcal Ly=\lambda wy$ where we are able to rewrite $\mathcal Ly=-(py^\prime)^\prime+qy$ and $w$ is a nonnegative weight function.
-\footnote{The reason why there is a weight function there is just for convenience.}
+
+\begin{definition}[Sturm-Liouville form]
+    An ODE $ \mathcal{L}y=f(x) $ can be written as the \textit{Sturm-Liouville form} if $ \mathcal{L} $ can be written as
+    \[
+        \mathcal{L}y=-(py')'+qy,
+    \]
+    where $ p,q$ are functions, and the ODE $ \mathcal{L}y=f(x) $ can be written as 
+    \begin{equation}
+        \mathcal{L}y=-(py')'+qy=\lambda w y,
+    \end{equation}
+    where $w$ is a nonnegative weight function.
+\end{definition}
+
+We can guarantee to rewrite the original eigenvalue problem into the Sturm-Liouville form.
+
 How to convert a second order linear ODE to this form?
 Simply multiply the diffential equation by an integrating factor $F$ that will be specified later and we can write
-$$\frac{\mathrm d}{\mathrm dx}(F\alpha y^\prime)-F^\prime\alpha y^\prime-F\alpha^\prime y^\prime+F\beta y^\prime+F\gamma y=-\lambda F\rho y$$
-So to eiminate the $y^\prime$ terms, we set
-$$F(x)=\exp\left(\int\frac{\beta-\alpha^\prime}{\alpha}\,\mathrm dx\right)$$
+\begin{align*}
+    &F \alpha y''+F \beta y'+ F \gamma y = -\lambda F \rho y\\ 
+    \implies&\frac{\mathrm d}{\mathrm dx}(F\alpha y^\prime)-F^\prime\alpha y^\prime-F\alpha^\prime y^\prime+F\beta y^\prime+F\gamma y=-\lambda F\rho y.
+\end{align*}
+So to eliminate the $y^\prime$ terms, we set
+\begin{equation}
+    F^\prime\alpha y^\prime+F\alpha^\prime y^\prime-F\beta y^\prime=0 \Longrightarrow  F(x)=\exp\left(\int\frac{\beta-\alpha^\prime}{\alpha}\,\mathrm dx\right)
+\end{equation}
 which reduced the equation to
-$$(F\alpha y^\prime)^\prime+F\gamma y=-\lambda F\rho y$$
-Setting $p=F\alpha,q=F\gamma$ and $w=F\rho\ge 0$.
+$$(F\alpha y^\prime)^\prime+F\gamma y=-\lambda F\rho y \Longleftrightarrow -(py')'+qy=\lambda w y,$$
+setting $p=F\alpha,q=-F\gamma$ and $w=F\rho\ge 0$.
 \begin{example}
     Consider the Hermite equation that appears in quantum mechanics
     $$y^{\prime\prime}-2xy^\prime+2ny=0$$
     Then $\alpha=1,\beta=-2x,\gamma=0,\lambda\rho=2n$, so the above procedure translates this to the Sturm-Liouville form
-    $$\mathcal L=(-e^{-x^2}y^\prime)^\prime=2ne^{-x^2}y$$
+    \begin{equation}\label{2.eq.9}
+        \mathcal Ly=(-e^{-x^2}y^\prime)^\prime=2ne^{-x^2}y
+    \end{equation}
 \end{example}
-\begin{definition}
-    Let $\mathcal L:C\to C$ be an operator, where $C$ on a class of functions $[a,b]\to\mathbb C$ equipped with the inner product we defined previously.
-    This operator $\mathcal L$ is self-adjoint if $\langle y_1,\mathcal Ly_2\rangle=\langle\mathcal Ly_1,y_2\rangle$ for any $y_1,y_2\in C$.
+\paragraph{Boundary conditions}
+
+\begin{definition}[Self-adjoint operators]
+    Let $\mathcal L:C\to C$ be an operator, where $C$ on a class of functions $[a,b]\to\mathbb C$ equipped with the inner product above.
+    $\mathcal L$ is \textit{self-adjoint} if $\langle y_1,\mathcal Ly_2\rangle=\langle\mathcal Ly_1,y_2\rangle$ for any $y_1,y_2\in C$. Equivalently,
+    \begin{equation}
+        \int_{a}^{b} y_1^*(x)\mathcal{L}y_2(x) \,\mathrm{d}x = \int_{a}^{b} (\mathcal{L}y_1(x))^* y_2(x) \,\mathrm{d}x
+    \end{equation}
 \end{definition}
+
 If we let $\mathcal L$ be the operator in the Strum-Liouville form, then
-\begin{align*}
-    \langle y_1,\mathcal Ly_2\rangle-\langle\mathcal Ly_1,y_2\rangle&=\int_a^b[-y_1(py_2^\prime)^\prime+y_1qy_2+y_2(py_1^\prime)^\prime-y_2qy_1]\,\mathrm dx\\
-    &=\int_a^b[-y_1(py_2^\prime)^\prime+y_2(py_1^\prime)^\prime]\,\mathrm dx\\
-    &=\int_a^b[-(y_1(py_2^\prime)^\prime+y_1^\prime py_2^\prime)+(y_2(py_1^\prime)^\prime+y_2^\prime py_1^\prime)]\,\mathrm dx\\
-    &=\int_a^b[-(py_1y_2^\prime)^\prime+(py_1^\prime y_2)^\prime]\,\mathrm dx\\
-    &=[-py_1y_2^\prime+py_1^\prime y_2]_a^b
-\end{align*}
+\begin{align}
+    \langle y_1,\mathcal Ly_2\rangle-\langle\mathcal Ly_1,y_2\rangle&=\int_a^b[-y_1(py_2^\prime)^\prime+y_1qy_2+y_2(py_1^\prime)^\prime-y_2qy_1]\,\mathrm dx\nonumber\\
+    &=\int_a^b[-y_1(py_2^\prime)^\prime+y_2(py_1^\prime)^\prime]\,\mathrm dx\nonumber\\
+    &=\int_a^b[-(y_1(py_2^\prime)^\prime+y_1^\prime py_2^\prime)+(y_2(py_1^\prime)^\prime+y_2^\prime py_1^\prime)]\,\mathrm dx\nonumber\\
+    &=\int_a^b[-(py_1y_2^\prime)^\prime+(py_1^\prime y_2)^\prime]\,\mathrm dx\nonumber\\
+    \implies \langle y_1,\mathcal Ly_2\rangle-\langle\mathcal Ly_1,y_2\rangle&=[-py_1y_2^\prime+py_1^\prime y_2]_a^b
+\end{align}
 So for this operator to be self-adjoint, we need some good enough boundary conditions so that enough stuff vanishes.
-This includes homogeneous boundary condition $y(a)=y(b)=0$ or $y^\prime(a)=y^\prime(b)=0$ or mixed $y+ky^\prime=0$ etc..
-We say a Sturm-Liouville problem is regular if the boundary conditions are homogeneous.
+This includes homogeneous boundary condition $y(a)=y(b)=0$ or $y^\prime(a)=y^\prime(b)=0$ or mixed $y+ky^\prime=0$ etc.
+
+We say a Sturm-Liouville problem is \textit{regular} if the boundary conditions are homogeneous.
 Periodic boundary conditions also work, where we can take $y(a)=y(b)$ and the derivatives are specified (or periodic) at the boundary.
 There can also be singular points of this ODE, where $p(a)=p(b)=0$.
 We can have combinations of above too.
 
 \subsection{Properties of Self-Adjoint Operators}
-\begin{definition}
-    The inner product of $y_1,y_2:[a,b]\to\mathbb C$ with respect to weight $w:[a,b]\to\mathbb R_{\ge 0}$ is
-    $$\langle f,g\rangle_w=\int_a^bwf^*g\,\mathrm dx=\langle wf,g\rangle=\langle f,wg\rangle$$
-\end{definition}
 Analogous to the finite dimensional case, we have
 \begin{theorem}\label{self-adjoint}
-    For a sufficiently nice self-adjoint operator $\mathcal L$ on a sufficiently nice space of functions:\\
-    (a) Eigenvalues of $\mathcal L$ are real.\\
-    (b) Eigenfunctions of it with different eigenvalues are orthogonal with respect to the weight $w$.\\
-    (c) We can take the eigenfunctions as a set of basis for the function space, just like Fourier series.
+    For a sufficiently nice self-adjoint operator $\mathcal L$ on a sufficiently nice space of functions:
+    \begin{enumerate}[(a)]
+        \item Eigenvalues of $\mathcal L$ are real.
+        \item Eigenfunctions of it with different eigenvalues are orthogonal with respect to the weight $w$.
+        \item We can take the eigenfunctions as a set of basis for the function space, just like Fourier series.
+    \end{enumerate}
 \end{theorem}
 \begin{proof}[Proof of (a)]
-    If $\mathcal Ly=\lambda wy$, taking complex conjugate gives $\mathcal Ly^*=\lambda^*wy^*$.
+    Given
+    \begin{equation}\label{2.eigenproblem}
+        \mathcal Ly=\lambda wy
+    \end{equation}
+    taking complex conjugate gives $\mathcal Ly^*=\lambda^*wy^*$.
     Hence as $\mathcal L$ is self-adjoint,
     $$0=\int_a^b(y^*\mathcal Ly-y\mathcal Ly^*)\,\mathrm dx=(\lambda-\lambda^*)\int_a^bw|y|^2\,\mathrm dx$$
     which means $\lambda=\lambda^*$, so $\lambda$ is real.
 \end{proof}
 If $\lambda$ is non-degenerate (simple), i.e. it has a one-dimensional eigenspace, then $y$ is guaranteed to be real.
-Even if it has dimension $2$ (not more because the ODE is second order), we can still find two real functions as basis of the eigenspace.
+Even if it has dimension $2$ (not more because the ODE is second order), we can still find two real functions as basis of the eigenspace. Hence from now on, we assume the eigenfunctions to be real.
+
 Also, by considering $u\mathcal Lv-v\mathcal Lu=(-p(uv^\prime-u^\prime v))^\prime$, one can show that a regular Sturm-Liouville problem always has all eigenvalues simple.
+
+\newpage
+\part*{Lecture 5}
 \begin{proof}[Proof of (b)]
     Suppose $\mathcal Ly_m=\lambda_mwy_m$ and $\mathcal Ly_n=\lambda_nwy_n$, then
-    $$0=\int_a^by_n\mathcal Ly_m-y_m\mathcal Ly_n\,\mathrm dx=(\lambda_m-\lambda_n)\int_a^bwy_ny_m\,\mathrm dx$$
+    \begin{equation}\label{2.eq.13}
+        0=\int_a^by_n\mathcal Ly_m-y_m\mathcal Ly_n\,\mathrm dx=(\lambda_m-\lambda_n)\int_a^bwy_ny_m\,\mathrm dx
+    \end{equation}
     But $\lambda_m$ and $\lambda_n$ are distinct.
     The claim follows.
 \end{proof}
+
+\begin{definition}
+    The inner product of $y_1,y_2:[a,b]\to\mathbb C$ with respect to weight $w:[a,b]\to\mathbb R_{\ge 0}$ is
+    \begin{equation}
+        \langle f,g\rangle_w=\int_a^bwf^*g\,\mathrm dx=\langle wf,g\rangle=\langle f,wg\rangle
+    \end{equation}
+\end{definition}
+
+So the orthogonality in (\ref{2.eq.13}) becomes 
+\begin{equation}
+    \langle y_n,y_m \rangle _w = 0,\quad \forall n\neq m.
+\end{equation}
+
+\begin{remark}
+    Watch the weight!
+\end{remark}
+
 As an aside, we do not really need the weight function in order to formulate Sturm-Liouville theory, since we can do the transformation $\tilde{y}=\sqrt{w}y$ and replace $\mathcal Ly$ by $(1/\sqrt{w})\mathcal L(\tilde{y}/\sqrt{w})$.
 Yet the analytic property is generally simpler if we keep $w$.
+\begin{example}
+    For the Hermite equation \ref{2.eq.9}, we can eliminate $ w $ with $ \tilde{y}=e^{-x^2/2}y $ to find 
+    \[
+        \tilde{\mcL} = -\tilde{y}''+(x^2-1)\tilde{y}=2n \tilde{y}.
+    \]
+\end{example}
+\subsection{Eigenfunction expansion}
+Completeness ((c) in theorem \ref{self-adjoint}) implies we can approximate any well-behaved $f(x)$ on $ [a,b] $ by the series 
+\begin{equation}
+    f(x)=\sum_{n=1}^\infty a_ny_n(x)
+\end{equation}
+where $y_n$ is a set of eigenfunctions of some self-adjoint operator.
+To find the coefficients $a_n$, we can use the orthogonality (\ref{2.eq.13}) to get
+\[
+    \int_{a}^{b} w(x)y_m(x)\cdot f(x) \,\mathrm{d}x = \sum_{n=1}^{\infty}a_n \int_{a}^{b} wy_ny_m \,\mathrm{d}x = a_m\int_a^bwy_m^2\,\mathrm dx
+\]
+Hence 
+\begin{equation}\label{2.eq.17}
+    a_n=\left(\int_a^bwy_nf\,\mathrm dx\middle)\right/\left(\int_a^bwy_n^2\,\mathrm dx\right)
+\end{equation}
+It's a common practice not to normalise the eigenfunctions as it is not really always clean.
+Of course, if we want, we can always write down
+\[
+    Y_n=y_n\left/\sqrt{\int_a^bwy_n^2\,\mathrm dx}\right.
+\]
+So that 
+\begin{equation}
+    \langle Y_n,Y_m \rangle =\delta_{nm}
+\end{equation}
+are orthonormal with 
+\[
+    f(x) = \sum_{n=1}^{\infty}A_nY_n(x)\quad \text{and}\quad A_n = \int_{a}^{b} w(x)Y_n(x)f(x) \,\mathrm{d}x
+\]
+\begin{example}
+    Recall the particular operator already in Sturm-Liouville form $\mathcal Ly=-y^{\prime\prime}$, then (with appropriate boundary conditions) we can easily get the eigenvalues $\lambda_n=(n\pi/L)^2$ and eigenfunctions being the trigonometrics.
+    This just reproduces the Fourier series.
+\end{example}
+\subsection{Completeness and Parseval's Identity}
+We expand
+\begin{align*}
+    &\int_a^bw\left( f(x)-\sum_{n=1}^\infty a_ny_n \right)^2\,\mathrm dx\\
+    =&\int_a^bw\left( f^2-2f\sum_{n=1}^\infty a_ny_n+\sum_{n=1}^\infty a_n^2y_n^2 \right)\,\mathrm dx\tag{Last term by orthogonality} \\    
+    =&\int_a^bwf^2\,\mathrm dx-\sum_{n=1}^\infty a_n^2\int_a^bwy_n^2\,\mathrm dx\tag{By \ref{2.eq.17}}
+\end{align*}
+If the eigenfunctions are complete, then the series expansion converges, and thus the above expansion is 0 and 
+
+\begin{align}\label{2.eq.19}
+    \int_a^bwf^2\,\mathrm dx&=\sum_{n=1}^\infty a_n^2\int_a^bwy_n^2\,\mathrm dx\\ 
+    &=\sum_{n=1}^\infty A_n^2\text{ for unit normal $Y_n$}\nonumber
+\end{align}
+Note that $\int_a^bwy_n^2\,\mathrm dx$ becomes $L$ for Fourier series.
+
+If some of the eigenfunctions are missing from the series, then this gives
+$$\int_a^bwf^2\,\mathrm dx\ge\sum_{n=1}^\infty A_n^2$$
+This is known as Bessel's Inequality.
+\paragraph{Calculating the error}
+Consider the partial sums $\sum_{n\le N}a_ny_n$, then we shall have
+\begin{equation}\label{2.eq.20}
+    f(x) = \lim_{N \to \infty} S_N(x)
+\end{equation}
+Convergence is defined in terms of the \textit{mean square error}
+\[
+    \epsilon_N=\int_a^bw[f(x)-S_N(x)]^2\,\mathrm dx\to 0,N\to\infty
+\]
+This global definition of convergence in mean is not the pointwise convergence of Fourier series, which converges to all the continuous points of $f$.
+
+An interesting question is that, while we know (maybe) the series converges as we want, if we truncate the sequence in some $N$, would the coefficients $\{a_n\}_{n\le N}$ provide the best approxmation (with respect to the error defined in this way) of that particular partial sum, or a different set of partial coefficient will yield a better result?
+The answer is yes. 
+\begin{claim}
+    The error in partial sums (\ref{2.eq.20}) is minimised by $a_n$ in (\ref{2.eq.19}) for $ N= \infty  $ expansion.
+\end{claim}
+\begin{proof}
+    Differentiate wrt $a_n$ gives
+    $$\frac{\partial\epsilon_N}{\partial a_n}=-2\int_a^bwy_n\left( f-\sum_{k=1}^Na_ky_k \right)\,\mathrm dx=-2\int_a^bwfy_n-a_nwy_n^2\,\mathrm dx$$
+    which is zero when $a_n$ is of the expression in (\ref{2.eq.17}).
+    We can see it is indeed a minimum by observing that
+    $$\frac{\partial^2\epsilon_N}{\partial a_n^2}=2\int_a^bwy_n^2\,\mathrm dx\ge 0$$
+    This answers our question.
+\end{proof}
+\subsection{Legendre's Equation}
+Take the usual spherical polar coordinate
+$$\begin{cases}
+    x=r\sin\theta\cos\phi\\
+    y=r\sin\theta\sin\phi\\
+    z=r\cos\theta
+\end{cases}$$
+where Laplace's equation $\nabla^2 u=0$ translates to
+$$\frac{1}{r^2}\frac{\partial}{\partial r}\left( r^2\frac{\partial u}{\partial r} \right)+\frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left( \sin\theta\frac{\partial u}{\partial\theta} \right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2u}{\partial\phi^2}=0$$
+Seperation of variables $u=R(r)\Theta(\theta)\Phi(\phi)$ then gives
+$$\frac{1}{\sin\theta}(\Theta^\prime\sin\theta)^\prime+\left( K-\frac{m^2}{\sin^2\theta} \right)\Theta=0$$
+where $K,m$ are constants which essentially makes it an eigenvalue problem.
+
+Now the transformation $x=\cos\theta\in[-1,1]$ and renaming $\Theta$ as $y$ then gives Legendre's Equation
+\begin{equation}\label{2.eq.21:legendre}
+    (1-x^2)y^{\prime\prime}-2xy^\prime+\lambda y=0
+\end{equation}
+where $\lambda$ is a constant which is again intepreted as an eigenvalue.
+This is already in Strum-Liouville form by taking $p=1-x^2,q=0,w=1$.
+Now $p=1-x^2$ vanishes at the boundary $\pm 1$, so this equation has to be self-adjoint.
+We assume that $y$ is bounded near the boundary. (Regular singular point)
+
+We now seek a power series solution to the problem.
+If we set
+$$y=\sum_{n=0}^\infty c_nx^n$$
+Then substitution gives 
+\begin{align}\label{2.eq.22}
+    &(1-x^2)\sum_n n(n-1)c_nx^{n-2}-2x \sum_n c_n x^{n-1} + \lambda \sum_n c_n x^n=0\nonumber\\
+    \Longrightarrow & (n+2)(n+1)c_{n+2}-n(n-1)c_n-2nc_n+\lambda c_n=0\nonumber\\ 
+    \implies &c_{n+2}=\frac{n(n+1)-\lambda}{(n+1)(n+2)}c_n
+\end{align}
+Specifying $c_0,c_1$ gives 2 independent solution near $ x=0 $:
+\begin{align*}
+    y_{\text{even}}&=c_0\left( 1+\frac{(-\lambda)}{2!}x^2+\frac{(6-\lambda)(-\lambda)}{4!}x^4+\cdots \right)\\
+    y_{\text{odd}}&=c_1\left( x+\frac{2-\lambda}{3!}x^3+\cdots \right)
+\end{align*}
+Note that $c_{n+2}/c_n\to 1$, so the both series has radius of convergence $1$ but they diverges at $x=\pm 1$.
+
+These series may not be infinite.
+If $\lambda=l(l+1)$ for some $l\in\mathbb N$, then one of these two series will terminate and give a polynomial solution.
+These polynomials are called \textit{Legendre polynomials} $P_l(x)$ which are eigenfunctions of the Legendre equation (\ref{2.eq.21:legendre}).
+
+Conventionally we normalise $P_l$ by requiring $P_l(1)=1$.
+One can check that this restricts $P_l([-1,1])\subset [-1,1]$ and $|P_l(-1)|=1$.
+By calculation we have
+\begin{align*}
+    P_{0}(x)&=1\\ 
+    P_{1}(x)&=x\\ 
+    P_{2}(x)&=\frac{1}{2}\left(3 x^{2}-1\right)\\ 
+    P_{3}(x)&=\frac{1}{2}\left(5 x^{3}-3 x\right)
+\end{align*}
+\begin{note}
+    \begin{enumerate}
+        \item $P_l$ has $l$ roots in $[-1,1]$.
+        \item $P_l$ is odd if $l$ is odd, and even when $l$ is even.
+    \end{enumerate}
+\end{note}
 \end{document}
