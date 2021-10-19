@@ -415,7 +415,7 @@ Lemma \ref{equivalence_of_direct_sum} is then generalized to
 \begin{remark}
     Choosing a basis of $V$ is then just equivalent to choosing an isomorphism from $V$ to $\bbF^n$.
 \end{remark}
-\begin{theorem}
+\begin{theorem}\label{isom iff same dim}
     Let $V,W$ be finite dimensional vector spaces over $\bbF$.
     Then $V\cong W$ iff $\dim V=\dim W$.
 \end{theorem}
@@ -425,7 +425,7 @@ Lemma \ref{equivalence_of_direct_sum} is then generalized to
 \end{proof}
 \begin{definition}
     Let $\alpha:V\to W$ be a linear map.
-    We define the kernel of $\alpha$ to be $\ker\alpha=\{v\in V:\alpha(v)=0\}$ and the image to be $\operatorname{Im}\alpha=\alpha(V)=\{w\in W:\exists v\in V,\alpha(v)=w\}$.
+    We define the kernel of $\alpha$ to be $\ker\alpha=\{\bfv\in V:\alpha(\bfv)=0\}$ and the image to be $\operatorname{Im}\alpha=\alpha(V)=\{\bfw\in W:\exists \bfv\in V,\alpha(\bfv)=\bfw\}$.
 \end{definition}
 \begin{lemma}
     $\ker\alpha\le V,\operatorname{Im}\alpha\le W$.
@@ -479,5 +479,149 @@ Hence in the finite dimensional case, we can rewrite the preceding theorem to ge
     We want to compute $\dim V$.
     Consider $\alpha:\mathbb R^3\to\mathbb R$ via $(x,y,z)^\top\mapsto x+y+z$, then $r(\alpha)=1$ and $n(\alpha)=V$, so $\dim V=3-1=2$.
     Geometrically, $V$ is just a plane with normal $(1,1,1)^\top$.
+\end{example}
+\newpage
+\part*{Lecture 5}
+\subsection{Linear Maps \texorpdfstring{$V \rightarrow W$}{V to W} and Matrices}
+\subsubsection*{Space of linear maps}
+We are now going to consider linear maps between two vector spaces $V$ and $W$.
+
+\begin{definition}[Space of Linear Maps]
+    Let $V$ and $W$ be vector spaces over $\bbF$. We define
+    $$
+    \mathcal{L}(V, W) = \{\alpha: V \rightarrow W \mid \alpha \text{ is a linear map}\}.
+    $$
+\end{definition}
+\begin{proposition}
+    $\mathcal{L}(V, W)$ is a vector space over $\bbF$.
+    
+    Moreover, if $V$ and $W$ are finite dimensional then so is $\mathcal{L}(V, W)$, and $\dim \mathcal{L}(V, W) = \dim V \cdot \dim W$.
+\end{proposition}
+\subsubsection*{Matrices}
+\begin{definition}[Matrix]
+    An $m \times n$ \emph{matrix} over $\bbF$ is an array with $m$ rows and $n$ columns, with entries in $\bbF$:
+    $$
+    A = (a_{ij}),
+    $$
+    with $1 \leq i \leq m$ and $1 \leq j \leq n$.
+
+    The \textit{space of matrices} is the set $\mathcal{M}_{m,n}(\bbF)$ of $m \times n$ matrices over $\bbF$.
+\end{definition}
+By checking definitions we have
+\begin{proposition}
+    $ \mcM_{m,n}(\bbF) $ is a vector space over $ \bbF $.
+\end{proposition}
+\begin{proposition}
+    $ \dim \mcM_{m,n}(\bbF) =m \times n$.
+\end{proposition}
+\begin{proof}
+    We find an explicit basis. Pick $ 1\le i\le m,1\le j\le n $, define the \textit{elementary matrices} as
+    \[
+        E_{ij}=1 \text{ for entry } ij \text{ and } 0 \text{ elsewhere}.
+    \]
+    The set $\{E_{i, j} \mid 1 \leq i \leq m, 1 \leq j \leq m\}$ is clearly spanning and is also clearly linearly independent, so it is a basis. Counting elements, we see that this set has size $m \times n$, as required.
+\end{proof}
+\subsubsection*{Representation of linear maps by matrices}
+Let $V$, $W$ be vector spaces over $\bbF$, and let $\alpha: V \rightarrow W$ be a linear map. 
+
+Let $B = \{\bfv_1, \dots, \bfv_n\}$ be a basis for $V$, and $C = \{\bfw_1, \dots, \bfw_m\}$ be a basis for $W$. Then if $\bfv \in V$, we can write
+$$
+\bfv = \sum_{j = 1}^n \lambda_j \bfv_j = \begin{pmatrix}
+    \lambda_1 \\ \vdots \\ \lambda_n
+\end{pmatrix} \in \bbF^n,
+$$
+which are the `coordinates of $\bfv$' with the respect to the basis $B$, which we will call $[\bfv]_B$.
+
+Similarly, for $\bfw \in W$, we can let $[\bfw]_C$ be the `coordinates' of $\bfw$ in the basis $C$.
+
+\begin{definition}[Matrix of $\alpha$ in the $B, C$ Basis]
+    We define $[\alpha]_{B, C}$, the \emph{matrix of $\alpha$} with respect to $B$ and $C$ by
+    $$
+    [\alpha]_{B, C} = \begin{pmatrix}
+        [\alpha(\bfv_1)]_C, [\alpha(\bfv_2)]_C, \cdots, [\alpha(\bfv_n)]_C
+    \end{pmatrix} \in \mathcal{M}_{m, n}(\bbF).
+    $$ 
+\end{definition}
+\begin{lemma}
+    For all $\v \in V$, we have $[\alpha(\v)]_C = [\alpha]_{B,C}  [\v]_B$.
+\end{lemma}
+\begin{proof}
+    Let $\v \in V$, and let $\v = \sum_{j = 1}^n \lambda_j \v_j$. Then
+    $$
+    \alpha(\v) = \sum_{j = 1}^n \lambda_j \alpha(\v_j) = \sum_{j = 1}^n \lambda_j \sum_{i = 1}^m a_{ij} \w_i = \sum_{i = 1}^m \left(\sum_{j = 1}^n a_{ij} \lambda_j\right) \w_i,
+    $$
+    as required.
+\end{proof}
+By checking definitions,
+\begin{lemma}
+    Let $\alpha: V \rightarrow W$ and $\beta: U \rightarrow W$ be linear maps. Then if $A$ is a basis of $U$, $B$ is a basis of $V$ and $C$ is a basis of $W$, then
+    $$
+    [\alpha \circ \beta]_{A, C} = [\alpha]_{B, C}  [\beta]_{A, B}.
+    $$
+\end{lemma}
+\begin{proposition}
+    If $V$ and $W$ are vector spaces over $\bbF$ such that $\dim V = n$ and $\dim W = m$, then $\mathcal{L}(V, W) \cong \mathcal{M}_{m, n}(\bbF)$.
+\end{proposition}
+\begin{proof}
+    Fix a basis $B, C$ of $V$ and $W$ respectively.
+    Then consider the linear map
+    $
+    \theta: \mathcal{L}(V, W) \rightarrow \mathcal{M}_{m, n}(\bbF)
+    $ given by $\alpha \mapsto [\alpha]_{B, C}$.
+    This map is clearly linear. Let $ A=(a_{ij}) $, then the linear map 
+    \[
+        \alpha: \bfv_j\to \sum_{i=1}^{m}a_{ij}\w_i
+    \]
+    on bases $B,C$. Then $ \theta(\alpha)=A $ so it is surjective. Since a linear map is uniquely determined by the action on basis, $ \theta $ is surjective and hence bijective. Thus $\theta$ is an isomorphism and $ \mcL(V,W) \cong \mcM_{m,n}(\bbF) $. 
+
+    Alternatively, the proposition is direct by theorem \ref{isom iff same dim}.
+\end{proof}
+\begin{remark}
+    If $B$ is a basis of $V$, $C$ a basis of $W$, and 
+    \[
+        \epsilon_B:\begin{aligned}
+            V&\to \bbF^n\\ 
+            \bfv&\to [\bfv]_B
+        \end{aligned}\quad \epsilon_C:\begin{aligned}
+            W&\to \bbF^m\\ 
+            \w &\to [\w]_C
+        \end{aligned}
+    \]
+    then the following diagram commute:
+    \begin{center}
+        $\begin{tikzcd}
+            V & W \\
+            {\mathbb{F}^n} & {\mathbb{F}^m}
+            \arrow["\alpha", from=1-1, to=1-2]
+            \arrow["{\epsilon_B}"', from=1-1, to=2-1]
+            \arrow["{[\alpha]_{B,C}}"', from=2-1, to=2-2]
+            \arrow["{\epsilon_C}", from=1-2, to=2-2]
+        \end{tikzcd}$
+    \end{center}
+\end{remark}
+
+\begin{example}
+    Let $V$ and $W$ be finite dimensional vector spaces.
+    Consider the linear map $\alpha: V \rightarrow W$, and suppose $Y \leq V$. Consider the image of $Y$ under $\alpha$, $Z=\alpha(Y) = \{ \w \in W \mid \w= \alpha(\bfy), \bfy \in Y\}$.
+
+    Define the sets $B' = \{\v_1, \dots, \v_k\}$ and $B'' = \{\v_{k + 1}, \dots, \v_n\}$ such that the union of disjoint sets $B = B' \cup B''$ is a basis for $V$, and $B'$ is a basis of $Y$ (that is, we extend using Steinitz exchange lemma).
+    
+    Similarity we define $C' = \{\w_1, \dots, \w_\ell\}$ and $C'' = \{\w_{\ell + 1}, \dots, \w_m\}$ such that the union of disjoint sets $C = C' \cup C''$ is a basis for $W$ and $C'$ is a basis for $\alpha(Y)$.
+
+    Then we have the matrix
+    $$ 
+    [\alpha]_{B, C} = \begin{pmatrix}
+        \alpha(\v_1) & \cdots & \alpha(\v_k) & \alpha(\v_{k + 1}) & \cdots & \alpha(\v_n)
+    \end{pmatrix},
+    $$
+    and this will look like the block matrix
+    $$
+    \begin{pmatrix}
+        A & B \\
+        0 & C \\
+    \end{pmatrix}
+    $$
+    where $A$ is $k \times \ell$ such that $ A = [\alpha\upharpoonright_Y]_{B',C'} $. 
+    Also $ \alpha $ induces a well-defined map $ \bar{\alpha}:V/Y\to W/Z $ such that $ \v+Y\mapsto \alpha(\bfv)+Z $, with matrix given by $ [\bar{\alpha}]_{B'',C''}=C $.
 \end{example}
 \end{document}
