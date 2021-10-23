@@ -358,9 +358,9 @@ We have proved, using these notations, that
 	\implies k_2^B &= 2.
 		\end{align*}
 \end{example}
-
+\subsection{Absorption probabilities are minimal solutions}
 \begin{theorem}
-	Let $A \subseteq I$. The vector $(h_i^A)_{i \in A}$ is the minimal non-negative solution to
+	Let $A \subseteq I$. The vector $(h_i^A)_{i \in I}$ is the minimal non-negative solution to
 	\begin{align*}
 		h_i^A = \begin{cases}
 			1 &\mbox{if } i  \in A, \\
@@ -376,13 +376,208 @@ We have proved, using these notations, that
     \]
     By countable additivity of disjoint events,
     \begin{align*}
-        &\mathbb{P}_i(T_A< \infty) = \mathbb{P}_i(X_0\in A) + \sum_{n=1}^{\infty}\mathbb{P}_i(X_i\notin A \text{ for }0\le i\le n-1, X_n\in A)\\ 
-            &= \sum_{n=1}^{\infty} \sum_{j} \mathbb{P}(X_i\notin A \text{ for }0\le i\le n-1, X_n\in A,X_1=j|X_0=i)\\ 
-            &=\sum_j \mathbb{P}(X_1\in A,X_1=j|X_0=i)+\sum_j \sum_{n=2}^{\infty}\mathbb{P}(X_i\notin A \text{ for }1\le i\le n-1, X_n\in A,X_1=j|X_0=i)\\ 
-            &= \sum_j P(i,j)\mathbb{P}(X_1\in A|X_1=j,X_0=i)\\[-13pt]
-            &\hspace{5em}+\sum_{j}P(i,j)\sum_{n=2}^{\infty}\mathbb{P}(X_i\notin A \text{ for }1\le i\le n-1, X_n\in A|X_1=j,X_0=i)\\ 
-            &= \sum_j P(i,j) \mathbb{P}(X_0\in A|X_0=j)+ \sum_{j}P(i,j) \mathbb{P}(X_i\notin A \text{ for }1 \le i\le n-1, X_n\in A|X_1=j)
+        &\mathbb{P}_i(T_A< \infty)={\color{blue}h_i^A} =\sum_{n=1}^{\infty}\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i)\\ 
+            &= \sum_{n=1}^{\infty} \sum_{j} \mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i,X_1=j)P(i,j)\\ 
+            &=\sum_j \mathbb{P}(\cancel{X_0\notin A}, X_1\in A|\cancel{X_0=i},X_1=j)P(i,j)\\[-13pt]
+            &\hspace{5em}+\sum_j \sum_{n=2}^{\infty}\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i,X_1=j)P(i,j)\\ 
+            &=\sum_j P(i,j)\mathbb{P}(X_1\in A|X_1=j)+\sum_j \sum_{n=1}^{\infty}P(i,j)\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_1=j)\tag{By Simple Markov Property}\\ 
+            &= \sum_j P(i,j) \left( \mathbb{P}_j(X_0\in A)+\sum_{n=1}^{\infty} \mathbb{P}_j(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A)\right)\tag{Combine terms and add `zero' term $\mathbb{P}_j(X_0\in A)$}\\ 
+            &= \sum_j P(i,j) \left( \mathbb{P}_j(T_A=0)+ \sum_{n=1}^{\infty}\mathbb{P}_j(T_A=n) \right)\\ 
+            &= \sum_j P(i,j) \bbP_j(T_A< \infty ) = {\color{blue}\sum_j P(i,j)h_j^A}.
     \end{align*}
-    \centerline{(TO BE FINISHED)}
+    Hence it is a solution.
+
+    We now check minimality. Let $x = (x_i \mid i \in S)$ be another non-negative solution. For $i \in A$, we have $x_i = h^A_i = 1$, so that holds. Then for $i \in S \backslash A$, since $x$ satisfies the system of equations we can write
+	\begin{equation}\label{eq:1}
+		x_i = \sum_{j \in S}P_{i, j} x_j = \sum_{j \in A} P_{i, j} x_j + \sum_{j \in S \backslash A} P_{i, j} x_j. \tag{$\dagger$}
+	\end{equation}
+	Then with $x_j = 1$ for $j \in A$ and $x \geq 0$, we have
+	\begin{align*}
+		x_i \geq \sum_{j \in A} P_{i, j} = \bbP(X_1 \in A \mid X_0 = i) = \bbP(T_A < 2 \mid X_0 = i).
+	\end{align*}
+	Similarily, expanding \eqref{eq:1}, we have
+	\begin{align*}
+	x_i &= \bbP(X_1 \in A \mid X_0 = i) + \sum_{j \in S \backslash A} P_{i, j} \left(\sum_{k \in A} P_{j, k} x_k + \sum_{k \in S \backslash A} P_{j, k} x_k\right) \\
+		&\geq \bbP(X_1 \in A \mid X_0 = i) + \bbP(X_1 \not \in A, X_2 \in A \mid X_0 = i) \\
+		&= \bbP(T_A < 3 \mid X_0 = 1).
+	\end{align*}
+	We can repeat this argument to eventually establish that $x_i \geq \bbP(T_A < n \mid X_0 = i)$, for all $n \geq 0$. Then as $n \rightarrow \infty$, we have $x_i \geq \bbP(T_A < \infty \mid X_0 = i)$, as required.
+\end{proof}
+
+This method of computing hitting probabilities is perfectly valid on Markov chains with infinite state spaces.
+\newpage
+\part*{Lecture 4}
+\begin{example}
+    Consider again the Markov chain in the diagram below.
+	\begin{center}
+		\begin{tikzpicture}
+		
+		\node[state] (1) {1};
+		\node[state, right=of 1] (2) {2};
+		\node[state, right=of 2] (3) {3};
+		\node[state, right=of 3] (4) {4};
+		
+		\path
+		(2) edge[->,above] node {$\frac{1}{2}$} (1)
+		(2) edge[bend left, ->,above] node {$\frac{1}{2}$} (3)
+		(3) edge[bend left, ->,below] node {$\frac{1}{2}$} (2)
+		(3) edge[->,above] node {$\frac{1}{2}$} (4);
+		\end{tikzpicture}
+		\end{center}
+    Take $A=\{4\}$. Applying the theorem, 
+    \begin{align*}
+        h_2&= \frac{1}{2}h_1+\frac{1}{2}h_3\\ 
+        h_3&= \frac{1}{2}h_4+\frac{1}{2}h_2\\ 
+        h_4&=1
+    \end{align*}
+    Then we can solve as before.
+\end{example}
+\begin{example}
+	Consider the Markov chain with states $S = \{0, 1, \dots\}$ such that $P_{0, 1} = 1$, and
+	$$
+	P_{i, i+1} = p, \quad P_{i, i - 1} = q \quad \text{for all } i \geq 1,
+	$$ 
+	where $p, q \in (0, 1)$ with $p + q = 1$.
+
+	\begin{center}
+    \begin{tikzpicture}
+    
+    \node[state] (1) {1};
+    \node[state, right=of 1] (2) {2};
+    \node[state, right=of 2] (3) {3};
+    \node[state, right=of 3] (4) {4};
+    \node[state, right=of 4] (5) {$\cdots$};
+    
+    \path
+    (1) edge[above,->] node {1} (2)
+    (2) edge[above,->] node {$p$} (3)
+    (3) edge[above,->] node {$p$} (4)
+    (4) edge[above,->] node {$\cdots$} (5)
+    (2) edge[bend left, below,->] node {$q$} (1)
+    (3) edge[bend left, below,->] node {$q$} (2)
+    (4) edge[bend left, below,->] node {$q$} (3)
+    (5) edge[bend left, below,->] node {$\cdots$} (4);
+    \end{tikzpicture}
+    \end{center}
+
+	Let $h_i = \bbP(T_0 < \infty \mid X_0 = i)$, and suppose that $p \neq q$. $h_0 = 1$, and generally
+	$$
+		h_i = p h_{i + 1} + qh_{i - 1}.
+	$$
+	This then implies $p(h_{i + 1} - h_i) = q(h_{i} - h_{i - 1})$, so that
+	$$
+		h_{i+1} - h_{i}  = \left(\frac{q}{p}\right)^i (h_1 - 1).
+	$$
+	This inspires us to write $h_i$ as a telescoping sum
+	\begin{align*}
+		h_i &= \sum_{j = 1}^i (h_j - h_{j - 1}) + 1  \\
+			&= (h_1 - 1) \sum_{j = 1}^i \left(\frac{q}{p}\right)^j + 1,
+	\end{align*}
+	which gives us our general solution $h_i = a + b(q/p)^i$, which we can then solve.
+
+	If $q > p$, then in order for $h_i$ to be the minimal solution, we need to have $a = 1$ and $b = 0$, so $h_i = 1$.
+
+    If $p>q$ then in seeking a minimal solution we will wish to take $A$ as large as possible, consistent with $h_{i} \geq 0$ for all $i$. So $a=0,b=1$, and $h_{i}=(q / p)^{i}$.
+
+    Finally, if $p=q=1 / 2$ the recurrence relation has a general solution $h_{i}=a+b i$, and the restriction $0 \leq h_{i} \leq 1$ forces $a=1,b=0$. Thus $h_{i}=1$ for all $i$. So even if you find a fair casino you are certain to end up broke. This apparent paradox is called \textit{gambler's ruin}.
+\end{example}
+
+\begin{example}[Birth and Death Chains]
+	Consider the Markov chain with diagram
+    \begin{center}
+        \begin{tikzpicture}
+        
+        \node[state] (1) {0};
+        \node[state, right=of 1] (2) {1};
+        \node[state, right=of 2] (3) {$i-1$};
+        \node[state, right=of 3] (4) {$i$};
+        \node[state, right=of 4] (5) {$i+1$};
+        \node[state, right=of 5] (6) {$\cdots$};
+        
+        \path
+        (1) edge[above,->] node {1} (2)
+        (2) edge[above,->] node {$\cdots$} (3)
+        (3) edge[above,->] node {$p_{i-1}$} (4)
+        (4) edge[above,->] node {$p_i$} (5)
+        (2) edge[bend left, below,->] node {$q_1$} (1)
+        (3) edge[bend left, below,->] node {$\cdots$} (2)
+        (4) edge[bend left, below,->] node {$q_i$} (3)
+        (5) edge[bend left, below,->] node {$q_{i+1}$} (4)
+        (5) edge[above,->] node {$\cdots$} (6)
+        (6) edge[bend left, below,->] node {$\cdots$} (5);
+        \end{tikzpicture}
+        \end{center}
+        where, for $i=1,2, \ldots$, we have $0<p_{i}=1-q_{i}<1$. State $i$ is that in which a population is $i$.
+
+    As in previous examples, 0 is an absorbing state and we wish to calculate the absorption probability starting from state $i$. So now $h_{i}=\mathbb{P}_i(\text{hit 0})$ is the extinction probability starting from state $i$. We write down the usual system of r.h. equations
+    \[
+    \begin{aligned}
+    h_{0} &=1 \\
+    h_{i} &=p_{i} h_{i+1}+q_{i} h_{i-1} \quad \text { for } i=1,2, \ldots
+    \end{aligned}
+    \]
+    This recurrence relation has variable coefficients so the usual technique fails. But consider $u_{i}=h_{i-1}-h_{i} .$ Then $p_{i} u_{i+1}=q_{i} u_{i}$, so
+    \[
+    u_{i+1}=\left(\frac{q_{i}}{p_{i}}\right) u_{i}=\left(\frac{q_{i} q_{i-1} \cdots q_{1}}{p_{i} p_{i-1} \cdots p_{1}}\right) u_{1}=\gamma_{i} u_{1}
+    \]
+    where the final equality defines $\gamma_{i} $. Then
+    \[
+    u_{1}+\cdots+u_{i}=h_{0}-h_{i}
+    \]
+    So
+    \[
+    h_{i}=1-u_{1}\left(\gamma_{0}+\cdots+\gamma_{i-1}\right)
+    \]
+    where $\gamma_{0}=1$. At this point $u_{1}$ remains to be determined. Since we know $h$ is the minimal solution to the right hand equations, we want to choose $u_{1}$ to be as large as possible. In the case $\sum_{i=0}^{\infty} \gamma_{i}=\infty$, the restriction $0 \leq h_{i} \leq 1$ forces $u_{1}=1-h_{1}=0$ and $h_{i}=1$ for all $i .$ But if $\sum_{i=0}^{\infty} \gamma_{i}<\infty$ then we can take $u_{1}>0$ so long as
+    \[
+    1-u_{1}\left(\gamma_{0}+\cdots+\gamma_{i-1}\right) \geq 0 \quad \text { for all } i
+    \]
+    Thus the minimal non-negative solution occurs when $u_{1}=\left(\sum_{i=0}^{\infty} \gamma_{i}\right)^{-1}$ and then
+    \[
+    h_{i}=\sum_{j=i}^{\infty} \gamma_{j}\bigg/\sum_{j=0}^{\infty} \gamma_{j}
+    \]
+    In this case, for $i=1,2, \ldots$, we have $h_{i}<1$, so the population survives with positive probability. 
+\end{example}
+\subsection{Mean hitting times are minimal solutions}
+\begin{theorem}
+    The vector of mean hitting times $k^{A}=\left(k_{i}^{A}: i \in I\right)$ is the minimal non-negative solution to the system of linear equations
+    \[
+    \begin{cases}k_{i}^{A}=0 & \text { for } i \in A \\ k_{i}^{A}=1+\sum_{j} p_{i j} k_{j}^{A} & \text { for } i \notin A\end{cases}
+    \]
+\end{theorem}
+\begin{proof}
+    First we show that $k^{A}$ satisfies the equation. If $X_{0}=i \in A$, then $T^{A}=0$, so $k_{i}^{A}=0$. If $X_{0} \notin A$, then $T^{A} \geq 1$, so by the Markov property
+    \[
+    \bbE_{i}\left(T^{A} \mid X_{1}=j\right)=1+\bbE_{j}\left(T^{A}\right)=1+k_{j}^{A}
+    \]
+    and so for $i \notin A$,
+    \[
+    \begin{aligned}
+    k_{i}^{A} &=\sum_{t=1}^{\infty} \bbP\left(T^{A} \geq t\right)=\sum_{t=1}^{\infty} \sum_{j \in I} \bbP\left(T^{A} \geq t \mid X_{1}=j\right) \bbP_{i}\left(X_{1}=j\right) \\
+    &=\sum_{j \in I} \sum_{t=1}^{\infty} \bbP\left(T^{A} \geq t \mid X_{1}=j\right) \bbP_{i}\left(X_{1}=j\right) \\
+    &=\sum_{j \in I} \bbE_{i}\left(T^{A} \mid X_{1}=j\right) \bbP_{i}\left(X_{1}=j\right) \\
+    &=\sum_{j \in I} p_{i j}\left(1+k_{j}^{A}\right) \\
+    &=1+\sum_{j \in I} p_{i j} k_{j}^{A}
+    \end{aligned}
+    \]
+    In the second line above we use the fact that we can swap $\sum_{t \geq 1}$ and $\sum_{j \in I}$ for countable sums (Fubini's theorem).
+
+    Suppose now that $y=\left(y_{i}: i \in I\right)$ is any solution to (4.1). Then $k_{i}^{A}=y_{i}=0$ for $i \in A$. Suppose $i \notin A$, then
+    \[
+    \begin{aligned}
+    y_{i} &=1+\sum_{j \notin A} p_{i j} y_{j} \\
+    &=1+\sum_{j \notin A} p_{i j}\left(1+\sum_{k \notin A} p_{j k} y_{k}\right) \\
+    &=\bbP_{i}\left(T^{A} \geq 1\right)+\bbP_{i}\left(T^{A} \geq 2\right)+\sum_{j, k \notin A} p_{i j} p_{j k} y_{k}
+    \end{aligned}
+    \]
+    By repeated substitution we obtain
+    \[
+    y_{i}=\bbP_{i}\left(T^{A} \geq 1\right)+\cdots+\bbP_{i}\left(T^{A} \geq n\right)+\sum_{j_{1}, \ldots, j_{n} \notin A} p_{i j_{1}} p_{j_{1} j_{2}} \cdots p_{j_{n-1} j_{n}} y_{j_{n}}
+    \]
+
+    So since $y_{j_{n}}$ is non-negative
+    \[
+    y_{i} \geq \lim _{n \rightarrow \infty}\left[\bbP_{i}\left(H^{A} \geq 1\right)+\cdots+\bbP_{i}\left(T^{A} \geq n\right)\right]=\bbE_{i}\left(T^{A}\right)=k_{i}^{A}.
+    \]
 \end{proof}
 \end{document}

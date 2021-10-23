@@ -37,7 +37,7 @@ Define an inner product of the set
     With this inner product, $g_n,h_n$ are mutually orthogonal on $ [0,2L) $.
 \end{proposition}
 \begin{proof}
-    Check that
+    Claim that
     \begin{align}
         &\langle h_n,h_m \rangle = \begin{cases}
             L\delta_{nm} &\forall n,m\neq 0\\
@@ -49,11 +49,26 @@ Define an inner product of the set
             \end{cases} \\
             &\langle h_n,g_m \rangle =0
     \end{align}
+    \textit{Proof of claim.} Note that for $n\neq m$,
+    \begin{align*}
+        \langle h_n,h_m \rangle &= \int_{0}^{2L} \sin \frac{n\pi x}{L} \sin \frac{m\pi x}{L} \,\mathrm{d}x\\ 
+        &=\int_{0}^{2L} \frac{1}{2}\left( \cos \frac{(n-m)\pi x }{L}-\cos \frac{(n+m)\pi x}{L} \right) \,\mathrm{d}x\\ 
+        &= \frac{1}{2} \left[ \frac{L}{(n-m)\pi}\sin \frac{(n-m)\pi x }{L}-\frac{L}{(n+m)\pi} \sin \frac{(n+m)\pi x }{L} \right]_0^{2L}\\ 
+        &= \frac{1}{2}\left( \frac{L}{(n-m)\pi}\sin (2\pi(n-m))-\frac{L}{(n+m)\pi} \sin (2\pi(n+m)) \right)\\ 
+        &=0.
+    \end{align*}
+    For $n=m$, 
+    \begin{align*}
+        \langle h_n,h_m \rangle &= \int_{0}^{2L} \sin^2 \frac{n\pi x}{L} \,\mathrm{d}x\\ 
+        &= \int_{0}^{2L} \frac{1-\cos \frac{2n\pi x}{L}}{2} \,\mathrm{d}x\\ 
+        &= L.
+    \end{align*}
+    This proves (1.1). The rest are similar.
 \end{proof}
 $g_n,h_n$ form a complete orthogonal set, i.e. they span the space of well-behaved periodic functions $ [0,2L) $ and they are linearly independent.
 
 \subsection{Definition of Fourier series}
-We can express any well-behaved periodic function of period 2L as 
+We can express any well-behaved periodic function of period $2L$ as 
 \begin{equation}\label{1.eq.4:FS}
     f(x) = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right)
 \end{equation}
