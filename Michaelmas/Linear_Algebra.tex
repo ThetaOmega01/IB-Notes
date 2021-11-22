@@ -158,6 +158,7 @@ By convention, $\langle \varnothing\rangle=\{0\}$.
 If $V$ is finite-dimensional, is there a minimal number of vectors in the family required so that the family spans $V$?
 \begin{definition}[(Linear) Independence]
     Let $V$ be a vector space over $F$.
+
     We say $\{\bfv_1,\ldots,\bfv_n\}\subset V$ are (linearly) independent (or is a free family) if for any $\lambda_1,\ldots,\lambda_n\in F$
     $$\sum_{i=1}^n\lambda_i\bfv_i=0\implies\forall i,\lambda_i=0$$
     Equivalently, this set is not linearly independent if there exists $\lambda_1,\ldots,\lambda_n\in F$ not all zero such that $\sum_{i=1}^n\lambda_i\bfv_i=0$.
@@ -234,7 +235,11 @@ On the other hand, $\bfv_4\notin\langle\{\bfv_1,\bfv_2\}\rangle$, which as one c
     Suppose $\{\bfv_1,\ldots,\bfv_l,\bfw_{l+1},\ldots,\bfw_n\}$ spans $V$ for some $l<m$, then
     $$\exists\alpha_i,\beta_i\in \bbF, \bfv_{l+1}=\sum_{i\le l}\alpha_i\bfv_i+\sum_{i>l}\beta_i\bfw_i$$
     But $\{\bfv_i\}$ is linearly independent, so one of the $\beta_i$ is nonzero.
-    By relabelling $\beta_{l+1}\neq 0$, then $\bfw_{l+1}\in\langle\{\bfv_1,\ldots,\bfv_l,\bfv_{l+1},\bfw_{l+2}\ldots,\bfw_n\}\rangle$, therefore the set of vectors $\{\bfv_1,\ldots,\bfv_l,\bfv_{l+1},\bfw_{l+2}\ldots,\bfw_n\}$ also spans $V$. If we start from 0, we are done after $m$ steps by induction, and thus $m\le n$, and
+    By relabelling $\beta_{l+1}\neq 0$, then $\bfw_{l+1}\in\langle\{\bfv_1,\ldots,\bfv_l,\bfv_{l+1},\bfw_{l+2}\ldots,\bfw_n\}\rangle$, therefore the set of vectors 
+    \[
+        \{\bfv_1,\ldots,\bfv_l,\bfv_{l+1},\bfw_{l+2}\ldots,\bfw_n\}
+    \]
+    also spans $V$. If we start from 0, we are done after $m$ steps by induction, and thus $m\le n$, and
     \[
         \langle \bfv_1,\ldots,\bfv_m,\bfw_{m+1},\ldots,\bfw_n \rangle =V.\qedhere
     \]
