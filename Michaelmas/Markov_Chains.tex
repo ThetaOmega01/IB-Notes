@@ -7,15 +7,15 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\newpage
-\part*{Lecture 1}
 \section{Markov Chains}
 Throughout the note, let $ I $ be a finite or countable set, and any random variables will be defined on the same probability space $ (\Omega, \mathcal{F}, \mathbb{P}) $.
 \subsection{Basics}
 \begin{definition}[Markov Chains]
     A stochastic process $ X=(X_n)_{n\ge 0} $ is called a \textit{Markov chain} if $ \forall n\ge 0 $ and for all $ x_1,\dots,x_n\in I $, we have 
     \[
-        \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n, X_{n-1}=x_{n-1}, \dots, X_0=x_0) = \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n).
+        \begin{aligned}
+            &\mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n, X_{n-1}=x_{n-1}, \dots, X_0=x_0)\\ &= \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n).
+        \end{aligned}
     \]
 \end{definition}
 \begin{definition}[Time-homogeneous]
@@ -88,7 +88,7 @@ The next theorem gives the condition for $X$ to be Markov.
 \begin{proof}
     Suppose $ X $ is $ \Markov(\lambda,P) $. Then 
     \begin{align*}
-        \mathbb{P}(X_0=x_0,\dots,X_n=x_n) &= \mathbb{P}(X_n=x_n,X_{n-1}=x_{n-1},\dots, X_0=x_0|X_{n-1}=x_{n-1},\dots, X_0=x_0)\\
+        &\mathbb{P}(X_0=x_0,\dots,X_n=x_n)\\ &= \mathbb{P}(X_n=x_n,X_{n-1}=x_{n-1},\dots, X_0=x_0|X_{n-1}=x_{n-1},\dots, X_0=x_0)\\
         &\quad\cdot \mathbb{P}(X_{n-1}=x_{n-1},\dots, X_0=x_0 )\\
         &= \mathbb{P}(X_n=x_n|X_{n-1}=x_{n-1},\dots, X_0=x_0)\mathbb{P}(X_{n-1}=x_{n-1},\dots, X_0=x_0 )\\ 
         &= P(x_{n-1},x_n)\mathbb{P}(X_{n-1}=x_{n-1},\dots, X_0=x_0 )\\ 
@@ -103,7 +103,7 @@ The next theorem gives the condition for $X$ to be Markov.
     \]
     Setting $n=0$ gives $ \mathbb{P}(X_0=x_0)=\lambda_{x_0} $. By definition, consider 
     \begin{align*}
-        \mathbb{P}(X_n=x_n|X_{n-1}=x_{n-1},\dots, X_0=x_0) &= \frac{\mathbb{P}(X_0=x_0,\dots,X_n=x_n)}{\mathbb{P}(X_0=x_0,\dots,X_{n-1}=x_{n-1})}\\ 
+        &\mathbb{P}(X_n=x_n|X_{n-1}=x_{n-1},\dots, X_0=x_0)\\ &= \frac{\mathbb{P}(X_0=x_0,\dots,X_n=x_n)}{\mathbb{P}(X_0=x_0,\dots,X_{n-1}=x_{n-1})}\\ 
         &= \frac{\lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-1},x_n)}{\lambda_{x_0} P(x_0,x_1)\cdots P(x_{n-2},x_{n-1})}\\ 
         &= P(x_{n-1},x_n).\qedhere
     \end{align*}
@@ -134,8 +134,6 @@ Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \f
     \end{align*}
 \end{definition}
 
-\newpage
-\part*{Lecture 2}
 \subsection{Markov property}
 \begin{theorem}[Simple Markov property]\label{thm:simple_markov_property}
     Suppose $ X $ is $ \Markov(\lambda,P) $ and fix $ M\in \mathbb{N}  $ and $ i\in I $. Conditional on $X_m=i$, the process $ (X_{m+n})_{n\ge 0} $ is $ \Markov(\delta_i, P) $ and it is independent of $ X_0,\dots,X_m $.
@@ -143,11 +141,16 @@ Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \f
 \begin{proof}
     We aim to show that $ \forall n $ and $ \forall x_i $, 
     \[
-        \mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)= \delta_{ix_m}\mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n}).
+        \begin{aligned}
+            &\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)\\
+            &= \delta_{ix_m}\mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n}).
+        \end{aligned}
     \]
     We have 
     \[
-        \mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)= \frac{\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_{m}=x_m)}{\mathbb{P}(X_m=i)}\delta_{ix_m}. \tag{$ * $}
+        \begin{aligned}
+            &\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)\\ &= \frac{\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_{m}=x_m)}{\mathbb{P}(X_m=i)}\delta_{ix_m}.
+        \end{aligned} \tag{$ * $}
     \]
     Note that
     \begin{align*}
@@ -158,7 +161,9 @@ Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \f
     \end{align*}
     Plugging this back into ($ * $) we get 
     \[
-        \mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)= \delta_{ix_m}\mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n}).
+        \begin{aligned}
+            &\mathbb{P}(X_{m+n}=x_{m+n},\dots,X_m=x_m|X_m=i)\\ &= \delta_{ix_m}\mathbb{P}(X_m,X_{m+1})\cdots \mathbb{P}(X_{m+n-1},X_{m+n}).
+        \end{aligned}
     \]
     So this shows that $ (X_{m+n})_{n\ge 0} $ is $ \Markov(\delta_i,P) $ conditioning on $X_m=i$, by theorem \ref{thm:1.1}.
 
@@ -248,8 +253,7 @@ We have proved, using these notations, that
     \]
     \item \textit{If they are not all distinct}, then say $ \lambda $ appears with multiplicity 2, then we include also the term $ (an+b)\lambda^n $ instead of just $ b\lambda^n $. (Jordan normal form of $P$)
 \end{enumerate}
-\newpage
-\part*{Lecture 3}
+
 \begin{example}
 	Given the transition matrix
 	$$
@@ -378,9 +382,10 @@ We have proved, using these notations, that
     \begin{align*}
         &\mathbb{P}_i(T_A< \infty)={\color{blue}h_i^A} =\sum_{n=1}^{\infty}\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i)\\ 
             &= \sum_{n=1}^{\infty} \sum_{j} \mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i,X_1=j)P(i,j)\\ 
-            &=\sum_j \mathbb{P}(\cancel{X_0\notin A}, X_1\in A|\cancel{X_0=i},X_1=j)P(i,j)\\[-13pt]
-            &\hspace{5em}+\sum_j \sum_{n=2}^{\infty}\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i,X_1=j)P(i,j)\\ 
-            &=\sum_j P(i,j)\mathbb{P}(X_1\in A|X_1=j)+\sum_j \sum_{n=1}^{\infty}P(i,j)\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_1=j)\tag{By Simple Markov Property}\\ 
+            &=\sum_j \mathbb{P}(\cancel{X_0\notin A}, X_1\in A|\cancel{X_0=i},X_1=j)P(i,j)\\[-1em]
+            &\hspace{4em}+\sum_j \sum_{n=2}^{\infty}\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_0=i,X_1=j)P(i,j)\\ 
+            &=\sum_j P(i,j)\mathbb{P}(X_1\in A|X_1=j)\\[-1em]
+            &\hspace{4em}+\sum_j \sum_{n=1}^{\infty}P(i,j)\mathbb{P}(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A|X_1=j)\tag{By Simple Markov Property} \\
             &= \sum_j P(i,j) \left( \mathbb{P}_j(X_0\in A)+\sum_{n=1}^{\infty} \mathbb{P}_j(X_0\notin A,\dots,X_{n-1}\notin A, X_n\in A)\right)\tag{Combine terms and add `zero' term $\mathbb{P}_j(X_0\in A)$}\\ 
             &= \sum_j P(i,j) \left( \mathbb{P}_j(T_A=0)+ \sum_{n=1}^{\infty}\mathbb{P}_j(T_A=n) \right)\\ 
             &= \sum_j P(i,j) \bbP_j(T_A< \infty ) = {\color{blue}\sum_j P(i,j)h_j^A}.
@@ -405,8 +410,7 @@ We have proved, using these notations, that
 \end{proof}
 
 This method of computing hitting probabilities is perfectly valid on Markov chains with infinite state spaces.
-\newpage
-\part*{Lecture 4}
+
 \begin{example}
     Consider again the Markov chain in the diagram below.
 	\begin{center}

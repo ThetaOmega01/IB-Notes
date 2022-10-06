@@ -19,6 +19,8 @@
 \usepackage{IEEEtrantools}
 \usepackage{xcomment}
 
+\newcommand{\sectionbreak}{\clearpage}
+
 \tdplotsetmaincoords{60}{120}
 
 \usetikzlibrary{arrows.meta}
@@ -404,9 +406,9 @@ dot/.default = 5pt% size of the circle diameter
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \input{../Publish.tex}
+\input{../Publish.tex}
 % \input{../iPad.tex}
-\input{../plain.tex}
+% \input{../plain.tex}
 
 %layout full
 % \geometry{%
@@ -426,6 +428,15 @@ dot/.default = 5pt% size of the circle diameter
 % top=54pt,
 % right=17pt
 % }
+% layout a5
+\geometry{%
+  a5paper,
+  lmargin=1cm,
+  rmargin=1cm,
+  tmargin=2.5cm,
+  bmargin=1.5cm,
+  footskip=12pt,
+  headheight=24pt}
 \pagestyle{fancy}
 \rhead{\textsc{\triposcourse{}}}
-\author{You}
+\author{jt775}
