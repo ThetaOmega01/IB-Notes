@@ -8,8 +8,7 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\newpage
-\part*{Lecture 1}
+\clearpage
 \part{Self-adjoint ODEs}
 \section{Fourier Series}
 \subsection{Periodic functions}
@@ -119,8 +118,7 @@ Similar for $a_n$. We get
         \item FS has a persistent \textit{overshoot} at $x=L$, which is approximately 9\% and is known as the \textit{Gibbs phenonenon}. See Example Sheet Q5.
     \end{enumerate}
 \end{note}
-\newpage
-\part*{Lecture 2}
+
 \subsection{The Dirichlet Conditions and Fourier's Theorem}
 A natural question is then which functions are allowed to have a proper Fourier series.
 Surprisingly, a big, yet hard to precisely characterise, class of functions has a convergent Fourier series that has the desired properties.
@@ -228,8 +226,7 @@ This is known as Parseval's Theorem.
 \begin{remark}
     If we think of the integral of the square as $ \langle f,f \rangle = \left\| f \right\| ^2  $, the $ L^2 $ norm, then Parseval's Theorem can be thought of an analog of Pythagoras' Theorem in this space of functions.
 \end{remark}
-\newpage
-\part*{Lecture 3}
+
 \subsection{Alternative Fourier Series}
 \paragraph{Fourier sines and cosines.}
 Consider a function $f:[0,L)\to\mathbb R$.
@@ -373,8 +370,7 @@ It is exactly the general see-saw wave
 \end{equation}
 This is the \textit{Green's function} for this ODE $-\rmd^2 y/\rmd x^2 =f(x)$.
 One can actually solve this integral and get what we got in Example \ref{odd_sq_fourier_ode}.
-\newpage
-\part*{Lecture 4}
+
 \section{Sturm-Liouville Theory}
 \subsection{Review of Second-Order Linear ODEs}
 For a general inhomogeneous ODE $\mathcal Ly=f(x)$ where
@@ -515,8 +511,6 @@ Even if it has dimension $2$ (not more because the ODE is second order), we can 
 
 Also, by considering $u\mathcal Lv-v\mathcal Lu=(-p(uv^\prime-u^\prime v))^\prime$, one can show that a regular Sturm-Liouville problem always has all eigenvalues simple.
 
-\newpage
-\part*{Lecture 5}
 \begin{proof}[Proof of (b)]
     Suppose $\mathcal Ly_m=\lambda_mwy_m$ and $\mathcal Ly_n=\lambda_nwy_n$, then
     \begin{equation}\label{2.eq.13}

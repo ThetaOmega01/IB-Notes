@@ -7,14 +7,13 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\newpage
-\part*{Lecture 1}
+
 \section{Vector Spaces}
 \subsection{Vector spaces and subspaces}
 Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
 
 \begin{definition}[$ \bbF $ Vector Space]
-    An \textit{$ \bbF$ vector space} (or a \textit{vector space over $\bbF$}) is a an abelian group $ (V,+) $ with a function $ \bbF\times V \mapsto V $, defined by $ (\lambda, \bfv) \mapsto \lambda\bfv $, such that 
+    An \textbf{$ \bbF$ vector space} (or a \textbf{vector space over $\bbF$}) is a an abelian group $ (V,+) $ with a function $ \bbF\times V \mapsto V $, defined by $ (\lambda, \bfv) \mapsto \lambda\bfv $, such that 
     \begin{enumerate}
         \item $ \lambda(\bfv_1+\bfv_2)=\lambda\bfv_1+\lambda\bfv_2 $,
         \item $ (\lambda_1+\lambda_2)\bfv = \lambda_1\bfv+\lambda_2\bfv $,
@@ -27,7 +26,7 @@ Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
 \begin{example}
     \begin{enumerate}
         \item $ \bbF^n,\ n\in \mathbb{N}  $ is a vector space.
-        \item $ \bbR^X $, where $X$ is a set, is a vector space.
+        \item $ \bbR^X = \{f: X\to \mathbb{R}\} $, the set of real-valued functions on $X$, is a vector space.
         \item $ \mcM_{n,m}(\bbF) $ is a vector space.
     \end{enumerate}
 \end{example}
@@ -36,7 +35,7 @@ Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
 \end{remark}
 
 \begin{definition}[Subspace]
-    Let $V$ be a vector space on $\bbF$. A subset $U$ of $V$ is a \textit{vector subspace} if 
+    Let $V$ be a vector space on $\bbF$. A subset $U$ of $V$ is a \textbf{vector subspace} if 
     \begin{enumerate}
         \item $ \mathbf{0}\in U $,
         \item $ (\bfu_1,\bfu_2)\in U\times U \Rightarrow u_1+u_2\in U $,
@@ -49,12 +48,14 @@ Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
     Denote $ U\le V $.
 \end{definition}
 Recall from Vectors and Matrices: the two definitions are equivalent.
+
+This property implies that $V$ and $U$ are \textbf{stable} by scalar multiplication and vector addition.
 \begin{proposition}
     Let $ V $ be a vector space over $\bbF$. If $ U\le V $, then $U$ is a vector space over $\bbF$.
 \end{proposition}
 \begin{example}
     \begin{enumerate}
-        \item $ \mathbb{P}(\bbR)\le \mcC(\bbR)\le \mathbb{R} ^\mathbb{R}  $.
+        \item $ \mathbb{P}(\bbR)\le \mcC(\bbR)\le \mathbb{R} ^\mathbb{R}  $, where $ \mathbb{P}(\mathbb{R}) $ is the space of real polynomials and $ \mathcal{C}(\mathbb{R}) $ is the space of continuous real functions.
         \item The set of vectors
         $$
         \left\{\begin{pmatrix}x_1 \\ x_2 \\ x_3\end{pmatrix} : x_1, x_2, x_3 \in \bbR, x_1 + x_2 + x_3 = t\right\}
@@ -105,8 +106,7 @@ The multiplication is well-defined, since if $ \bfv_1+U=\bfv_2+U $ then $ \bfv_1
         &= \lambda_1\bfv_1+\lambda_2\bfv_2+U\in V/U.\qedhere
     \end{align*}
 \end{proof}
-\newpage
-\part*{Lecture 2}
+\clearpage
 \subsection{Spans, independence and Steinitz Exchange Lemma}
 \begin{definition}[Span of a Family of Vectors]
     Let $V$ be a vector space over $\mathbb F$ and $S\subset V$.
@@ -244,8 +244,7 @@ On the other hand, $\bfv_4\notin\langle\{\bfv_1,\bfv_2\}\rangle$, which as one c
         \langle \bfv_1,\ldots,\bfv_m,\bfw_{m+1},\ldots,\bfw_n \rangle =V.\qedhere
     \]
 \end{proof}
-\newpage 
-\part*{Lecture 3}
+
 \subsection{Basis, Dimension and Direct Sum}
 From the Steinitz Exchange Lemma, we have
 \begin{corollary}\label{dim_well_defined}
@@ -267,8 +266,9 @@ We call this cardinality the \textit{dimension} of $V$, denoted by $ \dim V $ or
     $$\dim(U+W)=\dim U+\dim V-\dim(U\cap W)$$
 \end{proposition}
 \begin{proof}
-    Pick a basis $\bfv_1,\ldots,\bfv_l$ of $U\cap W$.
-    Extend it to a basis $\bfv_1,\ldots,\bfv_l,\bfu_1,\ldots,\bfu_m$ of $U$ and a basis $\bfv_1,\ldots,\bfv_l,\bfw_1,\ldots,\bfw_n$ of $W$. Claim that $B=\{\bfv_i\}\cup\{\bfu_i\}\cup\{\bfw_i\}$ is easily a basis of $U+W$.
+    Pick a basis $\bfv_1,\ldots,\bfv_l$ of $U\cap W$ and extend it to a basis $\bfv_1,\ldots,\bfv_l,\bfu_1,\ldots,\bfu_m$ of $U$ and a basis $\bfv_1,\ldots,\bfv_l,$ $\bfw_1,\ldots,\bfw_n$ of $W$. 
+    
+    Claim that $B=\{\bfv_i\}\cup\{\bfu_i\}\cup\{\bfw_i\}$ is easily a basis of $U+W$.
     The equality follows.
 
     Indeed, it is obvious that $B$ is a generating set. To show linear independence, consider 
@@ -277,7 +277,9 @@ We call this cardinality the \textit{dimension} of $V$, denoted by $ \dim V $ or
     \]
     Rearrange this to get 
     \[
-        \sum_{i=1}^{l}\alpha_i \bfv_i+\sum_{j=1}^{m}\beta_j \bfu_j=-\sum_{k=1}^{n}\gamma_k\bfw_k \Longrightarrow \sum_{k=1}^{n}\gamma_k\bfw_k\in U \cap W \Longrightarrow \sum_{k=1}^{n}\gamma_k\bfw_k=\sum_{i=1}^{l}\delta_i\bfv_i.
+        \begin{aligned}
+           & \sum_{i=1}^{l}\alpha_i \bfv_i+\sum_{j=1}^{m}\beta_j \bfu_j=-\sum_{k=1}^{n}\gamma_k\bfw_k\\ &\Longrightarrow \sum_{k=1}^{n}\gamma_k\bfw_k\in U \cap W\\ &\Longrightarrow \sum_{k=1}^{n}\gamma_k\bfw_k=\sum_{i=1}^{l}\delta_i\bfv_i.
+        \end{aligned}
     \]
     Therefore we get 
     \[
@@ -358,8 +360,7 @@ Lemma \ref{equivalence_of_direct_sum} is then generalized to
         \item For any bases $B_i$ of $V_i$, the union $\bigcup_iB_i$ is a basis of $\sum_iV_i$.
     \end{enumerate}
 \end{proposition}
-\newpage
-\part*{Lecture 4}
+
 \section{Linear Maps}
 \subsection{Linear maps}
 \begin{definition}[Linear Map]
@@ -485,8 +486,7 @@ Hence in the finite dimensional case, we can rewrite the preceding theorem to ge
     Consider $\alpha:\mathbb R^3\to\mathbb R$ via $(x,y,z)^\top\mapsto x+y+z$, then $r(\alpha)=1$ and $n(\alpha)=V$, so $\dim V=3-1=2$.
     Geometrically, $V$ is just a plane with normal $(1,1,1)^\top$.
 \end{example}
-\newpage
-\part*{Lecture 5}
+
 \subsection{Linear Maps \texorpdfstring{$V \rightarrow W$}{V to W} and Matrices}
 \subsubsection*{Space of linear maps}
 We are now going to consider linear maps between two vector spaces $V$ and $W$.
