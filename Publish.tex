@@ -8,12 +8,12 @@
   {}%
   {}%
   {}%
-  {\sffamily\bfseries}%
+  {\bfseries\sffamily}%
   {.}%
   { }%
   {}%
 
-% \renewenvironment{proof}{{\sffamily\bfseries Proof. }}{\qed}
+% \renewenvironment{proof}{{\bfseries Proof. }}{\qed}
 
 \theoremstyle{mystyle}{
   \newtheorem{theorem}{Theorem}[section]
@@ -47,10 +47,10 @@
 
 \tcolorboxenvironment{definition}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   colback={White!90!Cerulean},
   enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Cerulean},
+  borderline west={1pt}{0pt}{Cerulean},
   sharp corners,
   before skip=10pt,
   after skip=10pt,
@@ -60,10 +60,10 @@
 
 \tcolorboxenvironment{notation}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   colback={White!90!Cerulean},
   enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Cerulean},
+  borderline west={1pt}{0pt}{Cerulean},
   sharp corners,
   before skip=10pt,
   after skip=10pt,
@@ -73,10 +73,10 @@
 
 \tcolorboxenvironment{proposition}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   colback={White!90!Yellow},
   enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Yellow},
+  borderline west={1pt}{0pt}{Yellow},
   sharp corners,
   before skip=10pt,
   after skip=10pt,
@@ -86,10 +86,10 @@
 
 \tcolorboxenvironment{sprop}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   colback={White!90!Yellow},
   enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Yellow},
+  borderline west={1pt}{0pt}{Yellow},
   sharp corners,
   before skip=10pt,
   after skip=10pt,
@@ -99,10 +99,10 @@
 
 \tcolorboxenvironment{theorem}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   colback={White!90!Dandelion},
   enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Dandelion},
+  borderline west={1pt}{0pt}{Dandelion},
   sharp corners,
   before skip=10pt,
   after skip=10pt,
@@ -112,9 +112,9 @@
 
 \tcolorboxenvironment{lemma}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   blanker,
-  borderline west={2pt}{0pt}{Red},
+  borderline west={1pt}{0pt}{Red},
   before skip=10pt,
   after skip=10pt,
   sharp corners,
@@ -126,9 +126,9 @@
 
 \tcolorboxenvironment{corollary}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   blanker,
-  borderline west={2pt}{0pt}{ForestGreen},
+  borderline west={1pt}{0pt}{ForestGreen},
   before skip=10pt,
   after skip=10pt,
   sharp corners,
@@ -140,9 +140,9 @@
 
 \tcolorboxenvironment{proof}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   blanker,
-  borderline west={2pt}{0pt}{NavyBlue!80!white},
+  borderline west={1pt}{0pt}{NavyBlue!80!white},
   before skip=10pt,
   after skip=10pt,
   left=12pt,
@@ -153,9 +153,9 @@
 
 \tcolorboxenvironment{remark}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   blanker,
-  borderline west={2pt}{0pt}{Green},
+  borderline west={1pt}{0pt}{Green},
   before skip=10pt,
   after skip=10pt,
   left=12pt,
@@ -166,9 +166,9 @@
 
 \tcolorboxenvironment{note}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   blanker,
-  borderline west={2pt}{0pt}{PineGreen},
+  borderline west={1pt}{0pt}{PineGreen},
   before skip=10pt,
   after skip=10pt,
   left=12pt,
@@ -179,9 +179,9 @@
 
 \tcolorboxenvironment{example}{
   boxrule=0pt,
-  boxsep=2pt,
+  boxsep=0pt,
   blanker,
-  borderline west={2pt}{0pt}{Black},
+  borderline west={1pt}{0pt}{Black},
   sharp corners,
   before skip=10pt,
   after skip=10pt,
@@ -191,10 +191,11 @@
   % parbox=false,
 }
 
-\titleformat*{\section}{\Large\bfseries\sffamily}
-\titleformat*{\subsection}{\large\bfseries\sffamily}
-\titleformat*{\subsubsection}{\bfseries\sffamily}
-\titleformat*{\paragraph}{\bfseries\sffamily}
+\sectionfont{\Large\bfseries\sffamily}
+\subsectionfont{\large\bfseries\sffamily}
+\subsubsectionfont{\bfseries\sffamily}
+\paragraphfont{\bfseries\sffamily}
+\partfont{\bfseries\sffamily}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

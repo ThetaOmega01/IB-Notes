@@ -1,0 +1,102 @@
+\documentclass[a4paper]{article}
+
+\newcommand{\triposcourse}{Quantum Mechanics}
+\input{../header.tex}
+\graphicspath{ {./images/} }
+\pgfplotsset{compat=1.17}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\part{Historical Introduction}
+
+\section{Particles and waves in classical mechancis}
+\paragraph{Recap of classical mechanics} In this section we discuess basic concepts of classical mechanics.
+\begin{definition}
+    A \textbf{point particle} is an object carrying energy $E$ and momentum $\mathbf{p}$ in infinitesimal small point of space.
+\end{definition}
+The particle is determined by:
+\begin{itemize}
+    \item $\mathbf{x}$, position, 
+    \item $\mathbf{v} = \dot{\mathbf{x}}$, velocity
+\end{itemize}
+Recall that Newton's 2nd law states that 
+\[
+    m \ddot{\mathbf{x}} = \mathbf{F}(\mathbf{x},\dot{\mathbf{x}}).
+\]
+Solving N2 determines $ \mathbf{x},\dot{\mathbf{x}} $ for all $t>t_0$ (the start time), once initial conditions $ \mathbf{x}(t_0),\dot{\mathbf{x}}(t_0) $ are known.
+
+\paragraph{Waves} New concepts here.
+\begin{definition}
+    \textbf{Waves} are any real or complex-valued functions with periodicity in time or space. 
+
+    \begin{itemize}
+        \item When the function $f$ is periodic in time with period $T$, define \textbf{frequency} $ \nu = 1/T $, and \textbf{angular frequency} $ \omega = 2\pi \nu = 2\pi/T $. 
+        \item When the function is periodic in space $ f(x+\lambda)=f(x) $, define \textbf{wave length} $ \lambda $ and \textbf{wave number} $ k=2\pi/\lambda $. 
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    Common waves: $ \sin/\cos(\omega t) , \exp(i\omega t), \sin/\cos(kx), \exp(ikx) $. 
+\end{example}
+
+\begin{example}
+    1D electromagnetic wave obeys the \textbf{wave equation}: 
+    \begin{equation}\label{eqn:I.1.wave_eqn}
+        \frac{\partial^2 f}{\partial t^2} - c^2 \frac{\partial^2 f}{\partial x^2} = 0
+    \end{equation}
+    with $c\in \mathbb{R}$. It has general solutions 
+    \[
+        f_{\pm}(x,t) = A_{\pm}\exp(\pm ikx-i\omega t)
+    \]
+    where $A_{\pm}$ is called the \textbf{amplitude} of wave and
+    \[
+        \boxed{\omega=ck}\quad \lambda = \frac{2\pi c}{\omega} = \frac{c}{\nu}. 
+    \]
+    The equation in box is called \textbf{dispersion relation}. 
+
+    In 3D, replace $\frac{\partial^2 }{\partial x^2} $ with $ \nabla^2 $:
+    \begin{equation}\label{eqn:I.1.wave_eqn_3d}
+        \frac{\partial^2 f}{\partial t^2} - c^2 \nabla^2 f = 0
+    \end{equation}
+    with general solution 
+    \[
+        f(\mathbf{x},t) = A \exp(i \mathbf{k}\cdot \mathbf{x} - i \omega t).
+    \]
+    We need ICs $ f(x,t_0),\frac{\partial f}{\partial t}(x,t_0)  $ to get a unique solution. Dispersion relation is $ \omega = c|\mathbf{k}| $. 
+\end{example}
+
+\begin{note}\
+    \begin{itemize}
+        \item Other kind of waves arise as solutions of other governing equations provided a different dispersion relation. 
+        \item For any governing equation, superposition principle holds: if $ f_1,f_2 $ are solutions, then $f=f_1+f_2$ is also a solution. 
+    \end{itemize}
+\end{note}
+
+\section{Particle-like behaviour of waves}
+\subsection{Black-body radiation (1900)}
+\paragraph{Inconsistency between classical prediction and experiments}
+When a body is heated at temperature $T$, it radiates light at different frequencies. The experimented graph for frequency and intensity is as follows (in blue). This differs dramatically with classical prediction (in purple). Classical prediction states that 
+\begin{align*}
+    &E = k_B T, \quad k_B \text{ Boltzmann constant},\\ 
+    &I(\omega) \propto k_B T \frac{\omega^2}{\pi^2 c^3}. 
+\end{align*}
+\paragraph{Planck's interpretation}
+Planck imposes a fit of the curve 
+\[
+    I(\omega) \propto \frac{\omega^2}{\pi^2c^3} \frac{\hbar \omega}{\exp(\pi \omega/k_B T)-1}
+\]
+where $ \hbar = h/2\pi $ is the \textbf{reduced Planck constant} with 
+\[
+    h \sim 6.626 \cdot 10^{-34} \text { Joule} \times \text {sec } \quad \hbar=\frac{h}{2 \pi} \sim 1.055 \cdot 10^{-34} \text { Joule} \times \text {sec }. 
+\]
+It makes sense if $ E = \hbar \omega $, i.e. energy is \textit{quantized}.
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{qm1.png}
+\end{center}
+
+\subsection{Photoelectric effect (1905)}
+\subsection{Compton scattering (1923)}
+
+\end{document}
