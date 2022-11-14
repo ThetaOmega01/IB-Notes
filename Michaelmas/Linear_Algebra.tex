@@ -6,7 +6,9 @@
 \pgfplotsset{compat=1.17}
 \begin{document}
 \maketitle
+\newpage
 \tableofcontents
+\newpage
 
 \section{Vector Spaces}
 \subsection{Vector spaces and subspaces}
@@ -38,7 +40,7 @@ Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
     Let $V$ be a vector space on $\bbF$. A subset $U$ of $V$ is a \textbf{vector subspace} if 
     \begin{enumerate}
         \item $ \mathbf{0}\in U $,
-        \item $ (\bfu_1,\bfu_2)\in U\times U \Rightarrow u_1+u_2\in U $,
+        \item $ (\bfu_1,\bfu_2)\in U\times U \Rightarrow \mathbf{u}_1+\mathbf{u}_2\in U $,
         \item $ (\lambda,\bfu)\in \bbF\times U \Rightarrow \lambda\bfu\in U $.
     \end{enumerate}
     Equivalently, $U$ is a subspace of $V$ if 
@@ -49,13 +51,13 @@ Let $ \bbF $ be an arbitrary field ($ \mathbb{R}  $ or $ \mathbb{C}  $).
 \end{definition}
 Recall from Vectors and Matrices: the two definitions are equivalent.
 
-This property implies that $V$ and $U$ are \textbf{stable} by scalar multiplication and vector addition.
+This property implies that $V$ and $U$ are \textbf{stable} by scalar multiplication and vector addition. We immediately get:
 \begin{proposition}
     Let $ V $ be a vector space over $\bbF$. If $ U\le V $, then $U$ is a vector space over $\bbF$.
 \end{proposition}
 \begin{example}
     \begin{enumerate}
-        \item $ \mathbb{P}(\bbR)\le \mcC(\bbR)\le \mathbb{R} ^\mathbb{R}  $, where $ \mathbb{P}(\mathbb{R}) $ is the space of real polynomials and $ \mathcal{C}(\mathbb{R}) $ is the space of continuous real functions.
+        \item $ \mathbb{P}(\bbR)\le C(\bbR)\le \mathbb{R} ^\mathbb{R}  $, where $ \mathbb{P}(\mathbb{R}) $ is the space of real polynomials and $ C(\mathbb{R}) $ is the space of continuous real functions.
         \item The set of vectors
         $$
         \left\{\begin{pmatrix}x_1 \\ x_2 \\ x_3\end{pmatrix} : x_1, x_2, x_3 \in \bbR, x_1 + x_2 + x_3 = t\right\}
@@ -80,7 +82,7 @@ The union of two subspaces is generally \emph{not} a subspace, as it is typicall
         U+W  =\left\{ \bfu+\bfw: (\bfu,\bfw)\in U\times W \right\}.
     \] 
 \end{definition}
-For example, the sum of $x$-axis and $y$-axis is $ \mathbb{R}^{2} $.
+For example, the sum of $x$-axis and $y$-axis is $ \mathbb{R}^{2} $. By direct verification we get:
 
 \begin{proposition}
     $U+W\le V$.
@@ -92,6 +94,7 @@ For example, the sum of $x$-axis and $y$-axis is $ \mathbb{R}^{2} $.
     Let $X$ be a subspace of $V$ that contains $U,W$. By closure, $ \bfu+\bfw\in X $ for all $ \bfu\in U,\bfw\in W $, so $ U+W\le X $. Hence it is the smallest subspace.
 \end{proof}
 \subsection{Subspaces and quotient}
+Same as group theory, we can define subspaces and quotients. 
 \begin{definition}[Quotient]
     Let $V$ a vector space over $\bbF$, and let $U \leq V$. The \emph{quotient space} $V/U$ is the abelian group $V/U$ equipped with the scalar multiplication $\bbF \times V/U \rightarrow V/U$, $(\lambda, \bfv + U) \mapsto \lambda \bfv + U$.
 \end{definition}
@@ -106,7 +109,7 @@ The multiplication is well-defined, since if $ \bfv_1+U=\bfv_2+U $ then $ \bfv_1
         &= \lambda_1\bfv_1+\lambda_2\bfv_2+U\in V/U.\qedhere
     \end{align*}
 \end{proof}
-\clearpage
+
 \subsection{Spans, independence and Steinitz Exchange Lemma}
 \begin{definition}[Span of a Family of Vectors]
     Let $V$ be a vector space over $\mathbb F$ and $S\subset V$.
@@ -452,7 +455,7 @@ There is a similar result to first isomorphism theorem:
     Next show that $ \bar{\alpha} $ is a bijection. Let $ \bar{\alpha}(\bfv+\ker \alpha)=0 $, then $ \alpha(\bfv)=0 \Rightarrow \bfv+\ker \alpha=0+\ker \alpha $, so it is injective. Given $ \bfw\in \Im \alpha, \exists \bfv\in V $ such that $ \alpha(\bfv)=\bfw =\bar{\alpha}(\bfv+\ker \alpha)$, so it is surjective and hence bijective.
 \end{proof}
 \begin{definition}
-    The rank of $\alpha:V\to W$ is $\rank(\alpha)=\dim\operatorname{Im}\alpha$ and nullity is $\nullity(\alpha)=\dim\ker\alpha$.
+    The rank of $\alpha:V\to W$ is $\rank(\alpha)=\dim\operatorname{Im}\alpha$ and nullity is $\nullity(\alpha)=\dim\ker\alpha$. Sometimes we write $ r(\alpha),n(\alpha) $. 
 \end{definition}
 Hence in the finite dimensional case, we can rewrite the preceding theorem to get
 \begin{theorem}[Rank-Nullity Theorem]
@@ -629,4 +632,5 @@ By checking definitions,
     where $A$ is $k \times \ell$ such that $ A = [\alpha\upharpoonright_Y]_{B',C'} $. 
     Also $ \alpha $ induces a well-defined map $ \bar{\alpha}:V/Y\to W/Z $ such that $ \v+Y\mapsto \alpha(\bfv)+Z $, with matrix given by $ [\bar{\alpha}]_{B'',C''}=C $.
 \end{example}
+
 \end{document}

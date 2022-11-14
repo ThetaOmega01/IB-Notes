@@ -6,12 +6,15 @@
 \pgfplotsset{compat=1.17}
 \begin{document}
 \maketitle
+\clearpage
 \tableofcontents
-\section{Markov Chains}
+\clearpage 
+
+\section{Definition of a Markov chain}
 Throughout the note, let $ I $ be a finite or countable set, and any random variables will be defined on the same probability space $ (\Omega, \mathcal{F}, \mathbb{P}) $.
-\subsection{Basics}
+
 \begin{definition}[Markov Chains]
-    A stochastic process $ X=(X_n)_{n\ge 0} $ is called a \textit{Markov chain} if $ \forall n\ge 0 $ and for all $ x_1,\dots,x_n\in I $, we have 
+    A stochastic process $ X=(X_n)_{n\ge 0} $ is called a \textbf{Markov chain} if $ \forall n\ge 0 $ and for all $ x_1,\dots,x_n\in I $, we have 
     \[
         \begin{aligned}
             &\mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n, X_{n-1}=x_{n-1}, \dots, X_0=x_0)\\ &= \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n).
@@ -19,15 +22,15 @@ Throughout the note, let $ I $ be a finite or countable set, and any random vari
     \]
 \end{definition}
 \begin{definition}[Time-homogeneous]
-    A Markov chain $X$ is called \textit{time-homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textit{time-inhomogeneous}.
+    A Markov chain $X$ is called \textbf{time-homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textbf{time-inhomogeneous}.
 \end{definition}
 We will only be dealing with time-homogeneous Markov chains in this course.
 \begin{definition}[Stochastic matrix]
-    A matrix $P$ is called a \textit{stochastic matrix} if $ \sum_{y}P(x,y)=1 $.
+    A matrix $P$ is called a \textbf{stochastic matrix} if $ \sum_{y}P(x,y)=1 $.
 \end{definition}
 
 \begin{definition}[Transitional matrix]
-    $P$ be a matrix such that $ P(x,y) = \mathbb{P}(X_1=y|X_0=x), x,y\in I $. $P$ is called the \textit{transitional matrix} of $X$.
+    $P$ be a matrix such that $ P(x,y) = \mathbb{P}(X_1=y|X_0=x), x,y\in I $. $P$ is called the \textbf{transitional matrix} of $X$.
 \end{definition}
 
 We see that $P$ is a stochastic matrix.
@@ -50,7 +53,6 @@ We see that $P$ is a stochastic matrix.
     We also write $ P(x,y)=P_{xy} $.
 \end{note}
 
-\subsection{Diagrams of Markov chains}
 We usually represent a Markov chain by its \textit{diagram} corresponding to the allowed transitions.
 \begin{example}
     Let $ \alpha,\beta\in (0,1) $ and consider 
@@ -76,6 +78,8 @@ We usually represent a Markov chain by its \textit{diagram} corresponding to the
         \includegraphics[scale=0.09]{markov2.jpeg}
     \end{center}
 \end{example}
+
+\section{Basic properties}
 
 The next theorem gives the condition for $X$ to be Markov.
 
@@ -134,7 +138,6 @@ Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \f
     \end{align*}
 \end{definition}
 
-\subsection{Markov property}
 \begin{theorem}[Simple Markov property]\label{thm:simple_markov_property}
     Suppose $ X $ is $ \Markov(\lambda,P) $ and fix $ M\in \mathbb{N}  $ and $ i\in I $. Conditional on $X_m=i$, the process $ (X_{m+n})_{n\ge 0} $ is $ \Markov(\delta_i, P) $ and it is independent of $ X_0,\dots,X_m $.
 \end{theorem}
@@ -182,7 +185,8 @@ Recall the definition of independence: $ X_1,\dots,X_n $ are independent if $ \f
     \end{align*}
     as expected.
 \end{proof}
-\subsection{Powers of the transitional matrix}
+
+\section{Powers of the transitional matrix}
 Suppose $ X \sim \Markov(\lambda,P) $ with values in $I$. If $I$ is finite, then $ P\in \mcM_{|I|\times |I|} $ and we can label the states as $1,\dots,|I|$. If $I$ is infinite, we can label the states by $ \mathbb{N} $. Let $x\in I$ and $n\in \mathbb{N}$. Consider 
 \begin{align*}
     \mathbb{P}(X_n=x)&= \sum_{x_0,\dots,x_{n-1}\in I}\mathbb{P}(X_n=x,X_{n-1}=x_{n-1},\dots,X_0=x_0)\\ 
@@ -272,14 +276,14 @@ We have proved, using these notations, that
 	p_{11}(n) = \frac{1}{5} + \left(\frac{1}{2}\right)^n \left(\frac{4}{5}\cos\left(\frac{n \pi}{2}\right) - \frac{2}{5} \sin \left(\frac{n \pi}{2}\right)\right).
 	$$
 \end{example}
-\section{Classification of chains and states}
-\subsection{Communicating classes}
+
+\section{Communicating classes}
 \begin{definition}
-    Let $X$ be a Markov chain with transition matrix $P$ and values in $I$. For $x, y \in I$ we say that \emph{$x$ leads to $y$} and write it $x \rightarrow y$ if
+    Let $X$ be a Markov chain with transition matrix $P$ and values in $I$. For $x, y \in I$ we say that \textbf{$x$ leads to $y$} and write it $x \rightarrow y$ if
     $$
     \mathbb{P}(X_n = y \text{ for some }n \ge 0) > 0. 
     $$
-    We say that $x$ \emph{communicates} with $y$ and write $x \leftrightarrow y$ if $x \rightarrow y$ and $y \rightarrow x$.  
+    We say that $x$ \textbf{communicates} with $y$ and write $x \leftrightarrow y$ if $x \rightarrow y$ and $y \rightarrow x$.  
 \end{definition}
 
 \begin{theorem}
@@ -310,26 +314,32 @@ We have proved, using these notations, that
     $ \leftrightarrow $ is an equivalence relation on $I$.
 \end{corollary}
 \begin{definition}[Communicating Classes]
-	The equivalence classes induced by $\leftrightarrow$ on $I$ are called \emph{communicating classes}.
+	The equivalence classes induced by $\leftrightarrow$ on $I$ are called \textbf{communicating classes}.
 
-    A communicating class $C$ is \emph{closed} if $x \in C$ and $x \rightarrow y$ then $y \in C$.
+    A communicating class $C$ is \textbf{closed} if $x \in C$ and $x \rightarrow y$ then $y \in C$.
 
-    A matrix $P$ is called \emph{irreducible} if it has a single communicating class, that is, for all $x, y \in I$, $x \leftrightarrow y$. 
+    A matrix $P$ is called \textbf{irreducible} if it has a single communicating class, that is, for all $x, y \in I$, $x \leftrightarrow y$. 
 
-    A state $x$ is called \emph{absorbing} if $\{x\}$ is a closed class. 
+    A state $x$ is called \textbf{absorbing} if $\{x\}$ is a closed class. 
 \end{definition}
-\subsection{Hitting Times}
+
+\section{Hitting Times}
 
 \begin{definition}
-	For $A \subseteq I$, we define the r.v. $T_A$ to be the \emph{hitting time} of $A$,
-	$
-	T_A: \Omega \rightarrow \{0, 1, 2, \dots \} \cup \{\infty\},
-	$
-	defined by $T_A(\omega) = \inf\{ n \ge 0: X_n(\omega) \in A\}$, where we take $\inf \varnothing = \infty$.
+	We define $T_A$ to be the first hitting time of $A$, i.e. $T_A$ is a random variable $T_A: \Omega \rightarrow\{0,1, \ldots\} \cup\{\infty\}$ given by
+    \[
+    T_A(\omega)=\inf \left\{n \geq 0: X_n(\omega) \in A\right\} .
+    \]
+    We use the convention that the infimum of the empty set is equal to $\infty$.
 
-	The \emph{hitting probability} of $A$ is $h^A: I \rightarrow [0, 1]$ such that $h_i^A = \bbP_i(T_A < \infty)$.
-
-	The \emph{mean hitting time} of $A$ is $k^A: I \rightarrow \mathbb{R} $ with $k_i^A = \bbE_i[T_A] = \sum_{n = 0}^{\infty} n \cdot \bbP_i(T_A = n) + \infty \cdot \bbP_i(T_A = \infty)$.
+    The \textbf{hitting probability} of $A$ is defined to be the function $h^A: I \rightarrow[0,1]$ given by
+    \[
+    h_i^A=\mathbb{P}_i\left(T_A<\infty\right) .
+    \]
+    The \textbf{mean hitting time} of $A$ is defined to be the function $k^A: I \rightarrow \mathbb{R}_{+} \cup\{\infty\}$ given by
+    \[
+    k_i^A=\mathbb{E}_i\left[T_A\right]=\sum_{n=0}^{\infty} n \mathbb{P}_i\left(T_A=n\right)+\infty \cdot \mathbb{P}_i\left(T_A=\infty\right)
+    \]
 \end{definition}
 
 \begin{example}
@@ -584,4 +594,6 @@ This method of computing hitting probabilities is perfectly valid on Markov chai
     y_{i} \geq \lim _{n \rightarrow \infty}\left[\bbP_{i}\left(H^{A} \geq 1\right)+\cdots+\bbP_{i}\left(T^{A} \geq n\right)\right]=\bbE_{i}\left(T^{A}\right)=k_{i}^{A}.
     \]
 \end{proof}
+
+\section{Strong Markov property}
 \end{document}

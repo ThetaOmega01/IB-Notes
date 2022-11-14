@@ -67,7 +67,8 @@ Define an inner product of the set
 $g_n,h_n$ form a complete orthogonal set, i.e. they span the space of well-behaved periodic functions $ [0,2L) $ and they are linearly independent.
 
 \subsection{Definition of Fourier series}
-We can express any well-behaved periodic function of period $2L$ as 
+\begin{definition}
+    We can express any well-behaved periodic function of period $2L$ as 
 \begin{equation}\label{1.eq.4:FS}
     f(x) = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right)
 \end{equation}
@@ -75,16 +76,19 @@ where $a_n,b_n$ are constants such that RHS is convergent for all $x$ where $f$ 
 \[
     \frac{f(x_+)+f(x_-)}{2} = \frac{1}{2}a_0 + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{L} \right)+ \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{L} \right).
 \]
+\end{definition}
 Consider $ \langle h_n,f \rangle  $ and substitute in (1.4), we get 
 \[
     \int_{0}^{2L} \sin \left( \frac{n \pi x}{L} \right) f(x) \,\mathrm{d}x = \sum_{m=1}^{\infty}Lb_m \delta_{nm} = Lb_n.
 \]
 Similar for $a_n$. We get
-\begin{equation}
-    \begin{aligned}
-        &b_{n}=\frac{1}{L} \int_{0}^{2 L} f(x) \sin \left(\frac{n \pi x}{L}\right)\, \rmd x\\ &a_n = \frac{1}{L}\int_{0}^{2L} f(x) \cos \left( \frac{n \pi x}{L} \right) \,\mathrm{d}x
-    \end{aligned}
-\end{equation}
+\begin{proposition}
+    \begin{equation}
+        \begin{aligned}
+            &b_{n}=\frac{1}{L} \int_{0}^{2 L} f(x) \sin \left(\frac{n \pi x}{L}\right)\, \rmd x\\ &a_n = \frac{1}{L}\int_{0}^{2L} f(x) \cos \left( \frac{n \pi x}{L} \right) \,\mathrm{d}x
+        \end{aligned}
+    \end{equation}
+\end{proposition}
 \begin{note}
     \begin{enumerate}
         \item $a_n$ includes $n=0$ since $ \frac{1}{2}a_0 $ is the average of $f$, i.e.
@@ -439,7 +443,7 @@ This form often occurs after seperation of variables in a PDE.
 
 We can guarantee to rewrite the original eigenvalue problem into the Sturm-Liouville form.
 
-How to convert a second order linear ODE to this form?
+\paragraph{Integrating factor} How to convert a second order linear ODE to this form?
 Simply multiply the diffential equation by an integrating factor $F$ that will be specified later and we can write
 \begin{align*}
     &F \alpha y''+F \beta y'+ F \gamma y = -\lambda F \rho y\\ 
@@ -460,7 +464,7 @@ setting $p=F\alpha,q=-F\gamma$ and $w=F\rho\ge 0$.
         \mathcal Ly=(-e^{-x^2}y^\prime)^\prime=2ne^{-x^2}y
     \end{equation}
 \end{example}
-\paragraph{Boundary conditions}
+\subsubsection*{Boundary conditions}
 
 \begin{definition}[Self-adjoint operators]
     Let $\mathcal L:C\to C$ be an operator, where $C$ on a class of functions $[a,b]\to\mathbb C$ equipped with the inner product above.

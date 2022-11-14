@@ -15,27 +15,198 @@
 
 % \renewenvironment{proof}{{\bfseries Proof. }}{\qed}
 
+\mdfsetup{
+  skipabove=0.8\baselineskip,
+  skipbelow=0.3\baselineskip,
+  % innertopmargin=1\baselineskip,
+  innerbottommargin=8pt,
+  hidealllines=true
+}
+
+% Definition
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      backgroundcolor=White!90!Cerulean,
+      linecolor=Cerulean,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmdefinitionbox}
+
+% Notation
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      backgroundcolor=White!90!Cerulean,
+      linecolor=Cerulean,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmnotationbox}
+
+% Proposition
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      backgroundcolor=White!90!Yellow,
+      linecolor=Yellow,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmpropositionbox}
+
+% Theorem
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      backgroundcolor=White!90!Dandelion,
+      linecolor=Dandelion,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmtheorembox}
+
+% Lemma
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      linecolor=Red,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmlemmabox}
+
+% Corollary
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      linecolor=ForestGreen,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmcorollarybox}
+
+% Proof
+\mdfdefinestyle{mdproofbox}{
+    skipabove=0.4\baselineskip,
+    skipbelow=0.3\baselineskip,
+    linecolor=NavyBlue!80!white,
+    linewidth=1pt,
+    topline=false,
+    innerbottommargin=6pt,
+    rightline=false,
+    bottomline=false,
+    leftline=true
+}
+
+% Remark
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      linecolor=Green,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmremarkbox}
+
+% Note
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      linecolor=PineGreen,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmnotebox}
+
+% Example
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries,
+    mdframed={
+      linecolor=Black,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    headpunct={\\[3pt]},
+    postheadspace={3pt}
+]{thmexamplebox}
+
+\declaretheorem[style=thmtheorembox,name=Theorem,numberwithin=section]{theorem}
+\declaretheorem[style=thmdefinitionbox,name=Definition,sibling=theorem]{definition}
+\declaretheorem[style=thmnotationbox,name=Notation,sibling=theorem]{notation}
+\declaretheorem[style=thmpropositionbox,name=Proposition,sibling=theorem]{proposition}
+\declaretheorem[style=thmpropositionbox,name=Proposition,sibling=theorem,numbered=no]{sprop}
+\declaretheorem[style=thmlemmabox,name=Lemma,sibling=theorem]{lemma}
+\declaretheorem[style=thmcorollarybox,name=Corollary,sibling=theorem]{corollary}
+\declaretheorem[style=thmremarkbox,name=Remark,sibling=theorem,numbered=no]{remark}
+\declaretheorem[style=thmnotebox,name=Note,sibling=theorem,numbered=no]{note}
+\declaretheorem[style=thmexamplebox,name=Example,sibling=theorem]{example}
+
 \theoremstyle{mystyle}{
-  \newtheorem{theorem}{Theorem}[section]
-  \newtheorem{lemma}[theorem]{Lemma}
-  \newtheorem{proposition}[theorem]{Proposition}
-  \newtheorem{corollary}[theorem]{Corollary}
+%   \newtheorem{theorem}{Theorem}[section]
+%   \newtheorem{lemma}[theorem]{Lemma}
+%   \newtheorem{proposition}[theorem]{Proposition}
+%   \newtheorem{corollary}[theorem]{Corollary}
   \newtheorem{problem}[theorem]{Problem}
   \newtheorem*{claim}{Claim}
-  \newtheorem*{slemma}{Lemma}
-  \newtheorem*{sprop}{Proposition}
-  \newtheorem*{notation}{Notation}
+%   \newtheorem*{slemma}{Lemma}
+%   \newtheorem*{sprop}{Proposition}
+%   \newtheorem*{notation}{Notation}
 
   \newtheorem{inquestion}{Question}
   \newtheorem*{sque}{Question}
 
-  \newtheorem{definition}{Definition}[section]
+%   % \newtheorem{definition}{Definition}[section]
   \newtheorem{conjecture}{Conjecture}[section]
-  \newtheorem{example}{Example}[section]
+%   \newtheorem{example}{Example}[section]
   \newtheorem*{law}{Law}
 
-  \newtheorem*{remark}{Remark}
-  \newtheorem*{note}{Note}
+%   \newtheorem*{remark}{Remark}
+%   \newtheorem*{note}{Note}
 }
 
 \newenvironment{question}[1]
@@ -44,152 +215,6 @@
 
 \theoremstyle{definition}{
     \newtheorem*{exercise}{Exercise}}
-
-\tcolorboxenvironment{definition}{
-  boxrule=0pt,
-  boxsep=0pt,
-  colback={White!90!Cerulean},
-  enhanced jigsaw, 
-  borderline west={1pt}{0pt}{Cerulean},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{notation}{
-  boxrule=0pt,
-  boxsep=0pt,
-  colback={White!90!Cerulean},
-  enhanced jigsaw, 
-  borderline west={1pt}{0pt}{Cerulean},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{proposition}{
-  boxrule=0pt,
-  boxsep=0pt,
-  colback={White!90!Yellow},
-  enhanced jigsaw, 
-  borderline west={1pt}{0pt}{Yellow},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{sprop}{
-  boxrule=0pt,
-  boxsep=0pt,
-  colback={White!90!Yellow},
-  enhanced jigsaw, 
-  borderline west={1pt}{0pt}{Yellow},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{theorem}{
-  boxrule=0pt,
-  boxsep=0pt,
-  colback={White!90!Dandelion},
-  enhanced jigsaw, 
-  borderline west={1pt}{0pt}{Dandelion},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{lemma}{
-  boxrule=0pt,
-  boxsep=0pt,
-  blanker,
-  borderline west={1pt}{0pt}{Red},
-  before skip=10pt,
-  after skip=10pt,
-  sharp corners,
-  left=12pt,
-  right=12pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{corollary}{
-  boxrule=0pt,
-  boxsep=0pt,
-  blanker,
-  borderline west={1pt}{0pt}{ForestGreen},
-  before skip=10pt,
-  after skip=10pt,
-  sharp corners,
-  left=12pt,
-  right=12pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{proof}{
-  boxrule=0pt,
-  boxsep=0pt,
-  blanker,
-  borderline west={1pt}{0pt}{NavyBlue!80!white},
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{remark}{
-  boxrule=0pt,
-  boxsep=0pt,
-  blanker,
-  borderline west={1pt}{0pt}{Green},
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{note}{
-  boxrule=0pt,
-  boxsep=0pt,
-  blanker,
-  borderline west={1pt}{0pt}{PineGreen},
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
-  % parbox=false,
-}
-
-\tcolorboxenvironment{example}{
-  boxrule=0pt,
-  boxsep=0pt,
-  blanker,
-  borderline west={1pt}{0pt}{Black},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
-  % parbox=false,
-}
 
 \sectionfont{\Large\bfseries\sffamily}
 \subsectionfont{\large\bfseries\sffamily}
