@@ -21,6 +21,8 @@
 \usepackage{sectsty}
 \usepackage{thmtools}
 \usepackage{mdframed}
+\usepackage{siunitx}
+\usepackage{centernot}
 
 \newcommand{\sectionbreak}{\clearpage}
 
@@ -397,6 +399,7 @@ dot/.default = 5pt% size of the circle diameter
 \renewcommand{\le}{\leqslant}
 \renewcommand{\geq}{\geqslant}
 \renewcommand{\leq}{\leqslant}
+\renewcommand{\restriction}{\mathord{\upharpoonright}}
 
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
@@ -414,14 +417,14 @@ dot/.default = 5pt% size of the circle diameter
 % \input{../plain.tex}
 
 %layout full
-% \geometry{%
-%   a4paper,
-%   lmargin=2cm,
-%   rmargin=2.5cm,
-%   tmargin=3.5cm,
-%   bmargin=2.5cm,
-%   footskip=12pt,
-%   headheight=24pt}
+\geometry{%
+  a4paper,
+  lmargin=2cm,
+  rmargin=2.5cm,
+  tmargin=3.5cm,
+  bmargin=2.5cm,
+  footskip=12pt,
+  headheight=24pt}
 % layout trim
 % \geometry{
 % papersize={379pt, 542pt},
@@ -432,14 +435,15 @@ dot/.default = 5pt% size of the circle diameter
 % right=17pt
 % }
 % layout a5
-\geometry{%
-  a5paper,
-  lmargin=1cm,
-  rmargin=1cm,
-  tmargin=2.5cm,
-  bmargin=1.5cm,
-  footskip=12pt,
-  headheight=24pt}
+% \geometry{%
+%   a5paper,
+%   lmargin=1cm,
+%   rmargin=1cm,
+%   tmargin=2.5cm,
+%   bmargin=1.5cm,
+%   footskip=12pt,
+%   headheight=24pt}
 \pagestyle{fancy}
 \rhead{{\triposcourse{}}}
 \author{jt775}
+\AddToHook{cmd/section/before}{\clearpage}

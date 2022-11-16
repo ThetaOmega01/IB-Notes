@@ -25,7 +25,7 @@
 
 % Definition
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{MidnightBlue},
     mdframed={
       backgroundcolor=White!90!Cerulean,
       linecolor=Cerulean,
@@ -35,13 +35,13 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmdefinitionbox}
 
 % Notation
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{MidnightBlue},
     mdframed={
       backgroundcolor=White!90!Cerulean,
       linecolor=Cerulean,
@@ -51,13 +51,13 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmnotationbox}
 
 % Proposition
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{Black!30!Goldenrod},
     mdframed={
       backgroundcolor=White!90!Yellow,
       linecolor=Yellow,
@@ -67,13 +67,13 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmpropositionbox}
 
 % Theorem
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{Bittersweet!40!Dandelion},
     mdframed={
       backgroundcolor=White!90!Dandelion,
       linecolor=Dandelion,
@@ -83,13 +83,13 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmtheorembox}
 
 % Lemma
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{Black!50!Red},
     mdframed={
       linecolor=Red,
       linewidth=1pt,
@@ -98,13 +98,13 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmlemmabox}
 
 % Corollary
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{Black!50!ForestGreen},
     mdframed={
       linecolor=ForestGreen,
       linewidth=1pt,
@@ -113,8 +113,8 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmcorollarybox}
 
 % Proof
@@ -132,7 +132,7 @@
 
 % Remark
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{Black!30!Green},
     mdframed={
       linecolor=Green,
       linewidth=1pt,
@@ -141,13 +141,13 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmremarkbox}
 
 % Note
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\sffamily\bfseries\color{Black!30!PineGreen},
     mdframed={
       linecolor=PineGreen,
       linewidth=1pt,
@@ -156,8 +156,8 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmnotebox}
 
 % Example
@@ -171,8 +171,8 @@
       bottomline=false,
       leftline=true
     },
-    headpunct={\\[3pt]},
-    postheadspace={3pt}
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
 ]{thmexamplebox}
 
 \declaretheorem[style=thmtheorembox,name=Theorem,numberwithin=section]{theorem}
@@ -181,33 +181,22 @@
 \declaretheorem[style=thmpropositionbox,name=Proposition,sibling=theorem]{proposition}
 \declaretheorem[style=thmpropositionbox,name=Proposition,sibling=theorem,numbered=no]{sprop}
 \declaretheorem[style=thmlemmabox,name=Lemma,sibling=theorem]{lemma}
+\declaretheorem[style=thmlemmabox,name=Lemma,sibling=theorem,numbered=no]{slemma}
 \declaretheorem[style=thmcorollarybox,name=Corollary,sibling=theorem]{corollary}
 \declaretheorem[style=thmremarkbox,name=Remark,sibling=theorem,numbered=no]{remark}
 \declaretheorem[style=thmnotebox,name=Note,sibling=theorem,numbered=no]{note}
 \declaretheorem[style=thmexamplebox,name=Example,sibling=theorem]{example}
 
 \theoremstyle{mystyle}{
-%   \newtheorem{theorem}{Theorem}[section]
-%   \newtheorem{lemma}[theorem]{Lemma}
-%   \newtheorem{proposition}[theorem]{Proposition}
-%   \newtheorem{corollary}[theorem]{Corollary}
   \newtheorem{problem}[theorem]{Problem}
   \newtheorem*{claim}{Claim}
-%   \newtheorem*{slemma}{Lemma}
-%   \newtheorem*{sprop}{Proposition}
-%   \newtheorem*{notation}{Notation}
-
   \newtheorem{inquestion}{Question}
   \newtheorem*{sque}{Question}
-
-%   % \newtheorem{definition}{Definition}[section]
   \newtheorem{conjecture}{Conjecture}[section]
-%   \newtheorem{example}{Example}[section]
   \newtheorem*{law}{Law}
-
-%   \newtheorem*{remark}{Remark}
-%   \newtheorem*{note}{Note}
 }
+
+\surroundwithmdframed[style=mdproofbox]{proof}
 
 \newenvironment{question}[1]
 {\renewcommand\theinquestion{#1}\inquestion}

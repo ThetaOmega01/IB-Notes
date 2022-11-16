@@ -98,12 +98,508 @@ It makes sense if $ E = \hbar \omega $, i.e. energy is \textit{quantized}.
 \end{center}
 
 \subsection{Photoelectric effect (1905)}
-
+\paragraph{Classical expectation}
+Consider a metal surface in a vacuum, which is hit by light with angular frequency \( \omega \).
+When the radiation hits the surface of the metal, electrons were emitted.
+Classically, we would expect that:
 \begin{enumerate}
-    \item 11
-    \item 22
-    \item 33
+	\item Since the incident light carries energy $ \propto $ its intensity, increasing the intensity we should have sufficient energy to break the bonds of the electrons with the atoms of the metal.
+	\item Since the intensity and frequency are independent, light of any \( \omega \) would eventually cause electrons to be emitted, given a high enough intensity.
+	\item The emission rate should be constant.
 \end{enumerate}
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{qm2.png}
+\end{center}
+\paragraph{Inconsistency with experiment and interpretation}
+Experiments showed that
+\begin{enumerate}
+	\item The maximum energy \( E_{\max} \) of emitted electrons depended on \( \omega \) not $I$. 
+	\item Below a given threshold \( \omega_{\min} \), no electron emission.
+	\item The emission rate $ \nearrow $ as $ I \nearrow $.
+\end{enumerate}
+Einstein's explanation for this phenomenon was that 
+\begin{enumerate}
+    \item The light was \textit{quantised} into small quanta, called \textbf{photons}.
+    \item Each carries \( E = \hbar \omega, \mathbf{p}= \hbar \mathbf{k} \).
+    \item Each photon could liberate only one electron.
+    Thus,
+    \[
+        E_{\max} = \hbar \omega - \Phi
+    \]
+    where \( \Phi \) is the binding energy of the electron with the metal aka \textbf{work function}.
+    \item $ \nearrow I \Leftrightarrow \nearrow \# \text{ of photons}\Leftrightarrow \nearrow \text{ scattering}\Leftrightarrow \text{higher }e^- \text{ emission rate}$.
+\end{enumerate}
+
 \subsection{Compton scattering (1923)}
 
+X-rays were emitted towards a crystal, scattering free electrons.
+The X-ray should then be deflected by some angle \( \theta \).
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{qm3.png}
+    \includegraphics[width=0.45\textwidth]{qm4.png}
+\end{center}
+
+Classically, for a given \( \theta \) we would expect that the intensity as a function of \( \omega \) would have a maximum at \( \omega_0 \), the frequency of the incoming X-rays.
+This is because we would not expect \( \omega \) to change much after scattering an electron.
+
+However, there was another peak at \( \omega' \), which was dependent on the angle \( \theta \).
+In fact, considering the photon and electron as a relativistic system of particles, we can derive (from IA Dynamics and Relativity),
+\[
+	2 \sin^2 \frac{\theta}{2} = \frac{mc}{\abs{\vb q}} - \frac{mc}{\abs{\vb p}}
+\]
+where \( \vb p \) is the initial momentum and \( \vb q \) is the final momentum.
+Assuming \( E = \hbar \omega \) and \( \vb p = \hbar \vb k \),
+\[
+	\abs{\vb p} = \hbar \abs{\vb k} = \hbar \frac{\omega}{c}\quad \abs{\vb q} = \hbar \abs{\vb k'} = \hbar\frac{\omega'}{c}
+\]
+Hence,
+\[
+	\frac{1}{\omega} = \frac{1}{\omega'} + \frac{\hbar}{mc}(1-\cos\theta)
+\]
+So the frequency of the outgoing X-ray should have an angular frequency which is shifted from the original.
+The expected peak was actually caused by X-rays simply not interacting with the electrons.
+
+\subsection{Atomic spectra}
+The Rutherford scattering experiment: shoot \( \alpha \) particles at some thin gold foil.
+Most particles travelled through the foil, some were slightly deflected, and some were deflected completely back.
+This indicated that the gold foil was mostly comprised of vacuum and there was a high density of positive charge within the atom. 
+Which leads to Rutherford's model that electrons would orbit around the nucleus.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{qm5.png}
+\end{center}
+
+However, there were problems with this model:
+\begin{enumerate}
+	\item If the electrons in orbits moved, they would radiate and lose energy.
+	      However if the electrons were static, they would simply collapse and fall into the nucleus.
+	\item This model did not explain the atomic spectra, the observed frequencies of light absorbed or emitted by an atom when electrons change energy levels.
+\end{enumerate}
+The spectra had frequency
+\[
+	\omega_{mn} = 2 \pi c R_0 \qty(\frac{1}{n^2} - \frac{1}{mc}); \quad m, n \in \mathbb N, m > n
+\]
+where \( R_0 \) is the Rydberg constant, approximately \( \SI{1e7}{\per\metre} \).
+
+In 1913 Niels Bohr observed that these problems could be resolved in a way consistent with Planck's and Einstein's earlier postulates, if we suppose that the electron orbits of hydrogen atoms are quantised so that the orbital angular momentum takes one of a discrete set of values
+\[
+L=n \hbar \quad \text { with } \quad n \in \mathbb{N}, n>0 .
+\]
+\begin{proposition}
+    Quantisation of $L \implies $ quantisation of $r,v,E$. 
+\end{proposition}
+\begin{proof}
+    In a circular motion, the angular momentum is given by
+\[
+L=m_e v r,
+\]
+we can derive
+\[
+v \equiv v_n=\frac{n \hbar}{m_e r} .
+\]
+Coulomn force 
+\[
+    F_{\text {Coulomb }}=\frac{e^2}{4 \pi \epsilon_0} \frac{1}{r^2}=m_e \frac{v^2}{r} 
+\]
+So 
+\[
+    r \equiv r_n=n^2\left(\frac{4 \pi \epsilon_0}{m_e e^2} \hbar^2\right) \equiv n^2 r_0, \quad
+        r_0=\frac{4 \pi \epsilon_0 \hbar^2}{m_e e^2} \sim \SI{0.53e-10}{\metre}
+\]
+$a_0$ is the \textbf{Bohr radius}. Energy is also quantised: 
+\[
+    E_n=\frac{1}{2} m_e v_n^2-\frac{e^2}{4 \pi \epsilon_0} \frac{1}{r_n}=-\frac{e^2}{8 \pi \epsilon_0 a_0} \frac{1}{n^2}=-\frac{e^4 m_e}{32 \pi^2 \epsilon_0^2 \hbar^2} \frac{1}{n^2} \equiv \frac{E_1}{n^2}
+\]
+where $ E_1=-\left(e^4 m_e\right) /\left(32 \pi^2 \epsilon_0^2 \hbar^2\right) \sim \SI{-13.6}{eV} $ is the \textbf{groud level}. 
+\end{proof}
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{qm6.png}
+\end{center}
+
+Note that 
+\[
+R_0=\frac{m_e c}{2 \hbar}\left(\frac{e^2}{4 \pi \epsilon_0 \hbar c}\right)^2
+\]
+agrees well with the experimentally determined values of the Rydberg constant.
+
+\subsection{Wave-like behaviour of particles (1923)}
+De Broglie hypothesised that any particle of any mass is associated with a wave with
+\[
+	\omega = \frac{E}{\hbar}; \quad \vb k = \frac{\vb p}{\hbar}
+\]
+This hypothesis made sense of the quantisation of electron angular momentum; if the electron lies on a circular orbit then \( 2 \pi r = n \lambda \) where \( \lambda \) is the wavelength of the electron.
+However,
+\[
+	p = \hbar k = \hbar \frac{2 \pi}{\lambda} \implies L = m_e v r = p r = \hbar \frac{2 \pi}{\lambda} \frac{n \lambda}{2 \pi} = n \hbar
+\]
+Hence the angular momentum must be quantised.
+The electron diffraction experiment showed that this hypothesis was true, by showing that electrons behaved sufficiently like waves.
+Interference patterns were observed with \( \lambda = \frac{2 \pi}{\abs{\vb k}} = \frac{2 \pi k}{\abs{\vb p}} \) compatible with the De Broglie hypothesis.
+
+\clearpage
+
+\part{Foundations of Quantum Mechanics}
+\section{Wavefunctions and probabilistic interpretation}
+\subsection{Probabilistic interpretation}
+
+In classical mechanics, a particle is described with \( \vb x, \dot{\vb x} \) or \( \vb p = m \dot{\vb x} \).
+In quantum mechanics, it is described by a state \( \psi= \psi(\vb x, t) \) called the wavefunction.
+
+\begin{definition}
+    A wavefunction is a function \( \psi(\vb x, t) \colon \mathbb R^3 \to \mathbb C \) that satisfies certain mathematical properties dictated by its physical interpretation.
+\end{definition}
+\begin{note}
+    \( t \) is considered a fixed external parameter, so it is not included in the function's type.
+\end{note}
+
+\paragraph{The physical interpretation} is called \textbf{Born's rule.}
+
+\begin{proposition}[Born's rule]
+    The probability density for a particle to be at some point \( \vb x \) at \( t \) is given by 
+    \[
+        \rho(\mathbf{x},t) \propto \left| \psi(\mathbf{x},t) \right| ^2. 
+    \]
+    The probability that the particle lies in some small volume \( V \) centred at \( \vb x \) is given by 
+    \[
+        \rho(\vb x, t) \dd{V}.
+    \]
+\end{proposition}
+
+\paragraph{The mathematical properties} Now we can list the properties explicitly:
+\begin{enumerate}
+    \item The particle must be somewhere, so the wave function must be \textit{normalisable}, or \textit{square-integrable} in \( \mathbb R^3 \):
+    \[
+        \int_{\mathbb R^3} \psi^*(\vb x, t) \psi(\vb x, t) \dd{V} = \int_{\mathbb R^3} \abs{\psi(\vb x, t)}^2 \dd{V} = N \in (0, \infty).
+    \]
+    \item Total probability is 1, which leads to normalised wavefunction
+    \[
+        \overline{\psi}(\vb x, t) = \frac{1}{\sqrt{N}} \psi(\vb x, t) \iff \int_{\mathbb R^3} \abs{\overline{\psi}(\vb x, t)}^2 \dd{V} = 1.
+    \]
+    Hence, \( \rho(\vb x,t) = \abs{\overline{\psi}(\vb x,t)}^2 \).
+\end{enumerate}
+
+\begin{note}
+    \begin{enumerate}
+        \item Often we drop the bar and just write wavefunction as $ \psi $, and normalise at the end. 
+        \item If $ \widetilde{\psi}(\mathbf{x},t) = e^{i\alpha} \psi(\mathbf{x},t) $ with $ \alpha\in \mathbb{R} $, then $ \left| \widetilde{\psi}(\mathbf{x},t) \right|^2 = \left| \psi(\mathbf{x},t) \right| ^2  $, i.e. $ \psi,\widetilde{\psi} $ are \textit{equivalent states}. 
+        \item *We can think of states as arrays in the vector space of wavefunctions.
+        We can then describe the equivalence class \( [\psi] \) as the set of all functions \( \phi \) such that \( \phi = \lambda \psi \), for some \( \lambda \in \mathbb C \setminus \qty{0} \), since we must retain the condition that \( \phi \) is normalisable.
+    \end{enumerate}
+\end{note}
+
+\paragraph{Compare linear algebra to QM} Linear algebra and quantum mechancis have a lot of similarities: 
+\begin{center}
+\begin{tabular}{cc}
+    \toprule 
+    \textbf{Linear Algebra} & \textbf{Quantum Mechanics} \\ \midrule
+    Vector: $\displaystyle \mathbf{v} = (v_1,\dots,v_n)$ & State $ \psi: \mathbf{x} \mapsto \psi(\mathbf{x},t) $ \\[0.4em] 
+    Vector space: $ \mathbb{C}^n $ & Hilbert space: $ L^2( \mathbb{R}^{3}) $ \\[0.4em]  
+    Inner product: $ (\mathbf{v},\mathbf{w}) = \mathbf{v}^\dagger \mathbf{w} $ & Inner product: $\displaystyle (\psi,\phi) = \int_{\mathbb{R}^3} \psi^*(\mathbf{x},t)\phi(\mathbf{x},t) \,\mathrm{d}V$ \\[1em]  
+    Matrix: $ T = (T_{ij}) $ & Operators: $ \hat{O}: L^2( \mathbb{R}^{3})\to L^2( \mathbb{R}^{3}) $\\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Hilbert space}
+The set of all states forms a space, called Hilbert space. 
+\begin{definition}
+    The set of all square integrable functions in $ \mathbb{R}^3 $ is called \textbf{Hilbert space}, denoted as $ \mathcal{H} \equiv L^2(\mathbb{R}^3) $.
+\end{definition}
+Check that it is a vector space: 
+\begin{proposition}
+    $ \mathcal{H} $ is a vector space. Since $ \mathcal{H} \subseteq \mathbb{C}^{\mathbb{R}^3} $, this is equivalent to $ \psi_1,\psi_2\in \mathcal{H} \implies a_1 \psi_1+a_2\psi_2\in \mathcal{H} $, where $ a_1,a_2\in \mathbb{C} $.
+\end{proposition}
+
+\begin{proof}
+    It suffices to show that: if $\psi_1(\mathbf{x}, t)$ and $\psi_2(\mathbf{x}, t)$ are both normalisable,
+    \[
+    \int_{\mathbb{R}^3}\left|\psi_1(\mathbf{x}, t)\right|^2 d V=N_1<\infty, \quad \int_{\mathbb{R}^3}\left|\psi_2(\mathbf{x}, t)\right|^2 d V=N_2<\infty,
+    \]
+    then their linear combination is also normalisable.
+
+    For any two complex number $z_1$ and $z_2$, the triangle inequality states that
+    \[
+    \left|z_1+z_2\right| \leq\left|z_1\right|+\left|z_2\right|,
+    \]
+    and
+    \[
+    \left(\left|z_1\right|-\left|z_2\right|\right)^2 \geq 0 \Rightarrow 2\left|z_1\right|\left|z_2\right| \leq\left|z_1\right|^2+\left|z_2\right|^2 .
+    \]
+    If we apply these relations for $z_1=a_1 \psi_1$ and $z_2=a_2 \psi_2$, we get
+    \begin{align*}
+        \int_{\mathbb{R}^3}|\psi(&\mathbf{x}, t)|^2 \dd V =\int_{\mathbb{R}^3}\left|a_1 \psi_1(\mathbf{x}, t)+a_2 \psi_2(\mathbf{x}, t)\right|^2 \dd V \\
+        & \leq \int_{\mathbb{R}^3}\left(\left|a_1 \psi_1(\mathbf{x}, t)\right|+\left|a_2 \psi_2(\mathbf{x}, t)\right|\right)^2 \dd V \\
+        &=\int_{\mathbb{R}^3}\left(\left|a_1 \psi_1(\mathbf{x}, t)\right|^2+\left|a_2 \psi_2(\mathbf{x}, t)\right|^2+2\left|a_1 \psi_1(\mathbf{x}, t)\right|\left|a_2 \psi_2(\mathbf{x}, t)\right|\right) \dd V \\
+        & \leq \int_{\mathbb{R}^3}\left(2\left|a_1 \psi_1(\mathbf{x}, t)\right|^2+2\left|a_2 \psi_2(\mathbf{x}, t)\right|^2\right) \dd V \\
+        &=2\left|a_1\right|^2 N_1+2\left|a_2\right|^2 N_2<\infty .\qedhere
+    \end{align*}
+\end{proof}
+
+\begin{corollary}[Superposition principle]
+    If $\psi_1$ and $\psi_2$ correspond to allowed states of a system, then so does the state $\psi$, where
+    \[
+    \psi=a_1 \psi_1+a_2 \psi_2 \neq 0
+    \]
+    for arbitrary complex numbers $a_1$ and $a_2$. 
+\end{corollary}
+This is known as the \textbf{superposition principle}.
+
+\subsection{Inner product}
+We can naturally define an inner product on this vector space, in analogy with the finite-dimensional case.
+
+\begin{definition}
+    The inner product of two wavefunctions $\psi(\mathbf{x}, t)$ and $\phi(\mathbf{x}, t)$ at a time $t$ is given by
+    \[
+    (\psi, \phi) \equiv \int_{\mathbb{R}^3} \psi^*(\mathbf{x}, t) \phi(\mathbf{x}, t) \dd V .
+    \]
+\end{definition}
+
+\begin{theorem}
+    The following statements hold.
+\begin{enumerate}[(i)]
+	\item \( (\psi, \phi) \) exists for all \( (\psi, \phi) \in \mathcal H \)
+	\item \( (\psi, \phi^*) = (\phi, \psi) \)
+	\item The inner product is antilinear in the first entry, and linear in the second entry
+	\item Tor continuous \( \psi \), \( (\psi, \psi) = 0 \) if and only if \( \psi=0 \).
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+    (ii)-(iv) are from definition, so we only prove (i). 
+
+    Take $\psi(\mathbf{x}, t)$ and $\phi(\mathbf{x}, t)$. By Cauchy-Schwartz inequality,
+    \[
+    \left|\int_{\mathbb{R}^3} \psi^*(\mathbf{x}, t) \phi(\mathbf{x}, t) \dd V\right| \leq \sqrt{\int_{\mathbb{R}^3}|\psi(\mathbf{x}, t)|^2 \dd V \int_{\mathbb{R}^3}|\phi(\mathbf{x}, t)|^2 \dd V} .
+    \]
+    So if both terms on RHS are finite, then also the inner product is finite.
+\end{proof}
+
+Using the definition of inner product, we can define (or redefine) a series of important properties of wavefunctions:
+
+\begin{definition}
+    \begin{enumerate}
+        \item The \textbf{norm} of a wavefunction is $\|\psi\|=\sqrt{(\psi, \psi)}$.
+        \item A wavefunction $\psi$ is \textbf{normalised} if $\|\psi\|=1$.
+        \item Two wavefunctions $\psi, \phi$ are \textbf{orthogonal} if $(\psi, \phi)=0$.
+        \item A set of wavefunctions $\left\{\psi_n\right\}$ is \textbf{orthonormal} is they are normalised and mutually orthogonal:
+        \[
+        \left(\psi_m, \psi_n\right)=\delta_{m n} .
+        \]
+        \item A set of wavefunctions $\left\{\psi_n\right\}$ is \textbf{complete} if any other wavefunction in Hilbert space can be expressed as a linear combination of them:
+        \[
+        \phi=\sum_{n=0}^{\infty} c_n \psi_n
+        \]
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    If the wavefunctions $\left\{\psi_n\right\}$ that form a complete set are also an orthonormal set, the coefficients of $ \phi $ in $ \{\psi_n\} $ are given by:
+    \[
+    c_n=\left(\psi_n, \phi\right).
+    \]
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        \left(\psi_n, \phi\right) &=\left(\psi_n, \sum_{m=0}^{\infty} c_m \psi_m\right) \\
+        &=\sum_{m=0}^{\infty} c_m\left(\psi_n, \psi_m\right)=\sum_{m=0}^{\infty} c_m \delta_{m n}=c_n.\qedhere
+    \end{align*}
+\end{proof}
+
+\section{Time-dependent Schr\"odinger equation (TDSE)}
+\subsection{Definition of TDSE}\
+\vspace{-1.5em}
+\begin{definition}
+	The evolution of the wavefunction over time is given by the \textbf{time-dependent Schr\"odinger equation (TDSE)},
+	\[
+		i\hbar \pdv{\psi}{t} = -\frac{\hbar^2}{2m} \laplacian \psi + U \psi
+	\]
+	where \( U = U(x) \) is a real potential energy term.
+\end{definition}
+
+\begin{remark}
+	This equation is a first-order differential equation in \( t \).
+	Contrast this to Newton's second law, which is a second-order differential equation in \( t \).
+	This implies that we only need a single initial condition \( \psi(x,t_0) \) to determine all future behaviour.
+\end{remark}
+\begin{remark}
+	Note the asymmetry between the spatial and temporal components: there is only a first derivative in time but a second derivative in space.
+	This implies that this equation is incompatible with relativity, where time and space must be treated equitably.
+\end{remark}
+One way to conceptualise the TDSE is by letting \( \psi \) be some wave defined by
+\[
+	\psi(x,t) = \exp[ i(k \cdot x - \omega t) ]
+\]
+Then, the De Broglie hypothesis (\( k = p/\hbar, \omega = E/m \)) implies that
+\[
+	\psi(x,t) = \exp\qty[\frac{i}{\hbar}\qty(p \cdot x - \frac{p^2}{2m}t)]
+\]
+which is a solution to the TDSE.
+
+\subsection{Conservation of probability}\
+\vspace{-1.5em}
+\begin{proposition}
+    Any TDSE preserves normalization of the wavefunction $\psi$. 
+\end{proposition}
+\begin{proof}
+    We will show that (Recall Born's rule)
+    \[
+        \frac{\mathrm{d}}{\mathrm{d}t} \int_{\mathbb{R}^3} | \psi(\mathbf{x},t)|^2 \,\mathrm{d}V = 0 \iff \int_{\mathbb{R}^3} | \psi(\mathbf{x},t)|^2 \,\mathrm{d}V = \text{const}.
+    \]
+    Notice that 
+    \begin{align*}
+        \frac{\mathrm{d}}{\mathrm{d}t} \int_{\mathbb{R}^3} | \psi|^2 \,\mathrm{d}V &= \int_{ \mathbb{R}^{3}} \frac{\partial }{\partial t}|\psi|^2  \,\mathrm{d}V\\ 
+        &=\int_{\mathbb{R}^3} \frac{\partial }{\partial t}(\psi^* \psi)  \,\mathrm{d}V\\ 
+        &= \int_{\mathbb{R}^3} \psi^* \frac{\partial \psi}{\partial t} + \psi\frac{\partial \psi^*}{\partial t}   \,\mathrm{d}V. 
+    \end{align*}
+    By TDSE, 
+    \[
+        \frac{\partial \psi}{\partial t} = \frac{i\hbar}{2m}\nabla^2 \psi - \frac{i}{\hbar} U \psi,\quad \frac{\partial}{\partial t} \psi^*=-\frac{i \hbar}{2 m} \nabla^2 \psi^*+\frac{i}{\hbar} U \psi^*,
+    \]
+    so 
+    \[
+        \frac{\partial}{\partial t}|\psi|^2=\frac{i \hbar}{2 m}\left(\psi^* \nabla^2 \psi-\psi \nabla^2 \psi^*\right)=\nabla \cdot\left[\frac{i \hbar}{2 m}\left(\psi^* \nabla \psi-\psi \nabla \psi^*\right)\right]. 
+    \]
+    Hence the integral is 
+    \begin{align*}
+        \int_{ \mathbb{R}^{3}} \frac{\partial }{\partial t}|\psi|^2  \,\mathrm{d}V &= \int_{\mathbb{R}^3} \nabla \cdot\left[\frac{i \hbar}{2 m}\left(\psi^* \nabla \psi-\psi \nabla \psi^*\right)\right] \,\mathrm{d}V\\ 
+        &= \int_{\partial V} \frac{i \hbar}{2 m}\left(\psi^* \nabla \psi-\psi \nabla \psi^*\right) \cdot \mathrm{d} \mathbf{S}\\ 
+        &= 0 
+    \end{align*}
+    by divergence theorem, given that $ \psi = 0 $ on $ \partial V $, i.e. $ |\mathbf{x}|\to \infty  $. 
+\end{proof}
+
+Recall that for normalized $ \psi $,
+\[
+    \rho(\mathbf{x},t) = | \psi(\mathbf{x},t)|^2
+\]
+is the probability density function. 
+
+\begin{proposition}[Conservation of probability]
+    We have the following \textit{conservation of probability}
+    \[
+    \frac{\partial \rho}{\partial t}+\nabla \cdot \mathbf{j}=0,
+    \]
+    where
+    \[
+    \mathbf{j}=-\frac{i \hbar}{2 m}\left(\psi^* \nabla \psi-\psi \nabla \psi^*\right).
+    \]
+\end{proposition}
+
+It is straight from the proof of the previous proposition. $ \mathbf{j} $ is called the \textbf{probability current}. 
+
+\section{Expectation and operators}
+
+Given the wavefunction, we would like to extract some information about the particle it represents, i.e. \textit{observe} or \textit{measure} them. 
+\begin{definition}
+	An \textbf{observable} is a property of the particle that can be measured.
+\end{definition}
+
+In quantum mechanics, each observable is represented by an operator acting on the state \( \psi \).
+
+\subsection{Heuristic interpretation}
+From probabilistic interpretation, each measurement is represented by an expectation value of the operator. Expecation value of an observable is the mean of infinite series of measurements performed on particles on the same state. 
+\begin{example}
+    The measurement on position is given by 
+    \[
+    \langle x \rangle  = \int_{-\infty}^{\infty} x \left| \psi(x,t) \right| ^2 \,\mathrm{d}x = \int_{-\infty}^{\infty} \psi^*(x,t) x \psi(x,t) \,\mathrm{d}x.
+    \]
+    Measurement on momentum is 
+    \[
+        \begin{aligned}
+            \langle p\rangle =m \frac{\dd\langle x\rangle}{\dd t}&=m \frac{\dd}{\dd t} \int_{-\infty}^{+\infty} x|\psi(x, t)|^2 \dd x=m \int_{-\infty}^{+\infty} x \frac{\partial}{\partial t}\left(\psi^*(x, t) \psi(x, t)\right) \dd x \\
+            &=\frac{i \hbar}{2} \int_{-\infty}^{+\infty} x \frac{\partial}{\partial x}\left(\psi^*(x, t) \frac{\partial \psi(x, t)}{\partial x}-\psi(x, t) \frac{\partial \psi^*(x, t)}{\partial x}\right) \dd x\\ 
+            &= \int_{-\infty}^{+\infty} \psi^*(x, t)\left(-i \hbar \frac{\partial}{\partial x}\right) \psi(x, t) \dd x.
+        \end{aligned}
+    \]
+\end{example}
+In general, to calculate the expectation value of any quantity $\mathcal{Q}(x, p)$, we simply replace $p$ by $(-i \hbar \partial / \partial x)$ and insert the resulting operator between $\psi^*$ and $\psi$ and integrate over the whole space
+\[
+\langle\mathcal{Q}(\mathbf{x}, \mathbf{p})\rangle=\int_{\mathbb{R}^3} \psi^* \mathcal{Q}(\mathbf{x},-i \hbar \nabla) \psi \dd V
+\]
+
+\subsection{Hermitian operators}
+In quantum mechanics, linear transformations are represented by linear operators $\hat{O}$, which act on wavefunctions to produce new wavefunctions of the Hilbert space $\mathcal{H}$.
+
+\begin{definition}
+	An \textbf{operator} is a linear map \(\hat{O}: \mathcal H \to \mathcal H \) such that
+	\[
+		\hat O(a_1 \psi_1 + a_2 \psi_2) = a_1 \hat O(\psi_1) + a_2 \hat O(\psi_2)
+	\]
+	where \( a_1, a_2 \in \mathbb C, \psi_1, \psi_2 \in \mathcal H \).
+\end{definition}
+
+\begin{example}
+\begin{itemize}
+    \item Finite differential operators
+    \[
+    \sum_{n=0}^N p_n(x) \frac{\partial^n}{\partial x^n}
+    \]
+    where the $p_n(x)$ are polynomials. in $x$. Note that this includes the $\hat{p}$ and $\hat{x}$.
+    \item the translation operators
+    \[
+    \hat{S}_a: \quad \psi(x) \rightarrow \psi(x-a)
+    \]
+    \item the parity operator
+    \[
+    \hat P: \quad \psi(x) \rightarrow \psi(-x)
+    \]
+\end{itemize}
+\end{example}
+
+\begin{definition}
+    The \textbf{Hermitian conjugate} $\hat{O}^{\dagger}$ of an operator $\hat{O}$ is the operator such that
+    \[
+    \left(\hat{O}^{\dagger} \psi_1, \psi_2\right)=\left(\psi_1, \hat{O} \psi_2\right)
+    \]
+    for all normalisable wavefunctions $\psi_1, \psi_2 \in \mathcal{H}$.
+\end{definition}
+From Vectors and Matrices, 
+\begin{enumerate}
+    \item $\left(a_1 \hat{A}_1+a_2 \hat{A}_2\right)^{\dagger}=a_1^* \hat{A}_1^{\dagger}+a_2^* \hat{A}_2^{\dagger}$,
+    \item $(\hat{A} \hat{B})^{\dagger}=\hat{B}^{\dagger} \hat{A}^{\dagger}$.
+\end{enumerate}
+\begin{definition}
+    An operator $ \hat{O} $ is \textbf{Hermitian} if $ \hat{O} = \hat{O}^{\dagger} $.
+\end{definition}
+
+Most of the operators we deal with are hermitian: 
+\begin{example}
+    \begin{itemize}
+        \item position
+        \[
+        \hat{x}: \quad \psi(x, t) \mapsto x \psi(x, t),
+        \]
+        \item momentum
+        \[
+        \hat{p}: \quad \psi(x, t) \mapsto-i \hbar \frac{\partial \psi(x, t)}{\partial x} ,
+        \]
+        \item kinetic energy
+        \[
+        \hat{T}: \quad \psi(x, t) \mapsto \frac{\hat{p}^2}{2 m} \psi(x, t)=-\frac{\hbar^2}{2 m} \frac{\partial^2 \psi(x, t)}{\partial x^2},
+        \]
+        \item potential energy
+        \[
+        \hat{U}: \quad \psi(x, t) \mapsto U(\hat{x}) \psi(x, t)=U(x) \psi(x, t),
+        \]
+        \item total energy, sum of the kinetic and the potential energies
+        \[
+        \hat{H}: \quad \psi \mapsto-\frac{\hbar^2}{2 m} \frac{\partial^2}{\partial x^2} \psi(x, t)+U(x) \psi(x, t) .
+        \]
+        It is often called Hamitonian. 
+    \end{itemize}
+\end{example}
+
+We will now describe several crucial properties of Hermitian operators.
+
+\begin{theorem}
+    \begin{enumerate}[(i)]
+        \item The eigenvalues of Hermitian operators are real. 
+        \item Eigenfunctions corresponding to different eigenvalues are orthogonal. 
+        \item The discrete and continuous sets of eigenfunctions of any Hermitian operator together form a complete orthogonal basis of the physical wavefunctions, i.e. of the normalisable complex-valued wavefunctions $ \psi $. 
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See Vectors and Matrices, and Dr Ubiali's notes. 
+\end{proof}
 \end{document}

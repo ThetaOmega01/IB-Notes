@@ -811,6 +811,7 @@ In $\mathbb{R}$ or $\mathbb{C}$, we measure the ``closeness'' of points $x$ and 
 However, $\mathbb{R} \oplus_{1} \mathbb{R} \oplus_{2} \mathbb{R}$ makes no sense as $\left(\mathbb{R} \oplus_{1} \mathbb{R}\right) \oplus_{2} \mathbb{R}$ and $\mathbb{R} \oplus_{1}\left(\mathbb{R} \oplus_{2} \mathbb{R}\right)$ are different.
 \end{example}
 \subsection{Convergence}
+Convergence has the exact same meaning. 
 \begin{definition}[Convergence]
     Let $M$ be a metric space and let $\left(x_{n}\right)$ be a sequence in $M$. Given $x \in M$, we say $\left(x_{n}\right)$ converges to $x$ and write $x_{n} \rightarrow x$ as $n \rightarrow \infty$ if
     \[
@@ -886,5 +887,968 @@ However, $\mathbb{R} \oplus_{1} \mathbb{R} \oplus_{2} \mathbb{R}$ makes no sense
         E.g., In $\mathbb{R}^{n}$, we have $v_{i}=\left(x_{i, 1}, \ldots, x_{i, n}\right) \rightarrow v=\left(x_{1}, \ldots, x_{n}\right)$ iff $x_{i, k} \rightarrow x_{k}$ as $i \rightarrow \infty$ for each $k=1, \ldots, n$.
     \end{enumerate}
 \end{example}
+
+\subsection{Continuity}\ \vspace{-1.5em}
+\begin{definition}
+    Consider a function $f: M \rightarrow M^{\prime}$ between metric spaces $M$ and $M^{\prime}$. For $a \in M$ we say $f$ is continuous at $a$ if
+    \[
+    \forall \varepsilon>0 \quad \exists \delta>0 \quad \forall x \in M \quad d(x, a)<\delta \Longrightarrow d^{\prime}(f(x), f(a))<\varepsilon
+    \]
+    We say $f$ is continuous if $f$ is continuous at $a$ for every $a \in M$, i.e.,
+    \[
+    \forall a \in M \quad \forall \varepsilon>0 \quad \exists \delta>0 \quad \forall x \in M \quad d(x, a)<\delta \Longrightarrow d^{\prime}(f(x), f(a))<\varepsilon
+    \]
+\end{definition}
+\begin{note}
+    $\delta$ depends on $\varepsilon$ and on $a$.
+\end{note}
+More generally, for a subset $N \subset M$ we say $f$ is continuous on $N$ if $f$ is continuous at every $a \in N$.
+\begin{note}
+    $f$ being continuous on $N$ is related to but is different from $f\restriction_N: N \rightarrow M^{\prime}$ being continuous. The former implies the latter, but the converse fails.
+$f$ continuous on $N$ means:
+    \[
+        \forall a \in N \quad \forall \varepsilon>0 \quad \exists \delta>0 \quad \forall x \in M \quad d(x, a)<\delta \Longrightarrow d^{\prime}(f(x), f(a))<\varepsilon
+    \]
+    $f\restriction_N: N \rightarrow M^{\prime}$ continuous means:
+    \[
+        \forall a \in N \quad \forall \varepsilon>0 \quad \exists \delta>0 \quad \forall x \in N \quad d(x, a)<\delta \Longrightarrow d^{\prime}(f(x), f(a))<\varepsilon
+    \]
+\end{note}
+
+\begin{example}
+$M=\mathbb{R}$ and $f: \mathbb{R} \rightarrow \mathbb{R}, x \mapsto \begin{cases}0 & \text { if } x<0 \\ 1 & \text { if } x \geqslant 0\end{cases}$
+
+$N=[0, \infty)$ and then $f\restriction_N:[0, \infty) \rightarrow \mathbb{R}, x \mapsto 1$, is a constant function, so clearly continuous. However, $f$ is not continuous on $N$, e.g., $f$ is not continuous at 0.
+\end{example}
+
+\begin{proposition}
+	Let \( f \colon M \to M' \) be as above.
+	Let \( a \in M \).
+	Then the following are equivalent:
+	\begin{enumerate}[(i)]
+		\item \( f \) is continuous at \( a \);
+		\item \( x_n \to a \) in \( M \) implies \( f(x_n) \to f(a) \) in \( M \)
+	\end{enumerate}
+    So if $f$ is continuous, then for every convergent sequence $\left(x_n\right)$ in $M,\left(f\left(x_n\right)\right)$ is convergent in $M^{\prime}$, and moreover $\lim _{n \rightarrow \infty} f\left(x_n\right)=f\left(\lim _{n \rightarrow \infty} x_n\right)$.
+\end{proposition}
+\begin{proof}
+	First we show (i) implies (ii).
+	Suppose \( x_n \to a \) in \( M \).
+	Then fix \( \varepsilon > 0 \), and seek \( N \in \mathbb N \) such that \( \forall n \geq N, d'(f(x_n), f(a)) < \varepsilon \).
+	By continuity, there exists \( \delta > 0 \) such that \( \forall x \in M, d(x,a) < \delta \implies d'(f(x_n), f(a)) < \varepsilon \) as required.
+	So we want \( N \) such that \( \forall n \geq N, d(x,a) < \delta \), which must exist since \( x_n \to a \).
+
+	Now, we show (ii) implies (i).
+	Suppose that \( f \) is not continuous at \( a \).
+	Then,
+	\[
+		\exists \varepsilon > 0, \forall \delta > 0, \exists x \in M, d(x,a) < \delta, d'(f(x), f(a)) \geq \varepsilon
+	\]
+	So fix such an \( \varepsilon \) for which no suitable \( \delta \) exists.
+	Choose the sequence \( \delta_n = \frac{1}{n} \), so
+	\[
+		d(x_n,a) < \frac{1}{n};\quad d'(f(x_n), f(a)) \geq \varepsilon
+	\]
+	Then \( x_n \to a \) in \( M \) but \( f(x_n) \not\to f(a) \) in \( M \), which is a contradiction.
+\end{proof}
+
+\begin{proposition}
+	Let \( f,g \) be scalar functions on a metric space \( M \).
+	Let \( a \in M \).
+	Then if \( f,g \) are continuous at \( a \), so are \( f+g \) and \( f \cdot g \).
+	Moreover, letting \( N = \qty{x \in M \colon g(x) \neq 0} \) and assuming \( a \in N \), \( \frac{f}{g} \) is continuous at \( a \).
+	Hence if \( f,g \) are continuous, then so are \( f+g, f \cdot g, \frac{f}{g} \) where they are defined.
+\end{proposition}
+\begin{proof}
+	Suppose \( x_n \to a \).
+	Then by the above proposition, \( (f\cdot g)(x_n) = f(x_n) \cdot g(x_n) \to f(a) \cdot g(a) = (f \cdot g)(a) \), and similar results hold for the other operators.
+\end{proof}
+\begin{remark}
+	If \( f \colon M \to M' \) is continuous everywhere,
+	\[
+		\lim_{n \to \infty} f(x_n) = f\qty(\lim_{n \to \infty} x_n)
+	\]
+	by the second proposition.
+\end{remark}
+\begin{proposition}
+	Let \( f \colon M \to M', g \colon M' \to M'' \) be functions between metric spaces.
+	If \( f \) is continuous at \( a \) and \( g \) is continuous at \( f(a) \), then \( g \circ f \) is continuous at \( a \).
+	If \( f,g \) are continuous, \( g \circ f \) is continuous.
+\end{proposition}
+\begin{proof}
+	Let \( \varepsilon > 0 \).
+	We want to find \( \delta > 0 \) such that \( \forall x \in M \), \( d(x,a) < \delta \) implies \( d''(g(f(x)), g(f(a))) < \varepsilon \).
+	Since \( g \) is continuous at \( f(a) \), there exists \( \eta > 0 \) such that \( \forall y \in M' \), \( d'(y,f(a)) < \eta \implies d''(g(y), g(f(a))) < \varepsilon \).
+	Now, since \( f \) is continuous at \( a \), for this \( \eta \) there exists \( \delta \) such that for all \( x \in M \), \( d(x,a) < \delta \implies d'(f(x) - f(a)) < \eta \).
+	Then \( d(x,a) < \delta \implies d''(g(f(x)), g(f(a))) < \varepsilon \) as required.
+\end{proof}
+
+\begin{definition}
+	Let \( f \colon M \to M' \) be a function between metric spaces.
+	Then, \( f \) is
+	\begin{enumerate}
+		\item \textbf{isometric}, if \( \forall x,y \in M, d'(f(x),f(y)) = d(x,y) \)
+		\item \textbf{Lipschitz}, or \( c \)-Lipschitz, if \( \exists c \in \mathbb R^+, \forall x,y \in M, d'(f(x),f(y)) \leq c\cdot d(x,y) \)
+		\item \textbf{uniformly continuous}, if \( \forall \varepsilon > 0, \exists \delta > 0, \forall x,y \in M, d(x,y) < \delta \implies d'(f(x), f(y)) < \varepsilon \)
+	\end{enumerate}
+\end{definition}
+
+\begin{note}
+    \begin{enumerate}
+        \item isometric $\Longrightarrow$ Lipschitz $\Longrightarrow$ uniformly continuous $\Longrightarrow$ continuous.
+        \item An isometric map is injective but not necessarily surjective. An isometric map that is also surjective is called an \textbf{isometry}. The inverse of an isometry is also an isometry. If there is an isometry $M \rightarrow M^{\prime}$, we say that $M$ and $M^{\prime}$ are \textbf{isometric metric spaces} or that $M^{\prime}$ is an \textbf{isometric copy} of $M$.
+    \end{enumerate}
+\end{note}
+
+\begin{example}
+	\begin{enumerate}
+        \item Constant functions are continuous.
+        For instance, let \( b \in M \) and let \( f(x) = b \).
+        Then this is continuous since \( d'(f(x) - f(a)) = d'(b,b) = 0 \) so any \( \delta > 0 \) will satisfy the condition.
+    
+        \item The identity function \( f \colon M \to M \) defined by \( x \mapsto x \) is continuous.
+        Consider \( d(f(x) - f(a)) = d(x-a) \).
+        So \( \delta = \varepsilon \) will suffice.
+    
+        \item All real and complex polynomials and rational functions are continuous wherever they are defined by the propositions and examples above.
+        In fact, using uniform convergence, the uniform limits of such functions are also continuous.
+        For example, exponential and trigonometric functions are continuous.
+    
+        \item Let \( (M, d) \) be a metric space.
+        Then \( d \colon M \oplus_p M \to \mathbb R \), which can be viewed as a function between metric spaces \( M \oplus_p M \) and \( \mathbb R \).
+        Then, given \( v = (x,x'), w = (y,y') \in M \oplus_p M \),
+        \begin{align*}
+            \abs{d(v) - d(w)} &= \abs{d(x,x') - d(y,y')} \\ 
+            &\leq d(x,y) + d(x',y') \\ 
+            &= d_1(v,w) \leq 2 d_p(v,w)
+        \end{align*}
+        Hence \( \delta = \frac{\varepsilon}{2} \) will suffice.
+
+        \item Let $M, M^{\prime}$ be metric spaces.
+        Fix $y \in M^{\prime}$ and consider the function $f: M \rightarrow M \oplus_p M^{\prime}, f(x)=(x, y)$. 
+        
+        For $x, z \in M$, we have $d_p(f(x), f(z))=d_p((x, y),(z, y))=d(x, z)$, and thus $f$ is isometric, and $M \times\{y\}$ is an isometric copy of $M$.
+        This generalizes to any finite number of metric spaces. For example, given $a \in \mathbb{R}^n$, the map $x \mapsto\left(a_1, \ldots, a_{k-1}, x, a_{k+1}, \ldots, a_n\right): \mathbb{R} \rightarrow \mathbb{R}^n$ is isometric.
+
+        \begin{center}
+            \includegraphics[width=0.4\textwidth]{at2.png}
+        \end{center}
+        
+        \item Let $M, M^{\prime}$ be metric spaces. Consider the projection functions
+        \[
+            \pi: M \oplus_p M^{\prime} \rightarrow M,\left(x, x^{\prime}\right) \mapsto x \quad \text{and}\quad \pi^{\prime}: M \oplus_p M^{\prime} \rightarrow M^{\prime},\left(x, x^{\prime}\right) \mapsto x^{\prime}
+        \]
+        For $\mathbf{x}=\left(x, x^{\prime}\right)$ and $\mathbf{y}=\left(y, y^{\prime}\right)$ in $M \oplus_p M^{\prime}$, we have
+        \[
+        d(\pi(\mathbf{x}), \pi(\mathbf{y}))=d(x, y) \leqslant \max \left\{d(x, y), d^{\prime}\left(x^{\prime}, y^{\prime}\right)\right\}=d_{\infty}(\mathbf{x}, \mathbf{y}) \leqslant d_p(\mathbf{x}, \mathbf{y})
+        \]
+        and so $\pi$ is 1-Lipschitz. The same holds for $\pi^{\prime}$.
+
+        E.g., $\mathbb{C}^n \rightarrow \mathbb{C},\left(z_1, \ldots, z_n\right) \mapsto z_k$ is continuous. We deduce that polynomials in any number of variables are also continuous.
+    \end{enumerate}
+\end{example}
+
+\subsection{Generalised triangle inequality}
+Suppose \( u,x,y,z \in M \).
+Then, \( \abs{d(u,x) - d(y,z)} \leq d(u,y) + d(x,z) \).
+First,
+\[
+	d(u,x) \leq d(u,y) + d(y,x) \leq d(u,y) + d(y,z) + d(z,x)
+\]
+Rearranging,
+\[
+	d(u,x)-d(y,z) \leq d(u,y) + d(x,z)
+\]
+To achieve the negative, satisfying both conditions in the absolute value term,
+\[
+	d(y,z) \leq d(y,u) + d(u,x) + d(x,z)
+\]
+which gives
+\[
+	d(y,z) - d(u,x) \leq d(u,y) + d(x,z)
+\]
+as required.
+
+\section{Topology of metric spaces}
+\subsection{Open balls}
+In a metric space, continuity at a point $x$ or convergence of a sequence to a point $x$ depends on the set of points close to $x$. This motivates the following.
+\begin{definition}
+	Let $(M, d)$ be a metric space and $x \in M$. We define the \textbf{open ball} in $M$ with centre $x$ and radius $r$ (or the open $r$-ball around $x$ ) as the set
+    \[
+    D_r(x)=\{y \in M: d(y, x)<r\}
+    \]
+    We sometimes write $D_r^M(x)$ to indicate the underlying metric space $M$.
+\end{definition}
+The open ball notation is a convenient syntax for denoting closeness in some metric space.
+Note that
+\[
+    \begin{aligned}
+        &x_n \rightarrow x \text { in } M \Longleftrightarrow \forall \varepsilon>0\quad \exists N \in \mathbb{N}\quad \forall n \geqslant N \quad x_n \in D_{\varepsilon}(x) \\
+        &f: M \rightarrow M^{\prime} \text { is continuous at } x \Longleftrightarrow \forall \varepsilon>0\quad \exists \delta>0\quad f\left(D_\delta(x)\right) \subset D_{\varepsilon}(f(x))
+    \end{aligned}
+\]
+\begin{definition}
+	The closed ball of centre \( x \) and radius \( r \geq 0 \) is the set
+	\[
+		B_r(x) = \qty{y \in M \colon d(y,x) \leq r}
+	\]
+\end{definition}
+\begin{example} 
+	\begin{enumerate}
+        \item \( \mathbb R \), \( D_r(x) = (x-r,x+r) \),
+        \( B_r(x) = [x-r,x+r] \).
+        \item \( (\mathbb R^2, d_p) \), $\displaystyle B_1(0) = \left\{ x \in \mathbb R^2 \colon \norm{x}_p \leq 1  \right\}$. 
+        \item In $\mathbb{C}, D_r(x)$ and $B_r(x)$ are the open and closed discs with centre $x$ and radius $r$.
+        \item Let \( M \) be a discrete metric space.
+        Then for \( x \in M \),
+        \[
+            D_1(x) = \qty{x};\quad B_1(x) = M
+        \]
+    \end{enumerate}
+\end{example}
+\begin{note}
+	\begin{enumerate}
+        \item $D_r(x) \subset B_r(x) \subset D_s(x)$ whenever $r<s$.
+        \item $d(x, y)=\min \left\{r \geqslant 0: y \in B_r(x)\right\}=\inf \left\{r>0: y \in D_r(x)\right\}$
+    \end{enumerate}
+\end{note}
+
+\subsection{Neighbourhoods and openness}\ \vspace{-1.5em}
+\begin{definition}
+	Let \( M \) be a metric space, and \( U \subset M \).
+	Then for \( x \in M \), we say that \( U \) is a \textbf{neighbourhood} of \( x \) (in \( M \)) if
+	\[
+		\exists r > 0\quad D_r(x) \subset U \iff \exists r > 0\quad B_r(x) \subset U
+	\]
+\end{definition}
+\begin{definition}
+	We say \( U \subset M \) is \textbf{open} in \( M \), or that \( U \) is an \textbf{open subset} of \( M \), if
+	\[
+		\forall x \in U\quad \exists r > 0\quad D_r(x) \subset U
+	\]
+	So \( U \) is a neighbourhood of all points in \( U \).
+\end{definition}
+\begin{example}
+	\( D_r(x), B_r(x) \) are neighbourhoods of \( x \).
+\end{example}
+\begin{example}
+	Let \( H = \qty{ z \in \mathbb C \colon \Im z \geq 0 } \).
+	Let \( w \in H \) and \( \delta = \Im w \).
+	If \( \delta > 0 \), then \( D_\delta(w) \subset H \).
+	If \( \delta = 0 \), then for any \( r \), \( D_\delta(w) \not\subset H \).
+	So \( H \) is not open.
+\end{example}
+\begin{lemma}
+	Open balls are open.
+\end{lemma}
+\begin{proof}
+	Let \( D_r(x) \) be an open ball in a metric space \( M \).
+	We need to show that
+	\[
+		\forall y \in D_r(x)\quad \exists \delta > 0\quad D_\delta(y) \subset D_r(x)
+	\]
+	So let \( y \in D_r(x) \) and set \( \delta = r - d(x,y) \).
+	Note that \( d(x,y) > 0 \), and by the triangle inequality,
+	\[
+		d(z,x) \leq d(z,y) + d(y,x) < \delta + (r-\delta) = r
+	\]
+	as required.
+\end{proof}
+\begin{corollary}
+	Let \( M \) be a metric space, \( U \subset M \), \( x \in M \).
+	Then \( U \) is a neighbourhood of \( x \) if and only if there exists an open subset \( V \) of \( M \) such that \( x \in V \subset U \).
+\end{corollary}
+\begin{proof}
+	In the forward direction, there exists \( r > 0 \) such that \( D_r(x) \subset U \), so let \( V = D_r(x) \).
+	Conversely, if \( V \) is open we can construct \( r > 0 \) such that \( D_r(x) \subset V \subset U \).
+	So \( U \) is a neighbourhood of \( x \).
+\end{proof}
+
+\subsection{Continuity and convergence using topology}\ \vspace{-1.5em}
+\begin{proposition}
+	In a metric space \( M \), the following are equivalent.
+	\begin{enumerate}[(i)]
+		\item \( x_n \to x \);
+		\item for all neighbourhoods \( U \) of \( x \) in \( M \), \( \exists N \in \mathbb N, \forall n \geq N, x_n \in U \);
+		\item for all open neighbourhoods \( U \) of \( x \) in \( M \), \( \exists N \in \mathbb N, \forall n \geq N, x_n \in U \).
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	((i) $ \Rightarrow$ (ii))
+	Let \( U \) be a neighbourhood of \( x \).
+	Then by definition \( \exists \varepsilon > 0, D_\varepsilon(x) \subset U \).
+	Since \( x_n \to x \),
+	\[
+		\exists N \in \mathbb N, \forall n \geq N, x_n \in D_\varepsilon(x)
+	\]
+	hence \( \forall n \geq N, x_n \in U \).
+
+	((ii) $ \Rightarrow$ (iii))
+	This is clear since any open set \( U \) with \( x \in U \) is a neighbourhood of \( x \).
+
+	((iii) $ \Rightarrow$ (i))
+	Fix \( \varepsilon > 0 \).
+	By the above lemma, \( U = D_\varepsilon(x) \) is open, and \( x \in U \).
+	Then by (iii),
+	\[
+		\exists N \in \mathbb N, \forall n \geq n, x_n \in U
+	\]
+	hence \( d(x_n, x) < \varepsilon \).
+\end{proof}
+\begin{proposition}
+	Let \( f \colon M \to M' \) be a function between metric spaces.
+	\begin{enumerate}[(a)]
+		\item The following are equivalent for all \( x \in M \).
+		      \begin{enumerate}[(i)]
+			      \item \( f \) is continuous at \( x \);
+			      \item for all neighbourhoods \( V \) of \( f(x) \) in \( M' \), there exists a neighbourhood \( U \) of \( x \) in \( M \) such that \( f(U) \subset V \);
+			      \item for all neighbourhoods \( V \) of \( f(x) \) in \( M' \), \( f^{-1}(V) \) is a neighbourhood of \( x \) in \( M \).
+		      \end{enumerate}
+		\item The following are equivalent.
+		      \begin{enumerate}[(i)]
+			      \item \( f \) is continuous;
+			      \item \( f^{-1}(V) \) is open in \( M \) for all open subsets \( V \) of \( M' \). (The inverse image of open set is open.)
+		      \end{enumerate}
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+    We begin with part (a). 
+    
+    We first recall that (i) is the following statement.
+    \[
+        \forall \varepsilon>0 \quad \exists \delta>0 \quad f\left(D_\delta(x)\right) \subset D_{\varepsilon}(f(x))
+    \]
+
+    ((i) $\Rightarrow$ (ii)) Given a neighbourhood $V$ of $f(x)$ in $M^{\prime}$, there is an $\varepsilon>0$ such that $D_{\varepsilon}(f(x)) \subset V$. Since $f$ is continuous at $x$, there is a $\delta>0$ such that $f\left(D_\delta(x)\right) \subset D_{\varepsilon}(f(x))$. Set $U=D_\delta(x)$. Then $U$ is a neighbourhood of $x$ in $M$ and $f(U) \subset D_{\varepsilon}(f(x)) \subset V$.
+
+    ((ii) $\Rightarrow$ (iii)) Given a neighbourhood $V$ of $f(x)$ in $M^{\prime}$, by assumption (ii) there is a neighbourhood $U$ of $x$ in $M$ such that $f(U) \subset V$. By definition of neighbourhood, there is a $r>0$ such that $D_r(x) \subset U$. It follows that $D_r(x) \subset U \subset f^{-1}(V)$, and hence $f^{-1}(V)$ is a neighbourhood of $x$ in $M$.
+
+    ((iii) $\Rightarrow$ (i)) Given $\varepsilon>0$, the set $V=D_{\varepsilon}(f(x))$ is a neighbourhood of $f(x)$ in $M^{\prime}$, and hence $f^{-1}(V)$ is a neighbourhood of $x$ in $M$ by assumption. By definition, there is a $\delta>0$ such that $D_\delta(x) \subset f^{-1}(V)$. It follows that $f\left(D_\delta(x)\right) \subset V=D_{\varepsilon}(f(x))$. 
+
+    We now deduce part (b).
+
+    ((i) $\Rightarrow$ (ii)) Let $V$ be an open set in $M^{\prime}$. Fix $x \in f^{-1}(V)$. Then $f(x) \in V$, and so $V$ is a neighbourhood of $f(x)$ in $M^{\prime}$. Since $f$ is continuous at $x$, it follows from (a) that $f^{-1}(V)$ is a neighbourhood of $x$ in $M$. This holds for any $x \in f^{-1}(V)$, and thus $f^{-1}(V)$ is open in $M$.
+
+    ((ii) $\Rightarrow$ (i)) Let $x \in M$ and let $\varepsilon>0$. Since $V=D_{\varepsilon}(f(x))$ is open in $M^{\prime}$, it follows that $f^{-1}(V)$ is open in $M$ by assumption. Since $f(x) \in V$, we have $x \in f^{-1}(V)$. Thus, there is a $\delta>0$ such that $D_\delta(x) \subset f^{-1}(V)$. It follows that $f\left(D_\delta(x)\right) \subset V=D_{\varepsilon}(f(x))$. This shows that $f$ is continuous at every $x \in M$, and thus $f$ is continuous.
+\end{proof}
+
+\begin{definition}
+	The \textbf{topology} of a metric space \( M \) is the family of all open subsets of \( M \).
+\end{definition}
+\begin{proposition}
+	The topology of a metric space satisfies
+	\begin{enumerate}[(i)]
+		\item \( \varnothing \) and \( M \) are open;
+		\item if \( U_i \) are open in \( M \) for \( i \in I \) (\( I \) may be countable or uncountable), then \( \bigcup_{i \in I} U_i \) is open in \( M \);
+		\item if \( U, V \) are open then \( U \cap V \) is open.
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	(ii): Let \( x \in \bigcup_{i \in I} U_i \), then \( \exists i_a \in I, x \in U_{i_a} \).
+	Then since \( U_{i_a} \) is open, \( \exists \delta > 0, D_r(x) \subset U_{i_a} \subset \bigcup_{i \in I} U_i \)
+
+	(iii) Given \( x \in U \cap V \), since \( U \) is open then \( \exists r > 0 \), \( D_r(x) \subset U \) and \( \exists s > 0 \), \( D_s(x) \subset V \).
+	Then let \( t = \min(r,s) \), and \( D_t(x) = D_r(x) \cap D_s(x) \subset U \cap V \).
+\end{proof}
+
+\subsection{Properties of topology of metric space}\ \vspace{-1.5em}
+\begin{definition}
+	Let $M$ be a metric space and $A \subset M$. We say $A$ is closed in $M$ (or that $A$ is a closed subset of $M)$ if for every sequence $\left(x_n\right)$ in $A$ that converges in $M$, we have $\lim _{n \rightarrow \infty} x_n$ is in $A$.
+\end{definition}
+\begin{lemma}
+	Closed balls are closed.
+\end{lemma}
+\begin{proof}
+	Consider \( B_r(x) \) in \( M \).
+	Consider further \( (x_n) \in B_r(x) \) such that \( x_n \to z \) in \( M \).
+	\[
+		d(z,x) \leq d(z,x_n) + d(x_n,x) \leq d(z,x_n) + r \to r
+	\]
+	Hence \( d(z,x) \leq r \), so \( z \in B_r(x) \).
+\end{proof}
+\begin{example}
+	\begin{enumerate}
+        \item \( [0,1] = B_{1/2}(1/2) \) is closed in \( \mathbb R \).
+        This is not open, for instance consider \( D_r(0) \not\subset [0,1] \).
+    
+        \item \( (0,1) = D_{1/2}(1/2) \) is open in \( \mathbb R \).
+        This is not closed, for instance the sequence \( \frac{1}{n+1} \to 0\) in \( \mathbb R \).
+    
+        \item \( \mathbb R \) and \( \varnothing \) are open and closed in \( \mathbb R \).
+    
+        \item \( (0,1] \) in \( \mathbb R \) is neither open nor closed.
+        \( D_r(1) \not\subset (0,1] \) and \( \frac{1}{n} \to 0 \not\in (0,1] \).
+    \end{enumerate}
+\end{example}
+\begin{lemma}
+	Let \( A \subset M \).
+	Then \( A \) is closed in \( M \) if and only if \( M \setminus A \) is open in \( M \).
+\end{lemma}
+\begin{proof}
+	Let \( A \) be closed.
+	Suppose \( M \setminus A \) is not open.
+	Then \( \exists x \in M \setminus A, \forall r > 0, D_r(x) \not\subset M \setminus A \), so \( D_r(x) \cap A \neq \varnothing \).
+	In particular, for every \( n \) we can choose a point in \( D_{1/n}(x) \cap A \).
+	Then, \( d(x_n,x) < \frac{1}{n} \to 0 \) and \( x_n \in A \) which contradicts the fact that \( A \) is closed.
+
+	Conversely, assume \( M \setminus A \) is open, but suppose \( A \) is not closed.
+	Then there exists a sequence \( (x_n) \in A \) such that \( x_n \to x \) in \( M \) but \( x \not\in A \).
+	Since \( x \in M \setminus A \) and \( M \setminus A \) is open, there exists \( \varepsilon > 0, D_\varepsilon(x) \subset M \setminus A \).
+	Since \( x_n \to x \), we must have \( \exists N \in \mathbb N, \forall n \geq N, x_n \in D_\varepsilon(x) \) and hence \( x_n \in M \setminus A \), contradiction.
+\end{proof}
+\begin{example}
+	Let \( M \) be a discrete metric space.
+	Let \( A \subset M \).
+	Then for all \( x \in A \), \( D_1(x) = \qty{x} \subset A \).
+	Hence \( A \) is open.
+	So in a discrete metric space, all subsets are open.
+	Hence every subset is closed.
+\end{example}
+
+\subsection{Homeomorphisms}
+Recall that a map $f: M \rightarrow M^{\prime}$ between metric spaces is an isometry if it is bijective and isometric $\left(d^{\prime}(f(x), f(y))=d(x, y)\right.$ for all $\left.x, y \in M\right)$. This is the correct notion of structure-preserving map for metric spaces provided we are interested in metric properties, i.e., properties that depend on the metric itself. What if we are only interested in the topology that comes from the metric?
+
+\begin{definition}
+	A map \( f \colon M \to M' \) between metric spaces is called a \textbf{homeomorphism} if \( f \) is a bijection and \( f, f^{-1} \) are continuous.
+
+	Equivalently, \( f \) is a bijection, and for all open sets \( V \) in \( M' \), \( f^{-1}(V) \) is open in \( M \), and for all open sets \( U \) in \( M \), \( f(U) \) is open in \( M' \).
+
+	If there exists a homeomorphism between \( M, M' \), we say that \( M, M' \) are \textbf{homeomorphic}.
+\end{definition}
+\begin{example}
+	Consider \( (0,\infty) \) and \( (0,1) \).
+	Consider the map \( x \mapsto \frac{1}{x+1} \) with inverse \( x \mapsto \frac{1}{x} - 1 \).
+	These are continuous, so the metric spaces are homeomorphic.
+\end{example}
+\begin{remark}
+\begin{enumerate}
+    \item Every isometry is a homeomorphism. Converse is false.
+    \item Isometric metric spaces are homeomorphic. Converse is false.
+    \item The identity map on a metric space is a homeomorphism, the inverse of a homeomorphism is a homeomorphism and the composite of homeomorphisms is a homeomorphism. It follows that being homeomorphic is an equivalence relation.
+    \item Let $f: M \rightarrow M^{\prime}$ be a homeomorphism. If $U$ is an open subset of $M$, then $f(U)=\left(f^{-1}\right)^{-1}(U)$ is open in $M^{\prime}$, and conversely, if $V$ is an open subset of $M^{\prime}$, then $f^{-1}(V)$ is open in $M$. So we have a bijection between the topologies of $M$ and $M^{\prime}$.
+    \item Let $f: M \rightarrow M^{\prime}$ be a homeomorphism. Then $\left(x_n\right)$ is convergent in $M$ if and only if $\left(f\left(x_n\right)\right)$ is convergent in $M^{\prime}$. Also, $g: N \rightarrow M$ is continuous if and only if $f \circ g$ is continuous, and $h: N \rightarrow M^{\prime}$ is continuous if and only if $f^{-1} \circ h$ is continuous. Similar comment applies to functions from $M$ and $M^{\prime}$.
+    \item A continuous bijection need not be a homeomorphism. E.g.,
+    Id: $(\mathbb{R}$, discrete$) \rightarrow(\mathbb{R}$, euclidean$)$
+\end{enumerate}
+\end{remark}
+
+\subsection{Equivalence of metrics}\ \vspace{-1.5em}
+\begin{definition}
+	Let \( d, d' \) be metrics on a set \( M \).
+	We say that \( d, d' \) are \textbf{equivalent}, written \( d \sim d' \), if they define the same topology.
+\end{definition}
+
+\begin{remark}
+	Remark Each of the following statements are equivalent to $d \sim d^{\prime}$.
+\begin{enumerate}
+    \item The identity map Id: $(M, d) \rightarrow\left(M, d^{\prime}\right)$ is a homeomorphism. Note that this is stronger than saying that $(M, d)$ and $\left(M, d^{\prime}\right)$ are homeomorphic.
+    \item $(M, d)$ and $\left(M, d^{\prime}\right)$ have the same convergent sequences.
+    \item For every metric space $N$ and every $f: N \rightarrow M, f$ is continuous with respect to $d$ if and only if it is continuous with respect to $d^{\prime}$.
+    \item For every metric space $N$ and every $f: M \rightarrow N, f$ is continuous with respect to $d$ if and only it is continuous with respect to $d^{\prime}$.
+\end{enumerate}
+\end{remark}
+
+\begin{definition}
+	Let \( d, d' \) be metrics on \( M \).
+	Then we say \( d, d' \) are \textbf{uniformly equivalent}, written \( d \sim_u d' \) if
+	\[
+		\mathrm{id} \colon (M, d) \to (M, d');\quad \mathrm{id} \colon (M, d') \to (M, d)
+	\]
+	are uniformly continuous.
+	We say \( d, d' \) are \textbf{Lipschitz equivalent}, written \( d \sim_\mathrm{Lip} d' \), if the identity maps above are Lipschitz.
+\end{definition}
+Equivalently, \( d \sim_\mathrm{Lip} d' \) if \( \exists a > 0, b > 0, ad(x,y) \leq d'(x,y) \leq bd(x,y) \).
+	Note, \( d \sim_\mathrm{Lip} d' \implies d \sim_u d' \implies d \sim d' \).
+\begin{example}
+	\begin{enumerate}
+        \item Given \( (M,d) \), define \( d'(x,y) = \min(1,d(x,y)) \).
+        This defines a metric on \( M \), and \( d' \sim_u d \).
+    
+        \item On \( M \times M' \), \( d_1, d_2, d_\infty \) are pairwise Lipschitz equivalent.
+    
+        \item Consider \( C[0,1] \).
+        The \( L_1 \) metric and the uniform metric are not equivalent.
+        Consider \( f_n(x) = x^n \).
+        This is convergent to zero in the \( L_1 \) metric but is not convergent in the uniform metric.
+    
+        \item The discrete metric and Euclidean metric on \( \mathbb R \) are not equivalent.
+        This is becaue in the discrete metric all sets are open, but in the Euclidean metric there are some non-open sets.
+    \end{enumerate}
+\end{example}
+
+\section{Completeness}
+\subsection{Cauchy sequences}
+In \( \mathbb R, \mathbb C \), every Cauchy sequence is convergent.
+We wish to generalise this notion to an arbitrary metric space.
+Recall that a sequence \( (x_n) \) in \( \mathbb R \) or \( \mathbb C \) is bounded if there exists \( c \in \mathbb R^+ \) such that \( \forall n \in \mathbb N, \abs{x_n} \leq c \).
+\begin{definition}
+	A sequence \( (x_n) \) in a metric space \( M \) is said to be \textbf{Cauchy} if
+	\[
+		\forall \varepsilon > 0\quad \exists N \in \mathbb N\quad \forall m,n \geq N\quad d(x_m,x_n) < \varepsilon
+	\]
+	The sequence is bounded if
+	\[
+		\exists z \in M\quad \exists r > 0\quad \forall n \in \mathbb N\quad x_n \in B_r(z)
+	\]
+	This is equivalent to
+	\[
+		\forall z \in M\quad \exists r > 0\quad \forall n \in \mathbb N\quad x_n \in B_r(z)
+	\]
+	by considering the triangle inequality around the given \( z \) point.
+	In particular, if the metric arises from a norm, \( (x_n) \) is bounded if and only if \( \norm{x_n} \) is bounded.
+\end{definition}
+\begin{lemma}
+	$ \text { convergent } \Longrightarrow \text { Cauchy } \Longrightarrow \text { bounded } $
+\end{lemma}
+
+\begin{proof}
+    Let $\left(x_n\right)$ be a sequence in a metric space $M$.
+
+    For the first implication, assume that $\left(x_n\right)$ is convergent $M$ and let $x$ denote its limit. Given $\varepsilon>0$, there exists $N \in \mathbb{N}$ such that $d\left(x_n, x\right)<\varepsilon / 2$ for all $n \geqslant N$. Then for $m, n \geqslant N$ we have
+    \[
+    d\left(x_m, x_n\right) \leqslant d\left(x_m, x\right)+d\left(x, x_n\right)<\varepsilon
+    \]
+    Thus, $\left(x_n\right)$ is Cauchy.
+
+    For the second implication, assume that $\left(x_n\right)$ is Cauchy. Then there exists $N \in \mathbb{N}$ such that $d\left(x_m, x_n\right) \leqslant 1$ for all $m, n \geqslant N$. It follows that $x_n \in B_1\left(x_N\right)$ for all $n \geqslant N$. Now let
+    \[
+    r=\max \left\{d\left(x_1, x_N\right), d\left(x_2, x_N\right), \ldots, d\left(x_{N-1}, x_N\right), 1\right\}
+    \]
+    Then $x_n \in B_r\left(x_N\right)$ for all $n \in \mathbb{N}$.
+\end{proof}
+
+\begin{remark}
+\begin{enumerate}
+    \item Bounded $\centernot\implies$ Cauchy E.g., $0,1,0,1,0,1 \ldots$ in $\mathbb{R}$
+    \item Cauchy $\centernot\implies$ convergent E.g., $(1 / n)$ in $(0, \infty)$.
+\end{enumerate}
+\end{remark}
+
+\subsection{Completeness}\ \vspace{-1.5em}
+\begin{definition}
+	A metric space \( M \) is called \textbf{complete} if every Cauchy sequence in \( M \) converges in \( M \).
+\end{definition}
+\begin{example}
+	\( \mathbb R, \mathbb C \) are complete.
+\end{example}
+\begin{proposition}
+    If $M$ and $M^{\prime}$ are complete metric spaces, then $M \oplus_p M^{\prime}$ is also complete for $p=1,2$ and $\infty$.
+\end{proposition}
+\begin{proof}
+    Let $\left(a_n\right)$ be a Cauchy sequence in $M \oplus_p M^{\prime}$ where $a_n=\left(x_n, x_n^{\prime}\right)$ for $n \in \mathbb{N}$. Given $\varepsilon>0$, there exists $N \in \mathbb{N}$ such that $d_p\left(a_m, a_n\right)<\varepsilon$ for all $m, n \geqslant N$. It follows that
+    \[
+    d\left(x_m, x_n\right) \leqslant d_p\left(a_m, a_n\right)<\varepsilon \quad \forall m, n \geqslant N
+    \]
+    and hence $\left(x_n\right)$, and by a similar argument $\left(x_n^{\prime}\right)$, is Cauchy. Since $M$ and $M^{\prime}$ are complete, $x_n \rightarrow x$ and $x_n^{\prime} \rightarrow x^{\prime}$ for some $x \in M$ and $x^{\prime} \in M^{\prime}$. Finally, let $a=\left(x, x^{\prime}\right)$. Then
+    \[
+    d_p\left(a_n, a\right) \leqslant d\left(x_n, x\right)+d^{\prime}\left(x_n^{\prime}, x^{\prime}\right) \rightarrow 0 \quad \text { as } n \rightarrow \infty
+    \]
+    Thus, $\left(a_n\right)$ in convergent in $M \oplus_p M^{\prime}$.
+\end{proof}
+\begin{note}
+    $\left(a_n\right)$ is Cauchy if and only if $\left(x_n\right)$ and $\left(x_n^{\prime}\right)$ are Cauchy.
+\end{note}
+
+\begin{corollary}
+$\mathbb{R}^n$ and $\mathbb{C}^n$ are complete in the $\ell_p$-metric for $p=1,2$ and $\infty$. In particular, $n$-dimensional real or complex euclidean space is complete.
+\end{corollary}
+
+\subsection{Completeness of subspaces}\ \vspace{-1.5em}
+
+\begin{theorem}
+    Let $S$ be an arbitrary set. Then the space $\ell_{\infty}(S)$ is complete in the uniform metric $D$.
+\end{theorem}
+\begin{proof}
+    Let $\left(f_n\right)$ be a Cauchy sequence in $\ell_{\infty}(S)$. Then given $\varepsilon>0$, there exists $N \in \mathbb{N}$ such that for all $m, n \geqslant N$, we have
+    \[
+        D\left(f_m, f_n\right)=\sup _{x \in S}\left|f_m(x)-f_n(x)\right|<\varepsilon \implies \forall x \in S \quad\left|f_m(x)-f_n(x)\right|<\varepsilon.
+    \]
+    Thus, $\left(f_n\right)$ is uniformly Cauchy, and hence converges uniformly to a scalar function $f$ on $S$. It follows that $f$ is bounded, i.e., $f \in \ell_{\infty}(S)$. Finally, since $f_n \rightarrow f$ uniformly on $S$, given $\varepsilon>0$, there exists $N \in \mathbb{N}$ such that for all $n \geqslant N$ we have
+    \[
+        \forall x \in S \quad\left|f_n(x)-f(x)\right|<\varepsilon \implies D\left(f_n, f\right)=\sup _{x \in S}\left|f_n(x)-f(x)\right| \leqslant \varepsilon.
+    \]
+    This shows that $f_n \rightarrow f$ in the uniform metric.
+\end{proof}
+
+\begin{proposition}
+    Let $N$ be a subspace of a metric space $M$.
+    \begin{enumerate}[(i)]
+        \item If $N$ is complete, then $N$ is closed in $M$.
+        \item If $M$ is complete and $N$ is closed in $M$, then $N$ is complete.
+    \end{enumerate}In particular, in a complete metric space, a subspace is closed if and only if it is complete.
+\end{proposition}
+\begin{proof}
+    (i) Given $\left(x_n\right)$ in $N$, assume $x_n \rightarrow x$ in $M$. Then $\left(x_n\right)$ is Cauchy in $M$ by Lemma 12 , and hence Cauchy in $N$. Since $N$ is complete, $x_n \rightarrow y$ for some $y$ in $N$, and hence $x_n \rightarrow y$ in $M$. By uniqueness of limit, $x=y$, and thus $x \in N$, as required.
+
+    (ii) Let $\left(x_n\right)$ be a Cauchy sequence in $N$. Then $\left(x_n\right)$ is Cauchy in $M$, and hence $x_n \rightarrow x$ for some $x$ in $M$. Since $N$ is closed, $x$ belongs to $N$. It follows that $x_n \rightarrow x$ in $N$.
+\end{proof}
+
+\begin{definition}
+    Definition Let $(M, d)$ be a metric space. We define
+    \[
+    C_b(M)=\left\{f \in \ell_{\infty}(M): f \text { is continuous}\right\}.
+    \]
+    So in the real case, we have
+    \[
+    C_b(M)=\{f: M \rightarrow \mathbb{R}: f \text { is bounded and continuous}\}.
+    \]
+\end{definition}
+
+\begin{note}
+    $C_b(M)$ is a subspace of $\ell_{\infty}(M)$ in the uniform metric $D$.
+\end{note}
+
+\begin{theorem}
+    $C_b(M)$ is complete in the uniform metric for any metric space $M$.
+\end{theorem}
+
+\begin{proof}
+    It is enough to show that $C_b(M)$ is closed in $\ell_{\infty}(M)$. Let $\left(f_n\right)$ be a sequence in $C_b(M)$, let $f \in \ell_{\infty}(M)$, and assume that $f_n \rightarrow f$. We need to show that $f \in C_b(M)$, i.e., that $f$ is continuous. 
+    
+    Fix $a \in M$ and $\varepsilon>0$. Since $f_n \rightarrow f$, we can choose a large $n \in \mathbb{N}$ such that
+    \[
+    D\left(f_n, f\right)=\sup _{x \in M}\left|f_n(x)-f(x)\right|<\varepsilon.
+    \]
+    Since $f_n$ is continuous at $a$, there exists $\delta>0$ such that
+    \[
+    \forall x \in M \quad d(x, a)<\delta \Longrightarrow\left|f_n(x)-f_n(a)\right|<\varepsilon.
+    \]
+    It follows that for any $x \in M$, if $d(x, a)<\delta$, then
+    \[
+    \begin{aligned}
+    |f(x)-f(a)| & \leqslant\left|f(x)-f_n(x)\right|+\left|f_n(x)-f_n(a)\right|+\left|f_n(a)-f(a)\right| \\
+    & \leqslant \varepsilon+\varepsilon+\varepsilon=3 \varepsilon.
+    \end{aligned}
+    \]
+    This shows that $f$ is continuous at $a$, and hence continuous.
+\end{proof}
+
+\begin{corollary}
+    For any closed, bounded interval $[a, b]$ in $\mathbb{R}$, the space $C[a, b]$ of continuous scalar functions on $[a, b]$ is complete in the uniform metric.
+\end{corollary}
+
+\begin{definition}
+    Let $S$ be a set and $(N, e)$ be a metric space. Define
+    \[
+    \ell_{\infty}(S, N)=\{f: S \rightarrow N: f \text { is bounded}\}
+    \]
+    We say $f$ is bounded if: $\exists y \in N \quad \exists r>0 \quad \forall x \in S \quad f(x) \in B_r(y)$
+
+    Now assume that $g: S \rightarrow N$ is another bounded function: there exist $z \in N$ and $s>0$ such that $g(x) \in B_s(z)$ for all $x \in S$. Then
+    \[
+    \forall x \in S \quad e(f(x), g(x)) \leqslant e(f(x), y)+e(y, z)+e(z, g(x)) \leqslant r+e(y, z)+s
+    \]
+    It follows that $\sup _{x \in S} e(f(x), g(x))$ exists and will be denoted by $D(f, g)$. It is routine to verify that $D$ is a metric on $\ell_{\infty}(S, N)$ called the \textbf{uniform metric}.
+
+    Now assume further that $(M, d)$ is a metric space. Define
+    \[
+    C_b(M, N)=\{f: M \rightarrow N: f \text { is bounded and continuous}\}
+    \]
+    which is a subspace of $\ell_{\infty}(M, N)$.
+\end{definition}
+
+\begin{theorem}\label{thm:19}
+    Let $S$ be a set, $(M, d)$ and $(N, e)$ be metric spaces, and assume $N$ is complete. Then
+\begin{enumerate}[(i)]
+    \item $\ell_{\infty}(S, N)$ is complete in the uniform metric.
+    \item $C_b(M, N)$ is complete in the uniform metric.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (i) Let $\left(f_k\right)$ be a Cauchy sequence in $\ell_{\infty}(S, N)$. We first show that $\left(f_k\right)$ is pointwise convergent. 
+    
+    Fix $x \in S$ and $\varepsilon>0$, since $\left(f_k\right)$ is Cauchy, there exists $K \in \mathbb{N}$ such that $D\left(f_i, f_j\right)<\varepsilon$ for all $i, j \geqslant K$. It follows that
+    \[
+    e\left(f_i(x), f_j(x)\right) \leqslant D\left(f_i, f_j\right)<\varepsilon \quad \text { for all } i, j \geqslant K
+    \]
+    Hence $\left(f_k(x)\right)$ is Cauchy in $N$, and thus convergent in $N$, since $N$ is complete. We can now define $ f: S \rightarrow N \text { by } f(x)=\lim _{k \rightarrow \infty} f_k(x) $.
+
+    We next show that $f$ is bounded. 
+    
+    Since $ (f_k)$ is Cauchy, $\left(f_k\right)$ is bounded in the metric space $\ell_{\infty}(S, N)$. So there exists $g \in \ell_{\infty}(S, N)$ and $r>0$ such that $f_k \in B_r(g)$ for all $k \in \mathbb{N}$. Since $g$ is bounded, there exists $y \in N$ and $s>0$ such that $g(x) \in B_s(y)$ for all $x \in S$. It follows that for any $x \in S$ and $k \in \mathbb{N}$, we have
+    \[
+    e\left(f_k(x), y\right) \leqslant e\left(f_k(x), g(x)\right)+e(g(x), y) \leqslant D\left(f_k, g\right)+s \leqslant r+s
+    \]
+    and thus $f_k(x) \in B_{r+s}(y)$. By Lemma 2.10, the set $B_{r+s}(y)$ is closed in $N$. It follows that $f(x)=\lim _{k \rightarrow \infty} f_k(x) \in B_{r+s}(y)$ for all $x \in S$, and so $f$ is bounded, i.e., $f \in \ell_{\infty}(S, N)$.
+
+    It remains to show that $f_k \rightarrow f$ in the uniform metric in $\ell_{\infty}(S, N)$. 
+    
+    Let $\varepsilon>0$. Since $\left(f_k\right)$ is Cauchy, there exists $K \in \mathbb{N}$ such that $D\left(f_i, f_j\right)<\varepsilon$ for all $i, j \geqslant K$. Fix $x \in S$ and $i \geqslant K$. Then
+    \[
+    e\left(f_i(x), f_j(x)\right) \leqslant D\left(f_i, f_j\right)<\varepsilon \quad \text { for all } j \geqslant K
+    \]
+    Since $f_j(x) \rightarrow f(x)$, and since the metric $e$ is continuous, it follows that $e\left(f_i(x), f(x)\right) \leqslant \varepsilon$. Since this holds for any $x \in S$, we have $D\left(f_i, f\right) \leqslant \varepsilon$, and this is true for any $i \geqslant K$. This proves that $f_i \rightarrow f$ in the uniform metric $D$.
+    
+    (ii) Since $\ell_{\infty}(M, N)$ is complete, it suffices to prove that $C_b(M, N)$ is closed in $\ell_{\infty}(M, N)$. Let $\left(f_k\right)$ be a sequence in $C_b(M, N)$, let $f \in \ell_{\infty}(M, N)$, and assume that $f_k \rightarrow f$ in the uniform metric. We need to show that $f \in C_b(M, N)$, i.e., that $f$ is continuous.
+
+    Fix $a \in M$ and $\varepsilon>0$. Since $f_k \rightarrow f$, we can choose a large $k \in \mathbb{N}$ such that
+    \[
+    D\left(f_k, f\right)=\sup _{x \in M} e\left(f_k(x), f(x)\right)<\varepsilon
+    \]
+    Since $f_k$ is continuous at $a$, there exists $\delta>0$ such that
+    \[
+    \forall x \in M \quad d(x, a)<\delta \Longrightarrow e\left(f_k(x), f_k(a)\right)<\varepsilon
+    \]
+    It follows that for any $x \in M$, if $d(x, a)<\delta$, then
+    \[
+    \begin{aligned}
+    e(f(x), f(a)) & \leqslant e\left(f(x), f_k(x)\right)+e\left(f_k(x), f_k(a)\right)+e\left(f_k(a), f(a)\right) \\
+    & \leqslant \varepsilon+\varepsilon+\varepsilon=3 \varepsilon
+    \end{aligned}
+    \]
+    This shows that $f$ is continuous at $a$, and hence continuous.
+\end{proof}
+
+\section{Contraction mappings}
+\subsection{Contraction mapping theorem}\ \vspace{-1.5em}
+\begin{definition}
+    A map $f: M \rightarrow M^{\prime}$ between metric spaces is called a contraction mapping if
+\[
+\exists \lambda<1 \quad \forall x, y \in M \quad d^{\prime}(f(x), f(y)) \leqslant \lambda d(x, y)
+\]
+\end{definition}
+\begin{note}
+    Equivalently, $f$ is $\lambda$-Lipschitz with $\lambda<1$. Thus, a contraction mapping is continuous.
+\end{note}
+
+\begin{theorem}[Contraction Mapping Theorem]
+    Let $M$ be a non-empty, complete metric space and let $f: M \rightarrow M$ be a contraction mapping. Then $f$ has a unique fixed point, i.e. there is a unique $z \in M$ such that $f(z)=z$. 
+\end{theorem}
+\begin{proof}
+    Fix $\lambda<1$ such that $d(f(x), f(y)) \leqslant \lambda d(x, y)$ for all $x, y \in M$.
+
+    Uniqueness: Assume $f(z)=z$ and $f(w)=w$. Then
+    \[
+    d(z, w)=d(f(z), f(w)) \leqslant \lambda d(z, w)
+    \]
+    Since $\lambda<1$, it follows that $z=w$. 
+
+    Existence: Fix an arbitrary $x_0 \in M$ and define $\left(x_n\right)_{n=1}^{\infty}$ recursively by $x_n=f\left(x_{n-1}\right)$. Thus, $x_n=f^n(x)$, $f$ applies $n$ times.
+
+    Idea: if $z= f^{\infty}(x_0)$, then $f(z)=z$.
+
+    For any $n \in \mathbb{N}$, we have
+    \[
+    d\left(x_n, x_{n+1}\right)=d\left(f\left(x_{n-1}\right), f\left(x_n\right)\right) \leqslant \lambda d\left(x_{n-1}, x_n\right) \leqslant \ldots \leqslant \lambda^n d\left(x_0, x_1\right).
+    \]
+    It follows that for any $m, n \in \mathbb{N}$ with $n \geqslant m$, we have
+    \begin{align*}
+        d\left(x_m, x_n\right) &\leqslant \sum_{k=m}^{n-1} d\left(x_k, x_{k+1}\right) \leqslant \sum_{k=m}^{n-1} \lambda^k d\left(x_0, x_1\right)\\ 
+        &=\frac{\lambda^m-\lambda^n}{1-\lambda} d\left(x_0, x_1\right) \leqslant \frac{\lambda^m}{1-\lambda} d\left(x_0, x_1\right).
+    \end{align*}
+    Since $\frac{\lambda^m}{1-\lambda} \rightarrow 0$ as $m \rightarrow \infty$, given $\varepsilon>0$, there exists $N \in \mathbb{N}$ such that $\frac{\lambda^m}{1-\lambda} d\left(x_0, x_1\right)<\varepsilon$ for all $m \geqslant N$, and then by above $d\left(x_m, x_n\right)<\varepsilon$ whenever $n \geqslant m \geqslant N$. This show that $\left(x_n\right)$ is Cauchy. Since $M$ is complete, $x_n \rightarrow z$ for some $z \in M$.
+    Since $f$ is continuous, $f\left(x_n\right) \rightarrow f(z)$ as $n \rightarrow \infty$. On the other hand, $f\left(x_n\right)=x_{n+1} \rightarrow z$, so $f(z)=z$.
+\end{proof}
+
+\begin{remark}
+\begin{enumerate}
+    \item The proof not only shows the existence of a fixed point, but also a way of approximating it. Letting $n \rightarrow \infty$ in the inequality for $d\left(x_m, x_n\right)$, we obtain
+    \[
+    d\left(x_m, z\right) \leqslant \frac{\lambda^m}{1-\lambda} d\left(x_0, x_1\right) \quad \text { for all } m \in \mathbb{N}.
+    \]
+    Thus, the convergence is exponentially fast.
+    \item $f: \mathbb{R} \backslash\{0\} \rightarrow \mathbb{R} \backslash\{0\}, x \mapsto x / 2$ is a contraction $\left(\lambda=\frac{1}{2}\right)$ but has no fixed point.
+    \item $f: \mathbb{R} \rightarrow \mathbb{R}, x \mapsto x+1$ is isometric $(\lambda=1)$ but has no fixed point.
+    \item $f:[1, \infty) \rightarrow[1, \infty), x \mapsto x+\frac{1}{x}$ satisfies $|f(x)-f(y)|<|x-y|$ for all $x, y \in[1, \infty)$ but has no fixed point.
+\end{enumerate}
+\end{remark}
+
+\subsection{An application: initial value problem}
+Given $y_0 \in \mathbb{R}$, consider the initial value problem (IVP)
+\[
+f^{\prime}(t)=f\left(t^2\right), \quad f(0)=y_0.
+\]
+Using contraction mapping theorem, we can show that it has a unique solution given an interval. 
+\begin{proposition}
+    The IVP above has a unique solution on $\left[0, \frac{1}{2}\right]$. In other words, there is a unique differentiable function $f:\left[0, \frac{1}{2}\right] \rightarrow \mathbb{R}$ satisfying $f(0)=y_0$ and $f^{\prime}(t)=f\left(t^2\right)$ for all $t \in\left[0, \frac{1}{2}\right]$.
+\end{proposition}
+\begin{proof}
+    We show this in four steps. 
+
+    \textit{Step 1: construct $f$.} $ f$ is a solution of the IVP if and only if
+        \[
+        f \in C\left[0, \frac{1}{2}\right] \quad \text { and } \quad f(t)=y_0+\int_0^t f\left(s^2\right) \mathrm{d} s \quad \text {for all } t \in\left[0, \frac{1}{2}\right].
+        \]
+
+    \textit{Step 2: introduce a contraction mapping.} $ M=C\left[0, \frac{1}{2}\right]$ is a non-empty, complete metric space in the uniform metric $D$. Define $T: M \rightarrow M$ by
+    \[
+    T(g)(t)=y_0+\int_0^t g\left(s^2\right) d s \quad \text { for } t \in\left[0, \frac{1}{2}\right] \text { and } g \in M
+    \]
+    $T(g)(t)$ is well-defined since $s \mapsto g\left(s^2\right)$ is continuous. $T(g)$ is continuous, and indeed even differentiable by the FTC with $(T g)^{\prime}(t)=g\left(t^2\right)$ for all $t \in\left[0, \frac{1}{2}\right]$.
+    Thus $T g \in M$.
+    By Step $1, f$ is a solution of the IVP if and only if $f \in M$ and $T f=f$.
+
+    \textit{Step 3: show that $T$ is a contraction mapping.} For $g, h \in M$ we estimate
+    \begin{align*}
+        |(T g)(t)-(T h)(t)|&=\left|\int_0^t g\left(s^2\right)-h\left(s^2\right) d s\right| \\ 
+        &\leqslant t \sup _{s \in\left[0, \frac{1}{2}\right]}\left|g\left(s^2\right)-h\left(s^2\right)\right| \\ 
+        &\leqslant \frac{1}{2} D(g, h).
+    \end{align*}
+    Taking sup over all $t \in\left[0, \frac{1}{2}\right]$, we get $D(T g, T h) \leqslant \frac{1}{2} D(g, h)$. Thus, $T$ is a contraction mapping on $M$.
+
+    \textit{Step 4: apply CMT.} By the Contraction Mapping Theorem, $T$ has a unique fixed point, and thus by Step 2, the IVP has a unique solution.
+\end{proof}
+
+\begin{remark}
+    The same proof shows that for any $\delta \in(0,1)$, there is a unique solution $f_\delta$ to the IVP on $[0, \delta]$. For $\delta<\mu<1$, we have $f_\mu\restriction_{[0, \delta]}=f_\delta$ by uniqueness. Hence there is a unique solution to the IVP on $[0,1)$.
+\end{remark}
+
+\subsection{A theorem of Lindel\"{o}f-Picard}\ \vspace{-1.5em}
+\begin{theorem}[Lindel\"{o}f-Picard]\label{thm:21}
+    We are given $n \in \mathbb{N}, a, b, R \in \mathbb{R}$ with $a<b$ and $R>0, \mathbf{y}_0 \in \mathbb{R}^n$ and a continuous function
+    \[
+    \varphi:[a, b] \times B_R\left(\mathbf{y}_0\right) \rightarrow \mathbb{R}^n.
+    \]
+    Assume that there exists $K>0$ such that
+    \[
+    \|\varphi(t, \mathbf x)-\varphi(t, \mathbf y)\| \leqslant K\|\mathbf x-\mathbf y\| \quad \text { for all } t \in[a, b],\ \mathbf x, \mathbf y \in B_R\left(\mathbf y_0\right).
+    \]
+    Then there exists $\varepsilon>0$ such that for any $t_0 \in[a, b]$, the IVP
+    \[
+    f^{\prime}(t)=\varphi(t, f(t)), \quad f(t_0)=\mathbf y_0
+    \]
+    has a unique solution on $[c, d]=\left[t_0-\varepsilon, t_0+\varepsilon\right] \cap[a, b]$. In other words, there is a unique differentiable function $f:[c, d] \rightarrow \mathbb{R}^n$ that solves the above IVP.
+\end{theorem}
+\begin{note}
+    \begin{enumerate}
+        \item The statement that $f:[c, d] \rightarrow \mathbb{R}^n$ solves the IVP includes implicitly the condition that $f$ takes values in $B_R\left(y_0\right)$ (otherwise the differential equation would not make sense).
+        \item The assumption on $ \varphi $ is called a Lipschitz condition in the second variable.
+    \end{enumerate}
+\end{note}
+\subsubsection*{Aside: Differentiation and integration for functions $ [c,d]\to \mathbb{R}^{n} $}
+Given a function $f:[c, d] \rightarrow \mathbb{R}^n$, we let $f_k=\pi_k \circ f:[c, d] \rightarrow \mathbb{R}$, where $\pi_k: \mathbb{R}^n \rightarrow \mathbb{R}$ is the $k^{\text {th }}$ coordinate projection mapping $\left(y_1, \ldots, y_n\right) \mapsto y_k$ for $k=1, \ldots, n$. Thus, $f(t)=\left(f_1(t), \ldots, f_n(t)\right)$ for every $t \in[c, d]$.
+Now, $f$ is differentiable if each $f_k$ is differentiable, and
+\[
+f^{\prime}(t)=\left(f_1^{\prime}(t), \ldots, f_n^{\prime}(t)\right) \quad \text { for every } t \in[c, d]
+\]
+Also, if $f$ is continuous, then each $f_k$ is continuous, and hence integrable on $[c, d]$. 
+
+We can then define the integral of $f$ coordinate-wise: $\int_c^d f(t) \dd t$ is the element $\mathbf{v} \in \mathbb{R}^n$ with $k^{\text {th}}$ coordinate $v_k=\int_c^d f_k(t) \dd t$. Observe that
+\[
+\begin{aligned}
+\|v\|^2 &=\sum_{k=1}^n v_k^2=\sum_{k=1}^n v_k \int_c^d f_k(t) \dd t=\int_c^d \sum_{k=1}^n v_k f_k(t) \dd t \\
+&=\int_c^d v \cdot f(t) \dd t \leqslant \int_c^d\|v\|\|f(t)\| \dd t=\|v\| \int_c^d\|f(t)\| \dd t.
+\end{aligned}
+\]
+So we proved that $\left\|\int_c^d f(t) \dd t\right\| \leqslant \int_c^d\|f(t)\| \dd t$.
+
+\begin{proof}[Proof of theorem.]
+    Close balls are closed, so $B_R\left(\mathbf y_0\right)$ is a closed subset of $\mathbb{R}^n$. So $\varphi$ is a continuous function on the closed and bounded subset $[a, b] \times B_R\left(\mathbf y_0\right)$ of $\mathbb{R}^{n+1}$, and hence it is bounded. 
+    
+    Set $C=\sup \left\{\|\varphi(t, x)\|: t \in[a, b], x \in B_R\left(\mathbf y_0\right)\right\}$ and then set $\varepsilon=\min \left(\frac{R}{C}, \frac{1}{2 K}\right)$. We are going to show that this $\varepsilon$ works.
+
+    Given $t_0 \in[a, b]$, set $[c, d]=\left[t_0-\varepsilon, t_0+\varepsilon\right] \cap[a, b]$. We need to prove that there is a unique differentiable function $f:[c, d] \rightarrow \mathbb{R}^n$ such that $f\left(t_0\right)=\mathbf y_0$ and $f^{\prime}(t)=\varphi(t, f(t))$ for all $t \in[c, d]$
+
+    Since $B_R\left(\mathbf{y}_0\right)$ is closed in $\mathbb{R}^n$, and since $\mathbb{R}^n$ is complete, it follows that $B_R\left(\mathbf y_0\right)$ is complete. By Theorem \ref{thm:19}, the space $M=C\left([c, d], B_R\left(\mathbf y_0\right)\right)$ is complete in the uniform metric $D$. Also, $M \neq \emptyset$.
+
+    Next, note that $f$ is a solution of the IVP on $[c, d]$ if and only if
+    \[
+    f \in M \quad \text { and } \quad f(t)=\mathbf y_0+\int_{t_0}^t \varphi(s, f(s)) \dd s \quad \text { for all } t \in[c, d]
+    \]
+    This follows from the FTC applied coordinate-wise.
+
+    We next define
+    \[
+        T: M \rightarrow M \quad \text{by} \quad T(g)(t)=\mathbf y_0+\int_{t_0}^t \varphi(s, g(s)) \dd s \quad \text{for } t \in[c, d].
+    \]
+    We need to check that $T$ is well defined. First, the definition of $T(g)(t)$ makes sense, since
+    $s \mapsto \varphi(s, g(s))$ is continuous. Next, $T(g)$ is a continuous function $[c, d] \rightarrow \mathbb{R}^n$.
+    Indeed, $T(g)$ is differentiable with $(T g)^{\prime}(t)=\varphi(t, g(t))$ by the FTC. Finally, $T(g)$ takes values in $B_R\left(\mathbf y_0\right)$ since
+    \begin{align*}
+        \left\|T(g)(t)-\mathbf y_0\right\|&=\left\|\int_{t_0}^t \varphi(s, g(s)) \dd s\right\| \\ 
+        &\leqslant\left|t-t_0\right| \sup _{s \in[c, d]}\|\varphi(s, g(s))\| \leqslant \varepsilon C \leqslant R \tag{$*$}
+    \end{align*}
+    for all $t \in[c, d]$. This shows that $T(g) \in M$.
+
+    Now by the earlier observation, $f$ is a solution of the IVP if and only if $f \in M$ and $T f=f$. So the proof is complete if we can show that $T$ is a contraction mapping.
+
+    Let $g, h \in M$. Note that by assumption,
+    \[
+    \|\varphi(s, g(s))-\varphi(s, h(s))\| \leqslant K\|g(s)-h(s)\| \leqslant K D(g, h) \quad \text {for all } s \in[c, d].
+    \]
+    It follows that for every $t \in[c, d]$ we have
+    \begin{align*}
+        \|(T g)(t)-(T h)(t)\| &=\left\|\int_{t_0}^t \varphi(s, g(s))-\varphi(s, h(s)) \mathrm{d} s\right\| \\
+    & \leqslant\left|t-t_0\right| K D(g, h) \leqslant \varepsilon K D(g, h) \tag{$**$}
+    \end{align*}
+    Taking the sup over $t \in[c, d]$, we get $D(T g, T h) \leqslant \varepsilon K D(h, g) \leqslant \frac{1}{2} D(g, h)$. Thus, $T: M \rightarrow M$ is a contraction mapping, as required.
+\end{proof}
+\begin{remark}
+    \begin{enumerate}
+        \item In general, it is not possible to get a global solution, i.e., one on $[a, b]$.
+        \item Inequalities $ (*),(* *) $ give rise to the choice of $ \epsilon $. 
+        \item For any $\delta \in(0,1)$, taking $\varepsilon=\min \left(\frac{R}{c}, \frac{\delta}{K}\right)$ works. But by the uniqueness of the solution the choice does not matter for constructing the solution. So we can construct the solution for $\varepsilon=\min \left(\frac{R}{c}, \frac{1}{R}\right)$, on $\left(t_0-\varepsilon, t_0+\varepsilon\right) \cap[a, b]$.
+    \end{enumerate}
+\end{remark}
+
+\subsection{A special case of Lindel\"of-Picard}
+Theorem \ref{thm:21} handles $ n $th order ODEs as well. We do this next.
+
+\begin{example}
+    Let $a<b$ and $R>0$ be reals, let $\mathbf z=\left(z_0, z_1, \ldots, z_{n-1}\right) \in \mathbb{R}^n$ and let
+\[
+\psi:[a, b] \times B_R(\mathbf z) \rightarrow \mathbb{R}
+\]
+be a continuous function. Assume that for some $K>0$ we have
+\[
+|\psi(t, \bfx)-\psi(t, \bfy)| \leqslant K\|\bfx-\bfy\| \quad \text {for all } t \in[a, b] \text { and all } \bfx, \bfy \in B_R(\bfz) .
+\]
+Then there exists $\varepsilon>0$ such the for any $t_0 \in[a, b]$ the $n^{\text {th}}$-order IVP
+\[
+\begin{aligned}
+g^{(n)}(t) &=\psi\left(t, g(t), g^{(1)}(t), g^{(2)}(t), \ldots, g^{(n-1)}(t)\right) \\
+g^{(j)}\left(t_0\right) &=z_j \quad \text { for } 0 \leqslant j \leqslant n-1
+\end{aligned}
+\]
+has a unique solution on $[c, d]=\left[t_0-\varepsilon, t_0+\varepsilon\right] \cap[a, b]$.
+\end{example}
+
+\begin{note}
+    This means that there is a unique $n$-times differentiable function
+    \[
+    g:[c, d] \rightarrow \mathbb{R}
+    \]
+    that satisfies (1) for all $t \in[c, d]$. This implicitly includes the assumption that
+    \[
+    \left(g(t), g^{(1)}(t), g^{(2)}(t), \ldots, g^{(n-1)}(t)\right) \in B_R(\bfz)
+    \]
+    for all $t \in[c, d]$
+\end{note}
+\paragraph{Solution} Let us define $\varphi:[a, b] \times B_R(\bfz) \rightarrow \mathbb{R}^n$ by setting
+\[
+\varphi\left(t, x_0, x_1, \ldots, x_{n-1}\right)=\left(x_1, \ldots, x_{n-1}, \psi\left(t, x_0, x_1, \ldots, x_{n-1}\right)\right)
+\]
+for $t \in[a, b]$ and $\bfx=\left(x_0, x_1, \ldots, x_{n-1}\right) \in B_R(\bfz)$. Then $\varphi$ is continuous and satisfies 
+\[
+    \|\varphi(t, \bfx)-\varphi(t, \bfy)\| \leqslant(K+1)\|\bfx-\bfy\| \quad \text{for all } t \in[a, b] \text{ and all } \bfx, \bfy \in B_R(\bfz).
+\]
+
+By Lindelöf-Picard (Theorem \ref{thm:21}), there exists $\varepsilon>0$ such that the IVP
+\[
+    f^{\prime}(t)=\varphi(t, f(t)), \quad f\left(t_0\right)=\bfz
+\]
+has a unique solution on $[c, d]=\left[t_0-\varepsilon, t_0+\varepsilon\right] \cap[a, b]$. Let $f$ be this unique solution. 
+Thus, $f:[c, d] \rightarrow B_R(\bfz)$ is a differentiable function with $f(t_0)=\bfz$ and $f^{\prime}(t)=\varphi(t, f(t))$ for all $t \in[c, d]$. 
+
+Let $f_0, f_1, \ldots, f_{n-1}$ be the components of $f$, i.e., functions $f_j:[c, d] \rightarrow \mathbb{R}$ such that
+\[
+    f(t)=\left(f_0(t), f_1(t), \ldots, f_{n-1}(t)\right) \quad \text{for all } t \in[c, d].
+\]
+Since $f$ is a solution of the IVP, each $f_j$ is differentiable and
+\begin{align*}
+    &\left(f_0^{\prime}(t), f_1^{\prime}(t), \ldots, f_{n-1}^{\prime}(t)\right)=f^{\prime}(t)=\varphi(t, f(t)) \\
+    &=\left(f_1(t), f_2(t), \ldots, f_{n-1}(t), \psi(t, f_0(t), f_1(t), \ldots, f_{n-1}(t)\right))\quad \text{for all }t\in [c,d].
+\end{align*}
+Set $g=f_0$. Comparing coordinates shows that $g$ is an $n$-times differentiable function $[c, d] \rightarrow \mathbb{R}$ with $g^{(j)}=f_j$ for $0 \leqslant j\le n-1$ (induction on $j$), and moreover
+\begin{align*}
+    g^{(n)}(t)=f_{n-1}^{\prime}(t)&=\psi\left(t, f_0(t), f_1(t), \ldots, f_{n-1}(t)\right) \\
+&=\psi\left(t, g(t), g^{(1)}(t), \ldots, g^{(n-1)}(t)\right).
+\end{align*}
+for all $t \in[c, d]$. This solves the ODEs (first line of $g$).
+
+Since $f\left(t_0\right)=\bfz$, we have $g^{(j)}\left(t_0\right)=f_j\left(t_0\right)=z_j$ for $0 \leqslant j \leqslant n-1$. This shows the initial conditions, and hence completes the proof of existence.
+
+To prove uniqueness, assume that $\tilde{g}$ is another solution on $[c, d]$. Define $\tilde{f}:[c, d] \rightarrow B_R(\bfz)$ by setting $\tilde{f}(t)=\left(\tilde{g}(t), \tilde{g}^{(1)}(t), \ldots, \tilde{g}^{(n-1)}(t)\right)$. It is straightforward to verify that $\tilde{f}$ is a solution to the IVP of $f$. It follows that $\tilde{f}=f$ and $\tilde{g}=g$.
 
 \end{document}

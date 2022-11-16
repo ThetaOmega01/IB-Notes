@@ -672,10 +672,300 @@ By calculation we have
     P_{2}(x)&=\frac{1}{2}\left(3 x^{2}-1\right)\\ 
     P_{3}(x)&=\frac{1}{2}\left(5 x^{3}-3 x\right)
 \end{align*}
-\begin{note}
-    \begin{enumerate}
-        \item $P_l$ has $l$ roots in $[-1,1]$.
-        \item $P_l$ is odd if $l$ is odd, and even when $l$ is even.
+Note that 
+\begin{enumerate}
+    \item $P_l$ has $l$ roots in $[-1,1]$.
+    \item $P_l$ is odd if $l$ is odd, and even when $l$ is even.
+\end{enumerate}
+
+\subsection{Properties of Legendre polynomials}
+Since Legendre polynomials come from a self-adjoint operator, they must have certain conditions, such as orthogonality.
+\begin{proposition}
+    For \( n \neq m \), $\displaystyle \int_{-1}^1 P_n P_m \dd{x} = 0$. 
+\end{proposition}
+They are also normalisable,
+\begin{proposition}
+    $\displaystyle 
+	\int_{-1}^1 P_n^2 \dd{x} = \frac{2}{2n+1}$
+\end{proposition}
+We can prove this with Rodrigues' formula:
+\begin{proposition}
+    $\displaystyle P_n(x) = \frac{1}{2^n n!} \qty( \dv{x} )^n (x^2 - 1)^n$ 
+\end{proposition}
+Alternatively we could use a generating function:
+\begin{proposition}
+    \begin{align*}
+        \sum_{n=0}^\infty P_n(x) t^n = \frac{1}{\sqrt{1 - 2xt + t^2}} & = 1 + \frac{1}{2}\qty(2xt - t^2) + \frac{3}{8}\qty(2xt - t^2)^2 + \dots \\
+                                                                      & = 1 + xt + \frac{1}{2}\qty(3x^2 - 1)t^2 + \dots
+    \end{align*}
+\end{proposition}
+There are some useful recursion relations.
+\begin{proposition}\
+    \begin{enumerate}[(i)]
+        \item $ \ell(\ell + 1) P_{\ell + 1} = (2 \ell + 1) x P_\ell(x) - \ell P_{\ell - 1}(x) $
+        \item $\displaystyle (2\ell + 1)P_\ell(x) = \dv{x} \qty[ P_{\ell + 1}(x) - P_{\ell - 1}(x) ]$.
     \end{enumerate}
-\end{note}
+\end{proposition}
+
+\subsection{Eigenfunction expansion}
+Any (well-behaved) function on \( [-1,1] \) can be expressed as
+\[
+	f(x) = \sum_{\ell = 0}^\infty a_\ell P_\ell(x)
+\]
+where
+\[
+	a_\ell = \frac{2\ell + 1}{2} \int_{-1}^1 f(x) P_\ell(x) \dd{x}
+\]
+with no boundary conditions (e.g.\ periodicity conditions) on \( f \).
+
+\subsection{S-L Theory on inhomogeneous ODEs}
+
+\paragraph{Solve ODEs using SL theory} Consider the problem
+\[
+	\mathcal L y = f(x) \equiv w(x) F(x)
+\]
+on \( x \in [a,b] \) assuming homogeneous boundary conditions.
+Given eigenfunctions \( y_n(x) \) satisfying \( \mathcal L y_n = \lambda_n w y_n \), we wish to expand this solution as
+\[
+	y(x) = \sum_n c_n y_n(x)
+\]
+and
+\[
+	F(x) = \sum_n a_n y_n(x)
+\]
+where \( a_n \) are known and \( c_n \) are unknown:
+\[
+	a_n = \frac{\int_a^b w F y_n \dd{x}}{\int_a^b w y_n^2 \dd{x}}
+\]
+Substituting,
+\[
+	\mathcal L y = \mathcal L \sum_n c_n y_n = w \sum_n c_n \lambda_n y_n = w \sum_n a_n y_n
+\]
+By orthogonality,
+\[
+	c_n \lambda_n = a_n \implies c_n = \frac{a_n}{\lambda_n}
+\]
+In particular,
+\[
+	y(x) = \sum_{n=1}^\infty \frac{a_n}{\lambda_n}y_n(x)
+\]
+\paragraph{Generalisation} Driving force often induces a linear response term \( \widetilde\lambda w y \).
+\[
+	\mathcal L y - \widetilde \lambda w y = f(x)
+\]
+where \( \widetilde \lambda \neq \lambda \). 
+The solution becomes
+\[
+	y(x) = \sum_{n=1}^\infty \frac{a_n}{\lambda_n - \widetilde \lambda} y_n(x)
+\]
+
+\subsection{Integral solutions and Green's function}
+Recall that
+\[
+	y(x) = \sum_{n=1}^\infty \frac{a_n}{\lambda_n} y_n(x) = \sum_n \frac{y_n(x)}{\lambda_n  N_n} \int_a^b w(\xi) F(\xi) y_n(\xi) \dd{\xi}
+\]
+where
+\[
+	N_n = \int w y_n^2 \dd{x}
+\]
+This then gives
+\[
+	y(x) = \int_a^b \underbrace{\sum_{n=1}^\infty \frac{y_n(x) y_n(\xi)}{\lambda_n N_n}}_{G(x,\xi)} \underbrace{w(\xi) F(\xi)}_{f(\xi)} \dd{\xi} = \int_a^b G(x;\xi) f(\xi) \dd{\xi}
+\]
+where
+\[
+	G(x,\xi) = \sum_{n=1}^\infty \frac{y_n(x) y_n(\xi)}{\lambda_n N_n}
+\]
+is the eigenfunction expansion of the \textbf{Green's function}.
+Note that the Green's function does not depend on \( f \), but only on \( \mathcal L \) and the boundary conditions.
+In this sense, it acts like an inverse operator
+\[
+	\mathcal L^- \equiv \int \dd{\xi} G(x,\xi)
+\]
+analogously to how \( Ax = b \implies x = A^{-1} b \) for matrix equations.
+
+\clearpage
+
+\part{PDEs on bounded domains}
+\section{The Wave Equation}
+\subsection{Waves on an elastic string: physical derivation}
+Consider a small displacement \( y(x,t) \) on a stretched string with fixed ends at \( x = 0 \) and \( x = L \), that is, with boundary conditions \( y(0,t) = y(L,t) = 0 \).
+We can determine the string's motion for specified initial conditions \( y(x,0) = p(x) \) and \( \pdv{y}{t}(x,0) = q(x) \).
+
+We derive the equation of motion governing the motion of the string by balancing forces on a string segment \( (x,x+\delta x) \) and take the limit as \( \delta x \to 0 \).
+Let \( T_1 \) be the tension force acting to the left at angle \( \theta_1 \) from the horizontal.
+Analogously, let \( T_2 \) be the rightwards tension force at angle \( \theta_2 \).
+We assume at any point on the string that \( \abs{\pdv{y}{x}} \ll 1 \), so the angles of the forces are small.
+In the \( x \) dimension,
+\[
+	T_1 \cos \theta_1 = T_2 \cos \theta_2 \implies T_1 \approx T_2 = T
+\]
+So the tension \( T \) is constant up to an error of order \( O\qty(\abs{\pdv{y}{x}
+}^2) \).
+In the \( y \) dimension, since \( \theta \) are small,
+\[
+	F_T = T_2 \sin \theta_2 - T_1 \sin \theta_1 \approx T \qty(\eval{\pdv{y}{x}}_{x + \delta x} - \eval{\pdv{y}{x}}_x) \approx T \pdv[2]{y}{x} \delta x
+\]
+By \( F = ma \),
+\[
+	F_T + F_g = (\mu \delta x) \pdv[2]{y}{t} = T \pdv[2]{y}{x} \delta x - g \mu \delta x
+\]
+where \( F_g \) is the gravitational force and \( \mu \) is the linear mass density.
+We define the wave speed as
+$ c = \sqrt{T/\mu} $
+and find
+\[
+	\pdv[2]{y}{t} = \frac{T}{\mu} \pdv[2]{y}{x} - g = c^2 \pdv[2]{y}{x}-g
+\]
+We often assume gravity is negligible to produce the pure wave equation
+\[
+	\frac{1}{c^2} \pdv[2]{y}{t} = \pdv[2]{y}{x} 
+\]
+
+\subsection{Separation of variables}
+
+Consider a separable form:
+\[
+	y(x,t) = X(x) T(t)
+\]
+Substituting into the wave equation,
+\[
+	\frac{1}{c^2} \ddot y = y'' \implies \frac{1}{c^2} X \ddot T = X'' T
+\]
+Then
+\[
+	\frac{1}{c^2}\frac{\ddot T}{T} = \frac{X''}{X}
+\]
+However, \( \frac{\ddot T}{T} \) depends only on \( t \) and \( \frac{X''}{X} \) depends only on \( x \).
+Thus, both sides must be equal to some \textbf{separation constant} \( -\lambda \).
+\[
+	\frac{1}{c^2}\frac{\ddot T}{T} = \frac{X''}{X} = -\lambda \implies X'' + \lambda X = 0;\quad \ddot T + \lambda c^2 T = 0
+\]
+
+\subsection{Boundary conditions and normal modes}
+
+First look at the spatial part of the solution.
+
+One of \( \lambda > 0, \lambda < 0, \lambda = 0 \) must be true.
+The boundary conditions restrict the possible \( \lambda \).
+\begin{enumerate}[align=left]
+	\item[(1) \( \lambda < 0 \)] Take \( \chi^2 = -\lambda \).
+	      Then,
+	      \[
+		      X(x) = Ae^{\chi x} + Be^{-\chi x} = \tilde{A} \cosh (\chi x) + \tilde{B} \sinh (\chi x)
+	      \]
+	      The boundary conditions are \( x(0) = x(L) = 0 \), so only the trivial solution is possible: \( \tilde{A} = \tilde{B} = 0 \).
+	\item[(2) \( \lambda = 0 \)] Then
+	      \[
+		      X(x) = Ax + B
+	      \]
+	      Again, the boundary conditions impose \( A = B = 0 \) giving only the trivial solution.
+	\item[(3) \( \lambda > 0 \)]
+	      \[
+		      X(x) = A \cos \qty(\sqrt{\lambda} x) + B \sin \qty(\sqrt{\lambda} x)
+	      \]
+	      The boundary conditions give
+	      \[
+		      A = 0,\quad B \sin \qty(\sqrt{\lambda} L) = 0 \implies \sqrt{\lambda} L = n \pi
+	      \]
+\end{enumerate}
+The following are the eigenfunctions and eigenvalues.
+\[
+	X_n(x) = B_n \sin \frac{n \pi x}{L};\quad \lambda_n = \qty(\frac{n \pi}{L})^2
+\]
+These are also called the \textbf{normal modes} of the system.
+The spatial shape in \( x \) does not change in time, but the amplitude may vary.
+The \textbf{fundamental mode}, or \textbf{first harmonic}, is the lowest frequency of vibration, given by
+\[
+	n = 1 \implies \lambda_1 = \frac{\pi^2}{L^2}
+\]
+The \textbf{second mode}, or \textbf{overtone}, is the first overtone, and is given by
+\[
+	n = 2 \implies \lambda_2 = \frac{4\pi^2}{L^2}
+\]
+and so on. 
+
+\subsection{Initial conditions and temporal solutions}
+Substituting \( \lambda_n \) into the time ODE,
+\[
+	\ddot T + \frac{n^2 \pi^2 c^2}{L^2}T = 0
+\]
+Hence,
+\[
+	T_n(t) = C_n \cos \left(\frac{n \pi c t}{L}\right) + D_n \sin \left(\frac{n \pi c t}{L}\right)
+\]
+Therefore, a specific solution of the wave equation satisfying the boundary conditions is (absorbing the \( B_n \) into the \( C_n, D_n \)):
+\[
+	y_n(x,t) = T_n(t) X_n(x) = \qty(C_n \cos \left(\frac{n \pi c t}{L}\right) + D_n \sin \left(\frac{n \pi c t}{L}\right)) \sin \left(\frac{n \pi x}{L}\right)
+\]
+To find a particular solution for a given set of initial conditions, we must consider a linear superposition of all possible \( y_n \).
+\[
+	y(x,t) = \sum_{n=1}^\infty \qty(C_n \cos \left(\frac{n \pi c t}{L}\right) + D_n \sin \left(\frac{n \pi c t}{L}\right)) \sin \left(\frac{n \pi x}{L}\right)
+\]
+By construction, this \( y(x,t) \) satisfies the boundary conditions, so now we can impose the initial conditions.
+\[
+	y(x,0) = p(x) = \sum_{n=1}^\infty C_n \sin \left(\frac{n \pi x}{L}\right)
+\]
+We can find the \( C_n \) using standard Fourier series techniques, since this is exactly a half-range sine series.
+Further,
+\[
+	\pdv{y(x,0)}{t} = q(x) = \sum_{n=1}^\infty \frac{n \pi c}{L} D_n \sin \left(\frac{n \pi x}{L}\right)
+\]
+Again we can solve for the \( D_n \) in a similar way.
+In particular,
+\[
+	C_n = \frac{2}{L} \int_0^L p(x) \sin \left(\frac{n \pi x}{L}\right) \dd{x}
+\]
+\[
+	D_n = \frac{2}{n \pi c} \int_0^L q(x) \sin \left(\frac{n \pi x}{L}\right) \dd{x}
+\]
+\begin{example}
+	Consider the initial condition of a see-saw wave parametrised by \( \xi \), and let \( L = 1 \).
+	This can be visualised as plucking the string at position \( \xi \).
+	\[
+		y(x,0) = p(x) = \begin{cases}
+			x(1-\xi) & 0 \leq x < \xi \\
+			\xi(1-x) & \xi \leq x < 1
+		\end{cases}
+	\]
+	We also define
+	\[
+		\pdv{y(x,0)}{t} = q(x) = 0
+	\]
+	The Fourier series for \( p \) is given by
+	\[
+		C_n = \frac{2 \sin (n \pi \xi)}{(n \pi)^2};\quad D_n = 0
+	\]
+	Hence the solution to the wave equation is
+	\[
+		y(x,t) = \sum_{n=1}^\infty \frac{2}{(n \pi)^2} \sin (n \pi \xi) \sin (n \pi x) \cos (n \pi c t)
+	\]
+\end{example}
+
+\subsection{Separation of variables: algorithm}
+A general strategy for solving higher-dimensional partial differential equations is as follows.
+\begin{enumerate}
+	\item Obtain a linear PDE system, using boundary and initial conditions.
+	\item Separate variables to yield decoupled ODEs.
+	\item Impose homogeneous boundary conditions to find eigenvalues and eigenfunctions.
+	\item Use these eigenvalues (constants of separation) to find the eigenfunctions in the other variables.
+	\item Sum over the products of separable solutions to find the general series solution.
+	\item Determine coefficients for this series using the initial conditions.
+\end{enumerate}
+\begin{example}
+	We will solve the wave equation instead in characteristic coordinates.
+	Recall the sine and cosine summation identities:
+	\begin{align*}
+		y(x,t) & = \frac{1}{2} \sum_{n=1}^\infty \Bigg[ \qty(C_n \sin \frac{n \pi}{L}(x-ct) + D_n \cos \frac{n \pi}{L}(x-ct)) \\&
+		+ \qty(C_n \sin \frac{n \pi}{L}(x+ct) - D_n \cos \frac{n \pi}{L}(x+ct)) \Bigg]                                        \\
+		       & = f(x-ct) + g(x+ct)
+	\end{align*}
+	The standing wave solution can be interpreted as a superposition of a right-moving wave (along characteristic $ x-ct=\eta $ constant) and a left-moving wave(along characteristic $ x+ct=\xi $ constant).
+	A special case is \( q(x) = 0 \), implying \( f = g = \frac{1}{2} p \).
+	Then,
+	\[
+		y(x,t) = \frac{1}{2}\qty[p(x-ct) + p(x+ct)]
+	\]
+\end{example}
+
 \end{document}
