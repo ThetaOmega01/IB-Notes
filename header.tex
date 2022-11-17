@@ -98,6 +98,11 @@ dot/.style = {circle, fill, minimum size=#1,
 dot/.default = 5pt% size of the circle diameter 
 }
 \tikzset{mstate/.style={circle, draw, blue, text=black, minimum width=0.7cm}}
+\tikzset{snake it/.style={-stealth,
+decoration={snake, 
+    amplitude = .4mm,
+    segment length = 2mm,
+    post length=0.9mm},decorate}}
 
 \def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options](center)(initial angle:final angle:radius)
     { \draw[#1] ($(#2)+({#5*cos(#3)},{#5*sin(#3)})$) arc (#3:#4:#5); }
@@ -391,6 +396,7 @@ dot/.default = 5pt% size of the circle diameter
 \newcommand{\su}{\mathfrak{su}}
 \newcommand{\uu}{\mathfrak{u}}
 \renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\inner}[1]{\left\langle{#1}\right\rangle}
 \DeclareMathOperator{\spn}{span}
 
 \newcommand{\mobius}{{M\"{o}bius }}
@@ -417,14 +423,14 @@ dot/.default = 5pt% size of the circle diameter
 % \input{../plain.tex}
 
 %layout full
-\geometry{%
-  a4paper,
-  lmargin=2cm,
-  rmargin=2.5cm,
-  tmargin=3.5cm,
-  bmargin=2.5cm,
-  footskip=12pt,
-  headheight=24pt}
+% \geometry{%
+%   a4paper,
+%   lmargin=2cm,
+%   rmargin=2.5cm,
+%   tmargin=3.5cm,
+%   bmargin=2.5cm,
+%   footskip=12pt,
+%   headheight=24pt}
 % layout trim
 % \geometry{
 % papersize={379pt, 542pt},
@@ -435,14 +441,14 @@ dot/.default = 5pt% size of the circle diameter
 % right=17pt
 % }
 % layout a5
-% \geometry{%
-%   a5paper,
-%   lmargin=1cm,
-%   rmargin=1cm,
-%   tmargin=2.5cm,
-%   bmargin=1.5cm,
-%   footskip=12pt,
-%   headheight=24pt}
+\geometry{%
+  a5paper,
+  lmargin=1cm,
+  rmargin=1cm,
+  tmargin=2.5cm,
+  bmargin=1.5cm,
+  footskip=15pt,
+  headheight=24pt}
 \pagestyle{fancy}
 \rhead{{\triposcourse{}}}
 \author{jt775}

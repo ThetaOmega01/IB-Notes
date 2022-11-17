@@ -209,7 +209,18 @@
 \subsectionfont{\large\bfseries\sffamily}
 \subsubsectionfont{\bfseries\sffamily}
 \paragraphfont{\bfseries\sffamily}
-\partfont{\bfseries\sffamily}
+\makeatletter
+\titleformat{\part}[display]
+  {\centering\Huge\sffamily\bfseries}
+  {\partname~\thepart:}
+  {20pt}
+  {}
+\makeatother
+
+\let\oldpart\part
+\renewcommand{\part}[1]{\vspace*{\fill}
+\oldpart{#1}
+\vfill}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

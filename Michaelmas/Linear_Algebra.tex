@@ -629,8 +629,557 @@ By checking definitions,
         0 & C \\
     \end{pmatrix}
     $$
-    where $A$ is $k \times \ell$ such that $ A = [\alpha\upharpoonright_Y]_{B',C'} $. 
+    where $A$ is $k \times \ell$ such that $ A = [\alpha\restriction_Y]_{B',C'} $. 
     Also $ \alpha $ induces a well-defined map $ \bar{\alpha}:V/Y\to W/Z $ such that $ \v+Y\mapsto \alpha(\bfv)+Z $, with matrix given by $ [\bar{\alpha}]_{B'',C''}=C $.
 \end{example}
+\subsection{Change of basis}
+Suppose we have two bases $ B = \qty{\bfv_1, \dots, \bfv_n}, B' = \qty{\bfv_1', \dots, \bfv_n'} $ of $ V $ and corresponding $ C, C' $ for $ W $.
+If we have a linear map $ [\alpha]_{B,C} $, we are interested in finding the components of this linear map in another basis, that is,
+\[
+	[\alpha]_{B,C} \mapsto [\alpha]_{B',C'}
+\]
+\begin{definition}
+	The \textbf{change of basis} matrix $ P $ from $ B' $ to $ B $ is
+	\[
+		P = \begin{pmatrix}
+			[\bfv_1']_B & \cdots & [\bfv_n']_B
+		\end{pmatrix}
+	\]
+	which is the identity map in $ B' $, written
+	\[
+		P = [I]_{B', B}
+	\]
+\end{definition}
+\begin{lemma}
+	For a vector $ v $,
+	\[
+		[\bfv]_B = P [\bfv]_{B'}
+	\]
+\end{lemma}
+\begin{proof}
+	We have
+	\[
+		[\alpha(\bfv)]_C = [\alpha]_{B,C} \cdot [\bfv]_C
+	\]
+	Since $ P = [I]_{B', B} $,
+	\[
+		[I(\bfv)]_B = [I]_{B', B} \cdot [\bfv]_{B'} \implies [\bfv]_B = P[\bfv]_{B'}
+	\]
+	as required.
+\end{proof}
+\begin{remark}
+	$ P $ is an invertible $ n \times n $ square matrix.
+	In particular,
+	\[
+		P^{-1} = [I]_{B,B'}
+	\]
+	Indeed,
+	\[
+		I_n = [I \cdot I]_{B,B} = [I]_{B',B} \cdot [I]_{B',B}
+	\]
+	where $ I_n $ is the $ n \times n $ identity matrix.
+\end{remark}
+\begin{proposition}
+	If $ \alpha $ is a linear map from $ V $ to $ W $, and $ P = [I]_{B',B}, Q = [I]_{C',C} $, we have
+	\[
+		A' = [\alpha]_{B',C'} = [I]_{C,C'}[\alpha]_{B,C}[I]_{B,'B} = Q^{-1}AP
+	\]
+	where $ A = [\alpha]_{B,C}, A' = [\alpha]_{B',C'} $.
+\end{proposition}
+\begin{proof}
+	\begin{align*}
+		[\alpha(\bfv)]_C                     &= Q [\alpha(\bfv)]_{C'}= Q [\alpha]_{B',C'} [\bfv]_{B'} = QA [\mathbf{v}]_{B'} \\
+		[\alpha(\bfv)]_C                     & = [\alpha]_{B,C} [\bfv]_B        = AP[\bfv]_{B'}                  \\
+		\implies \forall \bfv,\ QA[\bfv]_{B'} & = AP[\bfv]_{B'}                  \\
+		\implies QA                     & = AP \implies A'=Q^{-1}AP.\qedhere
+	\end{align*}
+\end{proof}
+
+\begin{definition}
+	Matrices $ A, A' $ are called \textbf{equivalent} if
+	\[
+		A' = Q^{-1}AP
+	\]
+	for some invertible matrices $ Q\in \mathcal{M}_{m \times m}, P\in \mathcal{M}_{n \times n} $.
+\end{definition}
+\begin{remark}
+	This defines an equivalence relation on $ M_{m,n}(F) $.
+	\begin{itemize}
+		\item $ A = I_m^{-1} A I_n $;
+		\item $ A' = Q^{-1} AP \implies A = Q A' P^{-1} $;
+		\item $ A' = Q^{-1}AP, A'' = (Q')^{-1}A'P' \implies A'' = (QQ')^{-1}A(PP') $.
+	\end{itemize}
+\end{remark}
+\begin{proposition}
+	Let $ \alpha \colon V \to W $ be a linear map.
+	Then there exists a basis $ B $ of $ V $ and a basis $ C $ of $ W $ such that
+	\[
+		[\alpha]_{B,C} = \begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}
+	\]
+	so the components of the matrix are exactly the identity matrix of size $ r $ in the top-left corner, and zeroes everywhere else.
+\end{proposition}
+\begin{proof}
+    Keep in mind that
+    \begin{quotation}
+        \textit{If you choose a basis, choose it wisely.}
+    \end{quotation}
+	Fix $ r \in \mathbb N $ such that $ \dim \ker \alpha = n - r $,
+	and construct a basis $ \qty{\bfv_{r+1}, \dots, \bfv_n} $ of the kernel.
+	Extend this to a basis of the entirety of $ V $, that is, $ \qty{\bfv_1,\dots,\bfv_n} $.
+    We want to show that
+	\[
+		\qty{\alpha(\bfv_1), \dots, \alpha(\bfv_r)}
+	\]
+	is a basis of $ \Im \alpha $.
+
+	Indeed, it spans $W$:
+	\[
+        \bfv         = \sum_{i=1}^n \lambda_i \bfv_i,         \quad
+		\alpha(\bfv) = \sum_{i=1}^n \lambda_i \alpha(\bfv_i)
+		          = \sum_{i=1}^r \lambda_i \alpha(\bfv_i)
+    \]
+	Then if $ \bfy \in \Im \alpha $, there exists $ \bfv $ such that $ \alpha(\bfv) = \bfy $, i.e. $ \mathbf{y} $ is in the span.
+
+	Further, it is linearly independent:
+	\begin{align*}
+		\sum_{i=1}^r \lambda_i \alpha(\bfv_i) = 0&\implies
+		\alpha\qty(\sum_{i=1}^r \lambda_i \bfv_i)= 0 \implies
+		\sum_{i=1}^r \lambda_i \bfv_i \in \ker \alpha \\
+        &\implies \sum_{i=1}^r \lambda_i \bfv_i = \sum_{i=r+1}^n \lambda_i \bfv_i \\
+		&\implies \sum_{i=1}^r \lambda_i \bfv_i - \sum_{i=r+1}^n \lambda_i \bfv_i  = 0.
+	\end{align*}
+	But since $ \qty{\bfv_1, \dots, \bfv_n} $ is a basis, $ \lambda_i = 0 $ for all $ i $.
+	Hence $ \qty{\alpha(\bfv_i)} $ is a basis of $ \Im \alpha $.
+
+	Now, extend this basis to the whole of $ W $ to form
+	\[
+		\qty{\alpha(\bfv_1), \dots, \alpha(\bfv_r), \bfw_{r+1}, \dots, \bfw_n}
+	\]
+	Now,
+	\begin{align*}
+		[\alpha]_{BC} & = \begin{pmatrix}
+			\alpha(\bfv_1) & \cdots & \alpha(\bfv_r) & \alpha(\bfv_{r+1}) & \cdots & \alpha(\bfv_n)
+		\end{pmatrix} \\
+		              & = \begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}\qedhere
+	\end{align*}
+\end{proof}
+\begin{remark}
+	This also proves the rank-nullity theorem:
+	\[
+		\rank \alpha + \nullity \alpha = n
+	\]
+\end{remark}
+\begin{corollary}
+	Any $ m \times n $ matrix $ A $ is equivalent to a matrix of the form
+	\[
+		\begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}
+	\]
+	where $ r = \rank A $.
+\end{corollary}
+
+\subsection{Rank of matrices}\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( A \in M_{m,n}(\bbF) \).
+	Then, the \textbf{column rank} of \( A \), \( r_c(A) \), is the dimension of the subspace of \( \mathbb{F}^n \) spaned by the column vectors.
+	\[
+		r_c(A) = \dim \operatorname{span} \qty{\bfc_1, \dots, \bfc_n}.
+	\]
+
+    Similarly, the \textbf{row rank} of $A$ is defined by $ r(A^\top) $.
+\end{definition}
+
+\begin{remark}
+	If \( \alpha \) is a linear map, represented in bases \( B, C \) by the matrix \( A \), then
+	\[
+		\rank \alpha = r_c(A). 
+	\]
+    i.e. column rank $=$ rank.
+\end{remark}
+
+\begin{proposition}
+	Two matrices are equivalent if and only if they have the same column rank:
+	\[
+		r_c(A) = r_c(A')
+	\]
+\end{proposition}
+\begin{proof}
+	If the matrices are equivalent, then \( A = [\alpha]_{BC}, A' = [\alpha]_{B',C'} \).
+	Then
+	\[
+		r_c(A) = r_c(\alpha) = r_c(A')
+	\]
+	Conversely, if \( r_c(A) = r_c(A') = r \), then \( A, A' \) are equivalent to
+	\[
+		\begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}
+	\]
+	which indicates \( A, A' \) are equivalent.
+\end{proof}
+
+\begin{theorem}
+    $ r_c(A) = r_c(A^\top) $. 
+\end{theorem}
+\begin{proof}
+    Let $ r = r_c(A) $. We know that $A$ is equivalent to the matrix 
+    \[
+        Q^{-1}AP = \begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}_{m\times n}
+    \]
+    Take the transpose
+    \[
+		P^\top A^\top \qty(Q^{-1})^\top = (Q^{-1}AP)^\top = \begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}_{m \times n}^\top = \begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}_{n \times m}
+	\]
+    which proves the theorem. 
+\end{proof}
+
+Hence we can just write $ r(A) $, without subscript.
+
+\subsection{Elementary operations and elementary matrices}
+\paragraph{Aside: change of basis in the same space} Consider the following special case of changing basis.
+If \( \alpha \colon V \to V \) is linear, \( \alpha \) is called an \textbf{endomorphism}.
+If \( B = C, B' = C' \) then the special case of the change of basis formula is
+\[
+	[\alpha]_{B',B'} = P^{-1} [\alpha]_{B,B} P
+\]
+Then, we say square matrices \( A, A' \) are \textbf{similar} or \textbf{conjugate} if there exists \( P \) such that \( A' = P^{-1} A P \).
+
+\begin{definition}
+	An \textbf{elementary column operation} is
+	\begin{enumerate}[(i)]
+		\item swap columns \( i, j \)
+		\item replace column \( i \) by \( \lambda \) multiplied by the column
+		\item add \( \lambda \times\) column \( i \) to column \( j \ (i\neq j)\)
+	\end{enumerate}
+\end{definition}
+
+\begin{note}
+    \begin{itemize}
+        \item Elementary row operations are defined similarly. 
+        \item The elementary operations are invertible. 
+    \end{itemize}
+\end{note}
+
+These operations can be described through the action of \textbf{elementary matrices}: 
+\begin{definition}
+    The elementary matrices are defined by 
+    \begin{enumerate}[(i)]
+        \item Swap columns $i,j$  
+        \[
+            T_{ij} = \begin{pmatrix}
+                I_n & 0 & 0   \\
+                0   & A & 0   \\
+                0   & 0 & I_m
+            \end{pmatrix};\quad A = \begin{pmatrix}
+                0 & 0   & 1 \\
+                0 & I_k & 0 \\
+                1 & 0   & 1
+            \end{pmatrix}
+        \]
+        \item Multiply column $i$ by $\lambda$  
+        \[
+            M_{i,\lambda} = \begin{pmatrix}
+                I_n & 0       & 0   \\
+                0   & \lambda & 0   \\
+                0   & 0       & I_m
+            \end{pmatrix}
+        \]
+        \item Add a multiple of a column,
+        \[
+            C_{ij,\lambda} = I + \lambda E_{ij},\quad E_{ij} \text{ is the standard basis}
+        \]
+    \end{enumerate}
+\end{definition}
+
+An elementary column (or row) operation can be performed by multiplying \( A \) by the corresponding elementary matrix from the right (on the left for row operations).
+
+This provides a constructive proof that any \( n \times n \) matrix is equivalent to
+\[
+	\begin{pmatrix} I_r & 0 \\ 0 & 0 \end{pmatrix}
+\]
+\begin{proof}
+    Start with $A$. If all entries are 0, we are done. 
+
+    Pick $ a_{ij} = \lambda\neq 0 $: 
+    \begin{itemize}
+        \item Swap rows $i$ and $1$ 
+        \item Swap columns $i$ and $1$ 
+    \end{itemize}
+    We get $ \lambda = a_{11} $, and by multiplying $ 1/\lambda $ we get $ a_{11}= 1 $. 
+
+    Now the matrix becomes 
+    \[
+        \begin{pmatrix}
+            1 &  0 \\
+            0 &  \tilde{A} \\
+        \end{pmatrix},\quad \tilde{A}\in \mathcal{M}_{(n-1),(n-1)} 
+    \]
+    and we can proceed inductively. After a finite step we get 
+    \[
+        \begin{pmatrix} I_r & 0 \\ 0 & 0 \end{pmatrix} = Q^{-1}AP = \underbrace{E'_\ell \cdots E'_1}_{\text{row operations}} A \underbrace{E_1 \cdots E_{l}}_{\text{column operations}}\qedhere
+    \]
+\end{proof}
+
+\subsection{Gauss' pivot algorithm, finding inverses}
+
+If we use only row operations, we can reduce each matrix to the so-called \textbf{row echelon form}: 
+\[
+    \begin{pmatrix}
+        1 & 0 & \cdots & 0 &  b \\
+        0 & \cdots & 1 & 0 &  c \\
+        0 & \cdots & 0 & 1 &  d \\
+    \end{pmatrix}
+\]
+where the `1's are pivots. The algorithm is described as follows 
+\begin{enumerate}
+    \item Assume $a_{i1}\neq 0$ for some $i$
+    \item Swap rows $i$ and $1$ 
+    \item Divide first row by $ \lambda = a_{i 1} $ to get $a_{11}=1$ 
+    \item Use 1 to clear the rest of the first column
+    \item Move to the second column and repeat
+\end{enumerate}
+
+This process is exactly the process used to solve a linear system of equations (Gaussian elimination).
+
+\begin{lemma}
+	If \( A \) is an \( n \times n \) square invertible matrix, then we can obtain \( I_n \) using only row elementary operations, or only column elementary operations.
+\end{lemma}
+\begin{proof}
+	We show an algorithm that constructs this \( I_n \).
+	This is exactly going to invert the matrix, since the resultant operations can be combined to get the inverse matrix.
+	We will show here the proof for column operations.
+	We argue by induction on the number of rows.
+	Suppose we can make the form
+	\[
+		\begin{pmatrix} I_k & 0 \\ A & B \end{pmatrix}
+	\]
+	We want to obtain the same structure with \( k+1 \) rows.
+	We claim that there exists \( j > k \) such that \( a_{k+1,j} \neq 0 \).
+	Indeed, otherwise we can show that the vector
+	\[
+		\begin{pmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{pmatrix} = \delta_{k+1,i}
+	\]
+	is not in the span of the column vectors of \( A \).
+	This contradicts the invertibility of the matrix.
+	Now, we will swap columns \( k+1, j \) and divide this column by \( \lambda \).
+	We can now use this 1 to clear the rest of the \( k+1 \) row.
+
+	Inductively, we have found \( A E_1 \dots E_n = I_n \) where \( E_n \) are elementary.
+	Thus, we can find \( A^{-1} \).
+\end{proof}
+\begin{proposition}
+	Any invertible square matrix is a product of elementary matrices.
+\end{proposition}
+The proof is exactly the proof of the lemma above.
+
+
+\section{Dual spaces and dual maps}
+\subsection{Dual spaces}\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \) be an \( \mathbb{F} \)-vector space.
+	Then \( V^* \) is the \textbf{dual} of \( V \), defined by
+	\[
+		V^* = L(V,\mathbb F) = \qty{\alpha \colon V \to \mathbb F}
+	\]
+	where the \( \alpha \) are linear.
+	If \( \alpha \colon V \to \mathbb F \) is linear, then we say \( \alpha \) is a linear form.
+	So the dual of \( V \) is the set of linear forms on \( V \).
+\end{definition}
+\begin{example}
+	The trace \( \operatorname{tr} \colon M_{n,n}(\mathbb F) \to \mathbb F \) is a linear form on \( M_{n,n}(\mathbb F) \).
+\end{example}
+\begin{example}
+	Consider functions \( [0,1] \to \mathbb R \).
+	We can define \( T_f \colon C^\infty([0,1], \mathbb R) \to \mathbb R \) such that \( \phi \mapsto \int_0^1 f(x) \phi(x) \dd{x} \).
+	Then \( T_f \) is a linear form on \( C^{\infty}([0,1], \mathbb R) \).
+	We can then reconstruct \( f \) given \( T_f \).
+	This mathematical formulation is called distribution.
+\end{example}
+\begin{lemma}
+	Let \( V \) be an \( \mathbb F \)-vector space with a finite basis \( B = \qty{\bfe_1, \dots, \bfe_n} \).
+	Then there exists a basis \( B^* \) for \( V^* \) given by
+	\[
+		B^* = \qty{\varepsilon_1, \dots, \varepsilon_n}; \quad \varepsilon_j \qty( \sum_{i=1}^n a_i \bfe_i ) = a_j
+	\]
+	We call \( B^* \) the \textbf{dual basis} for \( B \).
+\end{lemma}
+We know
+\[
+    \varepsilon_j \qty( \sum_{i=1}^n a_i \bfe_i ) = a_j
+\]
+Equivalently,
+\[
+    \varepsilon_j (\bfe_i) = \delta_{ij}
+\]
+\begin{proof}
+	First, we will show that the set of linear forms as defined is linearly independent.
+	For all \( i \),
+	\[
+        \sum_{j=1}^n \lambda_j \varepsilon_j= 0 \implies
+		\qty( \sum_{j=1}^n \lambda_j \varepsilon_j ) \bfe_i = 0 \implies
+		\sum_{j=1}^n \lambda_j \varepsilon_j(e_i)                   = 0 \implies
+		\lambda_i = 0.
+    \]
+	Now we show that the set spans \( V^* \).
+	Suppose \( \alpha \in V^* \), \( x \in V \).
+	\[
+        \alpha(x) = \alpha\qty(\sum_{j=1}^n \lambda_j \bfe_j)
+		           = \sum_{i=1}^n \lambda_j \alpha(\bfe_j)
+    \]
+	Conversely, let
+	\[
+		\sum_{i=1}^n \alpha(\bfe_j) \varepsilon_j \in V^*
+	\]
+	Then
+	\begin{align*}
+		\qty( \sum_{i=1}^n \alpha(\bfe_j) \varepsilon_j) (\bfx) & = \sum_{j=1}^n \alpha(\bfe_j) \varepsilon_j\qty(\sum_{k=1}^n \lambda_k \bfe_k) \\
+        & = \sum_{j=1}^n \alpha(\bfe_j) \sum_{k=1}^n \lambda_k \varepsilon_j(\bfe_k)     \\
+        & = \sum_{j=1}^n \alpha(\bfe_j) \sum_{k=1}^n \lambda_k \delta_{jk}            \\
+        & = \sum_{j=1}^n \alpha(\bfe_j) \lambda_j                                     \\
+        & = \alpha(\bfx)
+	\end{align*}
+	We have then shown that
+	\[
+		\alpha = \sum_{j=1}^n \alpha(\bfe_j) \varepsilon_j
+	\]
+	as required.
+\end{proof}
+\begin{corollary}
+	If \( V \) is finite-dimensional, then $ \dim V = \dim V^* $.
+\end{corollary}
+\begin{remark}
+	It is sometimes convenient to think of \( V^* \) as the spaces of row vectors of length \( \dim V \) over \( \bbF \).
+	For instance, consider the basis \( B = (\bfe_1, \dots, \bfe_n) \), so \( \bfx = \sum_{i=1}^n x_i \bfe_i \).
+	Then we can pick \( (\varepsilon_1, \dots, \varepsilon_n) \) a basis of \( V^* \), so \( \alpha = \sum_{i=1}^n \alpha_i \varepsilon_i \).
+	Then
+	\[
+		\alpha(\bfx) = \sum_{i=1}^n \alpha_i \varepsilon_i(\bfx) = \sum_{i=1}^n \alpha_i \varepsilon\qty(\sum_{j=1}^n x_j \bfe_j) = \sum_{i=1}^n \alpha_i x_i
+	\]
+	This is exactly
+	\[
+		\begin{pmatrix} \alpha_1 & \cdots & \alpha_n \end{pmatrix} \begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix}
+	\]
+	which essentially defines a scalar product between the two spaces.
+\end{remark}
+
+\subsection{Annihilators}\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( U \subseteq V \).
+	Then the annihilator of \( U \) is
+	\[
+		U^0 = \qty{\alpha \in V^* \colon \forall \bfu \in U, \alpha(\bfu) = 0}
+	\]
+\end{definition}
+\begin{lemma}
+	\begin{enumerate}[(i)]
+		\item \( U^0 \leq V^* \);
+		\item If \( U \leq V \) and \( \dim V < \infty \), then \( \dim V = \dim U + \dim U^0 \).
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[(i)]
+		\item First, note that \( 0 \in U^0 \) since \( \alpha(0) = 0 \) by linearity.
+		      If \( \alpha, \alpha' \in U^0 \), then for all \( \bfu \in U \),
+		      \[
+			      (\alpha + \alpha')(\bfu) = \alpha(\bfu) + \alpha'(\bfu) = 0
+		      \]
+		      Further, for all \( \lambda \in F \),
+		      \[
+			      (\lambda \alpha)(\bfu) = \lambda \alpha(\bfu) = 0
+		      \]
+		      Hence \( U^0 \leq V^* \).
+		\item Let \( (\bfe_1, \dots, \bfe_k) \) be a basis of \( U \) and extend it to a basis
+		\[
+            B = (\bfe_1, \dots, \bfe_k, \bfe_{k+1}, \dots, \bfe_n)
+        \]
+		      Let \( (\varepsilon_1, \dots, \varepsilon_n) \) be the dual basis \( B^* \).
+		      We then will prove that
+		      \[
+			      U^0 = \langle\varepsilon_{k+1}, \dots, \varepsilon_n\rangle
+		      \]
+		      If \( i > k \), then \( \varepsilon_i(e_k) = \delta_{ik} = 0 \).
+		      Hence \( \varepsilon_i \in U^0 \).
+		      Thus \( \langle{\varepsilon_{k+1}, \dots, \varepsilon_n}\rangle \subset U^0 \).
+		      Let \( \alpha \in U^0 \).
+		      Then \( \alpha = \sum_{i=1}^n \alpha_i \varepsilon_i \).
+		      For \( i \leq k \), \( \alpha \in U^0 \) hence \( \alpha(e_i) = 0 \).
+		      Hence,
+		      \[
+			      \alpha = \sum_{i=k+1}^n \alpha_i \varepsilon_i
+		      \]
+		      Thus
+		      \[
+			      \alpha \in \langle{\varepsilon_{k+1}, \dots, \varepsilon_n}\rangle
+		      \]
+		      as required.\qedhere
+	\end{enumerate}
+\end{proof}
+
+\subsection{Dual maps}\ \vspace{-1.5em}
+\begin{lemma}
+	Let \( V, W \) be \( \bbF \)-vector spaces.
+	Let \( \alpha \in L(V,W) \).
+	Then there exists a unique \( \alpha^* \in L(W^*, V^*) \) such that
+	\[
+		\varepsilon \mapsto \varepsilon \circ \alpha
+	\]
+	It is called the \textbf{dual map}.
+\end{lemma}
+\begin{proof}
+	\( \varepsilon(\alpha) \colon V \to \bbF \) linear by linearity of $ \varepsilon, \alpha $,	so \( \varepsilon \circ \alpha \in V^* \).
+	Now we show \( \alpha^* \) is linear:
+	\[
+		\alpha^*(\theta_1 + \theta_2) = (\theta_1 + \theta_2)(\alpha) = \theta_1 \circ \alpha + \theta_2 \circ \alpha = \alpha^*(\theta_1) + \alpha^*(\theta_2)
+	\]
+	and
+	\[
+		\alpha^*(\lambda \theta) = \lambda \alpha^*(\theta)
+	\]
+	as required.
+	Hence \( \alpha^* \in L(W^*, V^*) \).
+\end{proof}
+\begin{proposition}
+	Let \( V, W \) be finite-dimensional \( \bbF \)-vector spaces with bases \( B, C \) respectively.
+	Then
+	\[
+		[\alpha^*]_{C^*, B^*} = [\alpha]^\top_{B, C}
+	\]
+	Thus, we can think of the dual map as the \textit{adjoint} of \( \alpha \).
+\end{proposition}
+\begin{proof}
+	Let \( B = (b_1, \dots, b_n) \), \( C = (c_1, \dots, c_m) \), \( B^* = (\beta_1, \dots, \beta_n) \), \( C^* = (\gamma_1, \dots, \gamma_m) \).
+	Let \( [\alpha]_{B,C} = (a_{ij}) \).
+	Then
+	\begin{align*}
+		\alpha^*(\gamma_r)(b_s) & = \gamma_r \circ \alpha(b_s)= \gamma_r \qty( \sum_t a_{ts} c_t ) \\
+		                            & = \sum_t a_{ts} \gamma_r(c_t) = \sum_t a_{ts} \delta_{tr}          \\
+		                            & = a_{rs}
+	\end{align*}
+	We can conversely write \( [\alpha^*]_{C^*, B^*} = (m_{ij}) \) and
+	\begin{align*}
+		\alpha^*(\gamma_r)      & = \sum_{i=1}^n m_{ir} \beta_i      \\
+		\alpha^*(\gamma_r)(b_s) & = \sum_{i=1}^n m_{ir} \beta_i(b_s)= \sum_{i=1}^n m_{ir} \delta_{is}  \\
+		                            & = m_{sr}
+	\end{align*}
+	which gives $ a_{rs} = m_{sr} $, as required.
+\end{proof}
 
 \end{document}

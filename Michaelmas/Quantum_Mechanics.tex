@@ -94,7 +94,7 @@ where $ \hbar = h/2\pi $ is the \textbf{reduced Planck constant} with
 \]
 It makes sense if $ E = \hbar \omega $, i.e. energy is \textit{quantized}.
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{qm1.png}
+    \includegraphics[scale=0.15]{qm1.png}
 \end{center}
 
 \subsection{Photoelectric effect (1905)}
@@ -108,7 +108,7 @@ Classically, we would expect that:
 	\item The emission rate should be constant.
 \end{enumerate}
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{qm2.png}
+    \includegraphics[scale=0.5]{qm2.png}
 \end{center}
 \paragraph{Inconsistency with experiment and interpretation}
 Experiments showed that
@@ -215,7 +215,7 @@ where $ E_1=-\left(e^4 m_e\right) /\left(32 \pi^2 \epsilon_0^2 \hbar^2\right) \s
 \end{proof}
 
 \begin{center}
-    \includegraphics[width=0.3\textwidth]{qm6.png}
+    \includegraphics[scale=0.5]{qm6.png}
 \end{center}
 
 Note that 
@@ -592,7 +592,7 @@ Most of the operators we deal with are hermitian:
 
 We will now describe several crucial properties of Hermitian operators.
 
-\begin{theorem}
+\begin{theorem}\label{thm:2.6}
     \begin{enumerate}[(i)]
         \item The eigenvalues of Hermitian operators are real. 
         \item Eigenfunctions corresponding to different eigenvalues are orthogonal. 
@@ -602,4 +602,267 @@ We will now describe several crucial properties of Hermitian operators.
 \begin{proof}
     See Vectors and Matrices, and Dr Ubiali's notes. 
 \end{proof}
+
+\subsection{Expectation values and operators}
+Let $O$ be an observation. 
+\paragraph{Postulates} 
+\begin{enumerate}[(1)]
+    \item $O$ is represented (mathematically) by a Hermitian operator $\hat{O}$. 
+    \item Outcomes are the \textit{eigenvalues} of $\hat{O}$. 
+    \item If $\hat{O}$ has a discrete set of eigenfunctions $ \psi_i $ with eigenvalues $ \lambda_i $, then $ \psi_i $ are complete and we can write our (normalized) wavefunction as 
+    \[
+        \psi = \sum_{i} a_i \psi_i. 
+    \]
+    Furthermore, $ \mathbb{P}(O = \lambda_i) = |a_i|^2 = |(\psi_i,\psi)|^2 $. 
+    \item If some $\lambda$ is degenerated, i.e. $ \exists \{\psi_i\}_{i\in I} $ with the samel eigenvalue $\lambda$, then
+    \[
+        \mathbb{P}(O=\lambda) = \sum_{i\in I} |a_i|^2
+    \]
+    \item $\displaystyle \sum_i\left|a_i\right|^2=\sum_i\left(a_i \psi_i, a_i \psi_i\right)=\sum_{i, j}\left(a_i \psi_i, a_j \psi_j\right)=(\psi, \psi)=1$. 
+    \item (Projection Postulate). If at time $t$, the measurement $ O=\lambda_i $, $ \psi $ immediately becomes $\psi_i$.  
+    \item Degeneracy in (6): If at time $t$, $ O = \lambda $, then $ \psi = \sum_{i\in I} a_i \psi_i $. 
+\end{enumerate}
+
+\begin{definition}
+    The \textbf{projection operator} given $ \psi = \sum_i a_i \psi_i = \sum_i (\psi_i,\psi)\psi_i $ is given by 
+    \[
+        \hat{P}_i: \psi \mapsto (\psi_i,\psi)\psi_i. 
+    \]
+\end{definition}
+
+Hence the expectation is essentially summing over $ |(\psi,\psi_i)|^2 \lambda_i $: 
+\[
+    \sum_i\left|\left(\psi, \psi_i\right)\right|^2 \lambda_i 
+        =\left(\sum_i\left(\psi, \psi_i\right) \psi_i, \sum_j \lambda_j\left(\psi, \psi_j\right) \psi_j\right)=(\psi, \hat{O} \psi)
+\]
+and the concept of observation (or measurement) is now formalized: 
+\begin{proposition}
+    The expectation of a measurement of the observable $O$ the state $\psi$ is given by 
+    \[
+        \langle \hat{O} \rangle_{\psi} = (\psi, \hat{O}\psi).
+    \]
+\end{proposition}
+
+As usual, $ \langle \cdot \rangle_{\psi} $ is linear: 
+\begin{proposition}
+    $ \langle a \hat{A}+ b\hat B \rangle_{\psi} = a \langle \hat A\rangle _{\psi} + b \langle\hat B\rangle_{\psi} $, where $a,b$ are real since we are dealing with Hermitian operators.
+\end{proposition}
+
+The physics implication is that if $O$ is measured twice, the outcome of second measure (if $\Delta t$ between measures is small) is the \textit{same} as the first one with probability 1. 
+
+\paragraph{Born's rule} If $\phi(\mathbf{x}, t)$ is the desired outcome of a measurement, then the probability of measuring such an outcome given the wavefunction $\psi(\mathbf{x}, t)$ at a time $t$ is given by
+\[
+|(\psi, \phi)|^2=\left|\int_{\mathbb{R}^3} \psi^*(\mathbf{x}, t) \phi(\mathbf{x}, t) \dd V\right|^2 .
+\]
+We say that this is the probability amplitude of $\phi$ to be found in $\psi$ at time $t$, so in a sense it measures the overlap of the two wavefunctions.
+
+\section{Time-independent Schr\"odinger Equation (TISE)}
+\subsection{Definition}
+From the time-dependent version of the equation,
+\[
+	i\hbar \pdv{\psi}{t} = \hat H \psi
+\]
+we can try a solution of the form
+\[
+	\psi(x,t) = T(t) \chi(x)
+\]
+Then, we can find
+\[
+	i \hbar \pdv{T(t)}{t} \chi(x) = T(t) \hat H \chi(x)
+\]
+Then, dividing by \( T \chi \),
+\[
+	\frac{1}{T(t)} \qty(i \hbar \pdv{T}{t}) = \frac{\hat H \chi(x)}{\chi}
+\]
+Since the left and right hand sides depend only on \( x \) and \( t \) respectively but are equal, they must be equal to a separation constant \( E \in \mathbb R \).
+Solving for time,
+\[
+	\frac{1}{T} i \hbar \pdv{T}{t} = E \implies T(t) = e^{\frac{-i Et}{\hbar}}
+\]
+If \( E \) were complex, \( T \) would diverge, so $T\in \mathbb{R}$.
+Solving for space, we have the time-independent Schr\"odinger equation as follows.
+\[
+	\hat H \chi(x) = E \chi(x)
+\]
+Explicitly,
+\begin{definition}
+    The \textbf{time-independent Schr\"odinger equation} is given by 
+    \[
+	-\frac{\hbar^2}{2m} \laplacian{\chi(x)} + U(x) \chi(x) = E \chi(x).
+\]
+\end{definition}
+This is an eigenvalue equation for \( \hat H \); we wish to find the eigenvalues for \( \hat H \) in the \( x \) basis.
+Note that the factorised solution \( \psi = T \chi \) is just a particular class of solutions for the time-dependent Schr\"odinger equation.
+However, it can be shown that any solution to the time-dependent equation can be written as a linear combination of the time-independent equation solutions.
+
+\subsection{Stationary states}\ \vspace{-1.5em}
+\begin{definition}
+	With the ansatz \( \psi(x,t) = \chi(x) T(t) \), we have found a particular class of solutions of the time-independent Schr\"odinger equation:
+	\[
+		\psi(x,t) = \chi(x) e^{-\frac{i E t}{\hbar}}
+	\]
+	where \( \chi(x) \) are the eigenfunctions of \( \hat H \) with eigenvalue \( E \).
+	Such solutions are called stationary states.
+\end{definition}
+
+\begin{note}
+    Notice that \[
+        \rho(x,t) = \abs{\psi(x,t)}^2 = \abs{\chi(x)}^2
+    \]
+    This explains the naming of the states as `stationary', as their probability density is independent of time.
+\end{note}
+
+By applying theorem \ref{thm:2.6} to the Hamiltonian operator we get
+\begin{theorem}
+    Every solution of the TDSE can be written as a superposition of stationary states $\chi(x) T(t)$.
+\end{theorem}
+
+\begin{itemize}
+    \item Suppose \( E \) is quantised.
+    Then, the general solution to the system is
+    \[
+        \psi(x,t) = \sum_{n=1}^N a_n \chi_n(x) e^{-\frac{iE_n t}{\hbar}}
+    \]
+    where \( N \) can be finite or infinite.
+    \item In principle, we can also have a continuous energy state \( E_\alpha, \alpha \in \mathbb R \).
+    We can still use the same idea:
+    \[
+        \psi(x,t) = \int_{\Delta \alpha} A(\alpha) \chi_\alpha(x) e^{-\frac{iE_\alpha t}{\hbar}} \dd{\alpha}
+    \]
+    Note that \( \abs{a_n}^2 \) and \( A(\alpha) \dd{\alpha} \) give the probability of measuring the particle energy to be \( E_n \) or \( E_\alpha \).
+\end{itemize}
+
+In general $\psi(x, t)$ is not a stationary state and thus does not have a definite energy. We can see this explicitly. Take a state $\psi$, which is the superposition of two stationary states $\psi_1$ and $\psi_2$ with two real coefficient of proportionality $a_1$ and $a_2$ and real stationary state wavefunctions $\chi_1(x)$ and $\chi_2(x)$ (for simplicity). If we compute the probability density associated to this state, we see that the it is not a constant, rather it oscillates with time. Indeed
+\[
+\begin{aligned}
+|\psi(x, t)|^2 &=\left|a_1 \Psi_1(x, t)+a_2 \Psi_2(x, t)\right|^2 \\
+&=a_1^2\left|\chi_1(x)\right|^2+a_2^2\left|\chi_2(x)\right|^2+a_1 a_2 \chi_1(x) \chi_2(x)[\exp (i \Delta E t / \hbar)+\exp (-i \Delta E t / \hbar)] \\
+&=a_1^2\left|\chi_1(x)\right|^2+a_2^2\left|\chi_2(x)\right|^2+2 a_1 a_2 \chi_1(x) \chi_2(x) \cos (\Delta E t / \hbar)
+\end{aligned}
+\]
+with $\Delta E=E_1-E_2$.
+\clearpage
+
+\part{1D Solutions of Schr\"odinger Equation}
+\section{Bound states}
+\subsection{Infinite potential well}
+\begin{example}
+    Define
+\[
+	U(x) = \begin{cases}
+		0      & \text{for } \abs{x} \leq a \\
+		\infty & \text{for } \abs{x} > a
+	\end{cases}
+\]
+
+\begin{center}
+    \begin{tikzpicture}
+        \draw[draw=none, fill=black!20] (-4,0) rectangle (-2,3.5); 
+        \draw[draw=none, fill=black!20] (2,0) rectangle (4,3.5); 
+        \draw[->] (-4,0) -- (4,0); 
+        \draw[->] (0,-0.5) -- (0,3);
+        \draw (0,3) node[anchor=east] {$U(x)$};
+        \draw (-2,0) -- (-2,3);
+        \draw[dashed] (-2,3) -- (-2,3.5);
+        \draw (2,0) -- (2,3);
+        \draw[dashed] (2,3) -- (2,3.5);
+        \draw (-2,0) node[anchor=north] {$-a$};
+        \draw (2,0) node[anchor=north] {$a$};
+    \end{tikzpicture}
+\end{center}
+
+For \( \abs{x} > a \), we must have \( \chi(a) = 0 \).
+Otherwise, \( \chi \cdot U = \infty \).
+This gives us a boundary condition, \( \chi(\pm a) = 0 \).
+For \( \abs{x} \leq a \), we seek solutions of the form
+\[
+	-\frac{\hbar^2}{2m} \chi''(x) = E \chi(x);\quad \chi(\pm a) = 0
+\]
+Equivalently,
+\[
+	\chi''(x) + k^2 \chi(x) = 0;\quad k = \sqrt{\frac{2mE}{\hbar^2}}. 
+\]
+\end{example}
+Since \( E > 0 \),
+\[
+	\chi(x) = A \sin kx + B \cos kx
+\]
+Imposing boundary conditions,
+\[
+	A \sin (k a) \pm B \cos (k a)=0 \quad \implies A \sin (k a)=0 \wedge B \cos (k a)=0
+\]
+Suppose \( A = 0 \), giving \( \chi(x) = B \cos kx \).
+Then, imposing boundary conditions, \( \chi_n(x) = B \cos k_n x \) where \( k_n = \frac{n \pi}{2a} \), and \( n \) are odd positive integers.
+These are even solutions.
+
+Alternatively, suppose \( B = 0 \).
+In this case, \( \chi(x) = A \sin kx \).
+Thus, \( \chi_n(x) = A \sin k_n x \) where \( k_n = \frac{n \pi}{2a} \), and \( n \) are even nonzero positive integers.
+These provide odd solutions.
+
+We can also determine the normalisation constants by defining that the eigenfunctions of the Hamiltonian are normalised to unity.
+Thus,
+\[
+	\int_{-a}^a \abs{\chi_n(x)}^2 = 1 \implies A = B = \sqrt{\frac{1}{a}}
+\]
+Hence, 
+\begin{proposition}
+    The general solution is given by the eigenvalues
+    \[
+        E_n = \frac{\hbar^2}{2n} k_n^2 = \frac{\hbar^2 \pi^2 n^2}{2ma^2}
+    \]
+    and eigenfunctions
+    \[
+        \chi_n(x) = \sqrt{\frac{1}{a}} \begin{cases}
+            \cos(\frac{n \pi x}{2a}) & \text{if } n \text{ odd}  \\
+            \sin(\frac{n \pi x}{2a}) & \text{if } n \text{ even}
+        \end{cases}
+    \]
+\end{proposition}
+\begin{remark}
+	\begin{enumerate}
+        \item Unlike classical mechanics, the ground state energy is not zero.
+        \item\( \chi_n \) have \( (n+1) \) nodes in which \( \rho(x) = 0 \).
+        When \( n \to \infty \), \( \rho_n(x) \) tends to a constant, which is like in classical mechanics.
+        \item $\chi_n(-x)=(-1)^{n+1} \chi_n(x) .$
+            This is known as \textbf{parity}.
+    \end{enumerate}
+\end{remark}
+\begin{proposition}
+	If we have a system of non-degenerate eigenstates (\( E_i \neq E_j \)),  then if \( U(x) = U(-x) \) the eigenfunctions of \( \hat H \) must be either odd or even.
+\end{proposition}
+\begin{proof}
+	The time-independent Schr\"odinger equation is invariant under \( x \mapsto -x \) if \( U \) is even.
+	Hence, if \( \chi(x) \) is a solution with eigenvalue \( E \), then \( \chi(-x) \) is also a solution.
+	Since we have a non-degenerate solution, \( \chi(-x) = \chi(x) \) hence the solutions must be the same up to a normalisation factor.
+	For consistency, \( \chi(x) = \chi(-(-x)) = \alpha \chi(-x) = \alpha^2 \chi(x) \).
+	Hence \( \alpha = \pm 1 \), so \( \chi \) is either odd or even.
+\end{proof}
+
+\subsection{Finite potential well}
+
+\begin{example}
+    In the case of a finite potential well,
+    \[
+    U(x)= \begin{cases}0 & |x| \leq a \\ U_0 & |x|>a,\end{cases}
+    \]
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[->] (-4,0) -- (4,0); 
+            \draw[->] (0,-0.5) -- (0,3);
+            \draw (0,3) node[anchor=east] {$U(x)$};
+            \draw (-2,0) -- (-2,3);
+            \draw[dashed] (-2,3) -- (-2,3.5);
+            \draw (2,0) -- (2,3);
+            \draw[dashed] (2,3) -- (2,3.5);
+            \draw (-2,0) node[anchor=north] {$-a$};
+            \draw (2,0) node[anchor=north] {$a$};
+        \end{tikzpicture}
+    \end{center}
+    the stationary states obey
+    \[
+    -\frac{\hbar^2}{2 m} \chi^{\prime \prime}(x)+U(x) \chi(x)=E \chi(x) .
+    \]
+\end{example}
+
 \end{document}
