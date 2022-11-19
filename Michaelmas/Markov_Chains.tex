@@ -596,4 +596,58 @@ This method of computing hitting probabilities is perfectly valid on Markov chai
 \end{proof}
 
 \section{Strong Markov property}
+The simple Markov property says that conditioning on $\qty{X_M=i}$, the future of the process start `fresh': a Markov chain from $i$ with the same transition matrix $P$, independent of $X_0,\dots,X_m$. 
+
+If we change the condition to any random time, the above property may not work, since it might contain information of future. It turns out that we can extend to the case of a random time which is a stopping time as we now define.
+
+\begin{definition}
+    A \textbf{stopping time} $T$ is a random variable $T: \Omega \rightarrow\{0,1, \ldots\} \cup\{\infty\}$ with the property that for every $n \in \mathbb{N}$ the event $\{T=n\}$ only depends on $X_0, \ldots, X_n$.
+\end{definition}
+
+\begin{example}
+\textbf{Hitting times of sets are stopping times.} Let $A \subseteq I$ and let $T_A=\inf \left\{n \geq 0: X_n \in A\right\}$. Then $T_A$ is a stopping time, since for all $n$ we have
+\[
+\left\{T_A=n\right\}=\left\{X_0 \notin A, \ldots, X_{n-1} \notin A, X_n \in A\right\} .
+\]
+
+\textbf{Last exit times are NOT stopping times.} Let $A \subseteq I$ and let $L_A=\sup \left\{n \geq 0: X_n \in A\right\}$. Then $L_A$ is not a stopping time, since for any $n$ we have that the event $\left\{L_A=n\right\}$ depends on $\left(X_{m+n}\right)_{m \geq 0}$.
+\end{example}
+
+\begin{theorem}[Strong Markov property]
+    Let $X$ be $\operatorname{Markov}(\lambda, P)$ and let $T$ be a stopping time. Then conditional on $T<\infty$ and $X_T=i$, we have that $\left(X_{T+n}\right)_{n \geq 0}$ is $\operatorname{Markov}\left(\delta_i, P\right)$ and it is independent of $X_0, \ldots, X_T$.
+\end{theorem}
+\begin{proof}
+    We need to show that for every $n \geq 0$, all $x_0, \ldots, x_n \in I$ and every $w \in \cup_k I^k$ we have
+    \[
+    \begin{aligned}
+    &\mathbb{P}\left(X_T=x_0, \ldots, X_{T+n}=x_n,\left(X_0, \ldots, X_T\right)=w \mid T<\infty, X_T=i\right) \\
+    &=\delta_{i x_0} P\left(x_0, x_1\right) \cdots P\left(x_{n-1}, x_n\right) \cdot \mathbb{P}\left(\left(X_0, \ldots, X_T\right)=w \mid T<\infty, X_T=i\right) .
+    \end{aligned}
+    \]
+    Suppose that $w$ has length $k$. Then
+    \[
+    \begin{aligned}
+    &\mathbb{P}\left(X_T=x_0, \ldots, X_{T+n}=x_n,\left(X_0, \ldots, X_T\right)=w \mid T<\infty, X_T=i\right) \\
+    &=\frac{\mathbb{P}\left(X_k=x_0, \ldots, X_{k+n}=x_n,\left(X_0, \ldots, X_k\right)=w, T=k, X_k=i\right)}{\mathbb{P}\left(T<\infty, X_T=i\right)} .
+    \end{aligned}
+    \]
+    Since the event $\{T=k\}$ only depends on $X_0, \ldots, X_k$ we have by the simple Markov property,
+    \[
+    \begin{aligned}
+    &\mathbb{P}\left(X_k=x_0, \ldots, X_{k+n}=x_n,\left(X_0, \ldots, X_k\right)=w, T=k, X_k=i\right) \\
+    &=\mathbb{P}\left(X_k=x_0, \ldots, X_{k+n}=x_n \mid\left(X_0, \ldots, X_k\right)=w, X_k=i, T=k\right)\\ 
+    &\hspace{1.5em} \cdot \mathbb{P}\left(\left(X_0, \ldots, X_k\right)=w, X_k=i, T=k\right) \\
+    &=\delta_{i x_0} P\left(x_0, x_1\right) \cdots P\left(x_{n-1}, x_n\right) \mathbb{P}\left(\left(X_0, \ldots, X_k\right)=w, X_k=i, T=k\right)
+    \end{aligned}
+    \]
+    Suppose that $w$ has length $k$. Then
+    \[
+    \begin{aligned}
+    &\mathbb{P}\left(X_T=x_0, \ldots, X_{T+n}=x_n,\left(X_0, \ldots, X_T\right)=w \mid T<\infty, X_T=i\right) \\
+    &=\frac{\mathbb{P}\left(X_k=x_0, \ldots, X_{k+n}=x_n,\left(X_0, \ldots, X_k\right)=w, T=k, X_k=i\right)}{\mathbb{P}\left(T<\infty, X_T=i\right)} .
+    \end{aligned}
+    \]
+    Since the event $\{T=k\}$ only depends on $X_0, \ldots, X_k$ we have by the simple Markov property, Theorem $2.4$
+\end{proof}
+
 \end{document}

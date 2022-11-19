@@ -851,10 +851,8 @@ Hence,
             \draw[->] (-4,0) -- (4,0); 
             \draw[->] (0,-0.5) -- (0,3);
             \draw (0,3) node[anchor=east] {$U(x)$};
-            \draw (-2,0) -- (-2,3);
-            \draw[dashed] (-2,3) -- (-2,3.5);
-            \draw (2,0) -- (2,3);
-            \draw[dashed] (2,3) -- (2,3.5);
+            \draw (-2,0) -- (-2,3) -- (-3.5,3) node[anchor=east] {$U_0$};
+            \draw (2,0) -- (2,3) -- (3.5,3) node[anchor=west] {$U_0$};
             \draw (-2,0) node[anchor=north] {$-a$};
             \draw (2,0) node[anchor=north] {$a$};
         \end{tikzpicture}
@@ -864,5 +862,513 @@ Hence,
     -\frac{\hbar^2}{2 m} \chi^{\prime \prime}(x)+U(x) \chi(x)=E \chi(x) .
     \]
 \end{example}
+
+Classically, if \( E < U_0 \), the particle has insufficient energy to escape the well.
+We will only consider eigenstates with \( E < U_0 \) here, but we will find that it is possible in quantum mechanics to escape the well with positive probability.
+
+Search for even functions only, odd functions can be solved independently.
+If \( \abs{x} \leq a \),
+\[
+	-\frac{\hbar^2}{2m} \chi''(x) = E\chi(x)
+\]
+Equivalently,
+\[
+	\chi''(x) + k^2 \chi(x) = 0;\quad k = \sqrt{\frac{2mE}{\hbar^2}}
+\]
+The solution becomes
+\[
+	\chi(x) = A \sin kx + B \cos kx \implies \chi(x) = B \cos kx
+\]
+since we are only looking for even solutions.
+In the region \( \abs{x} > a \),
+\[
+	-\frac{\hbar^2}{2m} \chi''(x) + U_0 \chi(x) = E \chi(x)
+\]
+giving
+\[
+	\chi''(x) - \tilde k^2 \chi(x) = 0;\quad \tilde k = \sqrt{\frac{2m(U_0 - E)}{\hbar^2}}
+\]
+This yields exponential solutions:
+\[
+	\chi(x) = C e^{\tilde k x} + D e^{-\tilde k x}
+\]
+Imposing the normalisability constraints, for \( x > a \) we have \( C = 0 \), and for \( x < -a \) we have \( D = 0 \).
+Imposing even parity, \( C = D \) when nonzero.
+Thus,
+\[
+	\chi(x) = \begin{cases}
+		C e^{\tilde k x}  & x < -a         \\
+		B \cos(kx)           & \abs{x} \leq a \\
+		C e^{-\tilde k x} & x > a
+	\end{cases}
+\]
+Now we must impose continuity of \( \chi(x) \) and its derivative at \( x = \pm a \).
+First,
+\[
+	C e^{-\tilde k a} = B \cos(k a)
+\]
+The other gives
+\[
+	-\tilde k C e^{-\tilde k a} = -k B \sin(k a)
+\]
+From the ratio of both constraints,
+\[
+	k \tan (ka) = \tilde k
+\]
+From the definition of \( k, \tilde k \),
+\[
+	k^2 + \tilde k^2 = \frac{2mU_0}{\hbar^2}
+\]
+We will define some rescaled variables for convenience: \( \xi = ka \), \( \eta = \tilde k a \).
+Rewriting,
+\[
+	\xi \tan \xi = \eta;\quad \xi^2 + \eta^2 = r_0^2;\quad r_0 = \frac{2mU}{\hbar}
+\]
+This may be solved graphically.
+\begin{center}
+    \includegraphics[scale=0.25]{qm7.png}
+\end{center}
+The eigenvalues of the system correspond to the points of intersection between the two equations.
+There are always a finite number of possible intersections, regardless of the value of \( r_0 \).
+The eigenvalues are
+\[
+	E_n = \frac{\hbar^2}{2 n a^2} \xi_n^2;\quad \xi \in \qty{\xi_1, \dots, \xi_n};\quad n = 1, \dots, p
+\]
+When \( U_0 \to \infty \), \( r_0 \to \infty \).
+At this point, there are an infinite amount of intersections, so the eigenvalues of the Hamiltonian become that of the infinite well.
+Further \( \chi(x) \) tends to the eigenfunctions of the infinite well.
+
+Note that the \( \chi_n(x) \) have some positive region outside the well.
+We can use the unused condition above to write \( C \) in terms of \( B \), and then we can use the normalisation condition to find \( B \).
+
+\subsection{Harmonic oscillator}\ \vspace*{-1.5em}
+\begin{example}
+    Consider a parabolic potential
+\[
+	U(x) = \frac{1}{2} kx^2 = \frac{1}{2} m \omega^2 x^2
+\]
+where \( k \) is an elastic constant and \( \omega = \sqrt{\frac{k}{m}} \) is the angular frequency of the harmonic oscillator.
+\end{example}
+Classically, we find the solution \( x = A \cos \omega t + B \sin \omega t \).
+This gives a continuous energy spectrum.
+The TDSE gives
+\[
+	-\frac{\hbar^2}{2m} \chi''(x) + \frac{1}{2} m\omega^2 x^2 \chi(x) = E \chi(X)
+\]
+Since this is a bound system, we will have a discrete set of eigenvalues.
+The potential is symmetric so the eigenfunctions are odd or even.
+We will make the change of variables
+\[
+	\xi^2 = \frac{m\omega}{\hbar} x^2;\quad \varepsilon = \frac{2E}{\hbar \omega}
+\]
+which reformulates the TDSE as
+\[
+	-\dv[2]{\chi}{\xi} + \xi^2 \chi = \varepsilon \chi
+\]
+We will start by considering the solution for \( \varepsilon = 1 \).
+In this case, \( E = \frac{\hbar \omega}{2} \) and the solution is
+\[
+	\chi_0(\xi) = \exp[-\frac{\xi^2}{2}]
+\]
+So the first eigenfunction, \( \chi_0 \), is known in terms of \( x \), given by
+\[
+	\chi_0(x) = A \exp[-\frac{m\omega}{2\hbar}x^2];\quad E_0 = \frac{\hbar \omega}{2}
+\]
+To find the other eigenfunctions, we will take the general form
+\[
+	\chi(\xi) = f(\xi) \exp[-\frac{\xi^2}{2}]
+\]
+This works because we know we have a bound solution and \( \chi \) must tend to zero quickly as \( \xi \) tends to infinity, due to the differential equation in terms of \( \xi, \varepsilon \).
+To find the other eigenfunction, use variation of parameters: 
+\[
+    \chi(\xi) = f(\xi) e^{-\xi^2/2}
+\]
+Which gives
+\[
+	-\dv[2]{f}{\xi} + 2\xi \dv{f}{\xi} + (1-\varepsilon)f = 0
+\]
+Note that if \( \varepsilon = 1 \), a solution is \( f = 1 \).
+We can find a power series solution to this differential equation, with \( \xi = 0 \) as a regular point.
+\[
+	f(\xi) = \sum_{n=0}^\infty a_n \xi^n
+\]
+We find
+\[
+	\xi \dv{f}{\xi} = \sum_{n=0}^\infty n a_n \xi^n;\quad \dv[2]{f}{\xi} = \sum_{n=0}^\infty n(n-1)a_n \xi^{n-2} = \sum_{n=0}^\infty (n+1)(n+2)a_{n+2}\xi^n
+\]
+Comparing coefficients of \( \xi^n \),
+\[
+	(n+1)(n+2) a_{n+2} - 2n a_n + (\varepsilon - 1) a_n = 0
+\]
+Hence,
+\[
+	a_{n+2} = \frac{2n - \varepsilon + 1}{(n+1)(n+2)} a_n
+\]
+Since the function must be either even or odd, exactly one of \( a_0 \) and \( a_1 \) must be zero.
+\begin{proposition}
+	If the series for \( f \) does not terminate, \( \chi \) is not normalisable.
+\end{proposition}
+\begin{proof}
+	Suppose the series does not terminate.
+	We will consider the asymptotic behaviour as \( n \to \infty \).
+	\[
+		\frac{a_{n+2}}{a_n} \to \frac{2}{n}
+	\]
+	But this is the same asymptotic behaviour as the function \( g(\xi) \) given by
+	\[
+		g(\xi) = \exp[\xi^2] = \sum_{m=0}^\infty \frac{\xi^{2m}}{m!} = \sum_{n=0}^\infty b_n \xi^n
+	\]
+	with
+	\[
+		b_n = \begin{cases}
+			\frac{1}{m!} & n = 2m     \\
+			0            & n = 2m + 1
+		\end{cases}
+	\]
+	So asymptotically,
+	\[
+		\frac{b_{n+2}}{b_n} = \frac{\qty(\frac{n}{2})!}{\qty(\frac{n}{2} + 1)!} = \frac{2}{n+2} \to \frac{2}{n}
+	\]
+	Hence \( \chi \) would have a form asymptotically equal to
+	\[
+		\chi(\xi) \sim \exp[\frac{\xi^2}{2}]
+	\]
+	Hence \( \chi(\xi) \) would be not normalisable.
+\end{proof}
+Hence \( f \) must be a polynomial.
+So there exists \( N \) such that \( a_{N+2} = 0 \) and \( a_N \neq 0 \).
+So for this value,
+\[
+	2N - \varepsilon + 1 = 0 \implies \varepsilon = 2N + 1
+\]
+By the definition of \( \varepsilon \),
+\[
+	E_N = \qty(N + \frac{1}{2}) \hbar \omega
+\]
+In particular, \( E_{N+1} - E_N = \hbar \omega \).
+The eigenfunctions are
+\[
+	\chi_N(\xi) = f_N(\xi) \exp[-\frac{\xi^2}{2}]
+\]
+with the property that
+\[
+	\chi_N(-\xi) = (-1)^N \chi_N(\xi)
+\]
+\begin{align*}
+	f_0(\xi) & = 1                      \\
+	f_1(\xi) & = \xi                    \\
+	f_2(\xi) & = 1 - 2 \xi^2            \\
+	f_3(\xi) & = \xi - \frac{2}{3}\xi^3 \\
+	         & \vdots
+\end{align*}
+
+In fact one can derive a general expression (Hermite polynomials):
+\[
+f_n(\xi)=(-1)^n e^{\xi^2} \frac{\rmd^n}{\rmd \xi^n} e^{-\xi^2}
+\]
+
+\section{Free particles and Gaussian wavepacket}
+\subsection{Free particles}\ \vspace{-1.5em}
+
+\begin{definition}
+    A free particle solution corresponds to a solution of the TISE with $U(x) \equiv 0$.
+\end{definition}
+
+The time-independent Schr\"odinger equation is
+\[
+	-\frac{\hbar}{2m} \chi''(x) = E\chi(x)
+\]
+This has solutions
+\[
+	\chi_k(x) = A e^{i k x},\quad k = \sqrt{\frac{2mE}{\hbar^2}}
+\]
+The complete solution, adding \( T(t) \), is thus
+\[
+	\psi_k(x,t) = \chi_k(x) e^{-i E_k t / \hbar} = A e^{i\qty(kx - \frac{\hbar k^2}{2m} t)}
+\]
+which are called De Broglie plane waves.
+This is not a solution since
+\[
+	\int_{-\infty}^\infty \abs{\phi_k(x,t)} \dd{x} = \abs{A}^2 \int_{-\infty}^\infty 1 \dd{x}
+\]
+which diverges.
+
+In general, any non-bound solution is non-normalisable.
+This is true since \[
+    \int_{-\infty}^\infty \abs{\chi(x)}^2 \dd{x} < \infty \implies \lim_{R \to \infty} \int_{\abs{x} > R} \abs{\chi(x)} \dd{x} = 0
+\]
+So, to solve the free particle system, we will build a linear combination of plane waves \( \chi \) to yield a normalisable solution.
+This is called the \textbf{Gaussian wavepacket}.
+
+Alternatively, we can simply ignore the problem of normalisability, and change the interpretation of \( \chi_n(x) \).
+
+\subsection{Gaussian wavepacket}
+Due to the superposition principle, we can take a continuous linear combination of the \( \psi_k \) functions.
+\[
+	\psi(x,t) = \int_0^\infty A(k) \psi_k(x,t) \dd{k}
+\]
+We can construct a suitable \( A(k) \) such that \( \psi \) is normalisable.
+Choosing
+\[
+	A(k) = A_{\text{GP}}(k) = \exp[-\frac{\sigma}{2}(k-k_0)^2],\quad k_0 \in \mathbb R, \sigma \in \mathbb R^+
+\]
+produces a solution called the Gaussian wavepacket.
+
+\begin{center}
+    \includegraphics[scale=0.2]{qm8.png}
+\end{center}
+
+Substituting into the above,
+\begin{align*}
+    &\psi_{\text{GP}}(x,t) = \int_0^\infty \exp[-\frac{\sigma}{2}(k-k_0)^2] \psi_k(x,t) \dd{k} = \int_0^\infty \exp[F(k)] \dd{k}\\ 
+    & F(k) = -\frac{\sigma}{2}(k-k_0)^2 + ikx - i \frac{\hbar k^2}{2m} t
+\end{align*}
+Can rewrite this as
+\[
+	F(k) = -\frac{1}{2}\qty(\sigma + \frac{i \hbar t}{m}) k^2 + (k_0 \sigma + ix)k - \frac{\sigma}{2} k_0^2
+\]
+We define further
+\[
+	\alpha \equiv \sigma + \frac{i \hbar t}{m},\quad \beta = k_0 \sigma + ix,\quad \delta = -\frac{\sigma}{2} k_0^2
+\]
+Completing the square,
+\[
+	F(k) = -\frac{\alpha}{2} \qty(k - \frac{\beta}{\alpha})^2 + \frac{\beta^2}{2\alpha} + \delta
+\]
+We arrive at the solution
+\[
+	\psi_{\text{GP}}(x,t) = \exp[\frac{\beta^2}{2\alpha} + \delta] \int_{-\infty}^\infty \exp[-\frac{\alpha}{2}\qty(k - \frac{\beta}{\alpha})^2 ] \dd{k}
+\]
+Under a change of variables \( \widetilde k = k - \frac{\beta}{\alpha}, u = \Im(\frac{\beta}{\alpha}) \),
+\[
+	\psi_{\text{GP}}(x,t) = \exp[\frac{\beta^2}{2\alpha} + \delta] \int_{\infty - iu}^{\infty - iu} \exp[-\frac{\alpha}{2} \widetilde k] \dd{\widetilde k}
+\]
+We arrive at the usual Gaussian integral:
+\[
+	I(a) = \int_{-\infty}^\infty \exp[-a x^2] \dd{x} = \sqrt{\frac{\pi}{2}}
+\]
+giving
+\[
+	\psi_{\text{GP}}(x,t) = \sqrt{\frac{2 \pi}{\alpha}} \exp[\frac{\beta^2}{2\alpha} + \delta] = \sqrt{\frac{2\pi}{\alpha}} \exp[-\frac{\sigma}{2} \frac{\qty(x - \frac{\hbar k_0}{m} t)^2}{\qty(\sigma^2 + \frac{\hbar^2 t^2}{m^2} )} ]
+\]
+We define \( \overline \psi_{\text{GP}} \) to be the normalised Gaussian wavefunction, so \( \overline \psi_{\text{GP}} = C \psi_{\text{GP}} \).
+We can find that
+\[
+	\rho_{\text{GP}}(x,t) = \abs{\overline \psi_{\text{GP}}(x,t)}^2 = \sqrt{\frac{\sigma}{\pi \qty(\sigma^2 + \frac{\hbar^2 t^2}{m^2})}} \exp[ - \frac{\sigma\qty(x - \frac{\hbar k_0}{m} t)^2}{\sigma^2 + \frac{\hbar^2 t^2}{m^2}} ]
+\]
+This is a wavefunction whoes probability density distribution resembles a Gaussian \( e^{-x^2} \) term, with a maximum point at
+\[
+	\inner{x} = \int_{-\infty}^\infty \psi_{\text{GP}}^\star x \psi_{\text{GP}} \dd{x} = \int_{-\infty}^\infty x \rho_{\text{GP}} \dd{x} = \frac{\hbar k_0}{m} t
+\]
+and a width of
+\[
+	\Delta x = \sqrt{\inner{x^2} - \inner{x}^2} = \sqrt{\frac{1}{2} \qty(\sigma + \frac{\hbar^2 t^2}{m^2 \sigma})}
+\]
+\begin{center}
+    \includegraphics[scale=0.15]{qm9.png}
+\end{center}
+
+The physical interpretation is that the uncertainty of the particle's position grows with time.
+In this case, we can find
+\[
+	\inner{p} = \int_{-\infty}^\infty -\psi_{\text{GP}}^* i \hbar \pdv{x} \psi_{\text{GP}} \dd{x} = \hbar k_0
+\]
+which is constant.
+The uncertainty in the momentum can be found to be
+\[
+	\Delta p=\sqrt{\frac{\hbar^2}{2 \sigma}}
+\]
+Thus at $t=0$, 
+\[
+	\Delta x \Delta p = \frac{\hbar}{2}
+\]
+while $\Delta x \Delta p>\hbar / 2$ for $t>0$.
+We can find for a single plane wave that
+\[
+	\Delta x = \infty,\quad \Delta p = 0
+\]
+The Gaussian wavepacket is the state with minimum uncertainty.
+
+\subsection{Beam interpretation}
+
+Ignore the normalisation problem and take the plane waves as the eigenfunctions of the Hamiltonian:
+\[
+	\chi_k(x) = Ae^{ikx},\quad \psi_k(x,t) = Ae^{ikx}e^{-\frac{i \hbar^2 k^2}{2m} t}
+\]
+Instead of \( \chi_k(x) \) describing a single particle, we can interpret it as a \textit{beam} of particles with momentum \( p = \hbar k \) and \( E = \frac{\hbar^2 k^2}{2m} \) with probability density
+\[
+	\rho_k(x) = \abs{\chi_k(x) e^{-\frac{i\hbar^2 k^2}{2m}t}}^2 = \abs{A}^2
+\]
+which here is interpreted as a constant average density of particles.
+The probability current is given by
+\[
+	J_k(x,t) = - \frac{i\hbar}{2m} \qty(\psi^*_k \pdv{\psi_k}{x} - \psi_k \pdv{\psi_k^*}{x}) = -\frac{i\hbar}{2m} \abs{A}^2 2ik = \abs{A}^2 \frac{\hbar k}{m} = \abs{A}^2 \underbrace{\frac{p}{m}}_{\mathclap{\text{velocity}}}
+\]
+This is interpreted as the \textit{average flux} of particles.
+
+\section{Scattering states}
+We wish to investigate what happens when a particle, or beam of particles, is thrown onto a potential \( U(x) \).
+In this case, suppose we have a step function
+\[
+	U(x) = \begin{cases} U_0 & \text{if } 0 \leq x < a \\
+              0   & \text{otherwise}\end{cases}
+\]
+and a Gaussian wavepacket which is centred at \( x_0 \ll 0 \) moving in the \( +x \) direction, towards the spike in potential.
+As \( t \gg 0 \), we end up with a probability density given by two wavepackets; one will be moving left from the spike and one will have cleared the spike and continues moving to the right.
+\begin{center}
+    \includegraphics[scale=0.17]{qm10.png}
+\end{center}
+\begin{definition}
+	The reflection coefficient \( R \) is
+	\[
+		R = \lim_{t \to \infty} \int_{-\infty}^0 \abs{\psi_{\text{GP}}(x,t)}^2 \dd{x}
+	\]
+	which is the probability for the particle to be reflected.
+	The transmission coefficient is
+	\[
+		T = \lim_{t \to \infty} \int_0^\infty \abs{\psi_{\text{GP}}(x,t)}^2 \dd{x}
+	\]
+	By definition, \( R + T = 1 \).
+\end{definition}
+In practice, working with Gaussian packets is mathematically challenging (but not impossible).
+The beam interpretation, by allowing us to use non-normalisable stationary state wavefunctions, greatly simplifies the computation.
+
+\subsection{Scattering off potential step}\ \vspace{-1.5em}
+\begin{example}
+    Consider a potential
+\[
+	U(x) =
+	\begin{cases}
+		0   & \text{if } x \leq 0 \\
+		U_0 & \text{if } x > 0
+	\end{cases}
+\]
+We want to solve
+\[
+	-\frac{\hbar^2}{2m} \chi''_k(x) + U(x) \chi_k(x) = E\chi_k(x)
+\]
+\end{example}
+We split the problem into two regions: \( x \leq 0, x > 0 \).
+
+For \( x \leq 0 \), the TISE becomes
+\[
+	\chi''_k(x) + k^2 \chi_k(x) = 0;\quad k = \sqrt{\frac{2mE}{\hbar^2}}
+\]
+The solution is
+\[
+	\chi(x) = Ae^{ikx} + Be^{-ikx}
+\]
+This is a superposition of two beams: the beam of incident particles \( Ae^{ikx} \) and the beam of reflected particles \( Be^{-ikx} \) which are travelling in the opposite direction.
+In the region \( x > 0 \), we have
+\[
+	\chi''_{\tilde k}(x) + \tilde k^2 \chi_{\tilde k}(x) = 0;\quad \tilde k = \sqrt{\frac{2m(E-U_0)}{\hbar^2}}
+\]
+where \( \tilde k \) is real if \( E > U_0 \), and \( \tilde k \) is pure-imaginary if \( E < U_0 \).
+Therefore, for \( E > U_0 \) we have
+\[
+	\chi_{\tilde k}(x) = Ce^{i \tilde k x} + De^{-i \tilde k x}
+\]
+which is a beam of particles moving towards the right and an incident beam of particles from the right moving towards the left.
+Since no such incident beam exists, we can set \( D = 0 \).
+If \( E < U_0 \), the solution is
+\[
+	\tilde k \equiv i \eta \implies \chi_{\tilde k}(x) = Ce^{-\eta x} + De^{\eta x}
+\]
+\( D \neq 0 \) would give infinite values of \( \chi_{\tilde k}(x) \) as \( x \to \infty \).
+In either case, the eigenfunctions are
+\[
+	\chi_{k, \tilde k}(x) =
+	\begin{cases}
+		Ae^{ikx} + Be^{-ikx} & x \leq 0 \\
+		Ce^{i \tilde k x} & x > 0
+	\end{cases}
+\]
+Impose continuity of $\chi,\chi'$ at $x=0$, we get
+\[
+	A + B = C,\quad ikA - ikB = i\tilde k C
+\]
+which gives
+\[
+	B = \frac{k - \tilde k}{k + \tilde k} A,\quad C = \frac{2k}{k + \tilde k}A
+\]
+Now compute flux
+\[
+	J_k(x,t) = - \frac{i\hbar}{2m} \qty(\psi^*_k \pdv{\psi_k}{x} - \psi_k \pdv{\psi_k^*}{x})
+\]
+If \( E > U_0 \)
+\[
+	J(x,t) =
+	\begin{cases}
+		\frac{\hbar k}{m} (\abs{A}^2 - \abs{B}^2) & x < 0    \\
+		\frac{\hbar \tilde k}{m} \abs{C}^2     & x \geq 0
+	\end{cases}
+\]
+The incident flux is \( \frac{\hbar k}{m} \abs{A}^2 \), the reflected flux is \( \frac{\hbar k}{m} \abs{B}^2 \), and the transmitted flux is \( \frac{\hbar k}{m} \abs{C}^2 \).
+Now we can define the reflection and transmission coefficients 
+\begin{align*}
+    R &= \frac{J_{\text{ref}}}{J_{\text{inc}}} = \frac{\abs{B}^2}{\abs{A}^2} = \qty(\frac{k - \tilde k}{k + \tilde k})^2\\ 
+	T &= \frac{J_{\text{trans}}}{J_{\text{inc}}} = \frac{k\abs{C}^2}{\tilde k\abs{A}^2} = \frac{4k \tilde k}{(k + \tilde k)^2}
+\end{align*}
+We can check that our original interpretation makes sense: \( R + T = 1 \), and \( E \to U_0, \tilde k \to 0 \) implies \( T \to 0 \), \( R \to 1 \).
+If \( E \to \infty \), \( T \to 1 \) and \( R \to 0 \).
+
+If \( E < U_0 \),
+\[
+	J(x,t) =
+	\begin{cases}
+		\frac{\hbar k}{m} (\abs{A}^2 + \abs{B}^2) & x < 0    \\
+		0                                         & x \geq 0
+	\end{cases}
+\]
+since \( \chi_{\tilde k} = \chi_{\tilde k}^* \).
+As in the classical case, the particle is certain to be reflected. However the wavefunction is not equal to zero in the classically forbidden region, rather it decays. 
+
+\subsection{Scattering off a potential barrier}\ \vspace{-1.5em}
+\begin{example}
+    Consider the potential
+\[
+	U(x) = \begin{cases}
+		0   & x \leq 0, x \geq a \\
+		U_0 & 0 < x < a
+	\end{cases}
+\]
+\end{example}
+When \( E < U_0 \), we define
+\[
+	k = \sqrt{\frac{2mE}{\hbar^2}} > 0;\quad \eta = \sqrt{\frac{2m(U_0 - E)}{\hbar^2}} > 0
+\]
+The solution is then
+\[
+	\chi(x) = \begin{cases}
+		e^{ikx} + Ae^{-ikx}        & x \leq 0  \\
+		Be^{-\eta x} + Ce^{\eta x} & 0 < x < a \\
+		De^{ikx}                   & x \geq a
+	\end{cases}
+\]
+We can take the coefficient of $e^{ikx}$ for $x\le 0$ to be 1 since we can always normalise afterwards (and it disappears in ratios). 
+
+The boundary conditions are that \( \chi(x) , \chi'(x) \) are both continuous at \( x = 0, x = a \), which gives
+\begin{align*}
+    1 + A &= B + C\\ 
+    ik - ikA &= -\eta B + \eta C\\ 
+	B e^{-\eta a} + C e^{\eta a} &= D e^{ika}\\ 
+    -\eta B e^{-\eta a} + \eta C e^{\eta a} &= ikD e^{ika}
+\end{align*}
+Solving the system gives
+\[
+	D = \frac{-4 i \eta k}{(\eta-ik)^2 \exp[(\eta+ik)a] - (\eta+ik)^2\exp[-(\eta-ik)a]}
+\]
+The transmitted flux is \( j_{\text{tr}} = \frac{\hbar k}{m} \abs{D}^2 \) and the incident flux is \( j_{\textit{inc}} = \frac{\hbar k}{m} \).
+Hence, the transmission coefficient is \( T = \abs{D}^2 \).
+This is
+\[
+	T = \frac{4 k^2 \eta^2}{(k^2+\eta^2)^2 \sinh^2(\eta a) + 4 k^2 \eta^2}
+\]
+If we take the limit as \( U_0 \gg E \), we have \( \eta a \gg 1 \).
+Then
+\[
+	T \to \frac{16k^2 \eta^2}{(\eta^2 + k^2)^2} \exp[-2\eta a] \propto \exp[-\frac{2a}{k} \sqrt{2m(U_0 - E)}]
+\]
+So the probability decreases exponentially with the width of the barrier.
 
 \end{document}

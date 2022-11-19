@@ -1182,4 +1182,377 @@ Equivalently,
 	which gives $ a_{rs} = m_{sr} $, as required.
 \end{proof}
 
+\subsection{Properties of the dual map, double dual}
+
+Let \( \alpha \in L(V,W) \), and \( \alpha^* \in L(W^*, V^*) \).
+Let \( B \) and \( C \) be bases of \( V, W \) respectively, and \( B^*, C^* \) be their duals.
+We have proven that
+\[
+	[\alpha]_{B,C} = [\alpha^*]^\top_{B,C}
+\]
+\begin{lemma}
+	Suppose that \( E = (e_1, \dots, e_n) \) and \( F = (f_1, \dots, f_n) \) are bases of \( V \).
+	Let \( P = [I]_{F, E} \) be a change of basis matrix from \( F \) to \( E \).
+	The bases \( E^* = (\varepsilon_1, \dots, \varepsilon_n) \), \( F^* = (\eta_1, \dots, \eta_n) \) are the corresponding dual bases.
+	Then, the change of basis matrix from \( F^* \) to \( E^* \) is
+	\[
+		\qty(P^{-1})^\top
+	\]
+\end{lemma}
+\begin{proof}
+	Consider
+	\[
+		[I]_{F^*, E^*} = [I]^\top_{E, F} = \qty([I]_{F, E}^{-1})^\top = \qty(P^{-1})^\top
+	\]
+\end{proof}
+\begin{lemma}
+	Let \( V, W \) be \( \bbF \)-vector spaces.
+	Let \( \alpha \in L(V, W) \).
+	Let \( \alpha^* \) be the corresponding dual map.
+	Then, denoting \( N(\alpha) \) for the kernel of \( \alpha \),
+	\begin{enumerate}[(i)]
+		\item \( N(\alpha^*) = (\Im \alpha)^0 \), so \( \alpha^* \) is injective if and only if \( \alpha \) is surjective.
+		\item \( \Im \alpha^* \leq (N(\alpha))^0 \), with equality if \( V, W \) are finite-dimensional.
+		      In this finite-dimensional case, \( \alpha^* \) is surjective if and only if \( \alpha \) is injective.
+	\end{enumerate}
+\end{lemma}
+\begin{remark}
+	In many applications, it is often simpler to understand the dual map \( \alpha^* \) than it is to understand \( \alpha \).
+\end{remark}
+\begin{proof}
+	\begin{enumerate}[(i)]
+        \item Let $ \epsilon\in W^* $. Then
+        \begin{align*}
+            \epsilon\in N(\alpha^*) &\iff \alpha^*(\epsilon) = 0 \iff \epsilon\circ \alpha = 0 \\ 
+            &\iff \forall \mathbf{v}\in V, \ \epsilon(\alpha(\mathbf{v})) = 0\\ 
+            &\iff \epsilon\in (\Im(\alpha))^0. 
+        \end{align*}
+        \item Let \( \varepsilon \in \Im \alpha^* \).
+        Then \( \alpha^*(\phi) = \varepsilon \) for some \( \phi \in W^* \).
+        Then, for all \( \bfu \in N(\alpha) \), \( \varepsilon(\bfu) = \qty(\alpha^*(\phi))(\bfu) = \phi \circ \alpha(\bfu) = \phi(\alpha(\bfu)) = 0 \).
+        So \( \Im \alpha^* \leq (N(\alpha))^0 \).
+    
+        In the finite-dimensional case, we can compare the dimension of these two spaces.
+        \begin{align*}
+            \dim \Im \alpha^* &= r(\alpha^*) = r\qty([\alpha^*]_{C^*, B^*}) \\ 
+            &= r\qty([\alpha]_{B,C}^\top) = r\qty([\alpha]_{B,C}) = r(\alpha) = \dim \Im \alpha
+        \end{align*}
+        Due to the rank-nullity theorem, \( \dim \Im \alpha^* = \dim V - \dim N(\alpha) = \dim\qty[(N(\alpha))^0] \).
+        Hence,
+        \[
+            \Im \alpha^* \leq (N(\alpha))^0;\quad \dim \Im \alpha^* = \dim (N(\alpha))^0
+        \]
+        The dimensions are equal, and one is a subspace of the other, hence the spaces are equal.
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+	Let \( V \) be an \( \bbF \)-vector space.
+	Let \( V^* \) be the dual of \( V \).
+	The \textbf{double dual} or \text{bidual} of \( V \) is
+	\[
+		V^{* *} = L(V^*, \bbF) = (V^*)^*
+	\]
+\end{definition}
+\begin{remark}
+	In general, there is no obvious relation between \( V \) and \( V^* \).
+	However, the following useful facts hold about \( V \) and \( V^{* *} \).
+	\begin{enumerate}
+		\item There is a \textit{canonical embedding} from \( V \) to \( V^{* *} \).
+		      In particular, there exists \( i \) in \( L(V, V^{* *}) \) which is injective.
+		\item There are examples of infinite-dimensional spaces where \( V \simeq V^{* *} \).
+		      These are called reflexive spaces.
+		      Such spaces are investigated in the study of Banach spaces.
+	\end{enumerate}
+\end{remark}
+\begin{theorem}
+	\( V \) embeds into \( V^{* *} \).
+\end{theorem}
+\begin{proof}
+	Choose a vector \( \bfv \in V \) and define the linear form \( \hat v \in L(V^*, F) \) such that
+	\[
+		\hat v(\varepsilon) = \varepsilon(\mathbf{v})
+	\]
+	So clearly \( \hat v \) is linear.
+	We want to show \( \hat v \in V^{* *} \).
+	If \( \varepsilon \in V^*, \varepsilon(v) \in F \).
+	Further, \( \lambda_1, \lambda_2 \in F \) and \( \varepsilon_1, \varepsilon_2 \in V^* \) give
+	\[
+		\hat v (\lambda_1 \varepsilon_1 + \lambda_2 \varepsilon_2) = (\lambda_1 \varepsilon_1 + \lambda_2 \varepsilon_2)(v) = \lambda_1 \varepsilon_1(v) + \lambda_2 \varepsilon_2(v) = \lambda_1 \hat v(\varepsilon_1) + \lambda_2 \hat v(\varepsilon_2)
+	\]
+\end{proof}
+\begin{theorem}
+	If \( V \) is finite-dimensional, then \( i \colon V \to V^{* *} \) given by \( i(\bfv) = \hat v \) is an isomorphism.
+\end{theorem}
+\begin{proof}
+	We will show \( i \) is linear.
+	If \( \bfv_1, \bfv_2 \in V, \lambda_1, \lambda_2 \in F \), then
+	\[
+		i(\lambda_1 \bfv_1 + \lambda_2 \bfv_2) (\varepsilon) = \varepsilon(\lambda_1 \bfv_1 + \lambda_2 \bfv_2) = \lambda_1 \varepsilon(\bfv_1) + \lambda_2 \varepsilon(\bfv_2) = \lambda_1 \hat v_1(\varepsilon) + \lambda_2 \hat v_2(\varepsilon)
+	\]
+	Now, we will show that \( i \) is injective for finite-dimensional \( V \).
+	Let \( \bfe \in V \setminus \qty{0} \).
+	We will show that \( \bfe \not\in \ker i \)
+    .
+	We extend \( \bfe \) into a basis \( (\bfe, \bfe_2, \dots, \bfe_n) \) of \( V \).
+	Now, let \( (\varepsilon, \varepsilon_2, \dots, \varepsilon_n) \) be the dual basis.
+	Then \( \hat e(\varepsilon) = \varepsilon(\bfe) = 1 \).
+	In particular, \( \hat e \neq 0 \).
+	Hence \( \ker i = \qty{0} \), so it is injective.
+
+	We now show that \( i \) is an isomorphism.
+	We need to simply compute the dimension of the image under \( i \).
+	Certainly, \( \dim V = \dim V^* = \dim (V^*)^* = \dim V^{* *} \).
+	Since \( i \) is injective, \( \dim V = \dim V^{* *} \).
+	So \( i \) is surjective as required.
+\end{proof}
+\begin{lemma}
+	Let \( V \) be a finite-dimensional \( \bbF \)-vector space.
+	Let \( U \leq V \).
+	Then,
+	\[
+		i(U)=\hat U = U^{00}
+	\]
+	After identifying \( V \) and \( V^{* *} \), we typically say
+	\[
+		U = U^{00}
+	\]
+	although this is is incorrect notation and not an equality.
+\end{lemma}
+\begin{proof}
+	We will show that \( \hat U \leq U^{00} \).
+	Indeed, let \( \bfu \in U \), then by definition
+	\[
+		\forall \varepsilon \in U^0, \varepsilon(\bfu) = 0 \implies \hat u(\varepsilon) = 0
+	\]
+	Hence \( \hat u \in U^{00} \) and so \( \hat U \leq U^{00} \).
+
+	Now, we will compute dimension:	\( \dim U^{00} = \dim V - \dim U^0 = \dim U \).
+	Since \( \hat U \simeq U \), their dimensions are the same, so \( U^{00} = \hat U \).
+\end{proof}
+\begin{remark}
+	Due to this identification of \( V^{* *} \) and \( V \), we can define
+	\[
+		T \leq V^*, T^0 = \qty{\bfv \in V \colon \forall \theta \in T, \theta(\bfv) = 0}
+	\]
+\end{remark}
+\begin{lemma}
+	Let \( V \) be a finite-dimensional \( \bbF \)-vector space.
+	Let \( U_1, U_2 \) be subspaces of \( V \).
+	Then
+	\begin{enumerate}[(i)]
+		\item \( (U_1 + U_2)^0 = U_1^0 \cap U_2^0 \);
+		\item \( (U_1 \cap U_2)^0 = U_1^0 + U_2^0 \)
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	Let \( \theta \in V^* \).
+	Then \( \theta \in (U_1 + U_2)^0 \iff \forall \bfu_1 \in U_1, \bfu_2 \in U_2, \theta(\bfu_1 + \bfu_2) = 0 \).
+	Hence \( \theta(\bfu) = 0 \) for all \( \bfu \in U_1 \cup U_2 \) by linearity.
+	Hence \( \theta \in U_1^0 \cap U_2^0 \).
+	Now, take the annihilator of (i) and \( U^{00} = U \) to complete part (ii).
+\end{proof}
+
+\section{Bilinear forms}\ \vspace{-1.5em}
+\begin{definition}
+	Let \( U, V \) be \( \bbF \)-vector spaces.
+	Then \( \varphi \colon U \times V \to F \) is a \textit{bilinear form} if it is linear in both components:
+    \begin{align*}
+        \varphi(\mathbf{u},\cdot)&: V \to \mathbb{F} \in V^* \quad \text{given }\mathbf{u}\\
+        \varphi(\cdot, \mathbf{v})&: U \to \mathbb{F} \in U^* \quad \text{given }\mathbf{v}
+    \end{align*}
+\end{definition}
+
+\begin{example}
+	\begin{enumerate}
+        \item Consider the map \( V \times V^* \to F \) given by
+        \[
+            (v, \theta) \mapsto \theta(v)
+        \]
+    
+        \item The scalar product on \( U = V = \mathbb R^n \) is given by
+        \[
+            \psi(\bfx, \bfy) = \sum_{i=1}^n x_i y_i
+        \]
+    
+        \item Let \( U = V = C([0,1], \mathbb R) \) and consider the inner product
+        \[
+            \varphi(f,g) = \int_0^1 f(t)g(t) \dd{t}
+        \]
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+	If \( B = (\bfe_1, \dots, \bfe_m) \) is a basis of \( U \) and \( C = (\bff_1, \dots, \bff_n) \) is a basis of \( V \), and \( \varphi \colon U \times V \to F \) is a bilinear form,.
+    
+    The matrix of $ \varphi $ in $B,C$ is
+	\[
+		[\varphi]_{B, C} = \qty( \varphi(\bfe_i, \bff_j) )_{1 \leq i \leq m\atop 1 \leq j \leq n}
+	\]
+\end{definition}
+
+\begin{lemma}
+	We can link \( \varphi \) with its matrix in a given basis as follows.
+	\[
+		\varphi(\bfu,\bfv) = [\bfu]_B^\top [\varphi]_{B, C} [\bfv]_C
+	\]
+\end{lemma}
+
+\begin{proof}
+	Let \( \bfu = \sum_{i=1}^m \lambda_i \bfe_i \) and \( v = \sum_{j=1}^n \mu_j \mathbf{f}_j \).
+	Then
+	\begin{align*}
+        \varphi(\bfu,\bfv) &= \varphi\qty( \sum_{i=1}^m \lambda_i \mathbf{e}_i, \sum_{j=1}^n \mu_j \mathbf{f}_j ) \\ 
+        &= \sum_{i=1}^m \sum_{j=1}^n \lambda_i \mu_j \varphi(\mathbf{e}_i,\mathbf{f}_j) = [u]_B^\top [\varphi]_{B,C} [v]_C. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+	A blinear map $ \varphi: U\times V \to \mathbb{F} $ determines two linear maps: 
+	\[
+		\varphi_L \colon U \to V^* \quad \varphi_L(\bfu) \colon V \to \bbF \quad \bfv \mapsto \varphi(\bfu,\bfv)
+	\]
+	\[
+		\varphi_R \colon V \to U^* \quad \varphi_R(\bfv) \colon U \to \bbF \quad \bfu \mapsto \varphi(\bfu,\bfv)
+	\]
+	In particular,
+	\[
+		\varphi_L(\bfu)(\bfv) = \varphi(\bfu,\bfv) = \varphi_R(\bfv)(\bfu)
+	\]
+\end{definition}
+
+\begin{lemma}
+	Let \( B = (\bfe_1, \dots, \bfe_m) \) be a basis of \( U \), and let \( B^* = (\varepsilon_1, \dots, \varepsilon_m) \) be its dual; and let \( C = (\bff_1, \dots, \bff_n) \) be a basis of \( V \), and let \( C^* = (\eta_1, \dots, \eta_n) \) be its dual.
+	Let \( A = [\varphi]_{B,C} \).
+	Then
+	\[
+		[\varphi_R]_{C, B^*} = A,\quad [\varphi_L]_{B, C^*} = A^\top.
+	\]
+\end{lemma}
+\begin{proof}
+    Assuming summation convention.
+    \begin{itemize}
+        \item $ \varphi_L(\mathbf{e}_i)(\mathbf{f}_j) = \varphi(\mathbf{e}_j,\mathbf{f}_j) = A_{ij} $, so $ \varphi_L(\mathbf{e}_i) = A_{ij}\eta_j $, i.e. $  [\varphi_L]_{B, C^*} = A^\top $. 
+        \item $ \varphi_R(\mathbf{f}_j)(\mathbf{e}_i) = \varphi(\mathbf{e}_i,\mathbf{f}_j) = A_{ij} $, so $ \varphi_R(\mathbf{f}_j) = A_{ij}\epsilon_i $ i.e. $ [\varphi_R]_{C, B^*} = A $. \qedhere
+    \end{itemize}
+\end{proof}
+\begin{definition}
+	\( \ker \varphi_L \) is called the \textbf{left kernel} of \( \varphi \).
+	\( \ker \varphi_R \) is the \textbf{right kernel} of \( \varphi \).
+\end{definition}
+\begin{definition}
+	We say that \( \varphi \) is \textbf{non-degenerate} if \( \ker \varphi_L = \ker \varphi_R = \qty{0} \).
+	Otherwise, \( \varphi \) is \textbf{degenerate}.
+\end{definition}
+
+\begin{lemma}
+	Let \( B \) be a basis of \( U \), and let \( C \) be a basis of \( V \), where \( U, V \) are finite-dimensional.
+	Let \( \varphi \colon U \times V \to F \) be a bilinear form.
+	Let \( A = [\varphi]_{B,C} \).
+	Then, \( \varphi \) is non-degenerate if and only if \( A \) is invertible.
+\end{lemma}
+\begin{corollary}
+	If \( \varphi \) is non-degenerate, then \( \dim U = \dim V \).
+\end{corollary}
+\begin{proof}
+	Suppose \( \varphi \) is non-degenerate.
+	Then \( \ker \varphi_L = \ker \varphi_R = \qty{0} \).
+	This is equivalent to saying that \( n(A^\top) = n(A) = 0 \).
+	By rank-nullity theorem, \( r(A^\top) = \dim U \) and \( r(A) = \dim V \).
+	This is equivalent to saying that \( A \) is invertible.
+	Note that this forces \( \dim U = \dim V \).
+\end{proof}
+
+\begin{remark}
+	The canonical example of a non-degenerate bilinear form is the scalar product \( \mathbb R^n \times \mathbb R^n \to \mathbb R \) represented by the identity matrix in the standard basis.
+\end{remark}
+
+\begin{corollary}
+	If \( U \) and \( V \) are finite-dimensional with \( \dim U = \dim V \), then choosing a non-degenerate bilinear form \( \varphi \colon U \times V \to \bbF \) is equivalent to choosing an isomorphism \( \varphi_L \colon U \simeq V^* \).
+\end{corollary}
+\begin{definition}
+	If \( T \subset U \), we define
+	\[
+		T^\perp = \qty{ \bfv \in V \colon \forall \bft \in T, \varphi(\bft,\bfv) = 0 }
+	\]
+	Further, if \( S \subset V \), we define
+	\[
+		^\perp S = \qty{ \bfu \in U \colon \forall \bfs \in S, \varphi(\bfu,\bfs) = 0 }
+	\]
+	These are called the \textbf{orthogonals} of \( T \) and \( S \).
+\end{definition}
+
+\begin{proposition}
+	Let \( B, B' \) be bases of \( U \) and \( P = [I]_{B', B} \), let \( C, C' \) be bases of \( V \) and \( Q = [I]_{C', C} \), and finally let \( \varphi \colon U \times V \to \bbF \) be a bilinear form.
+	Then
+	\[
+		[\varphi]_{B', C'} = P^\top [\varphi]_{B,C} Q
+	\]
+\end{proposition}
+\begin{proof}
+	We have \( \varphi(\bfu,\bfv) = [\bfu]_B^\top [\varphi]_{B,C} [\bfv]_C \).
+	Changing coordinates, we have
+	\[
+		\varphi(\bfu,\bfv) = (P [\bfu]_{B'})^\top [\varphi]_{B,C} (Q [\bfv]_{C'}) = [\bfu]_{B'}^\top (P^\top [\varphi]_{B,C} Q) [\bfv]_{C'}. \qedhere
+	\]
+\end{proof}
+
+\begin{lemma}
+	The \textbf{rank} of a bilinear form \( \varphi \), denoted \( r(\varphi) \), is the rank of any matrix representing \( \varphi \).
+	This quantity is well-defined.
+\end{lemma}
+\begin{remark}
+	\( r(\varphi) = r(\varphi_R) = r(\varphi_L) \), since \( r(A) = r(A^\top) \).
+\end{remark}
+\begin{proof}
+	For any invertible matrices \( P, Q \), \( r(P^\top A Q) = r(A) \).
+\end{proof}
+
+\section{Determinant and trace}
+\subsection{Trace}\ \vspace{-1.5em}
+\begin{definition}
+	The \textit{trace} of a square matrix \( A \in M_{n,n}(\bbF) \equiv M_n(\bbF) \) is defined by
+	\[
+		\tr A = \sum_{i=1}^n a_{ii}
+	\]
+	The trace is a linear form.
+\end{definition}
+\begin{lemma}
+	\( \tr (AB) = \tr (BA) \) for any matrices \( A, B \in M_n(\bbF) \).
+\end{lemma}
+\begin{proof}
+	We have
+	\[
+		\tr (AB) = \sum_{i=1}^n \sum_{j=1}^n a_{ij} b_{ji} = \sum_{j=1}^n \sum_{i=1}^n b_{ji} a_{ij} = \tr (BA)\qedhere
+	\]
+\end{proof}
+\begin{corollary}
+	Similar matrices have the same trace.
+\end{corollary}
+\begin{proof}
+	\[
+		\tr(P^{-1}AP) = \tr (A P^{-1} P) = \tr A\qedhere
+	\]
+\end{proof}
+
+\begin{definition}
+	If \( \alpha \colon V \to V \) is linear, we can define the trace of \( \alpha \) as
+	\[
+		\tr \alpha = \tr [\alpha]_B
+	\]
+	for any basis \( B \).
+	This is well-defined by the corollary above.
+\end{definition}
+\begin{lemma}
+	If \( \alpha \colon V \to V \) is linear, \( \alpha^* \colon V^* \to V^* \) satisfies
+	\[
+		\tr \alpha = \tr \alpha^*
+	\]
+\end{lemma}
+\begin{proof}
+	\[
+		\tr \alpha = \tr [\alpha]_B = \tr [\alpha]_B^\top = \tr [\alpha^*]_{B^*} = \tr \alpha^*\qedhere
+	\]
+\end{proof}
+
 \end{document}
