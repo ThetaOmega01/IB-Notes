@@ -1555,4 +1555,346 @@ We have proven that
 	\]
 \end{proof}
 
+\subsection{Determinants}
+Recall the following facts about permutations and transpositions.
+\( S_n \) is the group of permutations of the set \( \qty{1, \dots, n} \); the group of bijections \( \sigma \colon \qty{1, \dots, n} \to \qty{1, \dots, n} \).
+A transposition \( \tau_{k \ell} = (k, \ell) \) is defined by \( k \mapsto \ell, \ell \mapsto k, x \mapsto x \) for \( x \neq k, \ell \).
+Any permutation \( \sigma \) can be decomposed as a product of transpositions.
+This decomposition is not necessarily unique, but the parity of the number of transpositions is well-defined.
+We say that the signature of a permutation, denoted \( \varepsilon \colon S_n \to \qty{-1, 1} \), is \( 1 \) if the decomposition has even parity and \( -1 \) if it has odd parity.
+We can then show that \( \varepsilon \) is a homomorphism.
+
+\begin{definition}
+	Let \( A \in \mcM_n(\bbF) \).
+	We define
+	\[
+		\det A = \sum_{\sigma \in S_n} \varepsilon(\sigma) A_{\sigma(1) 1} \dots A_{\sigma(n) n}
+	\]
+\end{definition}
+
+\begin{example}
+	Let \( n = 2 \).
+	Then,
+	\[
+		A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \implies \det A = a_{11} a_{22} - a_{12} a_{21}
+	\]
+\end{example}
+\begin{lemma}
+	If \( A = (a_{ij}) \) is an upper (or lower) triangular matrix (with zeroes on the diagonal), then \( \det A = 0 \).
+\end{lemma}
+\begin{proof}
+	Let \( (a_{ij}) = 0 \) for \( i > j \).
+	Then
+	\[
+		\det A = \sum_{\sigma \in S_n} \varepsilon(\sigma) a_{\sigma(1) 1} \dots a_{\sigma(n) n}
+	\]
+	For the summand to be nonzero, \( \sigma(j) \leq j \) for all \( j \).
+	Thus,
+	\[
+		\det A = a_{1 1} \dots a_{n n} = 0\qedhere
+	\]
+\end{proof}
+
+\begin{lemma}
+	Let \( A \in M_n(F) \).
+	Then, \( \det A = \det A^\top \).
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		\det A & = \sum_{\sigma \in S_n} \varepsilon(\sigma) a_{\sigma(1) 1} \dots a_{\sigma(n) n}      \\
+		       & = \sum_{\sigma^{-1} \in S_n} \varepsilon(\sigma) a_{\sigma(1) 1} \dots a_{\sigma(n) n} \\
+		       & = \sum_{\sigma \in S_n} \varepsilon(\sigma^{-1}) a_{1 \sigma(1)} \dots a_{n \sigma(n)} \\
+		       & = \sum_{\sigma \in S_n} \varepsilon(\sigma) a_{1 \sigma(1)} \dots a_{n \sigma(n)}      \\
+		       & = \det A^\top\qedhere
+	\end{align*}
+\end{proof}
+
+\begin{definition}
+	A \textbf{volume form} \( d \) on \( \bbF^n \) is a function 
+	\[
+		d \colon \underbrace{F^n \times \dots \times F^n}_{n \text{ times}} \to \bbF
+	\]
+	satisfying
+	\begin{enumerate}[(i)]
+		\item \( d \) is multilinear: for all \( i \in \qty{1, \dots, n} \) and for all \( \bfv_1, \dots, \bfv_{i-1}, \bfv_{i+1}, \dots, \bfv_n \in F^n \), the map \( \bbF^n \to \bbF \) defined by
+		      \[
+			      \bfv \mapsto (\bfv_1, \dots, \bfv_{i-1}, \bfv, \bfv_{i+1}, \dots, \bfv_n)
+		      \]
+		      is linear.
+		      In other words, this map is an element of \( (\bbF^n)^* \).
+		\item \( d \) is alternating: for \( \bfv_i = \bfv_j \) for some \( i \neq j \), \( d = 0 \).
+	\end{enumerate}
+\end{definition}
+
+So an alternating multilinear form is a volume form.
+We want to show that, up to multiplication by a scalar, the determinant is the only volume form.
+
+\begin{lemma}
+	The map \( (\bbF^n)^n \to \bbF \) defined by \( (A^{(1)}, \dots, A^{(n)}) \mapsto \det A \) is a volume form, where $ A^{(i)} $ is the $i$th column.
+\end{lemma}
+\begin{proof}
+	Multilinear: 
+	Fix \( \sigma \in S_n \), and consider \( \prod_{i=1}^n a_{\sigma(i) i} \).
+	It contains exactly one term in each column of \( A \),
+	so the map \( (A^{(1)}, \dots, A^{(n)}) \mapsto \prod_{i=1}^n a_{\sigma(i) i} \) is multilinear.
+	This then implies that the determinant multilinear.
+
+	Alternating:
+	Suppose there are $k\neq \ell$ such that $ A^{(k)} = A^{(\ell)} $. 
+	Let \( \tau = ( k \ell ) \) be the transposition exchanging \( k \) and \( \ell \).
+	Then, for all \( i, j \in \qty{1, \dots, n} \), \( a_{ij} = a_{i \tau(j)} \).
+	We can decompose permutations into two disjoint sets: \( S_n = A_n \cup \tau A_n \), where \( A_n \) is the alternating group of order \( n \).
+	Now, 
+	\begin{align*}
+		\det A &= \sum_{\sigma\in A_n} \prod_{i=1}^{n} a_{i \sigma(i)} - \sum_{\sigma\in A_n} \prod_{i=1}^{n} a_{i \tau\sigma(i)}\\ 
+		&= \sum_{\sigma\in A_n} \prod_{i=1}^{n} a_{i \sigma(i)} - \sum_{\sigma\in A_n} \prod_{i=1}^{n} a_{i \sigma(i)} = 0,
+	\end{align*}
+	which proves that the map is alternating, and hence completes the proof. 
+\end{proof}
+
+\begin{lemma}
+	Let \( d \) be a volume form.
+	Then, swapping two entries changes the sign.
+\end{lemma}
+\begin{proof}
+	Take the sum of these two results:
+	\begin{align*}
+		d(\bfv_1, \dots, \bfv_i, \dots, \bfv_j, \dots, \bfv_n) & + d(\bfv_1, \dots, \bfv_j, \dots, \bfv_i, \dots, \bfv_n)               \\
+		                                           & = d(\bfv_1, \dots, \bfv_i, \dots, \bfv_j, \dots, \bfv_n)               \\
+		                                           & + d(\bfv_1, \dots, \bfv_j, \dots, \bfv_i, \dots, \bfv_n)               \\
+		                                           & + d(\bfv_1, \dots, \bfv_i, \dots, \bfv_i, \dots, \bfv_n)               \\
+		                                           & + d(\bfv_1, \dots, \bfv_j, \dots, \bfv_j, \bfv_n)                      \\
+		                                           & = 2 d(\bfv_1, \dots, \bfv_i + \bfv_j, \dots, \bfv_i + \bfv_j, \dots, \bfv_n) \\
+		                                           & = 0
+	\end{align*}
+	as required.
+\end{proof}
+
+\begin{corollary}
+	If \( \sigma \in S_n \) and \( d \) is a volume form,
+	\[
+		d(\bfv_{\sigma(1)}, \dots, \bfv_{\sigma(n)}) = \varepsilon(\sigma) d(\bfv_1, \dots, \bfv_n)
+	\]
+\end{corollary}
+\begin{proof}
+	We can decompose \( \sigma \) as a product of transpositions \( \prod_{i=1}^{n_\sigma} \tau_i \).
+\end{proof}
+
+\begin{theorem}
+	Let \( d \) be a volume form on \( \bbF^n \).
+	Let \( A \) be a matrix whose columns are \( A^{(i)} \).
+	Then
+	\[
+		d(A^{(1)}, \dots, A^{(n)}) = \det A \cdot d(\bfe_1, \dots, \bfe_n)
+	\]
+	So there is a unique volume form up to a constant multiple.
+	Hence \( \det A \) is the only volume form such that \( d(\bfe_1, \dots, \bfe_n) = 1 \).
+\end{theorem}
+
+\begin{proof}
+	\[
+		d(A^{(1)}, \dots, A^{(n)}) = d\qty(\sum_{i=1}^n a_{i1} \bfe_i, A^{(2)}, \dots, A^{(n)})
+	\]
+	Since \( d \) is multilinear,
+	\[
+		d(A^{(1)}, \dots, A^{(n)}) = \sum_{i=1}^n a_{i1} d\qty(\bfe_i, A^{(2)}, \dots, A^{(n)})
+	\]
+	Inductively on all columns,
+	\begin{align*}
+		d(A^{(1)}, \dots, A^{(n)}) &= \sum_{i=1}^n \sum_{j=1}^n a_{i1} a_{j2} d\qty(\bfe_i, \bfe_j, A^{(3)}, \dots, A^{(n)}) \\ 
+		&= \dots = \sum_{1 \leq i_1, \dots \leq n} \prod_{k=1}^n a_{i_k k} d(\bfe_{i_1}, \dots \bfe_{i_n})
+	\end{align*}
+	Since \( d \) is alternating, for \( d(\bfe_{i_1}, \dots, \bfe_{i_n}) \) to be nonzero, the \( i_k \) must be different, so this corresponds to a permutation \( \sigma \in S_n \).
+	\[
+		d(A^{(1)}, \dots, A^{(n)}) = \sum_{\sigma \in S_n} \prod_{k=1}^n a_{\sigma(k) k} \varepsilon(\sigma) d(\bfe_1, \dots, \bfe_n)
+	\]
+	which is exactly the determinant up to a constant multiple.
+\end{proof}
+
+\subsection{Some properties of determinant}
+
+\begin{lemma}
+	Let \( A, B \in \mcM_n(\bbF) \).
+	Then \( \det(AB) = \det(A) \det(B) \).
+\end{lemma}
+\begin{proof}
+	Given \( A \), we define the volume form \( d_A \colon (\bbF^n)^n \to \bbF \) by
+	\[
+		d_A(\bfv_1, \dots, \bfv_n) \mapsto \det(A \bfv_1, \dots, A \bfv_n)
+	\]
+	\( \bfv_i \mapsto A \bfv_i \) is linear, and the determinant is multilinear, so \( d_A \) is multilinear.
+	If \( i \neq j \) and \( \bfv_i = \bfv_j \), then \( \det(\dots, A \bfv_i, \dots, A \bfv_j, \dots) = 0 \) so \( d_A \) is alternating.
+	Hence \( d_A \) is a volume form.
+
+	Hence there exists a constant \( C_A \) such that \( d_A(\bfv_1, \dots, \bfv_n) = C_A \det(\bfv_1, \dots, \bfv_n) \).
+	We can compute \( C_A \) by considering the basis vectors; \( A \bfe_i = A_i \) where \( A_i \) is the \( i \)th column vector of \( A \).
+	Then,
+	\[
+		C_A = d_A(\bfe_1, \dots, \bfe_n) = \det(A\bfe_1, \dots, A\bfe_n) = \det A
+	\]
+	Hence,
+	\[
+		\det(AB) = d_A(B) = \det A \det B\qedhere
+	\]
+\end{proof}
+
+\begin{definition}
+	Let \( A \in \mcM_n(\bbF) \).
+	We say that
+	\begin{enumerate}[(i)]
+		\item \( A \) is \textbf{singular} if \( \det A = 0 \),
+		\item \( A \) is \textbf{non-singular} if \( \det A \neq 0 \).
+	\end{enumerate}
+\end{definition}
+
+\begin{lemma}
+	If \( A \) is invertible, it is non-singular.
+\end{lemma}
+\begin{proof}
+	If \( A \) is invertible, there exists \( A^{-1} \).
+	Then, since the determinant is a homomorphism,
+	\[
+		\det(A A^{-1}) = \det I = 1
+	\]
+	Thus \( \det A \det A^{-1} = 1 \) and hence neither of these determinants can be zero.
+\end{proof}
+\begin{theorem}
+	Let \( A \in \mcM_n(\bbF) \).
+	The following are equivalent.
+	\begin{enumerate}[(i)]
+		\item \( A \) is invertible;
+		\item \( A \) is non-singular;
+		\item \( r(A) = n \).
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	(i) implies (ii).
+	(i) and (iii) are equivalent by the rank-nullity theorem.
+	So it suffices to show that (ii) implies (iii).
+
+	Suppose \( r(A) < n \).
+	Then we will show \( A \) is singular.
+	
+	We have \( \dim \spn(A_1, \dots, A_n) < n \).
+	Therefore, since there are \( n \) vectors, \( (A_1, \dots, A_n) \) is not free.
+	So there exist scalars \( \lambda_i \) not all zero such that \( \sum_i \lambda_i A_i = 0 \).
+	Choose \( j \) such that \( \lambda_j \neq 0 \).
+	Then,
+	\[
+		A_j = -\frac{1}{\lambda_j} \sum_{i \neq j} \lambda_i A_i
+	\]
+	So we can compute the determinant of \( A \) by
+	\[
+		\det A = \det(A_1, \dots, -\frac{1}{\lambda_j} \sum_{i \neq j} \lambda_i A_i, \dots, A_n)
+	\]
+	Since the determinant is alternating and linear in the \( j \)th entry, its value is zero.
+	So \( A \) is singular as required.
+\end{proof}
+
+\begin{remark}
+	The above theorem gives necessary and sufficient conditions for invertibility of a set of \( n \) linear equations with \( n \) unknowns.
+\end{remark}
+
+\subsection{Determinant of linear maps}\ \vspace{-1.5em}
+
+\begin{lemma}
+	Similar matrices have the same determinant.
+\end{lemma}
+\begin{proof}
+	\[
+		\det (P^{-1} A P) = \det(P^{-1}) \det A \det P = \det A \det (P^{-1} P) = \det A\qedhere
+	\]
+\end{proof}
+
+\begin{definition}
+	If \( \alpha :V\to V \) is an endomorphism, then we define
+	\[
+		\det \alpha = \det [\alpha]_{B}
+	\]
+	where \( B \) is any basis of the vector space.
+	This value does not depend on the choice of basis.
+\end{definition}
+
+\begin{theorem}
+	\( \det \colon L(V,V) \to \bbF \) satisfies the following properties.
+	\begin{enumerate}[(i)]
+		\item \( \det I = 1 \);
+		\item \( \det (\alpha\beta) = \det\alpha \det\beta \);
+		\item \( \det \alpha \neq 0 \) if and only if \( \alpha \) is invertible, and in this case, \( \det(\alpha^{-1}) \det \alpha = 1 \).
+	\end{enumerate}
+\end{theorem}
+This is simply a reformulation of the previous theorem for matrices.
+The proof is simple, and relies on the invariance of the determinant under a change of basis.
+
+\subsection{Determinant of block-triangular matrices}\ \vspace{-1.5em}
+\begin{lemma}
+	Let \( A \in \mcM_k(\bbF) \), \( B \in \mcM_\ell(\bbF) \), \( C \in \mcM_{k, \ell}(\bbF) \).
+	Consider the matrix
+	\[
+		M = \begin{pmatrix}
+			A & C \\
+			0 & B
+		\end{pmatrix},\quad M\in \mathcal{M}_{n}(\mathbb{F}),\quad n = k+\ell
+	\]
+	Then \( \det M = \det A \det B \).
+\end{lemma}
+\begin{proof}
+	Let \( M = (m_{ij}) \).
+	We need to compute
+	\[
+		\det M = \sum_{\sigma \in S_n} \varepsilon(\sigma) \prod_{i=1}^n m_{\sigma(i) i}
+	\]
+	Observe that \( m_{\sigma(i) i} = 0 \) if \( i \leq k \) and \( \sigma(i) > k \).
+	Thus, we need only sum over $ \sigma\in S_n $ such that 
+	\begin{enumerate}
+		\item $ \forall j\in [1,k],\ \sigma(j)\in [1,k] $,
+		\item $ \forall j\in [k+1, n], \ \sigma(j)\in [k+1,n] $. 
+	\end{enumerate}
+	In other words, we may restrict the sum to $ \sigma $ of the form 
+	\begin{align*}
+		& \sigma_1 : \{1,\dots,k\} \to \{1,\dots,k\} \equiv \sigma_{1 \{1,\dots,k\}}\\ 
+		& \sigma_2 : \{k+1,\dots,n\} \to \{k+1,\dots,n\} \equiv \sigma_{1 \{k+1,\dots,n\}}
+	\end{align*}
+	Hence,
+	\begin{align*}
+		\det M & = \sum_{\sigma \in S_n} \varepsilon(\sigma) \prod_{i=1}^n m_{\sigma(i) i}                                                         \\
+		       & = \sum_{\sigma_1 \in S_k} \sum_{\sigma_2 \in S_{n-k}} \varepsilon(\sigma_1) \varepsilon(\sigma_2) \prod_{i=1}^k m_{\sigma_1(i) i} \prod_{i=k+1}^n m_{\sigma_2(i) i} \\
+		       & = \sum_{\sigma_1 \in S_k} \varepsilon(\sigma_1) \prod_{i=1}^k m_{\sigma(i) i} \sum_{\sigma_2 \in S_{n-k}} \varepsilon(\sigma_2) \prod_{i=k+1}^n m_{\sigma(i) i} \\
+		       & = \det A \det B\qedhere
+	\end{align*}
+\end{proof}
+
+\begin{corollary}
+	Let $ A_1,A_2,\dots,A_k $ be square matrices. Then 
+	\[
+		\det \begin{pmatrix}
+			A_1 &  &  &  * \\
+			 & A_2 &  &   \\
+			 &  & \ddots &   \\
+			0 &  &  &  A_k \\
+		\end{pmatrix}= \det A_1 \det A_2\cdots \det A_k. 
+	\]
+\end{corollary}
+\begin{proof}
+By induction. 
+\end{proof}
+In particular, this implies that an upper-triangular matrix with diagonal elements \( \lambda_i \) has determinant \( \prod_i \lambda_i \).
+\begin{remark}
+	\begin{enumerate}
+		\item In general,
+		\[
+			\det \begin{pmatrix}
+				A &  B \\
+				C &  D \\
+			\end{pmatrix}\neq \det A\det D - \det B \det C. 
+		\]
+		\item One can check that the volumn form in $ \mathbb{R}^{3} $, up to a multiplication constant, is given by 
+		\begin{align*}
+			& \mathbb{R}^{3} \times \mathbb{R}^{3} \times \mathbb{R}^{3} \to \mathbb{F}\\ 
+			& (\mathbf{a},\mathbf{b},\mathbf{c}) \mapsto (\mathbf{a} \times \mathbf{b})\cdot \mathbf{c}
+		\end{align*}
+		It is indeed a volume. 
+	\end{enumerate}
+\end{remark}
+
 \end{document}
