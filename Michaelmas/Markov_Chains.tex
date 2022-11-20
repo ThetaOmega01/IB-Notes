@@ -640,14 +640,829 @@ If we change the condition to any random time, the above property may not work, 
     &=\delta_{i x_0} P\left(x_0, x_1\right) \cdots P\left(x_{n-1}, x_n\right) \mathbb{P}\left(\left(X_0, \ldots, X_k\right)=w, X_k=i, T=k\right)
     \end{aligned}
     \]
-    Suppose that $w$ has length $k$. Then
+    Therefore,
     \[
     \begin{aligned}
     &\mathbb{P}\left(X_T=x_0, \ldots, X_{T+n}=x_n,\left(X_0, \ldots, X_T\right)=w \mid T<\infty, X_T=i\right) \\
-    &=\frac{\mathbb{P}\left(X_k=x_0, \ldots, X_{k+n}=x_n,\left(X_0, \ldots, X_k\right)=w, T=k, X_k=i\right)}{\mathbb{P}\left(T<\infty, X_T=i\right)} .
+    &=\delta_{i x_0} P\left(x_0, x_1\right) \cdots P\left(x_{n-1}, x_n\right) \frac{\mathbb{P}\left(\left(X_0, \ldots, X_k\right)=w, X_k=i, T=k\right)}{\mathbb{P}\left(T<\infty, X_T=i\right)} \\
+    &=\delta_{i x_0} P\left(x_0, x_1\right) \cdots P\left(x_{n-1}, x_n\right) \mathbb{P}\left(\left(X_0, \ldots, X_T\right)=w \mid X_T=i, T<\infty\right),
     \end{aligned}
     \]
-    Since the event $\{T=k\}$ only depends on $X_0, \ldots, X_k$ we have by the simple Markov property, Theorem $2.4$
+    which completes the proof.
 \end{proof}
+
+\begin{example}
+    Apply the strong Markov property to derive in a slightly different way the hitting probabilities of 0 for a simple random walk on $\mathbb{N}$ with transition probabilities
+    \[
+    P(0,1)=1,\quad P(i, i-1)=1 / 2 \text { and } P(i, i+1)=1 / 2\quad \text { for } i \geq 1 \text {. }
+    \]
+    Let $h_i=\mathbb{P}_i\left(T_0<\infty\right)$. By recursion, 
+    \[
+    h_1=\frac{1}{2}+\frac{1}{2} h_2 \text {. }
+    \]
+    Now notice that in order to hit 0 starting from 2 we first need to hit 1 and then 0. Also notice that by the strong Markov property, under $\mathbb{P}_2$ conditional on $T_1<\infty$ we can express $T_0=T_1+\tilde{T}_0$, where $\tilde{T}_0$ is independent of $T_1$ and has the same distribution as $T_0$ under $\mathbb{P}_1$. Therefore we have
+    \begin{align*}
+        \mathbb{P}_2\left(T_0<\infty\right)&=\mathbb{P}_2\left(T_1<\infty, T_0<\infty\right)\\ 
+        &=\mathbb{P}_2\left(T_1+\tilde{T}_0<\infty \mid T_1<\infty\right) \mathbb{P}_2\left(T_1<\infty\right) \\
+        &=\mathbb{P}_1\left(T_0<\infty\right) \mathbb{P}_2\left(T_1<\infty\right)=h_1^2
+    \end{align*}
+    Substituting this above we deduce
+    \[
+    h_1=\frac{1}{2}+\frac{1}{2} h_1^2 \implies h_1=1 .
+    \]
+\end{example}
+
+\section{Transience and recurrence}
+Let $X$ be a Markov chain with state space $I$ and transition matrix $P$.
+\begin{definition}
+    A state $i \in I$ is called \textbf{recurrent} if
+    \[
+    \mathbb{P}_i\left(X_n=i \text { for infinitely many } n\right)=1 .
+    \]
+    A state $i \in I$ is called \textbf{transient} if
+    \[
+    \mathbb{P}_i\left(X_n=i \text { for infinitely many } n\right)=0 .
+    \]
+\end{definition}
+Later in this section we are going to establish a dichotomy for transience and recurrence, i.e. we will show that every state is either transient or recurrent.
+
+\begin{definition}
+    Define the \textbf{successive times} at which $X$ visits $i$ as follows: first set $T_i^{(0)}=0$
+    and for $k \geq 1$ inductively set
+    \[
+    T_i^{(r+1)}=\inf \left\{n \geq T_i^{(k)}+1: X_n=i\right\} .
+    \]
+    Usually call $T_i=T_i^{(1)}$ the \textbf{first return time} to $i$. 
+    
+    Define the \textbf{successive excursion lengths} from $i$ by setting
+    \[
+    S_i^{(k)}=\begin{cases}
+        T_i^{(k)}-T_i^{(k-1)} & \text { if } T_i^{(k-1)}<\infty \\
+        0 & \text { otherwise }
+    \end{cases} 
+    \]
+    We set $f_i=\mathbb{P}_i\left(T_i<\infty\right)$ and write $V_i$ for the \textbf{total number of visits} to $i$, i.e.
+    \[
+    V_i=\sum_{\ell=0}^{\infty} 1\left(X_{\ell}=i\right)
+    \]
+\end{definition}
+
+\begin{lemma}
+    For every $r \in \mathbb{N}$ we have
+    \[
+    \mathbb{P}_i\left(V_i>r\right)=f_i^r .
+    \]
+\end{lemma}
+
+\begin{proof}
+    Prove by induction. For $r=1$
+    \[
+    \mathbb{P}_i\left(V_i>1\right)=\mathbb{P}_i\left(T_i<\infty\right)=f_i .
+    \]
+    Suppose the claim holds for all $r \leq k$. We will prove it also holds for $r=k+1$. Indeed, we have
+    \[
+    \begin{aligned}
+    \mathbb{P}_i\left(V_i>k+1\right) &=\mathbb{P}_i\left(T_i^{(k+1)}<\infty\right)=\mathbb{P}_i\left(T_i^{(k)}<\infty, T_i^{(k+1)}<\infty\right) \\
+    &=\mathbb{P}_i\left(T_i^{(k+1)}<\infty \mid T_i^{(k)}<\infty\right) \mathbb{P}_i\left(T_i^{(k)}<\infty\right) .
+    \end{aligned}
+    \]
+    We now use the strong Markov property applied to the stopping time $T_i^{(k)}$. Conditional on $T_i^{(k)}<$ $\infty$, since at this time the Markov chain is at $i$, it follows that $T_i^{(k+1)}$ has the same distribution as $T_i$ under $\mathbb{P}_i$. Therefore we get
+    \[
+    \mathbb{P}_i\left(V_i>k+1\right)=\mathbb{P}_i\left(T_i^{(1)}<\infty\right) \mathbb{P}_i\left(T_i^{(k)}<\infty\right)=f_i^{k+1}
+    \]
+    and this finishes the proof.
+\end{proof}
+
+\begin{theorem}
+    Let $X$ be a Markov chain and $i \in I$. Then we have the following dichotomy:
+\[
+    \begin{aligned}
+        i \text { is recurrent } & \Longleftrightarrow \sum_{n=0}^{\infty} p_{i i}^{(n)}=\infty \Longleftrightarrow f_i=1, \\
+        i \text { is transient } & \Longleftrightarrow \sum_{n=0}^{\infty} p_{i i}^{(n)}<\infty \Longleftrightarrow f_i<1 .
+    \end{aligned}
+\]
+\end{theorem}
+
+\begin{proof}
+    First note that
+    \begin{align*}
+        \mathbb{E}_i\left[V_i\right]&=\mathbb{E}_i\left[\sum_{n=0}^{\infty} 1\left(X_n=i\right)\right]=\sum_{n=0}^{\infty} p_{i i}(n)\\ 
+        &=\sum_{r=0}^{\infty} \bbP_i\left(V_i>r\right)=\sum_{r=0}^{\infty} f_i^r
+    \end{align*}
+    $f_i=1$ iff $V_i=\infty$ with probability 1 by lemma, which happens iff $i$ is recurrent. Moreover, $\mathbb{P}(V_i=\infty)=1 \Leftrightarrow \mathbb{E}_i\left[V_i\right]=\infty$, which happens iff
+    \[
+    \sum_{n=0}^{\infty} p_{i i}(n)=\mathbb{E}_i\left[V_i\right]=\infty .
+    \]
+    Now, $f_i<1$ iff $V_i$ is a geometric random variable of mean $1 /\left(1-f_i\right)<$ $\infty$, which happens iff $V_i$ is finite with probability 1, i.e. that $i$ is transient and moreover $\mathbb{E}_i\left[V_i\right]<\infty$, which happens iff
+    \[
+    \sum_{n=0}^{\infty} p_{i i}(n)<\infty .
+    \]
+    This completes the proof.
+\end{proof}
+
+\begin{theorem}
+    Let $x, y \in I$ be two states that communicate, i.e. $x \leftrightarrow y$. Then either they are both recurrent or both transient.
+\end{theorem}
+\begin{proof}
+    Suppose that $x$ is recurrent. Then
+    \[
+    \sum_{n=0}^{\infty} p_{x x}(n)=\infty .
+    \]
+    Since $x \leftrightarrow y$ there exist $m, \ell \in \mathbb{N}$ such that $p_{x y}(m)>0$ and $p_{y x}(\ell)>0$. So then we have
+    \begin{align*}
+        \sum_n p_{y y}(n) &\geq \sum_n p_{y y}(n+m+\ell) \geq \sum_n p_{y x}(\ell) p_{x x}(n) p_{x y}(m)\\ 
+        &=p_{y x}(\ell) p_{x y}(m) \sum_n p_{x x}(n)=\infty,
+    \end{align*}
+    which means that $y$ is also recurrent and finishes the proof.
+\end{proof}
+
+\begin{corollary}
+    Either all states in a communicating class are transient or they are all recurrent. 
+\end{corollary}
+
+Now we can talk about recurrence and transience as class properties. 
+
+\begin{theorem}
+    If $C$ is a recurrent communicating class, then it must be closed.
+\end{theorem}
+\begin{proof}
+    Suppose $C$ is not closed. Then there must exist $x \in C$ and $y \notin C$ such that $x \rightarrow y$. Let $m$ be such that $p_{x y}(m)>0$. Then since once $X$ hits $y$ it cannot come back to $x$ we get
+    \[
+    \mathbb{P}_x\left(V_x<\infty\right) \geq \mathbb{P}_x\left(X_m=y\right)>0,
+    \]
+    implying that $x$ is transient, which is a contradiction.
+\end{proof}
+
+\begin{theorem}
+    A finite closed class is recurrent.
+\end{theorem}
+\begin{proof}
+    Let $C$ be a finite closed communicating class and let $x \in C$. Then by the pigeonhole principle there exists $y \in C$ such that
+    \[
+    \mathbb{P}_x\left(X_n=y \text { for infinitely many } n\right)>0 \text {. }
+    \]
+    Since $x \leftrightarrow y$, there exists $m \geq 0$ such that $\mathbb{P}_y\left(X_m=x\right)>0$. Therefore by the simple Markov property we get
+    \[
+    \begin{aligned}
+    &\mathbb{P}_y\left(X_n=y \text { for infinitely many } n\right) \\ &\geq \mathbb{P}_y\left(X_m=x, X_n=y \text { for infinitely many } n \geq m\right) \\
+    &=\mathbb{P}_y\left(X_n=y \text { for infinitely many } n \geq m \mid X_m=x\right) \mathbb{P}_y\left(X_m=x\right) \\
+    &=\mathbb{P}_x\left(X_n=y \text { for infinitely many } n\right) \mathbb{P}_y\left(X_m=x\right)>0 .
+    \end{aligned}
+    \]
+    This implies that $y$ is recurrent, and hence $C$ is a recurrent class.
+\end{proof}
+
+\begin{theorem}
+    Let $P$ be irreducible and recurrent. Then for all $x, y$ we have
+    \[
+    \mathbb{P}_x\left(T_y<\infty\right)=1 .
+    \]
+\end{theorem}
+\begin{proof}
+    Since $P$ is irreducible, there exists $m \geq 0$ such that $p_{y x}(m)>0$. Also since $y$ is recurrent and by the simple Markov property, we get
+    \[
+    \begin{aligned}
+    1 &=\mathbb{P}_y\left(X_n=y \text { for infinitely many } n\right)\\ &=\sum_z \mathbb{P}_y\left(X_m=z, X_n=y \text { for infinitely many } n \geq m\right) \\
+    &=\sum_z p_{y z}(m) \mathbb{P}_z\left(X_n=y \text { for infinitely many } n\right) .
+    \end{aligned}
+    \]
+    Now notice that by the strong Markov property at time $T_y$ we get
+    $\mathbb{P}_z\left(X_n=y\right.$ for infinitely many $\left.n\right)=\mathbb{P}_z\left(T_y<\infty\right) \mathbb{P}_y\left(X_n=y\right.$ for infinitely many $\left.n\right)=\mathbb{P}_z\left(T_y<\infty\right)$.
+    Substituting this above yields
+    \[
+    1=\mathbb{P}_y\left(X_n=y \text { for infinitely many } n\right)=\sum_z p_{y z}(m) \mathbb{P}_z\left(T_y<\infty\right) .
+    \]
+    Since $p_{y x}(m)>0$ and $\sum_z p_{y z}(m)=1$, we get from the above equality that
+    \[
+    \mathbb{P}_x\left(T_y<\infty\right)=1
+    \]
+    and this completes the proof.
+\end{proof}
+
+\subsection{Random walks on $ \mathbb{Z}^d $}
+In this section we are going to show that simple random walk on $\mathbb{Z}$ and $\mathbb{Z}^2$ is recurrent, while it is transient in $\mathbb{Z}^d$ for $d \geq 3$
+\begin{definition}
+    A \textbf{simple random walk} in $\mathbb{Z}^d$ is a Markov chain that has transition probabilities
+    \[
+    P\left(\bfx, \bfx+\bfe_i\right)=P\left(\bfx, \bfx-\bfe_i\right)=\frac{1}{2 d} \quad \text { for all } \bfx \in \mathbb{Z}^d,
+    \]
+    where $\left(\bfe_i\right)_{i \leq d}$ is the standard basis of $\mathbb{R}^d$.
+\end{definition}
+
+\begin{theorem}[Polya]
+    Simple random walk in $\mathbb{Z}^d$ is recurrent when $d \leq 2$ and transient for $d \geq 3$.
+\end{theorem}
+
+We will not prove it here, but rather show that it is true for $d=1,2,3$. 
+
+\subsubsection*{Simple symmetric random walk on $ \mathbb{Z} $ is recurrent.}
+Let $X$ be a simple symmetric random walk on $\mathbb{Z}$, i.e. with transition probabilities
+\[
+P(x, x-i)=P(x, x+1)=\frac{1}{2} \quad \forall x \in \mathbb{Z} .
+\]
+We will prove that it is recurrent by showing that
+\[
+\sum_n p_{00}(n)=\infty
+\]
+
+Clearly, to go back to 0 one must take an even number of steps, i.e. $p_{00}(n)$ if and only if $n$ is even. It suffices to evaluate $ \mathbb{P}_0(X_{2n}=0) $.
+
+In order to be at 0 at time $2 n$ when the walk starts from 0 , it needs to make $n$ steps to the right and $n$ steps to the left. There are $\binom{2n}{n}$ ways to pick the steps that will be to the right and then the remaining ones will be to the left. Each choice of right, left steps has probability $1/2^{2 n}$ of occurring. Therefore we get
+\[
+\mathbb{P}_0\left(X_{2 n}=0\right)=\binom{2n}{n} \cdot\left(\frac{1}{2}\right)^{2 n}=\frac{(2 n) !}{n ! n !} \cdot \frac{1}{2^{2 n}}
+\]
+Using Stirling's formula, i.e. that as $n \rightarrow \infty$
+\[
+n ! \sim \sqrt{2 \pi n} \cdot e^{-n} \cdot n^n,
+\]
+we get
+\[
+\mathbb{P}_0\left(X_{2 n}=0\right) \sim \frac{1}{\sqrt{\pi n}} .
+\]
+Therefore, for $n_0$ sufficiently large and $n \geq n_0$ we get
+\[
+p_{00}(2 n) \geq \frac{1}{2 \sqrt{\pi n}},
+\]
+and hence
+\[
+\sum_n p_{00}(2 n) \geq \sum_{n \geq n_0} \frac{1}{2 \sqrt{\pi n}}=\infty,
+\]
+which implies that the walk is recurrent.
+
+\subsubsection*{Simple asymmetric random walk on $ \mathbb{Z} $ is transient.} 
+Suppose that $X$ is a simple random walk on $\mathbb{Z}$ with transition probabilities
+\[
+P(i, i+1)=p \text { and } P(i, i-1)=q
+\]
+with $p+q=1$ and $p, q \in(0,1)$. Then the same reasoning as above gives
+\[
+p_{00}(2 n)=\binom{2n}{n} p^n q^n \sim \frac{(4 p q)^n}{\sqrt{\pi n}},
+\]
+where in the last step we used again Stirling's formula as $n \rightarrow \infty$. If $p \neq q$, then $4 p q<1$, and hence
+\[
+\sum_n p_{00}(2 n) \leq \sum_{n \geq n_0} 2(4 p q)^n<\infty,
+\]
+this proves transience.
+
+\subsubsection*{Simple symmetric random walk on $\mathbb{Z}^2$ is recurrent.}
+We will use a very nice trick that works in two dimensions by projecting the walk on the two diagonal lines $y=x$ and $y=-x$. More precisely, let $X_n$ be the simple random walk in $\mathbb{Z}^2$ and let $f$ be the transformation
+\[
+f(x, y)=\left(\frac{x+y}{\sqrt{2}}, \frac{x-y}{\sqrt{2}}\right) .
+\]
+Then we write $f\left(X_n\right)$ as $f\left(X_n\right)=\left(X_n^{+}, X_n^{-}\right)$.
+The reason we project on the two diagonals is because this results into two independent simple random walks in $\mathbb{Z} / \sqrt{2}$.
+
+\begin{lemma}
+    Both $\left(X_n^{+}\right)$ and $\left(X_n^{-}\right)$are simple random walks in $\mathbb{Z} / \sqrt{2}$ and they are independent.
+\end{lemma}
+
+\begin{proof}
+    We can write $X_n=\sum_{i=1}^n \xi_i$ where $\left(\xi_i\right)_i$ are i.i.d. random variables distributed as follows
+    \[
+    \mathbb{P}\left(\xi_1=(1,0)\right)=\mathbb{P}\left(\xi_1=(-1,0)\right)=\mathbb{P}\left(\xi_1=(0,1)\right)=\mathbb{P}\left(\xi_1=(0,-1)\right)=\frac{1}{4} .
+    \]
+    Then writing $\xi_i=\left(\xi_i^1, \xi_i^2\right)$, we have $X_n^{+}=\sum_{i=1}^n\left(\xi_i^1+\xi_i^2\right) / \sqrt{2}$ and $X_n^{-}=\sum_{i=1}^n\left(\xi_i^1-\xi_i^2\right) / \sqrt{2}$. One can then check that both $X_n^{+}$and $X_n^{-}$are simple random walks in $\mathbb{Z} / \sqrt{2}$. To prove the independence, since the $\left(\xi_i\right)$ are independent, it is enough to show that $\xi_i^1+\xi_i^2$ is independent of $\xi_i^1-\xi_i^2$. This follows from calculating all possible probabilities, i.e.
+    \begin{align*}
+        \mathbb{P}\left(\xi_i^1+\xi_i^2=1, \xi_i^1-\xi_i^2=-1\right)&=\mathbb{P}\left(\xi_i=(0,1)\right)\\ 
+        &=\frac{1}{4}=\mathbb{P}\left(\xi_i^1+\xi_i^2=0\right) \mathbb{P}\left(\xi_i^1-\xi_i^2=-1\right)
+    \end{align*}
+    and similarly for all the other possible events.
+\end{proof}
+
+Notice that $X_n=0$ if and only if both $X_n^{+}=0$ and $X_n^{-}=0$. Using the independence we proved above we obtain
+\[
+\mathbb{P}_0\left(X_{2 n}=0\right)=\mathbb{P}_0\left(X_{2 n}^{+}=0\right) \mathbb{P}_0\left(X_{2 n}^{-}=0\right) \sim \frac{A}{n}
+\]
+using the estimates we established in the 1-dimensional case. Therefore, we conclude
+\[
+\sum_n p_{00}(2 n)=\infty,
+\]
+showing that the random walk in $\mathbb{Z}^2$ is recurrent.
+
+\subsubsection*{Simple symmetric random walk on $\mathbb{Z}^3$ is transient}
+
+We don't have a nice trick now as in 2D case, so we proceed in the standard way. 
+
+As in the previous cases, $X$ can be back at 0 only at even times. In order for $X$ to be at 0 at time $2 n$ it must make $i$ steps up, $i$ steps down, $j$ steps north and $j$ south and $k$ east and $k$ west for some $i, j, k \geq 0$ with $i+j+k=n$. There are 
+\[
+    \binom{2n}{i,i,j,j,k,k}
+\]
+ ways of choosing which steps will be done in each direction. So we get
+\begin{align*}
+    p_{00}(2 n)&=\sum_{\substack{i, j, k \geq 0 \\
+    i+j+k=n}}\binom{2n}{i,i,j,j,k,k} \cdot\left(\frac{1}{6}\right)^{2 n}\\ 
+    &=\binom{2n}{n}\left(\frac{1}{2}\right)^{2 n} \sum_{\substack{i, j, k \geq 0 \\
+    i+j+k=n}}\binom{n}{i,j,k}^2 \cdot\left(\frac{1}{3}\right)^{2 n}
+\end{align*}
+Notice that
+\[
+\sum_{\substack{i, j, k>0 \\
+i+j+k=n}}\binom{n}{i,j,k} \cdot\left(\frac{1}{3}\right)^n=1,
+\]
+since the sum corresponds to the total probability of all the ways of placing $n$ balls into 3 boxes uniformly at random. 
+
+Take $n=3 m$. Then by direct comparison,
+\[
+\binom{n}{i,j,k} \leq\binom{n}{m,m,m} .
+\]
+Therefore, we deduce
+\begin{align*}
+    p_{00}(2 n)&= \binom{2n}{n}\left(\frac{1}{2}\right)^{2 n} \sum_{\substack{i, j, k \geq 0 \\
+i+j+k=n}}\binom{n}{i,j,k}^2 \cdot\left(\frac{1}{3}\right)^{2 n}\\ 
+&= \binom{2n}{n}\left(\frac{1}{2}\right)^{2 n} \left(\frac{1}{3}\right)^{n}\sum_{\substack{i, j, k \geq 0 \\
+i+j+k=n}}\binom{n}{i,j,k}^2 \cdot\left(\frac{1}{3}\right)^{n} \\ 
+&\le \binom{2n}{n}\left(\frac{1}{2}\right)^{2 n} \left(\frac{1}{3}\right)^{n} \binom{n}{m,m,m}\sum_{\substack{i, j, k>0 \\
+i+j+k=n}}\binom{n}{i,j,k} \cdot\left(\frac{1}{3}\right)^n \\ 
+&= \binom{2n}{n}\left(\frac{1}{2}\right)^{2 n} \left(\frac{1}{3}\right)^{n} \binom{n}{m,m,m} \\
+&\leq\binom{2n}{n}\binom{n}{m,m,m}\left(\frac{1}{3}\right)^n \sim \frac{C}{n^{3 / 2}}
+\end{align*}
+where $C$ is a positive constant and this asymptotic follows from Stirling's formula. We thus get
+\[
+\sum_m p_{00}(6 m)<\infty .
+\]
+Using that $p_{00}(6 m) \geq(1 / 6)^2 p_{00}(6 m-2)$ and $p_{00}(6 m) \geq(1 / 6)^4 p_{00}(6 m-4)$ we get that
+\[
+\sum_n p_{00}(2 n)<\infty
+\]
+and this completes the proof that simple random walk on $\mathbb{Z}^3$ is transient.
+
+\section{Invariant distribution}
+Let $I$ be a discrete set. Recall that $\lambda=\left(\lambda_i: i \in I\right)$ is called a (probability) distribution if $\lambda_i \geq 0$ for all $i$ and $\sum_{i \in I} \lambda_i=1$.
+
+\begin{example}
+    Consider a 2 state Markov chain with states called 1 and 2 and let
+    \[
+    P(1,2)=P(1,1)=P(2,1)=P(2,2)=\frac{1}{2} .
+    \]
+    As $n \rightarrow \infty$ where do we expect the chain to be? Will state 1 be more likely than state 2? 
+    
+    By symmetry, we expect both of them to be equally likely, i.e. $p_{11}(n),p_{12}(n) \rightarrow 1 / 2$ as $n \rightarrow \infty$ and similarly starting from 2.
+
+    We can think of $(1 / 2,1 / 2)$ as the equilibrium distribution of the Markov chain, since running it for a long time we expect it to equilibrate at $(1 / 2,1 / 2)$.
+\end{example}
+
+Suppose next that we want to define a probability distribution $\pi$ on the state space $I$, so that if $X_0 \sim \pi$, then $X_n \sim \pi$ for all $n$. Let's see what $\pi$ should satisfy in this case. Since $X_0 \sim \pi$,
+\begin{align*}
+    \mathbb{P}\left(X_1=j\right)&=\sum_i \mathbb{P}\left(X_0=i, X_1=j\right)\\ 
+    &=\sum_i \mathbb{P}\left(X_0=i\right) \mathbb{P}\left(X_1=j \mid X_0=i\right)=\sum_i \pi(i) P(i, j)
+\end{align*}
+So if we want $X_n \sim \pi$ for all $n$, it follows that
+\[
+\pi(j)=\sum_i \pi(i) P(i, j),
+\]
+or in matrix form
+\[
+\pi=\pi P,
+\]
+where $\pi$ is a row vector.
+
+\begin{definition}
+    A probability distribution $\pi=\left(\pi_i: i \in I\right)$ is called an \textbf{invariant}, or equilibrium, or stationary distribution for the Markov chain with transition matrix $P$ if $\pi=\pi P$.
+\end{definition}
+
+\begin{theorem}
+    Let $X$ be a Markov chain with transition matrix $P$ and invariant distribution $\pi$. If $X_0 \sim \pi$, then $X_n \sim \pi$ for all $n$.
+\end{theorem}
+\begin{proof}
+    Prove by induction. For $n=0$ it holds, since $X_0 \sim \pi$. Suppose it holds for $n$, then
+    \begin{align*}
+        \mathbb{P}\left(X_{n+1}=j\right)&=\sum_i \mathbb{P}\left(X_n=i, X_{n+1}=j\right)\\ 
+        &=\sum_i \mathbb{P}\left(X_n=i\right) P(i, j)=\sum_i \pi_i P(i, j)=\pi_j\qedhere
+    \end{align*}
+\end{proof}
+
+\begin{theorem}
+    Let $I$ be a finite state space and suppose that there exists $i \in I$ such that for all $j$
+    \[
+    p_{i j}(n) \rightarrow \pi_j \quad \text { as } n \rightarrow \infty .
+    \]
+    Then $\pi=\left(\pi_j: j \in I\right)$ is an invariant distribution.
+\end{theorem}
+
+\begin{proof}
+    First show that $\pi$ is a distribution. Note that
+    \[
+    \sum_{j \in I} \pi_j=\sum_{j \in I} \lim _{n \rightarrow \infty} p_{i j}(n)=\lim _{n \rightarrow \infty} \sum_{j \in I} p_{i j}(n)=1
+    \]
+    where $I$ is a finite set, so we can interchange the sum and the limit.
+
+    Next show that $\pi=\pi P$. Let $j \in I$. we have
+    \begin{align*}
+        \pi_j&=\lim _{n \rightarrow \infty} p_{i j}(n)=\lim _{n \rightarrow \infty} \sum_k p_{i k}(n-1) P(k, j)\\ 
+        &=\sum_k \lim _{n \rightarrow \infty} p_{i k}(n-1) P(k, j)=\sum_k \pi_k P(k, j)\qedhere
+    \end{align*}
+\end{proof}
+
+\begin{remark}
+    The assumption that $I$ is finite is \textit{essential}. Take the simple symmetric random walk on $\mathbb{Z}$:
+    \[
+    p_{00}(n) \sim \frac{C}{\sqrt{n}} \quad \text { as } n \rightarrow \infty,
+    \]
+    where $C$ is a positive constant. Then $p_{0 x}(n) \rightarrow 0$ as $n \rightarrow \infty$ for all $x$. In this case, the limit is not a probability distribution.
+\end{remark}
+
+\begin{example}
+    Consider again the two state Markov chain with
+    \[
+    P=
+    \begin{pmatrix}
+        1 / 2 & 1 / 2 \\
+    1 / 2 & 1 / 2
+    \end{pmatrix}
+    \]
+    By calculating the eigenvalues or otherwise,
+    \[
+    p_{11}(n) \rightarrow \frac{1}{2} \text { and } p_{12}(n) \rightarrow \frac{1}{2} \quad \text { as } n \rightarrow \infty
+    \]
+    So $\pi=(1 / 2,1 / 2)$ is an invariant distribution. Solving $\pi=\pi P$ we also get $\pi=(1 / 2,1 / 2)$.
+\end{example}
+
+We now want to understand whether a transition matrix has an invariant distribution and whether this is unique. We will only talk about irreducible Markov chains, since if the state space consists of several communicating classes, then the invariant distribution might not be unique.
+
+\begin{remark}
+    For an irreducible transition matrix $P$ on a finite state space $I$, one can deduce the existence of an invariant distribution using the Perron-Frobenius theorem, a result in linear algebra. The following theorem works both in the finite and infinite setting using probabilistic arguments.
+\end{remark}
+
+We next define a measure in terms of the numbers of visits to a vertex during an excursion from another vertex. Afterwards we will show that when $P$ is irreducible and recurrent, this is always an invariant measure.
+
+\begin{definition}
+    Let $k \in I$. Recall that $T_k$ is the first return time to $k$, i.e.
+    \[
+    T_k=\inf \left\{n \geq 1: X_n=k\right\} .
+    \]
+    Define $\nu_k(i)$ to be the \textbf{expected number of visits} to $i$ during an excursion from $k$, i.e.
+    \[
+    \nu_k(i)=\mathbb{E}_k\left[\sum_{n=0}^{T_k-1} 1\left(X_n=i\right)\right] .
+    \]
+\end{definition}
+
+\begin{lemma}
+    Let $ \pi $ be an invariant distribution. Then $ \pi = \pi P^n $ for all $n\in \mathbb{N}$. 
+\end{lemma}
+This follows directly from applying the definition $n$ times.
+
+\begin{theorem}
+    Suppose that $P$ is irreducible and recurrent. Then $\nu_k$ is an invariant measure, i.e. $\nu_k=\nu_k P$, satisfying $0<\nu_k(i)<\infty$ and $\nu_k(k)=1$.
+\end{theorem}
+\begin{proof}
+    By definition, $ \nu_k(k) = 1 $. We next show that $\nu$ is invariant. 
+
+    First note that since the chain is recurrent, then $T_k<\infty$ with probability 1 and since $X_{T_k}=k$ by definition of $T_k$, we obtain
+    \begin{align*}
+        \nu_k(i)=\mathbb{E}_k\left[\sum_{n=1}^{T_k} \mathbf{l}\left(X_n=i\right)\right]&=\mathbb{E}_k\left[\sum_{n=1}^{\infty} \mathbf{l}\left(n \leq T_k\right) \cdot \mathbf{l}\left(X_n=i\right)\right]\\ &=\sum_{n=1}^{\infty} \mathbb{P}_k\left(X_n=i, n \leq T_k\right)
+    \end{align*}
+    By the law of total probability we get for all $n \geq 1$
+    \[
+    \mathbb{P}_k\left(X_n=i, n \leq T_k\right)=\sum_j \mathbb{P}_k\left(X_n=i, X_{n-1}=j, n \leq T_k\right)
+    \]
+    We now claim that the event $\left\{T_k \geq n\right\}$ only depends on $X_0, \ldots, X_{n-1}$. Indeed, $\left\{T_k \geq n\right\}$ is the complement of $\left\{T_k \leq n-1\right\}$ which is the union
+    \[
+    \left\{T_k \leq n-1\right\}=\bigcup_{\ell \leq n-1}\left\{T_k=\ell\right\} .
+    \]
+    Using that $T_k$ is a stopping time, each of the events of the union only depends on $X_0, \ldots, X_k$, and hence the claim follows. 
+    
+    By strong Markov property, 
+    \[
+        \begin{aligned}
+            &\mathbb{P}_k\left(X_n=i, X_{n-1}=j, n \leq T_k\right)\\ &=\mathbb{P}_k\left(X_n=i \mid X_{n-1}=j, n \leq T_k\right) \mathbb{P}_k\left(X_{n-1}=j, n \leq T_k\right) \\
+            &=P(j, i) \mathbb{P}_k\left(X_{n-1}=j, n \leq T_k\right)
+        \end{aligned}
+    \]
+    Plugging in back to $ \nu_k(i) $ we get 
+    \[
+        \begin{aligned}
+            \nu_k(i)&=\sum_{n=1}^{\infty} \sum_{j \in I} P(j, i) \mathbb{P}_k\left(X_{n-1}=j, n \leq T_k\right)\\ &=\sum_{j \in I} P(j, i) \sum_{n=1}^{\infty} \mathbb{E}_k\left[1\left(X_{n-1}=j\right), 1\left(n \leq T_k\right)\right] \\
+            &=\sum_{j \in I} P(j, i) \mathbb{E}_k\left[\sum_{n=0}^{T_k-1} 1\left(X_n=j\right)\right]=\left(\nu_k P\right)_i
+        \end{aligned}
+    \]
+    This proves that $\nu_k$ is an invariant measure. 
+
+    It remains to check that $0<\nu_k(i)<\infty$. Let $m, n$ be such that $p_{k i}(n)>0$ and $p_{i k}(m)>0$ (which exist by irreducibility). Then using the lemma we get
+    \[
+    \nu_k(i) = \sum _{j} \nu_k(j)p_{ji}(n) \geq \nu_k(k) p_{k i}(n)=p_{k i}(n)>0,
+    \]
+    since $\nu_k(k)=1$. To prove the finiteness, we use the invariance of $\nu_k$ at $k$, i.e.
+    \[
+    1=\nu_k(k) \geq p_{i k}(m) \nu_k(i) \Rightarrow \nu_k(i) \leq \frac{1}{p_{i k}(m)}<\infty
+    \]
+    and this completes the proof.
+\end{proof}
+
+\begin{theorem}\label{thm:8.9}
+    Suppose that $P$ is an irreducible transition matrix and let $\lambda$ be an invariant measure satisfying $\lambda_k=1$. Then $\lambda \geq \nu_k$.
+
+    If $P$ is also recurrent, then $\lambda=\nu_k$.
+\end{theorem}
+\begin{proof}
+    Since $\lambda$ is invariant we get
+    \[
+        \lambda_i =P(k, i) +\sum_{j_1 \neq k} \lambda_{j_1} P(j_1, i)
+    \]
+    Notice that $ \lambda_{j_1}P(j_1,i) = \sum_{j_2} \lambda_{j_2}P(j_{2},j_1)P(j_1,i) $, which gives 
+    \begin{align*}
+        \sum_{j_1 \neq k} \lambda_{j_1} P(j_1, i) &= \sum_{j_1\neq k, j_2}\lambda_{j_2}P(j_{2},j_1)P(j_1,i) \\ 
+        &=  \sum_{j_1 \neq k} P\left(k, j_1\right) P\left(j_1, i\right)+ \sum_{j_1,j_2\neq k}\lambda_{j_2}P(j_{2},j_1)P(j_1,i)
+    \end{align*}
+    Apply this recursively, we get 
+    \begin{align*}
+        \lambda_i = P(k, i) &+\sum_{j_1 \neq k} P\left(k, j_1\right) P\left(j_1, i\right)\\ 
+        &+\cdots\\ 
+        &+\sum_{j_1, \ldots, j_{n-1} \neq k} P\left(k, j_{n-1}\right) \cdots P\left(j_2, j_1\right) P\left(j_1, i\right) \\
+        &+\sum_{j_1, \ldots, j_n \neq k} \lambda_{j_n} P\left(j_n, j_{n-1}\right) \cdots P\left(j_2, j_1\right) P\left(j_1, i\right)
+    \end{align*}
+    Since $\lambda$ is a measure, it follows that $\lambda_x \geq 0$ for all $x$, and hence for all $i \neq k$
+    \[
+    \begin{aligned}
+    \lambda_i & \geq P(k, i)+\sum_{j_1 \neq k} P\left(k, j_1\right) P\left(j_1, i\right)\\ 
+    &\hspace{5em}+\cdots+\sum_{j_1, \ldots, j_{n-1} \neq k} P\left(k, j_{n-1}\right) \cdots P\left(j_2, j_1\right) P\left(j_1, i\right) \\
+    &=\mathbb{P}_k\left(X_1=i\right)+\mathbb{P}_k\left(X_2=i\right)+\cdots+\mathbb{P}_k\left(X_n=i\right) \\
+    &=\mathbb{P}_k\left(X_1=i, T_k \geq 1\right)+\mathbb{P}_k\left(X_2=i, T_k \geq 2\right)+\cdots+\mathbb{P}_k\left(X_n=i, T_k \geq n\right) \\
+    &=\sum_{\ell=1}^n \mathbb{P}_k\left(X_{\ell}=i, T_k \geq \ell\right) \rightarrow \sum_{\ell=1}^{\infty} \mathbb{P}_k\left(X_{\ell}=i, T_k \geq \ell\right)
+    \end{aligned}
+    \]
+    where $ \{X_1=i\} $ is equivalent to $\{X_j=i,T_k\ge j\}$ since reaching $i$ at step $j$ means the time taken to get to $k$ again is at least $j$. Now 
+    \begin{align*}
+        \sum_{\ell=1}^{\infty} \mathbb{P}_k\left(X_{\ell}=i, T_k \geq \ell\right) &= \sum_{\ell=1}^{\infty} \mathbb{E}_k\left[ 1(X_{\ell}=i, T_k \geq \ell) \right]\\ 
+        &= \mathbb{E}_k\left[ \sum_{\ell=1}^{\infty} 1(X_{\ell}=i, T_k \geq \ell) \right]
+    \end{align*}
+    Recall the definition of $\nu_k(i)$: 
+    \[
+        \nu_k(i)=\mathbb{E}_k\left[\sum_{n=0}^{T_k-1} 1\left(X_n=i\right)\right]=\mathbb{E}_k\left[\sum_{n=1}^{T_k} 1\left(X_n=i\right)\right]
+    \]
+    $ \sum_{n=1}^{T_k} 1\left(X_n=i\right) $ is the number of visits to $i$ before the next hit of $k$. On the other hand, $\sum_{\ell=1}^{\infty} 1(X_{\ell}=i, T_k \geq \ell)$ is the number of visits to $i$ with $ T_k\ge \ell $. Given $T_k=m$, $ 1(X_{\ell}=i, T_k \geq \ell)=0 $ for all $\ell > m$, so the two random variables are the same and thus 
+    \[
+        \mathbb{E}_k\left[ \sum_{\ell=1}^{\infty} 1(X_{\ell}=i, T_k \geq \ell) \right] = \mathbb{E}_k\left[\sum_{n=1}^{T_k} 1\left(X_n=i\right)\right] = \nu_k(i)
+    \]
+    which implies 
+    \[
+        \lambda_i\ge \nu_k(i)
+    \]
+    as required. 
+
+    Suppose next that $P$ is also recurrent. Then $\nu_k$ is an invariant measure. So $\lambda-\nu_k$ is an invariant measure, since $\lambda \geq \nu_k$. It also satisfies that $\lambda_k-\nu_k(k)=0$. By irreducibility there exists $m>0$ such that $p_{i k}(m)>0$. Using the invariance property we get
+    \[
+    0=\lambda_k-\nu_k(k)=\sum_j\left(\lambda_j-\nu_k(j)\right) p_{j k}(m) \geq\left(\lambda_i-\nu_k(i)\right) p_{i k}(m),
+    \]
+    which implies that $\lambda_i=\nu_k(i)$ and this finishes the proof.
+\end{proof}
+
+So far we have established that: if $P$ is irreducible and recurrent, then it has a unique invariant measure up to multiplicative constants. 
+
+The question is when we can get an invariant distribution out of an invariant measure. In order to get a distribution, the total mass of the invariant measure has to be finite. Fix $k \in I$ and consider the invariant measure $\nu_k$:
+\[
+\sum_{i \in I} \nu_k(i)=\sum_{i \in I} \mathbb{E}_k\left[\sum_{n=0}^{T_k-1} \mathbf{1}\left(X_n=i\right)\right]=\mathbb{E}_k\left[\sum_{n=0}^{T_k-1} \sum_{i \in I} \mathbf{l}\left(X_n=i\right)\right]=\mathbb{E}_k\left[T_k\right]
+\]
+We thus see that in order to be able to normalise and get an invariant distribution, we require $\mathbb{E}_k\left[T_k\right]<\infty$. This leads us to the following definition.
+
+\begin{definition}
+    Let $i \in I$ be a recurrent state i.e. if $T_i=\inf \left\{n \geq 1: X_n=i\right\}$ is the first return time to $i$, then $\mathbb{P}_i\left(T_i<\infty\right)=1$. We call $i$ \textbf{positive recurrent} if $T_i$ also has finite expectation, i.e.
+    \[
+    \mathbb{E}_i\left[T_i\right]<\infty .
+    \]
+    If $\mathbb{E}_i\left[T_i\right]=\infty$, then $i$ is called \textbf{null recurrent}.
+\end{definition}
+
+\begin{theorem}
+    Suppose that $P$ is an irreducible transition matrix. Then the following are equivalent:
+    \begin{enumerate}[(i)]
+        \item every state is positive recurrent;
+        \item some state is positive recurrent;
+        \item $P$ has an invariant distribution $\pi$.
+    \end{enumerate}
+    If any of the above holds, then $\pi_i=\frac{1}{\mathbb{E}_i\left[T_i\right]}$ for every $i$.
+\end{theorem}
+
+\begin{proof}
+    (i) $ \Rightarrow$ (ii): Obvious. 
+
+    (ii) $ \Rightarrow $ (iii): Suppose that $k$ is the positive recurrent state and consider the invariant measure $\nu_k$. Then
+    \[
+    \sum_{i \in I} \nu_k(i)=\sum_{i \in I} \mathbb{E}_k\left[\sum_{n=0}^{T_k-1} 1\left(X_n=i\right)\right]=\mathbb{E}_k\left[T_k\right]<\infty
+    \]
+    since $k$ is positive recurrent. So if we define for every $i$
+    \[
+    \pi_i=\frac{\nu_k(i)}{\mathbb{E}_k\left[T_k\right]},
+    \]
+    then $\pi$ is an invariant distribution.
+
+    (iii) $ \Rightarrow $ (i): Suppose next that (iii) holds and let $k$ be a state. We want to show that $k$ is positive recurrent. 
+    
+    First we show that $\pi_k>0$. Let $i \in I$ be such that $\pi_i>0$ and by irreducibility there exists $n \geq 0$ such that $p_{i k}(n)>0$. By stationarity of $\pi$ we get
+    \[
+    \pi_k=\sum_{j \in I} \pi_j p_{j k}(n) \geq \pi_i p_{i k}(n)>0 .
+    \]
+    So we can define a new invariant measure $\lambda_i=\pi_i / \pi_k$ for every $i \in I$. Also $\lambda_k=1$, and hence by theorem \ref{thm:8.9} $\lambda \geq \nu_k$, which implies
+    \[
+    \mathbb{E}_k\left[T_k\right]=\sum_{i \in I} \nu_k(i) \leq \sum_{i \in I} \lambda_i=\frac{1}{\pi_k}<\infty,
+    \]
+    since $\pi_k>0$. This proves that $k$ is positive recurrent.
+
+    For the last part, let $k \in I$. Then $k$ is positive recurrent by (i), and therefore also recurrent. So the measure $\lambda$ that we defined above must be equal to $\nu_k$ by Theorem \ref{thm:8.9}. We thus obtain that
+    \[
+    \sum_{i \in I} \frac{\pi_i}{\pi_k}=\sum_{i \in I} \nu_k(i)=\mathbb{E}_k\left[T_k\right],
+    \]
+    which using that $\pi$ is a distribution gives
+    \[
+    \frac{1}{\pi_k}=\mathbb{E}_k\left[T_k\right] \implies \pi_k = \frac{1}{\mathbb{E}_k[T_k]}
+    \]
+    and completes the proof.
+\end{proof}
+
+From the proof we immediately conclude that
+
+\begin{corollary}\label{col:8.12}
+    Suppose that $P$ is an irreducible matrix and it has an invariant distribution $\pi$. Then for all $x, y$ we have
+    \[
+    \nu_x(y)=\frac{\pi(y)}{\pi(x)} .
+    \]
+\end{corollary}
+
+\begin{example}
+    Let $X$ be a simple symmetric random walk on $\mathbb{Z}$, i.e.
+    \[
+    P(x, x+1)=P(x, x-1)=\frac{1}{2} \quad \text { for all } x \in \mathbb{Z} \text {. }
+    \]
+    It is immediate to check that $\pi_i=1$ for all $i \in \mathbb{Z}$ is an invariant measure, since
+    \[
+    \pi_i=\frac{1}{2} \pi_{i+1}+\frac{1}{2} \pi_{i-1} .
+    \]
+    By Theorem \ref{thm:8.9}, since $P$ is a recurrent walk, we get that all invariant measures are multiples of $\pi$. We thus deduce that $X$ is not positive recurrent, since $\sum_{i \in \mathbb{Z}} \pi_i=\infty$, and hence we cannot normalise to obtain a probability distribution.
+\end{example}
+
+\begin{remark}
+    The existence of an invariant measure does not imply recurrence. Indeed, let $X$ be a simple symmetric random walk on $\mathbb{Z}^3$. Then $\pi_i=1$ for all $i \in \mathbb{Z}^3$ is an invariant measure, but $X$ is transient.
+\end{remark}
+
+\begin{example}
+    Let $X$ be an asymmetric random walk on $\mathbb{Z}$ with transition probabilities
+    \[
+    P(x, x-1)=q \text { and } P(x, x+1)=p
+    \]
+    with $p>q$ and $p+q=1$. Writing down the equations that an invariant measure $\pi$ should satisfy we get
+    \[
+    \pi_i=\pi_{i-1} p+\pi_{i+1} q,
+    \]
+    which we can solve to get
+    \[
+    \pi_i=a+b\left(\frac{p}{q}\right)^i .
+    \]
+    So here uniqueness up to multiplicative constants does not hold.
+\end{example}
+
+\begin{example}
+    Let $X$ be a random walk on $\mathbb{Z}_{+}$with transition probabilities
+    \[
+    P(x, x-1)=q>p=P(x, x+1) \text { for } x \geq 1
+    \]
+    and $p+q=1$. Suppose also that $P(0,1)=p$ and $P(0,0)=q$. We look for an invariant distribution by solving $\pi=\pi P$. We have
+    \[
+    \begin{aligned}
+    &\pi_0=q \pi_1+q \pi_0 \\
+    &\pi_k=p \pi_{k-1}+q \pi_{k+1} \text { for all } k \geq 1 .
+    \end{aligned}
+    \]
+    Solving the above system we get
+    \[
+    \pi_1=\pi_0 \cdot \frac{p}{q} \text { and } \pi_k=\left(\frac{p}{q}\right)^k \cdot \pi_0 .
+    \]
+    So we can normalise $\pi$ in order to get a probability distribution by taking $\pi_0=1-p / q$. We then get
+    \[
+    \pi_k=\left(\frac{p}{q}\right)^k \cdot\left(1-\frac{p}{q}\right) .
+    \]
+    Since we found an invariant distribution, it follows that $X$ is positive recurrent.
+\end{example}
+
+\section{Time reversibility}
+
+We start with a lemma which says that if a Markov chain is started from stationarity and we reverse time, then we obtain another Markov chain with the same invariant distribution.
+
+\begin{proposition}
+    Let $X$ be a Markov chain with transition matrix $P$ which is irreducible and has invariant distribution $\pi$. Fix $N \in \mathbb{N}$ and suppose that $X_0 \sim \pi$. Then the process $\left(Y_n\right)_{0 \leq n \leq N}$ defined via $Y_n=X_{N-n}$ is a Markov chain with transition matrix $\widehat{P}$ given by
+    \[
+    \widehat{P}(x, y)=\frac{\pi(y)}{\pi(x)} P(y, x) \quad \text { for all } x, y .
+    \]
+    Moreover, $\widehat{P}$ is irreducible and has invariant distribution $\pi$.
+\end{proposition}
+
+\begin{proof}
+    First we check that $\widehat{P}$ is indeed a transition matrix. We have
+    \[
+    \sum_y \widehat{P}(x, y)=\sum_y \frac{\pi(y)}{\pi(x)} P(y, x)=\frac{\pi(x)}{\pi(x)}=1,
+    \]
+    where for the second equality we used that $\pi$ is invariant, i.e. that $\pi=\pi P$.
+
+    We next show that $Y$ is a Markov chain. Let $y_0, \ldots, y_N \in I$. Then
+    \[
+    \begin{aligned}
+    \mathbb{P}\left(Y_0=y_0, \ldots, Y_n=\right.&\left.y_N\right)=\mathbb{P}\left(X_0=y_N, \ldots, X_N=y_0\right) \\
+    &=\pi\left(y_N\right) P\left(y_N, y_{N-1}\right) \cdots P\left(y_1, y_0\right) \\
+    &=\pi\left(y_0\right) \widehat{P}\left(y_0, y_1\right) \cdots \widehat{P}\left(y_{N-1},     y_N\right)
+    \end{aligned}
+    \]
+    which shows that $Y$ is $\operatorname{Markov}(\pi, \widehat{P})$.
+
+    We check now that $\pi$ is invariant for $\widehat{P}$. Indeed, we have
+    \[
+    \sum_x \pi(x) \widehat{P}(x, y)=\sum_x \pi(x) \cdot \frac{\pi(y)}{\pi(x)} P(y, x)=\sum_x \pi(y) P(y, x)=\pi(y),
+    \]
+    since $P$ is a stochastic matrix.
+
+    Finally, to prove that $\widehat{P}$ is irreducible, let $x, y$ be two states. Then there exists a sequence of states $x_0=x, x_1, \ldots, x_k=y$ such that $P\left(x_0, x_1\right) \cdots P\left(x_{k-1}, x_k\right)>0$. But
+    \[
+    \widehat{P}\left(x_k, x_{k-1}\right) \cdots \widehat{P}\left(x_1, x_0\right)=\pi\left(x_0\right) P\left(x_0, x_1\right) \cdots P\left(x_{k-1}, x_k\right) / \pi\left(x_k\right)
+    \]
+    $\widehat{P}\left(x_k, x_{k-1}\right) \cdots \widehat{P}\left(x_1, x_0\right)>0$, which shows that $\widehat{P}$ is also irreducible.   
+\end{proof}
+
+In the previous proposition we saw that if $X_0 \sim \pi$ and we reverse time, then we obtain a Markov chain again with a different transition matrix but the same invariant distribution. So in general, the matrices $P$ and $\widehat{P}$ are not equal. In the particular case that they are equal, then we say that $X$ is time reversible.
+
+\begin{definition}
+    We say that $X$ with transition matrix $P$ and invariant distribution $\pi$ is \textbf{time reversible}, if $\widehat{P}=P$. By the definition of $\widehat{P}$, we see that $X$ is time reversible, if for all $x, y$ we have
+    \[
+    \pi(x) P(x, y)=\pi(y) P(y, x) .
+    \]
+    These equations are called the \textbf{detailed balance equations}.
+
+    Equivalently, $X$ is called time-reversible if for any fixed $N \in \mathbb{N}$ whenever $X_0 \sim \pi$ then
+    \[
+    \left(X_0, \ldots, X_N\right) \stackrel{d}{=}\left(X_N, \ldots, X_0\right)
+    \]
+\end{definition}
+
+\begin{remark}
+    \begin{enumerate}
+        \item It is important to emphasise that in the definition of reversibility we start the chain from $\pi$. Indeed, since we want the two vectors $\left(X_0, \ldots, X_N\right)$ and $\left(X_N, \ldots, X_0\right)$ to have the same distribution, this would not be possible if say $X_0 \sim \delta_x$.
+
+        \item An intuitive way of thinking of time reversibility is by imagining watching a video of the Markov chain started from stationarity. Then reversibility means that whether we watch the video forwards or backwards in time, what we see is indistinguishable statistically, i.e. we cannot tell the two movies apart.
+    \end{enumerate}
+\end{remark}
+
+The following lemma gives a way to find invariant distribution. 
+
+\begin{lemma}
+    Suppose that $\mu$ is a distribution satisfying
+    \[
+    \mu(x) P(x, y)=\mu(y) P(y, x) \quad \text { for all } x, y .
+    \]
+    Then $\mu$ is an invariant distribution for $P$.
+\end{lemma}
+\begin{proof}
+    Taking the sum over all $x$ of both sides of the equality of the statement we get
+    \[
+    \sum_x \mu(x) P(x, y)=\sum_x \mu(y) P(y, x)=\mu(y),
+    \]
+    where we used that $P$ is a stochastic matrix. Therefore, $\mu=\mu P$, which means that $\mu$ is an invariant distribution.
+\end{proof}
+
+\begin{remark}
+    From the lemma above we see that if we find a solution to the detailed balance equations, i.e. we find a distribution $\mu$ satisfying
+    \[
+    \mu(x) P(x, y)=\mu(y) P(y, x) \quad \text { for all } x, y,
+    \]
+    then $\mu$ is necessarily invariant for $P$, and in particular this implies that $P$ is time reversible. 
+    
+    So when looking for an invariant distribution, we should first check whether there is a solution to the detailed balance equations, since this is much easier than trying to solve $\pi=\pi P$. Of course, if there is no solution to detailed balance, it does not mean that $P$ does not have an invariant distribution. It means that even if $P$ has an invariant distribution, then it is not time-reversible.
+\end{remark}
+
+\begin{example}
+    Consider a biased random walk $X$ on the cycle $\mathbb{Z}_n$ with transition probabilities
+    \[
+    P(i,(i+1) \bmod n)=\frac{2}{3}=1-P(i,(i-1) \bmod n), \text { for all } i \in\{0, \ldots, n-1\} .
+    \]
+    Then $\pi_i=1 / n$ for all $i$ is clearly an invariant distribution, but $P$ is not reversible, because the detailed balance equations are not satisfied. 
+    
+    Thinking of the intuitive explanation of reversibility, we see that if we start $X$ from $\pi$, then all states are equally likely, and if we run the chain forwards in time we will observe a rightwards drift, while if we run it backwards in time, we will observe a leftwards drift. This means that the two are not indistinguishable.
+\end{example}
+
+\begin{example}
+    Consider a biased random walk $X$ on $\{0,1, \ldots, n-1\}$ with transition probabilities
+    \[
+    P(i, i+1)=\frac{2}{3}=1-P(i, i-1) \quad \text { for } i \in\{1, \ldots, n-2\}
+    \]
+    and $P(0,1)=2 / 3=1-P(0,0)$ and $P(n, n-1)=1 / 3=1-P(n, n)$. Then solving the detailed balance equations one gets that $\lambda_i=2^i$ is an invariant measure which can be normalised, and hence that $X$ is reversible. 
+    
+    The difference with the previous example, is that the invariant distribution here is concentrated on the right side, and hence starting the chain according to $\pi$ we will observe the chain bouncing off the endpoint $n-1$.
+\end{example}
+\begin{example}[Random walk on a graph]
+    Let $G=(V, E)$ be a finite connected graph with $V$ being the set of vertices and $E$ the set of edges. A simple random walk on $G$ is a Markov chain with transition matrix
+    \[
+    P(x, y)=\left\{\begin{array}{ll}
+    \frac{1}{d(x)} & \text { if }(x, y) \in E \\
+    0 & \text { otherwise }
+    \end{array},\right.
+    \]
+    where $d(x)$ is the degree of $x$, i.e. the total number of edges having $x$ as an endpoint. Since $G$ is connected, it follows that $P$ is irreducible. We now look for an invariant distribution by solving the detailed balance equations:
+    \[
+    \pi(x) P(x, y)=\pi(y) P(y, x) \quad \text { for all } x, y .
+    \]
+    For $(x, y) \in E$ we get
+    \[
+    \pi(x) \cdot \frac{1}{d(x)}=\pi(y) \cdot \frac{1}{d(y)} .
+    \]
+    So we see that taking $\nu(x)=d(x)$ for every $x$ gives an invariant measure. Normalising it (since the graph is finite), we get an invariant distribution $\pi$ given by
+    \[
+    \pi(x)=\frac{d(x)}{\sum_{y \in V} d(y)}=\frac{d(x)}{2|E|} \quad \text { for all } x \in V .
+    \]
+\end{example}
 
 \end{document}
