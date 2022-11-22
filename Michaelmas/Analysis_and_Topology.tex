@@ -1155,7 +1155,7 @@ Note that
 	\]
 	as required.
 \end{proof}
-\begin{corollary}
+\begin{corollary}\label{col:2.6}
 	Let \( M \) be a metric space, \( U \subset M \), \( x \in M \).
 	Then \( U \) is a neighbourhood of \( x \) if and only if there exists an open subset \( V \) of \( M \) such that \( x \in V \subset U \).
 \end{corollary}
@@ -1166,7 +1166,7 @@ Note that
 \end{proof}
 
 \subsection{Continuity and convergence using topology}\ \vspace{-1.5em}
-\begin{proposition}
+\begin{proposition}\label{prop:2.7}
 	In a metric space \( M \), the following are equivalent.
 	\begin{enumerate}[(i)]
 		\item \( x_n \to x \);
@@ -1196,7 +1196,7 @@ Note that
 	\]
 	hence \( d(x_n, x) < \varepsilon \).
 \end{proof}
-\begin{proposition}
+\begin{proposition}\label{prop:2.8}
 	Let \( f \colon M \to M' \) be a function between metric spaces.
 	\begin{enumerate}[(a)]
 		\item The following are equivalent for all \( x \in M \).
@@ -1236,7 +1236,7 @@ Note that
 \begin{definition}
 	The \textbf{topology} of a metric space \( M \) is the family of all open subsets of \( M \).
 \end{definition}
-\begin{proposition}
+\begin{proposition}\label{prop:2.9}
 	The topology of a metric space satisfies
 	\begin{enumerate}[(i)]
 		\item \( \varnothing \) and \( M \) are open;
@@ -1281,7 +1281,7 @@ Note that
         \( D_r(1) \not\subset (0,1] \) and \( \frac{1}{n} \to 0 \not\in (0,1] \).
     \end{enumerate}
 \end{example}
-\begin{lemma}
+\begin{lemma}\label{lma:2.11}
 	Let \( A \subset M \).
 	Then \( A \) is closed in \( M \) if and only if \( M \setminus A \) is open in \( M \).
 \end{lemma}
@@ -1649,7 +1649,7 @@ $\mathbb{R}^n$ and $\mathbb{C}^n$ are complete in the $\ell_p$-metric for $p=1,2
     d\left(x_m, z\right) \leqslant \frac{\lambda^m}{1-\lambda} d\left(x_0, x_1\right) \quad \text { for all } m \in \mathbb{N}.
     \]
     Thus, the convergence is exponentially fast.
-    \item $f: \mathbb{R} \backslash\{0\} \rightarrow \mathbb{R} \backslash\{0\}, x \mapsto x / 2$ is a contraction $\left(\lambda=\frac{1}{2}\right)$ but has no fixed point.
+    \item $f: \mathbb{R} \setminus\{0\} \rightarrow \mathbb{R} \setminus\{0\}, x \mapsto x / 2$ is a contraction $\left(\lambda=\frac{1}{2}\right)$ but has no fixed point.
     \item $f: \mathbb{R} \rightarrow \mathbb{R}, x \mapsto x+1$ is isometric $(\lambda=1)$ but has no fixed point.
     \item $f:[1, \infty) \rightarrow[1, \infty), x \mapsto x+\frac{1}{x}$ satisfies $|f(x)-f(y)|<|x-y|$ for all $x, y \in[1, \infty)$ but has no fixed point.
 \end{enumerate}
@@ -1851,5 +1851,666 @@ for all $t \in[c, d]$. This solves the ODEs (first line of $g$).
 Since $f\left(t_0\right)=\bfz$, we have $g^{(j)}\left(t_0\right)=f_j\left(t_0\right)=z_j$ for $0 \leqslant j \leqslant n-1$. This shows the initial conditions, and hence completes the proof of existence.
 
 To prove uniqueness, assume that $\tilde{g}$ is another solution on $[c, d]$. Define $\tilde{f}:[c, d] \rightarrow B_R(\bfz)$ by setting $\tilde{f}(t)=\left(\tilde{g}(t), \tilde{g}^{(1)}(t), \ldots, \tilde{g}^{(n-1)}(t)\right)$. It is straightforward to verify that $\tilde{f}$ is a solution to the IVP of $f$. It follows that $\tilde{f}=f$ and $\tilde{g}=g$.
+
+\section{Topological Spaces}
+\subsection{Topology}\ \vspace{-1.5em}
+\begin{definition}
+    Let $X$ be a set. A \textbf{topology} on $X$ is a family $\tau$ of subsets of $X$ (i.e. $ \tau\subset \mathcal{P}(X) $) such that 
+    \begin{enumerate}[(i)]
+        \item $ \varnothing, X\in \tau $.
+        \item If $U_i\in \tau$ for all $i\in I$ ($I$ some index set) the $ \bigcup_{i\in I} U_i\in \tau $. 
+        \item If $ U,V\in \tau $, then $ U\cap V\in \tau $. 
+    \end{enumerate}
+    Members of $\tau$ are called \textbf{open sets}. Thus, for $U \subset X$, we say $U$ is \textbf{open} in $X$ (or that $U$ is an open subset of $X$ ) if $U \in \tau$. We might also say that $U$ is $\tau$-open to emphasize the topology $\tau$.
+
+    A \textbf{topological space} is a pair $(X, \tau)$, where $X$ is a set, and $\tau$ is a topology on $X$.
+\end{definition}
+
+\begin{note}
+    If $n \in \mathbb{N}$ and $U_1, \ldots, U_n$ are open sets in a topological space, then $\bigcap_{i=1}^n U_i$ is also open.
+\end{note}
+
+\begin{example}[Metric topologies]
+    Let $(M, d)$ be a metric space. Recall that $U \subset M$ is defined to be open in the metric space $M$ if
+    \[
+    \forall x \in U \quad \exists r>0 \quad D_r(x) \subset U
+    \]
+    We sometimes call such a set $U\ d$-open to emphasize that it is the metric notion of being open. By proposition \ref{prop:2.9}, the family of $d$-open sets is a topology on $M$, which we called the metric topology of $M$.
+    Unless mentioned otherwise, a metric space will always be equipped with its metric topology.
+    
+\end{example}
+
+\begin{definition}
+We say that a topological space $(X, \tau)$ is \textbf{metrizable} (or that $\tau$ is \textbf{metrizable}) if there is a metric $d$ on $X$ such that $\tau$ is the metric topology induced by $d$.
+Thus, for $U \subset X$, we have $U$ is $\tau$-open if and only if $U$ is $d$-open. Note that in this case any metric $d^{\prime}$ equivalent to $d$ induces the same topology $\tau$.
+\end{definition}
+
+\begin{example}[Indiscrete topology]
+    The \textbf{indiscrete topology} on a set $X$ is the topology $\{\emptyset, X\}$.
+    If $|X| \geqslant 2$, then this is not metrizable. To see this, consider any metric $d$ on $X$, fix $x \neq y$ in $X$, set $r=d(x, y)$, and note that $U=D_r(x)$ is $d$-open, non-empty (contains $x$ ) and $U \neq X$ (as $y \notin U$).
+\end{example}
+
+\begin{definition}
+    Let $\tau_1$ and $\tau_2$ be topologies on a set $X$. We say that $\tau_1$ is \textbf{coarser} than $\tau_2$ (or that $\tau_2$ is \textbf{finer} than $\tau_1$ ) if $\tau_1 \subset \tau_2$, i.e., if every $\tau_1$-open set is $\tau_2$-open.
+\end{definition}
+E.g., the indiscrete topology on a set is the coarsest topology on that set.
+
+\begin{example}[Discrete topology]
+    The \textbf{discrete topology} on a set $X$ is the power set $\mathcal{P}(X)$ of $X$.
+
+    This is the finest topology on $X$. The discrete topology is metrizable: by the discrete metric.
+\end{example}
+
+\begin{example}[Cofinite topology]
+    The \textbf{cofinite topology} on a set $X$ is
+    \[
+    \tau=\{\emptyset\} \cup\{U \subset X: U \text { is cofinite in } X\}
+    \]
+    We say $U \subset X$ is \textbf{cofinite} in $X$ if $X \setminus U$ is finite.
+    
+    Note that if $X$ is a finite set, then this is the discrete topology.
+    However, we will see that if $X$ is infinite, then the cofinite topology is not metrizable. Observe that if $x \neq y$ in $X$ and $U$ and $V$ are open sets with $x \in U$ and $y \in V$, then $U \cap V \neq \emptyset$.
+\end{example}
+
+\begin{definition}
+    A topological space $X$ is said to be \textbf{Hausdorff} if for all $x \neq y$ in $X$, there exist disjoint open sets $U$ and $V$ in $X$ such that $x \in U$ and $y \in V$.
+\end{definition}
+
+\begin{note}
+    An infiite set with the cofinite topology is not Hausdorff. On the other hand, we have the following result.
+\end{note}
+
+\begin{proposition}
+    Every metric space is Hausdorff.
+\end{proposition}
+
+It follows that the cofinite topology on an infinite set is not metrizable.
+\begin{proof}
+    Given distinct elements $x$ and $y$ in a metric space $M$, fix $r>0$ with $2 r<d(x, y)$. Then $U=D_{r}(x)$ and $V=D_{r}(y)$ are open sets in $M$ with $x \in U$ and $y \in V$. Moreover, $U \cap V=\emptyset$, otherwise if $z \in U \cap V$, then
+
+$$
+d(x, y) \leqslant d(x, z)+d(z, y)<2 r<d(x, y)
+$$
+
+which is a contradiction.
+\end{proof}
+
+\subsection{Closed subsets, neighbourhoods}
+\ \vspace{-1.5em}
+\begin{definition}
+    A subset $A$ of a topological space $(X, \tau)$ is \textbf{closed} in $X$ (or is a \textbf{closed subset} of $X$, or $\tau$-closed) if $X \setminus A$ is open in $X$.
+\end{definition}
+
+In a metric space, this agrees with the earlier definition of a closed set by Lemma \ref{lma:2.11}.
+
+\begin{proposition}
+    The collection of closed sets in a topological space $X$ satisfies:
+
+\begin{enumerate}[(i)]
+    \item $\emptyset, X$ are closed.
+
+    \item If $A_{i}, i \in I$, are closed, then $\bigcap_{i \in I} A_{i}$ is closed.
+    
+    \item If $A, B$ are closed, then $A \cup B$ is closed.
+\end{enumerate}
+\end{proposition}
+
+\begin{example}
+    \begin{enumerate}
+        \item In a discrete topological space, every subset is closed.
+      
+        \item In the cofinite topology on a set $X$, a subset $A$ is closed if and only if $A=X$ or $A$ is finite.
+      
+      \end{enumerate}
+\end{example}
+
+\begin{definition}
+    Let $X$ be a topological space, $U \subset X$ and $x \in X$. We say $U$ is a \textbf{neighbourhood} of $x$ in $X$ if there exists an open subset $V$ of $X$ such that $x \in V \subset U$.
+\end{definition}
+
+\begin{note}
+    In a metric space, this agrees with the earlier definition by Corollary \ref{col:2.6}. The following result generalizes an earlier observation in metric space.
+\end{note}
+
+\begin{proposition}
+    Let $U$ be a subset of a topological space $X$. Then $U$ is open in $X$ if and only if $U$ is a neighbourhood of $x$ for all $x \in U$.
+\end{proposition}
+
+\begin{proof}
+    Assume $U$ is open and $x \in U$. Then $V=U$ is open, and $x \in V \subset U$. Thus, $U$ is a neighbourhood of $x$.
+
+    Conversely, assume that for every $x \in U$, there exists some open set $V_{x}$ in $X$ such that $x \in V_{x} \subset U$. Then $U=\bigcup_{x \in U} V_{x}$, and hence $U$ is open in $X$.
+\end{proof}
+
+\subsection{Convergence}\ \vspace{-1.5em}
+\begin{definition}
+    Let $\left(x_{n}\right)$ be a sequence in a topological space and let $x \in X$. We say $\left(x_{n}\right)$ \textbf{converges to} $x$ (and write $x_{n} \rightarrow x$) if
+    $$
+    \forall \text { neighbourhoods } U \text { of } x \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad x_{n} \in U
+    $$
+    or equivalently,
+    $$
+    \forall \text { open sets } U \text { with } x \in U \quad \exists N \in \mathbb{N} \quad \forall n \geqslant N \quad x_{n} \in U
+    $$
+\end{definition}
+
+\begin{note}
+    In a metric space, this agrees with the previous definition of convergence by Proposition \ref{prop:2.7}.
+\end{note}
+
+\begin{example}
+    \begin{enumerate}
+        \item Eventually constant sequences: if $\left(x_{n}\right)$ is a sequence in some topological space, and for some $N \in \mathbb{N}$, we have $x_{n}=z$ for $n \geqslant N$, then $x_{n} \rightarrow z$.
+      
+        \item In an indiscrete space, every sequence converges to every point.
+      
+        \item Let $X$ be a set equipped with the cofinite topology. Assume that $x_{n} \rightarrow x$ in $X$. For any $y \neq x$, the set $U=X \setminus \{y\}$ is a neighbourhood of $x$. It follows that $N_{y}=\left\{n \in \mathbb{N}: x_{n}=y\right\}$ is finite. Conversely, if for some $x \in X$, the set $N_{y}$ is finite for all $y \neq x$, then $x_{n} \rightarrow x$. So if $N_{y}$ is finite for all $y \in X$, then $x_{n} \rightarrow x$ for all $x \in X$.
+      \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    Suppose $x_{n} \rightarrow x$ and $x_{n} \rightarrow y$ in a Hausdorff space. Then $x=y$.
+\end{proposition}
+
+\begin{proof}
+    Assume $x \neq y$. Then there exist disjoint open sets $U$ and $V$ such that $x \in U$ and $y \in V$. Since $x_{n} \rightarrow x$, there exists $N_{1} \in \mathbb{N}$ such that $x_{n} \in U$ for every $n \geqslant N_{1}$. Similarly, since $x_{n} \rightarrow y$, there exists $N_{2} \in \mathbb{N}$ such that $x_{n} \in V$ for every $n \geqslant N_{2}$. Then for $n=\max \left\{N_{1}, N_{2}\right\}$, we have $x_{n} \in U \cap V$, contradiction.
+\end{proof}
+
+\begin{remark}
+    So in a Hausdorff space limits are unique. If $x_{n} \rightarrow x$, we will sometimes denote this unique limit $x$ by $\lim _{n \rightarrow \infty} x_{n}$.
+\end{remark}
+
+\begin{remark}
+    Recall that a subset $A$ of a metric space $X$ is closed in $X \Leftrightarrow$ whenever $\left(x_{n}\right)$ is a sequence in $A$ converging to a point $x$ in $X$, the limit $x$ belongs to $A$. The implication ``$\Rightarrow $'' is true also in an arbitrary topological space. However, the reverse implication ``$\Leftarrow$'' is not true in general.
+\end{remark}
+
+\subsection{Interiors and closures}\ \vspace{-1.5em}
+\begin{definition}
+    Let $A$ be a subset of a topological space $X$.
+
+The interior of $A$ in $X$, denoted $\operatorname{int}(A)$ or $A^{\circ}$, is the set
+
+$$
+\operatorname{int}(A)=A^{\circ}=\bigcup\{U \subset X: U \text { is open in } X \text { and } U \subset A\}
+$$
+
+The closure of $A$ in $X$, denoted $\mathrm{cl}(A)$ or $\overline{A}$, is the set
+
+$$
+\mathrm{cl}(A)=\overline{A}=\bigcap\{F \subset X: F \text { is closed in } X \text { and } A \subset F\}
+$$
+
+(Note that $X$ is closed in $X$ and $A \subset X$.)
+\end{definition}
+
+\begin{remark}
+    \begin{enumerate}
+        \item $A^{\circ}$ is open, $A^{\circ} \subset A$ and if $U$ is open with $U \subset A$, then $U \subset A^{\circ}$. Thus, $A^{\circ}$ is the largest open set contained in $A$. It follows that $A$ is open $\Longleftrightarrow A=A^{\circ}$.
+      
+        \item $\overline{A}$ is closed, $A \subset \overline{A}$ and if $F$ is closed with $A \subset F$, then $\overline{A} \subset F$. Thus, $\overline{A}$ is the smallest closed set containing $A$. It follows that $A$ is closed $\Longleftrightarrow A=\overline{A}$.
+      
+      \end{enumerate}
+\end{remark}
+
+\begin{proposition}
+    Let $A$ be a subset of a topological space $X$. Then
+    \begin{enumerate}[(a)]
+        \item $A^{\circ}=\{x \in X: A$ is a neighbourhood of $x\}$
+        \item $\bar{A}=\{x \in X: \forall $ neighbourhoods $U$ of $x, U \cap A \neq \emptyset\}$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}[(a)]
+        \item For $x \in X$ we have
+
+        $$
+        \begin{aligned}
+        x \in A^{\circ} & \Longleftrightarrow \exists \text { open } U \text { with } U \subset A \text { and } x \in U \\
+        & \Longleftrightarrow A \text { is a neighbourhood of } x
+        \end{aligned}
+        $$
+        
+        \item If $x \notin \bar{A}$, then $U=X \setminus \bar{A}$ is an open set with $x \in U$, so $U$ is a neighbourhood of $x$, and $U \cap A=\emptyset$.
+        
+        Conversely, if there is a neighbourhood $U$ of $x$ with $U \cap A=\emptyset$, then there is an open set $V$ with $x \in V \subset U$. Then $V \cap A=\emptyset$, and hence $A \subset X \setminus V$. Since $X \setminus V$ is closed, it follows that $\bar{A} \subset X \setminus V$, and thus $x \notin \bar{A}$.\qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    In $\mathbb{R}$, if $A=[0,1) \cup\{2\}$, then $A^{\circ}=(0,1)$ and $\bar{A}=[0,1] \cup\{2\}$.
+
+    Also, $\mathbb{Q}^{\circ}=\emptyset, \overline{\mathbb{Q}}=\mathbb{R}, \mathbb{Z}^{\circ}=\emptyset$ and $\overline{\mathbb{Z}}=\mathbb{Z}$.
+\end{example}
+
+\begin{note}
+    In a metric space, $x \in \bar{A} \Longleftrightarrow$ there is a sequence $\left(x_{n}\right)$ in $A$ such that $x_{n} \rightarrow x$.
+
+In a topological space, ``$\Longleftarrow $'' is still true, but ``$\Longrightarrow $'' is not true in general.
+
+In a metric space, convergent sequences determine the topology. This fails in topological spaces in general.
+\end{note}
+
+\begin{definition}
+    Let $X$ be a topological space.
+
+A subset $A$ of $X$ is \textbf{dense} in $X$ if $\bar{A}=X$.
+
+We say $X$ is \textbf{separable} if there is a countable subset $A$ of $X$ that is dense in $X$.
+\end{definition}
+
+\begin{example}
+    $\mathbb{R}$ is separable, since $\mathbb{Q}$ is dense in $\mathbb{R}$. Similarly, $\mathbb{R}^{n}$ is separable for any $n \in \mathbb{N}$.
+
+On the other hand, an uncountable discrete topological space is not separable, since the closure of any set is itself.
+\end{example}
+
+\subsection{Subspaces}\ \vspace{-1.5em}
+\begin{definition}
+    Let $(X,\tau)$ be a topological space. The \textbf{subspace topology} on $Y$ (or the relative topology on $Y$ ) is the topology $\{U \cap Y: U \in \tau\}$. This is also called the topology on $Y$ \textbf{induced} by the topology on $X$.
+
+    So for $U \subset Y$, we have $U$ is open in $Y \Longleftrightarrow \exists$ open $V$ in $X$ with $U=V \cap Y$.
+\end{definition}
+
+\begin{example}
+    Let $ X = \mathbb{R}, Y = [0,2], U = (1,2] $. Then $ U \subset Y \subset X $, and $U$ is open in $Y$ since $U = (1,3)\cap Y$. However, $U$ is not open in $X$. 
+\end{example}
+
+\begin{remark}
+    \begin{enumerate}
+        \item A subset of a topological space will always be assumed to be equipped with the relative topology.
+      
+        \item A subspace of a subspace is a subspace: Let $X$ be a topological space and $Z \subset Y \subset X$. Then the topology on $Z$ induced by the topology of $X$ is the same as the topology on $Z$ induced by the relative topology on $Y$.
+        
+        \item Let $(M, d)$ be a metric space and $N \subset M$.
+        
+        The metric $d$ induces the metric topology on $M$. In turn, this induces the relative topology on $N$. On the other hand, the restriction of $d$ to $N$ is a metric on $N$, which in turn induces the metric topology on $N$. These two topologies are fortunately the same. This follows easily from the observation that $D_{r}^{N}(x)=D_{r}^{M}(x) \cap N$ for $x \in N$ and $r>0$.
+      \end{enumerate}
+\end{remark}
+
+\begin{proposition}
+    Let $X$ be a topological space, and let $A \subset Y \subset X$.
+
+    \begin{enumerate}[(i)]
+        \item $A$ is closed in $Y \Longleftrightarrow \exists$ a closed set $B$ in $X$ with $A=B \cap Y$.
+
+        \item The closure of $A$ in $Y$ is the intersection with $Y$ of the closure of $A$ in $X$. i.e. $ \closure_Y A = \closure_X A \cap Y $.
+    \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+    The analogue of part (ii) for interiors is false. E.g., $X=\mathbb{R}$ and $A=Y=\{0\}$. Then the interior of $A$ in $Y$ is $A$, and the interior of $A$ in $X$ is $\emptyset$.
+\end{remark}
+
+\begin{proof}
+    (i) If $A$ is closed in $Y$, then $Y \setminus A$ is open in $Y$. It follows that $Y \setminus A=U \cap Y$ for some set $U$ open in $X$. Then $A=(X \setminus U) \cap Y$ and $X \setminus U$ is closed in $X$, which proves ``$\Longrightarrow $''.
+
+Conversely, assume that $A=B \cap Y$ where $B$ is closed in $X$. Then $Y \setminus A=(X \setminus B) \cap Y$ and $X \setminus B$ is open in $X$. It follows that $Y \setminus A$ is open in $Y$, and thus $A$ is closed in $Y$.
+
+(ii) Let us write $\bar{A}^{Y}$ and $\bar{A}^{X}$ for the closure of $A$ in $Y$ and $X$, respectively. Then $\bar{A}^{X} \cap Y \supset A$, and $\bar{A}^{X} \cap Y$ is closed in $Y$ by part (i). It follows that $\bar{A}^{X} \cap Y \supset \bar{A}^{Y}$.
+
+Conversely, since $\bar{A}^{Y}$ is closed in $Y$, by part (i) there is a closed set $V$ in $X$ such that $\bar{A}^{Y}=V \cap Y$. Then $V \supset A$, and thus $V \supset \bar{A}^{X}$ since $V$ is closed in $X$. It follows that $\bar{A}^{Y}=V \cap Y \supset \bar{A}^{X} \cap Y$.
+\end{proof}
+
+\subsection{Base}\ \vspace{-1.5em}
+\begin{definition}
+    Let $(X, \tau)$ be a topological space. A \textbf{base} for $\tau$ is a family $\mathcal{B} \subset \tau$ such that for every $U \in \tau$, there exists $\mathcal{C} \subset \mathcal{B}$ such that $U=\bigcup_{B \in \mathcal{C}} B$.
+\end{definition}
+\begin{note}
+    \begin{enumerate}
+        \item If $\mathcal{B}$ is a base for $\tau$, then $\tau=\left\{\bigcup_{B \in \mathcal{C}} B: \mathcal{C} \subset \mathcal{B}\right\}$. So $\mathcal{B}$ determines $\tau$.
+      
+        \item If $\mathcal{B}$ is a base for $\tau$, then for every $U \subset X$, we have:
+        
+        \begin{center}
+            $U \in \tau \Longleftrightarrow$ for all $x \in U$ there exists $B \in \mathcal{B}$ such that $x \in B \subset U$.
+        \end{center}
+      \end{enumerate}
+\end{note}
+
+\begin{example}
+    \begin{enumerate}
+        \item The family of open balls in a metric space is a base for the metric topology.
+      
+        \item In $\mathbb{R}$ the family $\{(a, b): a<b\}$ of all open intervals is a base for the usual topology.
+      
+        \item In a discrete space $X$, any base must contain $\{\{x\}: x \in X\}$, and moreover, this family is a base for $X$.
+      \end{enumerate}
+\end{example}
+
+\begin{lemma}\label{lma:4.7}
+    Let $X$ be a set and $\mathcal{B} \subset \mathcal{P}(X)$. If $X \in \mathcal{B}$ and for all $B_{1}, B_{2} \in \mathcal{B}$ we have $B_{1} \cap B_{2} \in \mathcal{B}$, then there is a unique topology $\tau$ on $X$ such that $\mathcal{B}$ is a base for $\tau$.
+\end{lemma}
+\begin{proof}
+    Existence: Let $\mathcal{B}$ be such a base. Motivated by note 2 above, define 
+    \[
+        \tau=\{U \subset X: \forall x \in U\ \exists B \in \mathcal{B}\ x \in B \subset U\} \tag{$*$}
+    \]
+    It is clear that $\mathcal{B} \subset \tau$: if $U \in \mathcal{B}$, then for each $x \in U$, one can take $B=U$ and get $x \in B \subset U$. So it is enough to check that the family $\tau$ defined above is a topology on $X$.
+
+    Clearly, $\emptyset \in \tau$, and $X \in \tau$ since $X \in \mathcal{B}$.
+
+    Let $U_{i} \in \tau$ for every $i$ in some set $I$, and let $x \in \bigcup_{i \in I} U_{i}$. Then $x \in U_{j}$ for some $j \in I$, and hence there exists $B \in \mathcal{B}$ with $x \in B \subset U_{j} \subset \bigcup_{i \in I} U_{i}$. It follows that $\bigcup_{i \in I} U_{i} \in \tau$. 
+
+    Finally, let $U_{1}, U_{2} \in \tau$, and let $x \in U_{1} \cap U_{2}$. Then for each $i=1,2$, since $x \in U_{i} \in \tau$, there exists $B_{i} \in \mathcal{B}$ with $x \in B_{i} \subset U_{i}$. It follows that $x \in B_{1} \cap B_{2} \subset U_{1} \cap U_{2}$. By assumption, $B_{1} \cap B_{2} \in \mathcal{B}$, and hence $U_{1} \cap U_{2} \in \tau$.
+
+    Uniqueness: by note 2 above, ($*$) must be satisfied by all $\tau$, and hence it is unique. 
+\end{proof}
+
+\begin{remark}
+    The conditions in the lemma are sufficient but not necessary. It follows easily from the proof that the two conditions below (as a whole) are also sufficient.
+
+\begin{enumerate}
+    \item $\bigcup_{B \in \mathcal{B}} B=X$
+
+    \item $\forall U, V \in \mathcal{B} \quad \forall x \in U \cap V \quad \exists W \in \mathcal{B} \quad x \in W \subset U \cap V$.
+\end{enumerate}
+These are also clearly necessary.
+\end{remark}
+
+\begin{definition}
+    We say that a topological space $(X, \tau)$ (or that the topology $\tau)$ is \textbf{second countable} if there is a countable base for $\tau$.
+\end{definition}
+\begin{example}
+    $\mathbb{R}$ is second countable: the family of open intervals $(a, b)$ with $a, b \in \mathbb{Q}$ is a countable base.
+
+Similarly, $\mathbb{R}^{n}$ is second countable.
+
+\end{example}
+
+\subsection{Continuity}\ \vspace{-1.5em}
+\begin{definition}
+    A function $f: X \rightarrow Y$ between topological spaces is said to be \textbf{continuous} if $f^{-1}(V)$ is open in $X$ for every open subset $V$ of $Y$.
+\end{definition}
+\begin{note}
+    For functions between metric spaces, this agrees with the $\varepsilon-\delta$ definition by Proposition \ref{prop:2.8}.
+\end{note}
+
+\begin{example}
+    \begin{enumerate}
+        \item Constant functions are continuous: if $f: X \rightarrow Y$ is constant, then for any $V \subset Y$, we have that $f^{-1}(V)$ is either $X$ or $\emptyset$ depending on whether the constant value that $f$ takes is in $V$ or not.
+      
+        \item The identity function $\identity: X \rightarrow X$ on a space $X$ is continuous.
+      
+        \item If $Y$ is a subspace of a topological space $X$, then the inclusion map $\iota: Y \rightarrow X$ is continuous. Indeed, if $V$ is open in $X$, then $\iota^{-1}(V)=V \cap Y$, which is open in $Y$ by the definition of the subspace topology. It follows that for any continuous function $f: X \rightarrow Z$, the restriction $f\restriction_{Y}: Y \rightarrow Z$ is also continuous since $f\restriction_{Y}=f \circ \iota$. (See the next proposition.)
+      
+      \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop:4.8}
+    Let $f: X \rightarrow Y$ be a function between topological spaces.
+
+    \begin{enumerate}[(i)]
+        \item $f$ is continuous $\Longleftrightarrow f^{-1}(V)$ is closed in $X$ for all closed sets $V$ in $Y$.
+
+        \item If $\mathcal{B}$ is a base for $Y$, then we have:
+    
+        $f$ is continuous $\Longleftrightarrow f^{-1}(B)$ is open in $X$ for every $B \in \mathcal{B}$.
+    
+        \item If $f$ is continuous and $g: Y \rightarrow Z$ is another continuous function between topological spaces, then the composite $g \circ f: X \rightarrow Z$ is also continuous.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (i) If $f$ is continuous and $V$ is a closed subset of $Y$, then $Y \setminus V$ is open in $Y$, and hence $f^{-1}(Y \setminus V)=X \setminus f^{-1}(V)$ is open in $X$. Thus, $f^{-1}(V)$ is closed in $X$. The reverse implication is similar.
+    
+    (ii) Since members of $\mathcal{B}$ are open in $Y$, the given condition is necessary.
+    
+    Conversely, assuming the condition, if $V$ is open in $Y$, then there is a subfamily $\mathcal{C} \subset \mathcal{B}$ with $V=\bigcup_{B \in \mathcal{C}} B$. It follows that $f^{-1}(V)=\bigcup_{B \in \mathcal{C}} f^{-1}(B)$, which is a union of open sets in $X$, and hence open in $X$.
+    
+    (iii) Given an open set $W$ in $Z$, we have $(g \circ f)^{-1}(W)=f^{-1}\left(g^{-1}(W)\right)$. This is open in $X$, since $V=g^{-1}(W)$ is open in $Y$ by continuity of $g$, and in turn $f^{-1}(V)$ is open in $X$ by continuity of $f$.
+\end{proof}
+
+\begin{remark}
+    There is a notion of continuity at a point. Let $f: X \rightarrow Y$ be a function between topological spaces, and let $x \in X$. We say $f$ is \textbf{continuous} at $x$ if for every neighbourhood $V$ of $f(x)$ in $Y$, there is a neighbourhood $U$ of $x$ in $X$ such that $f(U) \subset V$. Equivalently, $f^{-1}(V)$ is a neighbourhood of $x$ in $X$ for every neighbourhood $V$ of $f(x)$ in $Y$.
+
+    Then $f$ is continuous if and only if $f$ is continuous at every $x \in X$.
+
+    If $f$ is continuous at $x$ and $x_{n} \rightarrow x$ in $X$, then $f\left(x_{n}\right) \rightarrow f(x)$. The converse is false in general! If $f\left(x_{n}\right) \rightarrow f(x)$ whenever $x_{n} \rightarrow x$ in $X$, then it does not follow in general that $f$ is continuous at $x$. See \href{https://math.stackexchange.com/questions/1419938/example-of-topological-spaces-where-sequential-continuity-does-not-imply-continu}{here}. 
+\end{remark}
+
+\subsection{Homeomorphisms and topological invariance}\ \vspace{-1.5em}
+\begin{definition}
+    A function $f: X \rightarrow Y$ between topological spaces is a \textbf{homeomorphism} if $f$ is a bijection and both $f$ and $f^{-1}$ are continuous.
+
+    Topological spaces $X$ and $Y$ are said to be \textbf{homeomorphic} if there is a homeomorphism $f: X \rightarrow Y$. This is an equivalence relation on the class of topological spaces.
+
+    A property $\mathfrak{P}$ of topological spaces is called a \textbf{topological property} (or a \textbf{topological invariant}) if for any pair $X, Y$ of homeomorphic topological spaces, $X$ has $\mathfrak{P} \Longleftrightarrow Y$ has $\mathfrak{P}$. 
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item Being metrizable is a topological property.
+        
+        Indeed, assume $f:(X, d) \rightarrow(Y, \tau)$ is a homeomorphism, where $d$ is a metric on $X$ and $\tau$ is a topology on $Y$. We define $d^{\prime}(y, z)=d\left(f^{-1}(y), f^{-1}(z)\right)$ for $y, z \in Y$. A routine check shows that $d^{\prime}$ is a metric. We now let $g=f$ but thought of as a function into $\left(Y, d^{\prime}\right)$. So we have $f:(X, d) \rightarrow(Y, \tau)$ and $g:(X, d) \rightarrow\left(Y, d^{\prime}\right)$. Note that $g$ is isometric, and so $g$ is a homeomorphism. It follows that $\identity=g \circ f^{-1}:(Y, \tau) \rightarrow\left(Y, d^{\prime}\right)$ is a homeomorphism. Thus, if $U \subset Y$, then $U$ is $\tau$-open if and only if $U$ is $d^{\prime}$-open (same open sets).
+        \begin{center}
+            \begin{tikzcd}
+                (X,d) \arrow[rd, "g"] \arrow[r,"f"] & (Y,\tau) \arrow[d, "\identity"]\\ 
+                & (Y,d')
+            \end{tikzcd}
+        \end{center}
+        \item Being Hausdorff is a topological property.
+        \item Being a complete metric space is \textit{not} a topological property. There are examples where a complete metric on a set is equivalent to another metric on the same set that is not complete. See \href{https://math.stackexchange.com/questions/1565350/why-is-completeness-not-a-topological-property}{here}.
+      \end{enumerate}
+\end{example}
+
+\begin{note}
+    Let $f: X \rightarrow Y$ be a continuous bijection between topological spaces. Such an $f$ need not be a homeomorphism: see \href{https://math.stackexchange.com/questions/378717/finding-counterexamples-bijective-continuous-functions-that-are-not-homeomorphi}{here}. In fact, such an $f$ is a homeomorphism if and only if for every open set $U$ in $X$, the set $\left(f^{-1}\right)^{-1}(U)=f(U)$ is open in $Y$ (by definition of homeomorphism).
+\end{note}
+
+\begin{definition}
+    A function $f: X \rightarrow Y$ between topological spaces is called \textbf{open} (or an \textbf{open map}) if $f(U)$ is open in $Y$ for every open subset $U$ of $X$.
+\end{definition}
+
+\begin{remark}
+    A homeomorphism is a continuous and open bijection.
+\end{remark}
+
+\subsection{Product topology}
+Let $X$ and $Y$ be topological spaces. Consider the family
+$$
+\mathcal{B}=\{U \times V: U \text { is open in } X \text { and } V \text { is open in } Y\}
+$$
+of subsets of $X \times Y$. Note that $X \times Y \in \mathcal{B}$. Also, for open sets $U, U^{\prime}$ in $X$ and $V, V^{\prime}$ in $Y$, we have $U \times V \cap U^{\prime} \times V^{\prime}=\left(U \cap U^{\prime}\right) \times\left(V \cap V^{\prime}\right)$. It follows that $\mathcal{B}$ is closed under taking intersections.
+
+By lemma \ref{lma:4.7}, there is a unique topology on $X \times Y$ for which $\mathcal{B}$ is a base. 
+
+\begin{definition}
+    The \textbf{product topology} on \( X \times Y \) is the topology such that a subset \( U \) of \( X \times Y \) is open if there exists a set \( I \) and open sets \( U_i, V_i \) in \( X, Y \) for all \( i \in I \) such that
+	\[
+		U = \bigcup_{i \in I} U_i \times V_i
+	\]
+\end{definition}
+
+\begin{note}
+    For a subset $W \subset X \times Y$, we have
+
+\begin{center}
+    $W$ is open $\Longleftrightarrow \forall z \in W \quad \exists$ open $U$ in $X$ and $V$ in $Y \quad z \in U \times V \subset W$
+\end{center}
+\end{note}
+
+\begin{example}
+    Let $(M, d)$ and $\left(M^{\prime}, d^{\prime}\right)$ be metric spaces. We consider the metric topology on $M$ and $M^{\prime}$, which induces a product topology on $M \times M^{\prime}$. Let $W \subset M \times M^{\prime}$. Then $W$ is open in the product topology if and only if
+    \begin{center}
+        $\forall\left(x, x^{\prime}\right) \in W \quad\left(x, x^{\prime}\right) \in U \times U^{\prime} \subset W$ for some open sets $U$ in $M$ and $U^{\prime}$ in $M^{\prime}$
+    \end{center}
+    Equivalently,
+    $$
+    \forall\left(x, x^{\prime}\right) \in W \quad\left(x, x^{\prime}\right) \in D_{r}(x) \times D_{r}\left(x^{\prime}\right) \subset W \text { for some } r>0
+    $$
+
+    Observe that $D_{r}(x) \times D_{r}\left(x^{\prime}\right)=D_{r}\left(x, x^{\prime}\right)$ in $M \oplus_{\infty} M^{\prime}$. It follows that $W$ is open in the product topology if and only if $W$ is $d_{\infty}$-open. Thus, the product topology on the product of metrizable spaces is metrizable: it is induced by $d_{\infty}$, and hence also by $d_{p}$ for $p=1$ or 2 .
+
+    E.g., Taking the product of two copies of $\mathbb{R}$ with its usual topology, we deduce that the product topology on $\mathbb{R}^{2}$ is the standard euclidean topology.
+\end{example}
+
+\begin{proposition}\label{prop:4.9}
+    Let $X$ and $Y$ be topological spaces. The coordinate projections $q_{X}: X \times Y \rightarrow X,(x, y) \mapsto x$, and $q_{Y}: X \times Y \rightarrow Y,(x, y) \mapsto y$, satisfy
+
+    \begin{enumerate}[(i)]
+        \item $q_{X}$ and $q_{Y}$ are continuous.
+
+        \item Given a topological space $Z$ and a function $f: Z \rightarrow X \times Y$, we have $f$ is continuous $\Longleftrightarrow q_{X} \circ f: Z \rightarrow X$ and $q_{Y} \circ f: Z \rightarrow Y$ are continuous. i.e. continuous coordinate-wise. 
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (i) If $U$ is an open subset of $X$, then $q_{X}^{-1}(U)=U \times Y$, which is open in $X \times Y$. Thus, $q_{X}$ is continuous, as is $q_{Y}$ by a similar argument.
+
+    (ii) If $f$ is continuous, then so are the composites $q_X \circ f$ and $q_{Y} \circ f$ by part (i). 
+    
+    For the converse, set $g=q_{X} \circ f$ and $h=q_{Y} \circ f$, and assume that $g$ and $h$ are continuous. Note that $f(z)=(g(z), h(z))$ for $z \in Z$. 
+    
+    Let $W$ be a member of the defining base of the product topology on $X \times Y$, i.e., $W=U \times V$ where $U$ is open in $X$ and $V$ is open in $Y$. Then for $z \in Z$, we have $f(z) \in W$ if and only if $g(z) \in U$ and $h(z) \in V$. It follows that $f^{-1}(W)=g^{-1}(U) \cap h^{-1}(V)$, which is open in $Z$ since $g$ and $h$ are assumed continuous. Finally, it follows by Proposition \ref{prop:4.8}(ii) that $f$ is continuous.
+\end{proof}
+
+\begin{remark}
+    All of the above extends to products of any finite number of topological spaces. Given $n \in \mathbb{N}$ and spaces $X_{1}, \ldots, X_{n}$, the family
+    $$
+    \mathcal{B}=\left\{U_{1} \times \cdots \times U_{n}: U_{i} \text { is open in } X_{i} \text { for } 1 \leqslant i \leqslant n\right\}
+    $$
+    of subsets of $X=X_{1} \times \cdots \times X_{n}$ is a base for a unique topology on $X$ called the product topology. A subset $W \subset X$ is open in $X$ if and only if
+    $$
+    \forall\left(x_{1}, \ldots, x_{n}\right) \in W \quad \exists \text { open } U_{i} \subset X_{i} \quad\left(x_{1}, \ldots, x_{n}\right) \in U_{1} \times \cdots \times U_{n} \subset W
+    $$
+    As before, the product of metrizable spaces is metrizable using any of the metrics $d_{1}, d_{2}, d_{\infty}$ on the product. E.g., the product of $n$ copies of $\mathbb{R}$ with the usual topology yields $\mathbb{R}^{n}$ with the standard topology.
+
+    The obvious extension to $n$ products of Proposition \ref{prop:4.9} holds.
+
+    Finally, it is possible to define the product topology on arbitrary (not necessarily finite) products. This is beyond the scope of this course. (See \href{https://www.dpmms.cam.ac.uk/~az10000/2021-mich-partib-aandt-product-topology.pdf}{additional notes}.)
+\end{remark}
+
+\subsection{Quotient topology}
+Let $X$ be a topological space and let $R$ be an equivalence relation on $X$. This means that 
+\begin{enumerate}
+    \item $R \subset X \times X$ (as usual we write $x \sim y$ instead of $(x, y) \in R$ )
+    \item $R$ is reflexive $(\forall x \in X, x \sim x)$,
+    \item symmetric $(\forall x, y \in X, x \sim y \Rightarrow y \sim x)$ 
+    \item and transitive $(\forall x, y, z \in X, x \sim y, y \sim z \Rightarrow x \sim z)$.
+\end{enumerate}
+For $x \in X$ we let $q(x)$ be the equivalence class of $x: q(x)=\{y \in X: y \sim x\}$.
+
+\begin{definition}
+    The set $X / R$ of all equivalence classes is called the \textbf{quotient set} of $X$ by $R$. The map $q: X \rightarrow X / R, x \mapsto q(x)$, is called the \textbf{quotient map}. We define the \textbf{quotient topology} on $X / R$ (induced by the topology of $X$ ) to be the family
+    $$
+    \left\{V \subset X / R: q^{-1}(V) \text { is open in } X\right\}
+    $$
+\end{definition}
+
+This is a topology:
+\begin{enumerate}
+    \item \( q^{-1}(\varnothing) = \varnothing \) which is open, and \( q^{-1}(X/R) = X \) which is open.
+    \item If \( V_i \) are open, then \( q^{-1}\qty(\bigcup_{i \in I} V_i) = \bigcup_{i \in I} q^{-1}(V_i) \) which is a union of open sets which is open.
+    \item If \( U, V \) are open, then \( q^{-1}(U \cap V) = q^{-1}(U) \cap q^{-1}(V) \) which is open.
+\end{enumerate}
+\begin{remark}
+    \begin{enumerate}
+        \item The quotient map $q: X \rightarrow X / R$ is continuous. Indeed, if $V$ is open in $X / R$, then by definition $q^{-1}(V)$ is open in $X$.
+      
+        \item For $x \in X$ and $t \in X / R$, we have $x \in t \Longleftrightarrow t=q(x)$. This is because equivalence classes partition $X$. It follows that for $V \subset X / R$ we have
+        $$
+        q^{-1}(V)=\{x \in X: q(x) \in V\}=\{x \in X: \exists t \in V x \in t\}=\bigcup\{t: t \in V\}
+        $$
+      \end{enumerate}
+\end{remark}
+\begin{center}
+    \includegraphics[scale=0.4]{at3.jpg}
+\end{center}
+\begin{example}
+\begin{enumerate}
+  \item $\mathbb{R}$ in the usual topology is also an abelian group under addition. Then $\mathbb{Z} \leqslant \mathbb{R}$ and we can form the quotient group $\mathbb{R} / \mathbb{Z}$, which is an example of a quotient space with relation $x \sim y \Longleftrightarrow x-y \in \mathbb{Z}$. Elements of $[0,1]$ represent different cosets except for $0+\mathbb{Z}=1+\mathbb{Z}$ : in the quotient space, 0 and 1 are "glued together". There are no other cosets, so the quotient space $\mathbb{R} / \mathbb{Z}$ is a circle. More precisely, $\mathbb{R} / \mathbb{Z}$ in the quotient topology is homeomorphic to a circle. This is not obvious.
+
+  \item This time consider the quotient group $\mathbb{R} / \mathbb{Q}$. The quotient map $q: \mathbb{R} \rightarrow \mathbb{R} / \mathbb{Q}$ is a group homomorphism. Assume that $V \subset \mathbb{R} / \mathbb{Q}$ is open and non-empty. Then $q^{-1}(V)$ is a non-empty open subset of $\mathbb{R}$, and hence $(a, b) \subset q^{-1}(V)$ for some $a<b$ in $\mathbb{R}$. Given $x \in \mathbb{R}$, there exists $r \in \mathbb{Q} \cap(a-x, b-x)$. It follows that $x+r \in(a, b)$, and hence $q(x)=q(x+r) \in V$ and $x \in q^{-1}(V)$. We have shown that $q^{-1}(V)=\mathbb{R}$, and thus $V=q\left(q^{-1}(V)\right)=\mathbb{R} / \mathbb{Q}$. The quotient topology is the indiscrete topology! So a quotient of a metrizable space need not be metrizable.
+\item Consider the unit square $Q=[0,1] \times[0,1]$ in $\mathbb{R}^{2}$ with the following equivalence relation:
+$$
+(x, y) \sim\left(x^{\prime}, y^{\prime}\right) \Longleftrightarrow \begin{cases}(x, y)=\left(x^{\prime}, y^{\prime}\right) & \text { or } \\ x=x^{\prime},\left\{y, y^{\prime}\right\}=\{0,1\} & \text { or } \\ \left\{x, x^{\prime}\right\}=\{0,1\}, y=y^{\prime} & \end{cases}
+$$
+\begin{center}
+    \includegraphics[scale=0.4]{at4.jpg}
+\end{center}
+The space \( Q / R \) is homeomorphic to \( \mathbb R^2 / \mathbb Z^2 \).
+	This is a square where the top and bottom edges are identified as the same, and the left and right edges are also identified as the same.
+	This is homeomorphic to the surface of a torus with the Euclidean topology embedded in Euclidean three-dimensional space.
+\end{enumerate}
+\end{example}
+
+\paragraph{Recall from IA Numbers and Sets }
+Let $X$ be a set and $R$ be an equivalence relation on $X$. Let $q: X \rightarrow X / R$ be the quotient map.
+
+Suppose $Y$ is another set and a function $f: X \rightarrow Y$ \textbf{respects} the relation $R$ :
+$$
+\forall x, y \in X \quad x \sim y \Longrightarrow f(x)=f(y)
+$$
+
+Then there is a unique function $\tilde{f}: X / R \rightarrow Y$ such that $f=\tilde{f} \circ q$. So the following diagram commutes. 
+\begin{center}
+\begin{tikzcd}
+    X \arrow[r,"f"] \arrow[d,"q"] & Y\\ 
+    X/R \arrow[ur, "\tilde{f}"] & 
+\end{tikzcd}
+\end{center}
+\begin{proof}
+    given $z \in X / R$, write $z=q(x)$ for some $x \in X$, then set $\tilde{f}(z)=f(x)$.
+\end{proof}
+
+\begin{note}
+    \begin{enumerate}
+        \item $\operatorname{im}(f)=\operatorname{im}(\tilde{f})$ So $f$ surjective $\Longrightarrow \tilde{f}$ surjective.
+      
+        \item Suppose $f$ \textbf{fully respects} $R: \forall x, y \in X \quad x \sim y \Longleftrightarrow f(x)=f(y)$
+        
+        Then $\tilde{f}$ is injective.
+      \end{enumerate}
+\end{note}
+
+\begin{proposition}\label{prop:4.10}
+    Let $X, Y$ be topological spaces, let $R$ be an equivalence relation on $X$ and let $q: X \rightarrow X / R$ be the quotient map. Let $f: X \rightarrow Y$ be a function that respects the relation $R$. Then the following hold.
+    \begin{enumerate}[(i)]
+        \item If $f$ is continuous, then $\tilde{f}$ is continuous.
+
+        \item If $f$ is an open map, then $\tilde{f}$ is an open map.
+    \end{enumerate}
+    (Here $\tilde{f}: X / R \rightarrow Y$ is the unique map with $\tilde{f} \circ q=f$.) In particular, if $f$ is continuous, surjective and fully respects $R$, then $\tilde{f}$ is a continuous bijection. If in addition, $f$ is an open map, then $\tilde{f}$ is a homeomorphism.
+\end{proposition}
+\begin{proof}
+    (i) Let $V$ be an open subset of $Y$. Is $\tilde{f}^{-1}(V)$ open in $X / R$ ? We have $q^{-1}\left(\tilde{f}^{-1}(V)\right)=(\tilde{f} \circ q)^{-1}(V)=f^{-1}(V)$, which is open in $X$ since $f$ is continuous. Hence, $\tilde{f}^{-1}(V)$ is open in $X / R$, and so $\tilde{f}$ is continuous.
+
+    (ii) Let $V$ be an open subset of $X / R$. Then $U=q^{-1}(V)$ is open in $X$ and $q(U)=q\left(q^{-1}(V)\right)=V$. Hence, $\tilde{f}(V)=\tilde{f}(q(U))=f(U)$, which is open in $Y$. Thus, $\tilde{f}$ is open.
+\end{proof}
+
+\begin{example}
+    $\mathbb{R} / \mathbb{Z}$ is homeomorphic to $S^{1}=\left\{x \in \mathbb{R}^{2}:\|x\|=1\right\}$.
+
+    Define $f: \mathbb{R} \rightarrow S^{1}$ by $f(t)=(\cos (2 \pi t), \sin (2 \pi t))$. Then $f$ is continuous, surjective and for $s, t \in \mathbb{R}$, we have $s-t \in \mathbb{Z} \Longleftrightarrow f(s)=f(t)$. So by Proposition \ref{prop:4.10}, there is a unique map $\tilde{f}: \mathbb{R} / \mathbb{Z} \rightarrow S^{1}$ with $f=\tilde{f} \circ q$, and moreover, $\tilde{f}$ is a continuous bijection.
+
+    It remains to check that $f$ is an open map. 
+    \begin{itemize}
+        \item Let $U$ be an open subset of $\mathbb{R}$, and assume for a contradiction that $f(U)$ is not open in $S^{1}$. 
+        \item Then its complement is not closed, so it contains a sequence $\left(z_{n}\right)$ that converges to some $z \in f(U)$. 
+        \item For each $n \in \mathbb{N}$ choose $x_{n} \in[0,1]$ such that $z_{n}=f\left(x_{n}\right)$. This can be done since $f$ is surjective.  
+        \item Note that $x_{n} \notin U$ since $z_{n} \notin f(U)$. After passing to a subsequence, we may assume that $x_{n} \rightarrow x$ for some $x \in[0,1]$ (Bolzano-Weierstrass). 
+        \item Then $f\left(x_{n}\right) \rightarrow f(x)$ by continuity, and so $f(x)=z$. 
+        \item Since $z \in f(U)$, we have $z=f(y)$ for some $y \in U$. Then $k=y-x \in \mathbb{Z}$. 
+        \item Now $f\left(x_{n}+k\right)=f\left(x_{n}\right)=z_{n} \notin f(U)$, and thus $x_{n}+k \notin U$. On the other hand, $x_{n}+k \rightarrow x+k=y$. Since $\mathbb{R} \setminus U$ is closed, we have $y \notin U$, a contradiction.
+    \end{itemize}
+
+    Later we will have a much better way of proving that $f$ is open.
+\end{example}
+
+\begin{proposition}
+    Let $X$ be a topological space and $R$ an equivalence relation on $X$.
+    \begin{enumerate}[(a)]
+        \item If $X / R$ Hausdorff, then $R$ is closed in $X \times X$.
+        \item If $R$ is closed in $X \times X$ and $q: X \rightarrow X / R$ is open, then $X / R$ is Hausdorff.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (a) Given $(x, y) \in X \times X \setminus R$, we have $x \not\sim y$, so $q(x) \neq q(y)$. Thus, there exist disjoint open sets $S, T$ in $X / R$ such that $q(x) \in S$ and $q(y) \in T$. Then $U=q^{-1}(S)$ and $V=q^{-1}(T)$ are disjoint open sets in $X$ with $x \in U$ and $y \in V$. 
+    
+    Now for all $a \in U$ and $b \in V$, we have $q(a) \in S$ and $q(b) \in T$, and so $a \not\sim b$, i.e., $(a, b) \notin R$. It follows that $(x, y) \in U \times V \subset X \times X \setminus R$. This proves that $R$ has open complement, and thus $R$ is closed.
+
+(b) Given $z \neq w$ in $X / R$, choose $x, y \in X$ with $z=q(x)$ and $w=q(y)$. Then $(x, y) \notin R$, i.e., the open set $X \times X \setminus R$ contains $(x, y)$. Thus, there exist open set $U, V$ in $X$ such that $(x, y) \in U \times V \subset X \times X \setminus R$. 
+
+Since $q$ is an open map, $q(U)$ and $q(V)$ are open sets in $X / R$ with $z=q(x) \in q(U)$ and $w=q(y) \in q(V)$. Finally, $q(U) \cap q(V)=\emptyset$ since otherwise, there exist $a \in U$ and $b \in V$ with $q(a)=q(b)$, and thus $(a, b) \in R \cap U \times V$, contradicting the choice of $U, V$.
+\end{proof}
 
 \end{document}

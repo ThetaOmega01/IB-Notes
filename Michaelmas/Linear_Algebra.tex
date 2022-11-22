@@ -1897,4 +1897,349 @@ In particular, this implies that an upper-triangular matrix with diagonal elemen
 	\end{enumerate}
 \end{remark}
 
+\section{Adjugate matrix}
+
+\subsection{Column and row expansions}
+Let \( A \in \mcM_n(\bbF) \) with column vectors \( A^{(i)} \).
+We know that
+\[
+	\det(A^{(1)}, \dots, A^{(j)}, \dots, A^{(k)}, \dots, A^{(n)}) = -\det(A^{(1)}, \dots, A^{(k)}, \dots, A^{(j)}, \dots, A^{(n)})
+\]
+Using the fact that \( \det A = \det A^\top \) we can similarly see that swapping two rows will invert the sign of the determinant.
+
+\begin{remark}
+	We could have proven all of the properties of the determinant above by using the decomposition of \( A \) into elementary matrices.
+\end{remark}
+
+\begin{definition}
+	Let \( A \in \mcM_n(\bbF) \).
+	Let \( i, j \in \qty{1, \dots, n} \).
+	We define the \textbf{minor} \( A_{\widehat{ij}} \in \mcM_{n-1}(\bbF) \) to be the matrix obtained by removing the \( i \)th row and the \( j \)th column.
+\end{definition}
+
+\begin{example}
+	$ A = \begin{pmatrix}
+		1 & 2 &  -7 \\
+		2 & 1 &  0 \\
+		-3 & 6 &  1 \\
+	\end{pmatrix}, A_{\widehat{32}} = \begin{pmatrix}
+		1 &  -7 \\
+		2 &  0 \\
+	\end{pmatrix} $. 
+\end{example}
+
+\begin{lemma}[Expansion of the determinant]
+	Let \( A \in \mcM_n(\bbF) \).
+	\begin{enumerate}[(i)]
+		\item Let \( j \in \qty{1, \dots, n} \).
+		      The determinant of \( A \) is given by the \textit{column expansion with respect to the \( j \)th column}:
+		      \[
+			      \det A = \sum_{i=1}^n (-1)^{i+j} a_{ij} \det A_{\widehat{ij}}
+		      \]
+		\item Let \( i \in \qty{1, \dots, n} \).
+		      The same determinant is also given by the \textit{row expansion with respect to the \( i \)th row}:
+		      \[
+			      \det A = \sum_{j=1}^n (-1)^{i+j} a_{ij} \det A_{\widehat{ij}}
+		      \]
+	\end{enumerate}
+	This is a process of reducing the computation of \( n \times n \) determinants to \( (n-1) \times (n-1) \) determinants.
+\end{lemma}
+
+\begin{proof}
+	We will prove case (i), the column expansion with respect to the \( j \)th column.
+	Then (ii) will follow from the transpose of the matrix.
+
+	Pick \( j \in \qty{1, \dots, n} \).
+	Write \( A^{(j)} = \sum_{i=1}^n a_{ij} \bfe_i \) wrt the standard basis. Expand $A^{(j)}$ in the determinant gives
+	\begin{align*}
+		\det A & = \det\qty(A^{(1)}, \dots, \sum_{i=1}^n a_{ij} \bfe_i, \dots, A^{(n)})                                    \\
+		       & = \sum_{i=1}^n a_{ij} \det\qty(A^{(1)}, \dots, \bfe_i, \dots, A^{(n)})                                    \\
+		       & = \sum_{i=1}^n a_{ij} (-1)^{j-1} \det\qty(\bfe_i, A^{(1)}, \dots, A^{(n)})                                \\
+		       & = \sum_{i=1}^n a_{ij} (-1)^{j-1} (-1)^{i-1} \det\qty(\bfe_1, \overline A^{(1)}, \dots, \overline A^{(n)})
+	\end{align*}
+	where $ \overline{A}^{(j)} $ are the columns with the $i$th row swapped with the first row. 
+
+	The matrix now becomes 
+	\[
+		\begin{pmatrix}
+			1 & a_{i 1} & \cdots & a_{i j-1} &  a_{i j+1} & \cdots & a_{i n} \\
+			0 &  &  &  &  &  &  \\
+			\vdots &  &  & A_{\widehat{ij}} &  &  & \\
+			\vdots &  &  &  &  &  & \\
+			0 &  &  &  &  &  & \\
+		\end{pmatrix}
+	\]
+	Hence,
+	\[
+		\det A = \sum_{i=1}^n (-1)^{i+j} a_{ij} \det A_{\widehat{ij}}
+	\]
+	as required.
+\end{proof}
+We have proven that
+\[
+	\det (A^{(1)}, \dots, e_i, \dots, A^{(n)}) = (-1)^{i+j} \det A_{\widehat{ij}}
+\]
+
+\subsection{Adjugates}\ \vspace{-1.5em}
+\begin{definition}
+	Let \( A \in \mcM_n(\bbF) \).
+	The \textbf{adjugate matrix} of \( A \), denoted \( \adj A \), is the \( n \times n \) matrix given by
+	\[
+		(\adj A)_{ij} = (-1)^{i+j} \det A_{\widehat{ji}}
+	\]
+	Hence,
+	\[
+		\det (A^{(1)}, \dots, A^{(j-1)}, \bfe_i, , A^{(j+1)},\dots, A^{(n)}) = (\adj A)_{ji}.
+	\]
+\end{definition}
+
+\begin{theorem}
+	Let $ A \in \mathcal{M}_n (\mathbb{F}) $. Then $ \adj(A) A = (\det A) I $. 
+	
+	In particular, when \( A \) is invertible,
+	\[
+		A^{-1} = \frac{\adj A}{\det A}
+	\]
+\end{theorem}
+\begin{proof}
+	We just proved:
+	\begin{align*}
+		\det A &= \sum_{i=1}^n (-1)^{i+j} a_{ij} \det A_{\widehat{ij}} \\
+		&= \sum_{i=1}^n (\adj A)_{ji} a_{ij} = ((\adj A) A)_{jj}
+	\end{align*}
+	So the diagonal terms match.
+	
+	Off the diagonal,
+	\[
+		0 = \det(A^{(1)}, \dots, \underbrace{A^{(k)}}_{\mathclap{j\text{th position}}}, \dots, A^{(k)}, \dots, A^{(n)})
+	\]
+	By linearity,
+	\begin{align*}
+		0 & = \det\qty(A^{(1)}, \dots, \underbrace{\sum_{i=1}^n a_{ik} \bfe_i}_{\mathclap{j\text{th position}}}, \dots, A^{(k)}, \dots, A^{(n)}) \\
+		  & = \sum_{i=1}^n a_{ik} \det\qty(A^{(1)}, \dots, \underbrace{\bfe_i}_{\mathclap{j\text{th position}}}, \dots, A^{(k)}, \dots, A^{(n)}) \\
+		  & = \sum_{i=1}^n a_{ik} (\adj A)_{ji}                                                                                               \\
+		  & = ((\adj A) A)_{jk}. \qedhere
+	\end{align*}
+\end{proof}
+
+\subsection{Cramer's rule}\ \vspace{-1.5em}
+\begin{proposition}[Cramer's rule]
+	Let \( A\in \mathcal{M}_n(\mathbb{F}) \) be invertible. 
+	Let \( \bfb \in \bbF^n \).
+	Then the unique solution to \( A\bfx = \bfb \) is given by
+	\[
+		x_i = \frac{1}{\det A} \det (A_{\hat{i}b}),\quad 1\le i\le n
+	\]
+	where \( A_{\hat{i}b} \) is obtained by replacing the \( i\)th column of \( A \) by \( b \).
+	Algorithmically, this avoids computation of $A^{-1}$. 
+\end{proposition}
+
+\begin{proof}
+	Let \( A \) be invertible.
+	Then there exists a unique \( \bfx \in \bbF^n \) such that \(A \bfx = \bfb \).
+	Then
+	\begin{align*}
+		\det (A_{\hat{i}b}) & = \det(A^{(1)}, \dots, A^{(i-1)}, \bfb, A^{(i+1)}, \dots, A^{(n)})                            \\
+		                        & = \det\qty(A^{(1)}, \dots, A^{(i-1)}, \sum_{j=1}^n x_j A^{(j)}, A^{(i+1)}, \dots, A^{(n)}) \\
+		                        & = \det\qty(A^{(1)}, \dots, A^{(i-1)}, x_i A^{(i)}, A^{(i+1)}, \dots, A^{(n)})              \\
+		                        & = x_i \det A
+	\end{align*}
+	The result follows.
+\end{proof}
+
+\section{Eigenvectors, eigenvalues, and trigonal matrices}
+\subsection{Eigenvectors and eigenvalues}
+Let \( V \) be an \( \bbF \)-vector space with \( \dim V = n < \infty \), and let \( \alpha \) be an endomorphism of \( V \).
+We wish to find a basis \( B \) of \( V \) such that, in this basis, \( [\alpha]_B \equiv [\alpha]_{B,B} \) has a simple (e.g. diagonal, triangular) form.
+
+Recall that if \( B' \) is another basis and \( P \) is the change of basis matrix, \( [\alpha]_{B'} = P^{-1} [\alpha]_B P \).
+
+Equivalently, given a square matrix \( A \in \mcM_n(\bbF) \) we want to conjugate it to a matrix with a ``simple'' form. 
+
+\begin{definition}
+	\begin{enumerate}[(i)]
+		\item $ \alpha\in L(V) $ is \textbf{diagonalisable} if there exists a basis $B$ of $V$ such that $ [\alpha]_{B} $ is diagonal. 
+		\[
+			[\alpha]_B = \begin{pmatrix}
+				\lambda_1 & \cdots &  0 \\
+				\vdots  & \ddots  &  \vdots  \\
+				0 & \cdots  &  \lambda_n \\
+			\end{pmatrix}
+		\]
+		\item $ \alpha\in L(V) $ is \textbf{triangulable} if there exists a basis $B$ of $V$ wuch that $ [\alpha]_B $ is triangular.
+		\[
+			[\alpha]_B = \begin{pmatrix}
+				\lambda_1 & \cdots &  * \\
+				\vdots  & \ddots  &  \vdots  \\
+				0 & \cdots  &  \lambda_n \\
+			\end{pmatrix}
+		\]
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	A matrix is diagonalisable(triangulable) if and only if it is conjugate to a diagonal(triangular) matrix. 
+\end{remark}
+
+\begin{definition}
+	\begin{enumerate}[(i)]
+		\item $ \lambda\in \mathbb{F} $ is an \textbf{eigenvalue} of $ \alpha\in L(V) $ if and only if: 
+		\[
+			\exists \mathbf{v}\in V \setminus \{0\}\quad \alpha(\mathbf{v}) = \lambda \mathbf{v}
+		\]
+		\item $ \mathbf{v}\in V $ is an \textbf{eigenvector} of $\alpha$ if and only if: 
+		\[
+			\mathbf{v}\neq 0\quad \text{and}\quad \exists \lambda\in \mathbb{F}\quad \alpha(\mathbf{v}) = \lambda \mathbf{v}
+		\]
+		\item $ V_{\lambda} = \{\mathbf{v}\in V: \alpha(\mathbf{v}) = \lambda \mathbf{v}\} $ is the \textbf{eigenspace} associated to $\lambda$. 
+	\end{enumerate}
+\end{definition}
+
+\begin{lemma}
+	\( \lambda \) is an eigenvalue if and only if \( \det(\alpha - \lambda I) = 0 \).
+\end{lemma}
+\begin{proof}
+	If \( \lambda \) is an eigenvalue, there exists a nonzero vector \( \bfv \) such that \( \alpha(\bfv) = \lambda \bfv \), so \( (\alpha - \lambda)(\bfv) = 0 \).
+	So the kernel is non-trivial.
+	So \( \alpha - \lambda I \) is not injective, so it is not surjective by the rank-nullity theorem.
+	Hence this matrix is not invertible, so it has zero determinant.
+\end{proof}
+
+\begin{remark}
+	If \( \alpha(\bfv_j) = \lambda \bfv_j \) for \( j \in \qty{1, \dots, m} \), we can complete the family \( \bfv_j \) into a basis \( (\bfv_1, \dots, \bfv_n) \) of \( V \).
+	Then in this basis, the first \( m \) columns of the matrix \( \alpha \) has diagonal entries \( \lambda_j \).
+\end{remark}
+\subsection{Polynomials}
+Recall the following facts about polynomials on a field, for instance
+\[
+	f(t) = a_n t^n + \dots + a_1 t + a_0
+\]
+We say that the degree of \( f \), written \( \deg f \) is \( n \).
+The degree of \( f + g \) is at most the maximum degree of \( f \) and \( g \).
+\( \deg (fg) = \deg f + \deg g \).
+
+Let \( \bbF[t] \) be the vector space of polynomials with coefficients in \( F \).
+If \( \lambda \) is a root of \( f \), then \( (t-\lambda) \) divides \( F \). Indeed, $ f(\lambda) = a_n \lambda^n + \dots + a_1 \lambda + a_0 = 0 $,
+which implies that
+\[
+	f(t) = f(t) - f(\lambda) = a_n(t^n - \lambda^n) + \dots + a_1(t - \lambda)
+\]
+But note that, for all \( n \),
+\[
+	t^n - \lambda^n = (1-\lambda)(t^{n-1} + \lambda t^{n-2} + \dots + \lambda^{n-2} t + \lambda^{n-1}).\qed
+\]
+
+\begin{remark}
+	We say that \( \lambda \) is a root of \textit{multiplicity} \( k \) if \( (t-\lambda)^k \) divides \( f \) but \( (t-\lambda)^{k+1} \) does not.
+\end{remark}
+
+\begin{corollary}
+	A nonzero polynomial of degree \( n \) has at most \( n \) roots, counted with multiplicity.
+\end{corollary}
+\begin{corollary}
+	If \( f_1, f_2 \) are two polynomials of degree less than \( n \) such that \( f_1(t_i) = f_2(t_i) \) for \( i \in \qty{1, \dots, n} \) and \( t_i \) distinct, then \( f_1 \equiv f_2 \).
+\end{corollary}
+\begin{proof}
+	\( f_1 - f_2 \) has degree less than \( n \), but has \( n \) roots.
+	Hence it is zero.
+\end{proof}
+
+\begin{theorem}[Fundamental Theorem of Algebra]
+	Any polynomial \( f \in \mathbb C[t] \) of positive degree has a complex root.
+	When counted with multiplicity, \( f \) has exactly $ \deg f $ roots when counted with multiplicity. 
+\end{theorem}
+\begin{corollary}
+	Any polynomial \( f \in \mathbb C[t] \) can be factorised into an amount of linear factors equal to its degree.
+\end{corollary}
+
+\subsection{Characteristic polynomials}\ \vspace{-1.5em}
+\begin{definition}
+	Let \( \alpha \) be an endomorphism.
+	The \textbf{characteristic polynomial} of \( \alpha \) is
+	\[
+		\chi_\alpha(\lambda) = \det(\alpha - \lambda I)
+	\]
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item $ \det (A-\lambda I) $ is a polynomial of $\lambda$ from definition. 
+		\item Conjugate matrices have the samce characteristic polynomial. 
+		
+		Indeed, $ \det( P^{-1}AP - \lambda I) = \det ( P^{-1}(A-\lambda I)P) = \det(A - \lambda I) $.
+	\end{enumerate}
+\end{remark}
+
+\begin{theorem}
+	Let \( \alpha \in L(V) \).
+	\( \alpha \) is triangulable if and only if \( \chi_\alpha \) can be written as a product of linear factors over \( \bbF \) 
+	\[
+		\chi_\alpha(t) = c \prod_{i=1}^{n}(t-\lambda I)
+	\]
+	In particular, all complex matrices are triangulable.
+\end{theorem}
+\begin{proof}
+	($\Rightarrow$) Suppose $\alpha$ is triangulable. Then 
+	\begin{align*}
+		& [\alpha]_B = \begin{pmatrix}
+			a_1 & \cdots &  * \\
+			\vdots  & \ddots  &  \vdots  \\
+			0 & \cdots  &  a_n \\
+		\end{pmatrix}\\ 
+		\implies & \chi_\alpha(t) = \begin{pmatrix}
+			a_1-t & \cdots &  * \\
+			\vdots  & \ddots  &  \vdots  \\
+			0 & \cdots  &  a_n-t \\
+		\end{pmatrix} = \prod_{i=1}^{n} (a_i - t)
+	\end{align*}
+
+	$(\Leftarrow)$ We argue by induction on $ \dim V = n $ 
+	\begin{itemize}
+		\item $n=1$, $ \chi_\alpha(t) $ is obviously linear.
+		\item Suppose it is true for $n=k>1$. By assumption, $ \chi_\alpha $ has a root $ \lambda $, i.e. $\alpha$ has an eigenvalue $\lambda$. 
+		\item Let $U = V_\lambda$ be the corresponding eigenspace for $\lambda$. 
+		\item Let $ \{\mathbf{v}_1,\dots,\mathbf{v}_k\} $ be a basis of $U$, and extend to a basis $ \{\mathbf{v}_1,\dots,\mathbf{v}_k,\mathbf{v}_{k+1},\dots,\mathbf{v}_n\} $ of $V$. 
+		\item Let \( W = \spn\qty{\bfv_{k+1}, \dots, \bfv_n} \), and then \( V = V_\lambda \oplus W \).
+		\item Then
+		\[
+			[\alpha]_B = \begin{pmatrix}
+				\lambda I & * \\
+				0         & C
+			\end{pmatrix}
+		\]
+		where \( * \) is arbitrary, and \( C \) is a block of size \( (n-k) \times (n-k) \).
+		\item Then \( \alpha \) induces an endomorphism \( \overline \alpha \colon V/U \to V/U \) with respect to the basis \( (\bfv_{k+1}, \dots, \bfv_n) \), where \( U = V_\lambda \).
+		\item By induction on the dimension, we can find a basis \( (\bfw_{k+1}, \dots, \bfw_n) \) for which \( C \) has a triangular form.
+		Then the basis \( (\bfv_1, \dots, \mathbf{v}_k, \bfw_{k+1}, \dots, \bfw_n) \) is a basis for which \( \alpha \) is triangular.
+	\end{itemize}
+\end{proof}
+
+\begin{lemma}
+	Let \( n = \dim V \), and \( V \) be a vector space over \( \mathbb R \) or \( \mathbb C \).
+	Let \( \alpha \) be an endomorphism on \( V \).
+	Then
+	\[
+		\chi_\alpha(t) = (-1)^n t^n + c_{n-1} t^{n-1} + \dots + c_0
+	\]
+	with
+	\[
+		c_0 = \det A;\quad c_{n-1} = (-1)^{n-1} \tr A
+	\]
+\end{lemma}
+\begin{proof}
+	\[
+		\chi_\alpha(t) = \det(\alpha - t I) \implies \chi_\alpha(0) = \det(\alpha)
+	\]
+	Further, for \( \mathbb R, \mathbb C \) we know that \( \alpha \) is triangulable over \( \mathbb C \).
+	Hence \( \chi_\alpha(t) \) is the determinant of a triangular matrix;
+	\[
+		\chi_\alpha(t) = \prod_{i=1}^n (a_i - t)
+	\]
+	Hence
+	\[
+		c_{n-1} = (-1)^{n-1} a_i
+	\]
+	Since the trace is invariant under a change of basis, this is exactly the trace as required.
+\end{proof}
+
 \end{document}

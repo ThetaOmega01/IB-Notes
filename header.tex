@@ -153,6 +153,7 @@ decoration={snake,
 \DeclareMathOperator{\corr}{Corr}
 \DeclareMathOperator{\Markov}{Markov}
 \DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\identity}{id}
 
 \newcommand{\bfA}{{\bf A}}
 \newcommand{\bfB}{{\bf B}}
@@ -407,6 +408,8 @@ decoration={snake,
 \renewcommand{\geq}{\geqslant}
 \renewcommand{\leq}{\leqslant}
 \renewcommand{\restriction}{\mathord{\upharpoonright}}
+\renewcommand{\bar}{\overline}
+\DeclareMathOperator{\closure}{cl}
 
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
@@ -424,14 +427,14 @@ decoration={snake,
 % \input{../plain.tex}
 
 %layout full
-% \geometry{%
-%   a4paper,
-%   lmargin=2cm,
-%   rmargin=2.5cm,
-%   tmargin=3.5cm,
-%   bmargin=2.5cm,
-%   footskip=12pt,
-%   headheight=24pt}
+\geometry{%
+  a4paper,
+  lmargin=2cm,
+  rmargin=2.5cm,
+  tmargin=3.5cm,
+  bmargin=2.5cm,
+  footskip=12pt,
+  headheight=24pt}
 % layout trim
 % \geometry{
 % papersize={379pt, 542pt},
@@ -442,14 +445,14 @@ decoration={snake,
 % right=17pt
 % }
 % layout a5
-\geometry{%
-  a5paper,
-  lmargin=1cm,
-  rmargin=1cm,
-  tmargin=2.5cm,
-  bmargin=1.5cm,
-  footskip=15pt,
-  headheight=24pt}
+% \geometry{%
+%   a5paper,
+%   lmargin=1cm,
+%   rmargin=1cm,
+%   tmargin=2.5cm,
+%   bmargin=1.5cm,
+%   footskip=15pt,
+%   headheight=24pt}
 \pagestyle{fancy}
 \rhead{{\triposcourse{}}}
 \author{jt775}
