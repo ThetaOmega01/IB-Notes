@@ -22,7 +22,7 @@ Throughout the note, let $ I $ be a finite or countable set, and any random vari
     \]
 \end{definition}
 \begin{definition}[Time-homogeneous]
-    A Markov chain $X$ is called \textbf{time-homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textbf{time-inhomogeneous}.
+    A Markov chain $X$ is called \textbf{time} \textbf{homogeneous} if $ \mathbb{P}(X_{n+1}=y|X_n=x),\ \forall x,y\in I $ is independent of $n$. Otherwise it is called \textbf{time-inhomogeneous}.
 \end{definition}
 We will only be dealing with time-homogeneous Markov chains in this course.
 \begin{definition}[Stochastic matrix]
@@ -812,7 +812,7 @@ Now we can talk about recurrence and transience as class properties.
     This implies that $y$ is recurrent, and hence $C$ is a recurrent class.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:irriducible and recurrent imples certain return time starting elsewhere}
     Let $P$ be irreducible and recurrent. Then for all $x, y$ we have
     \[
     \mathbb{P}_x\left(T_y<\infty\right)=1 .
@@ -1101,7 +1101,7 @@ We next define a measure in terms of the numbers of visits to a vertex during an
 \end{lemma}
 This follows directly from applying the definition $n$ times.
 
-\begin{theorem}
+\begin{theorem}\label{thm:irriducible and recurrent => expected visit invariant}
     Suppose that $P$ is irreducible and recurrent. Then $\nu_k$ is an invariant measure, i.e. $\nu_k=\nu_k P$, satisfying $0<\nu_k(i)<\infty$ and $\nu_k(k)=1$.
 \end{theorem}
 \begin{proof}
@@ -1222,7 +1222,7 @@ We thus see that in order to be able to normalise and get an invariant distribut
     If $\mathbb{E}_i\left[T_i\right]=\infty$, then $i$ is called \textbf{null recurrent}.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}\label{thm:irreducible tfae}
     Suppose that $P$ is an irreducible transition matrix. Then the following are equivalent:
     \begin{enumerate}[(i)]
         \item every state is positive recurrent;
@@ -1464,5 +1464,251 @@ The following lemma gives a way to find invariant distribution.
     \pi(x)=\frac{d(x)}{\sum_{y \in V} d(y)}=\frac{d(x)}{2|E|} \quad \text { for all } x \in V .
     \]
 \end{example}
+
+\section{Convergence to equilibrium}
+Recall the following theorem from section 8 
+\begin{theorem}
+    Let $I$ be a finite state space and suppose that there exists $i \in I$ such that for all $j$
+    \[
+    p_{i j}(n) \rightarrow \pi_j \quad \text { as } n \rightarrow \infty .
+    \]
+    Then $\pi=\left(\pi_j: j \in I\right)$ is an invariant distribution.
+\end{theorem}
+The question we are interested in is the conditions under which the $n$-th power of a transition matrix converges to the invariant distribution. Let us start with an example.
+
+Consider a simple random walk on $\mathbb{Z}_n$ with transition probabilities
+\[
+P(i,(i+1) \bmod n)=\frac{1}{2}=P(i,(i-1) \bmod n) \quad \text { for all } i \in \mathbb{Z}_n .
+\]
+The invariant distribution is $\pi(i)=1 / n$ for all $i$. We see that starting from 0 , the random walk is back at 0 only at even times. So if we look at the limit $P^k(0,0)$ as $k \rightarrow \infty$, then it would not converge. This leads us to the definition of the period of a state.
+
+\begin{definition}
+    Let $P$ be a transition matrix and $i$ a state. We define the \textbf{period} of $i$ to be
+    \[
+    d_i=\gcd\left\{n \geq 1: P^n(i, i)>0\right\} .
+    \]
+    We say that $i$ is \textbf{aperiodic} if $d_i=1$.
+\end{definition}
+
+\begin{lemma}\label{lma:aperiodic iff eventually aperiodic}
+    Let $P$ be a transition matrix and $i$ a state. Then $d_i=1$ if and only if $P^n(i, i)>0$ for all $n$ large enough.
+\end{lemma}
+\begin{proof}
+    It is clear that if $P^n(i, i)>0$ for all $n$ sufficiently large, then $d_i=1$.
+
+    Suppose next that $d_i=1$ and set $D(i)=\left\{n \geq 1: P^n(i, i)>0\right\}$. We first show that $D(i)$ contains two consecutive integers. 
+    
+    First of all, if $m, n \in D(i)$, then also $m+n \in D(i)$. Suppose now that the minimum distance between any two elements of $D(i)$ is $r \geq 2$ and let $n, m \in D(i)$ with $n=m+r$. 
+    
+    Let also $k \in D(i)$ with $k=\ell r+s$ with $\ell \in \mathbb{N}$ and $0<s<r$, which exists since otherwise only multiples of $r$ would be contained in $D(i)$ and this would contradict that $ \gcd D(i)=1 $. 
+    
+    Letting $a=(\ell+1) n$ and $b=(\ell+1) m+k$ we see that both $a$ and $b$ are contained in $D(i)$ and
+    \[
+    a-b=r-s \in(0, r)
+    \]
+    and this contradicts the definition of $r$ as the minimum distance between any two elements of $D(i)$. Therefore, $D(i)$ contains two consecutive numbers $n_1, n_1+1$. Since $a n_1+b\left(n_1+1\right) \in D(i)$ for all $a, b$ it easily follows that $D(i)$ contains all $n$ sufficiently large $\left(n \geq n_1^2\right)$ and this completes the proof.
+\end{proof}
+
+\begin{lemma}
+    Let $P$ be an irreducible transition matrix and let $i$ be an aperiodic state. Then all states are aperiodic.
+\end{lemma}
+\begin{proof}
+    Let $j$ be another state. Since $i$ and $j$ communicate there exist $m, n \geq 0$ such that $P^n(j, i)>$ 0 and $P^m(i, j)>0$. Then for all $s \geq 0$ sufficiently large we have
+    \[
+    P^{s+n+m}(j, j) \geq P^n(j, i) P^s(i, i) P^m(i, j)>0
+    \]
+    which shows that $P^{\ell}(j, j)$ is positive for all $\ell$ sufficiently large, and hence $j$ is also aperiodic by lemma \ref{lma:aperiodic iff eventually aperiodic}.
+\end{proof}
+
+\begin{theorem}[Convergence to equilibrium]\label{thm:Convergence to equilibrium}
+    Suppose that $P$ is irreducible and aperiodic and has an invariant distribution $\pi$. Let $X \sim \operatorname{Markov}(\lambda, P)$, where $\lambda$ is a distribution. Then for all $y$ we have
+    \[
+    \lim _{n \rightarrow \infty} \mathbb{P}\left(X_n=y\right)=\pi(y) .
+    \]
+    In particular, for all $x, y$ taking $\lambda=\delta_x$ we have
+    \[
+    \lim _{n \rightarrow \infty} P^n(x, y)=\pi(y)
+    \]
+\end{theorem}
+\begin{proof}
+    Let $\left(Y_n\right)_{n \geq 0} \sim \operatorname{Markov}(\pi, P)$ be independent of $X$. We now consider the process $\left(\left(X_n, Y_n\right)\right)_{n \geq 0}$ which is clearly a Markov chain on $I \times I$ with initial distribution $\lambda \times \pi$ and transition matrix $\widetilde{P}$ given by
+    \[
+    \widetilde{P}\left(\left(x_1, y_1\right),\left(x_2,y_2\right)\right)=P\left(x_1, y_1\right) P\left(x_2, y_2\right)
+    \]
+    \begin{claim}
+        $ \widetilde{P} $ is irreducible. 
+    \end{claim}
+    Indeed, let $(x, y)$ and $\left(x^{\prime}, y^{\prime}\right)$ be two states in $I \times I$. By irreducibility of $P$ we have that there exist $m$ and $\ell$ such that $P^m\left(x, x^{\prime}\right)>0$ and $P^{\ell}\left(y, y^{\prime}\right)>0$. By aperiodicity of $P$ for all $n$ large enough we have that
+    \begin{align*}
+        &P^n\left(x, x^{\prime}\right) \geq P^m\left(x, x^{\prime}\right) P^{n-m}\left(x^{\prime}, x^{\prime}\right)>0\\ \text {and}\quad & P^n\left(y, y^{\prime}\right) \geq P^{\ell}\left(y, y^{\prime}\right) P^{n-\ell}\left(y^{\prime}, y^{\prime}\right)>0 .
+    \end{align*}
+    Therefore, this proves that for all $n$ large enough $\widetilde{P}^n\left((x, y),\left(x^{\prime}, y^{\prime}\right)\right)>0$, which means that $\widetilde{P}$ is irreducible.
+
+    Let $a \in I$ and define
+    \[
+    T=\inf \left\{n \geq 1:\left(X_n, Y_n\right)=(a, a)\right\} .
+    \]
+    Then $T$ is a stopping time for the Markov chain $(X, Y)$. We now show that $\mathbb{P}(T<\infty)=1$. It is immediate to check that $\widetilde{\pi}$ given by
+    \[
+    \widetilde{\pi}(x, y)=\pi(x) \pi(y) \quad \text { for all } x, y
+    \]
+    is an invariant distribution for $\widetilde{P}$. Theorem \ref{thm:irreducible tfae} now implies that $\widetilde{P}$ is positive recurrent, which means in particular that the state $(a, a)$ is recurrent, and hence using also Theorem \ref{thm:irriducible and recurrent imples certain return time starting elsewhere} we get $\mathbb{P}(T<\infty)=1$.
+
+    We next define a new process $\left(Z_n\right)_{n \geq 0}$ as follows
+    \[
+    Z_n= \begin{cases}X_n & \text { if } n<T \\ Y_n & \text { if } n \geq T\end{cases}
+    \]
+    \begin{claim}
+        $Z$ is $\operatorname{Markov}(\lambda, P)$.
+    \end{claim}
+    Since $T \geq 1$ by definition, for all $x \in I$ we have
+    \[
+    \mathbb{P}\left(Z_0=x\right)=\mathbb{P}\left(X_0=x\right)=\lambda(x)
+    \]
+    We now show that $Z$ is a Markov chain with transition matrix $P$. Let $A=\left\{Z_{n-1}=z_{n-1}, \ldots, Z_0=z_0\right\}$. We have
+    \[
+    \begin{aligned}
+    &\mathbb{P}\left(Z_{n+1}=y \mid Z_n=x, A\right)\\=&\, \mathbb{P}\left(Z_{n+1}=y, T>n \mid Z_n=x, A\right)+\mathbb{P}\left(Z_{n+1}=y, T \leq n \mid Z_n=x, A\right) \\
+    =&\, \mathbb{P}\left(X_{n+1}=y \mid T>n, Z_n=x, A\right) \mathbb{P}\left(T>n \mid Z_n=x, A\right) \\
+    &+\mathbb{P}\left(Y_{n+1}=y \mid T \leq n, Z_n=x, A\right) \mathbb{P}\left(T \leq n \mid Z_n=x, A\right) .
+    \end{aligned}
+    \]
+    The event $\{T>n\}$ is the complement of $\{T \leq n\}$ which since $T$ is a stopping time only depends on $\left(X_0, Y_0\right), \ldots,\left(X_n, Y_n\right)$. Therefore, we obtain
+    \begin{align*}
+        & \mathbb{P}\left(X_{n+1}
+        =y \mid T>n, Z_n=x, A\right)\\ 
+    =&\, \sum_z \mathbb{P}\left(X_{n+1}=y \mid T>n, Z_n=x, A, Y_n=z\right) \\[-1em]
+    &\hspace*{6em}\cdot \mathbb{P}\left(Y_n=z \mid T>n, Z_n=x, A\right)\\ 
+    =&\, P(x, y)
+    \end{align*}
+    Similarly,
+    \[
+    \mathbb{P}\left(Y_{n+1}=y \mid T \leq n, Z_n=x, A\right)=\mathbb{P}\left(Y_{n+1}=y \mid T \leq n, Y_n=x, A\right)=P(x, y)
+    \]
+    Therefore, we obtain
+    \[
+    \mathbb{P}\left(Z_{n+1}=y \mid Z_n=x, A\right)=P(x, y),
+    \]
+    which shows that $Z \sim \operatorname{Markov}(\lambda, P)$.
+
+    We can now finish the proof. Let $y \in I$. Since $X$ and $Z$ have the same distribution and $Y$ is a stationary chain we have
+    \[
+    \begin{aligned}
+    &\left|\mathbb{P}\left(X_n=y\right)-\pi(y)\right|=\left|\mathbb{P}\left(Z_n=y\right)-\mathbb{P}\left(Y_n=y\right)\right| \\
+    &=\left|\mathbb{P}\left(X_n=y, T>n\right)+\mathbb{P}\left(Y_n=y, T \leq n\right)-\mathbb{P}\left(Y_n=y, T>n\right)-\mathbb{P}\left(Y_n=y, T \leq n\right)\right| \\
+    &=\left|\mathbb{P}\left(X_n=y, T>n\right)-\mathbb{P}\left(Y_n=y, T>n\right)\right| \leq \mathbb{P}(T>n) .
+    \end{aligned}
+    \]
+    Since $\mathbb{P}(T<\infty)=1$, we have that $\mathbb{P}(T>n) \rightarrow 0$ as $n \rightarrow \infty$ and this completes the proof.
+\end{proof}
+
+\begin{theorem}
+    Suppose that $P$ is irreducible, null-recurrent and aperiodic transition matrix. Then for all $x, y$ we have
+    \[
+    P^n(x, y) \rightarrow 0 \quad \text { as } n \rightarrow \infty
+    \]
+\end{theorem}
+
+\begin{proof}
+    Consider the transition matrix $\widetilde{P}\left((x, y),\left(x^{\prime}, y^{\prime}\right)\right)=P\left(x, x^{\prime}\right) P\left(y, y^{\prime}\right)$ as in the proof of Theorem \ref{thm:Convergence to equilibrium}. As in the proof of Theorem \ref{thm:Convergence to equilibrium} we get that $\widetilde{P}$ is irreducible, since $P$ is assumed to be irreducible and aperiodic. If $\widetilde{P}$ is transient, then the statement of the theorem follows, since in this case for every $(x, y) \in I \times I$ we get
+    \[
+    \sum_n \widetilde{P}^n((x, x),(y, y))=\sum_n\left(P^n(x, y)\right)^2<\infty,
+    \]
+    which implies that $P^n(x, y) \rightarrow 0$ as $n \rightarrow \infty$.
+
+    So we suppose now that $\widetilde{P}$ is recurrent. Fix $y \in I$ and consider the measure $\nu_y$ defined by
+    \[
+    \nu_y(x)=\mathbb{E}_y\left[\sum_{i=0}^{T_y-1} 1\left(X_i=x\right)\right] .
+    \]
+    Then since $P$ is irreducible and recurrent, it follows from Theorem \ref{thm:irriducible and recurrent => expected visit invariant} that $\nu_y$ is invariant for $P$. Since $P$ is null-recurrent, it means that $\nu_y(I)=\mathbb{E}_y\left[T_y\right]=\infty$. Fix $M>0$. Then there exists a finite set $A$ such that $\nu_y(A)>M$, which follows from the fact that $\nu_y(I)=\infty$. Consider now a new measure $\mu$ defined as follows
+    \[
+    \mu(x)=\frac{\nu_y(x)}{\nu_y(A)} 1(x \in A) .
+    \]
+    Then $\mu$ is a probability measure and by the invariance of $\nu_y\left(\nu_y=\nu_y P^n\right.$ for all $\left.n\right)$ we have
+    \[
+    \mu P^n(z)=\sum_x \mu(x) P^n(x, z) \leq \sum_x \frac{\nu_y(x)}{\nu_y(A)} P^n(x, z)=\frac{1}{\nu_y(A)} \nu_y P^n(z)=\frac{\nu_y(z)}{\nu_y(A)}
+    \]
+    We now let $(X, Y)$ be a Markov chain started according to $\mu \times \delta_x$ and with transition matrix $\widetilde{P}$. As in the proof of Theorem \ref{thm:Convergence to equilibrium} we let
+    \[
+    T=\inf \left\{n \geq 1:\left(X_n, Y_n\right)=(x, x)\right\} .
+    \]
+    Then $T$ is a finite stopping time with probability 1 (since $\widetilde{P}$ is recurrent) and defining
+    \[
+    Z_n=\begin{cases}
+        X_n & \text { if } n<T \\
+        Y_n & \text { if } n \geq T
+    \end{cases} 
+    \]
+    we see as in Theorem \ref{thm:Convergence to equilibrium} that $Z$ is a Markov chain started according to $\mu$ and with transition matrix $P$. Therefore, we obtain
+    \[
+    \mathbb{P}\left(Z_n=y\right)=\mu P^n(y) \leq \frac{\nu_y(y)}{\nu_y(A)}=\frac{1}{\nu_y(A)}<\frac{1}{M}
+    \]
+
+    We can now finish the proof, since
+    \[
+    \mathbb{P}_x\left(Y_n=y\right)=\mathbb{P}_x\left(Y_n=y, n \geq T\right)+\mathbb{P}_x\left(Y_n=y, n<T\right) \leq \mathbb{P}\left(Z_n=y\right)+\mathbb{P}(T>n) .
+    \]
+    Using the bound and taking the limit as $n \rightarrow \infty$ we get
+    \[
+    \limsup _{n \rightarrow \infty} \mathbb{P}_x\left(Y_n=y\right) \leq \frac{1}{M},
+    \]
+    since $T<\infty$ with probability 1 . Since this holds for any $M>0$, the statement of the theorem follows.
+\end{proof}
+
+\section{Ergodic theorem}\ \vspace{-1.5em}
+\begin{theorem}\label{thm:Ergodic theorem}
+    Let $P$ be an irreducible and positive recurrent matrix with invariant distribution $\pi$. Suppose that $X$ starts according to a distribution $\lambda$. Then for all $x$ we have almost surely
+\[
+\frac{1}{n} \sum_{i=0}^{n-1} 1\left(X_i=x\right) \rightarrow \pi(x) \quad \text { as } n \rightarrow \infty
+\]
+\end{theorem}
+\begin{proof}
+    We write $V_n(x)=\sum_{i=0}^{n-1} 1\left(X_i=x\right)$ for the total number of visits to $x$ up to time $n-1$.
+
+Since $P$ is recurrent, it follows that $T_x<\infty$ with probability 1 and by the strong Markov property the process $\left(X_{T_x+n}\right)_{n \geq 0}$ is $\operatorname{Markov}\left(\delta_x, P\right)$ independent of $X_0, \ldots, X_T$. Since $T_x<\infty$, we get that the limit $\lim V_n(x) / n$ is the same when the initial distribution is $\lambda$ and $\delta_x$. So it suffices to consider the case when $\lambda=\delta_x$.
+
+We recall the definition of the successive times at which $X$ visits $x$: first we set $T_x^{(0)}=0$ and for $k \geq 1$ inductively we set
+\[
+T_x^{(k+1)}=\inf \left\{n \geq T_x^{(k)}+1: X_n=x\right\} .
+\]
+We also define the successive excursion lengths from $x$ by setting
+\[
+S_x^{(k)}= \begin{cases}T_x^{(k)}-T_x^{(k-1)} & \text { if } T_x^{(k-1)}<\infty \\ 0 & \text { otherwise }\end{cases}
+\]
+
+By the definition of the return times we have
+\[
+T_x^{\left(V_n(x)-1\right)} \leq n-1
+\]
+and equivalently
+\[
+S_x^{(1)}+\ldots+S_x^{\left(V_n(x)-1\right)} \leq n-1 .
+\]
+Similarly,
+\[
+T_x^{\left(V_n(x)\right)} \geq n
+\]
+and equivalently
+\[
+S_x^{(1)}+\ldots+S_x^{\left(V_n(x)\right)} \geq n .
+\]
+By the strong Markov property, the excursion lengths $\left(S_x^{(k)}\right)_{k \geq 1}$ are i.i.d. with expectation given by $m_x=\mathbb{E}_x\left[T_x\right]=1 / \pi(x)$. The strong law of large numbers then asserts that almost surely
+\[
+\frac{S_x^{(1)}+\ldots+S_x^{(k)}}{k} \rightarrow m_x \quad \text { as } k \rightarrow \infty .
+\]
+We now have
+\[
+S_x^{(1)}+\ldots+S_x^{\left(V_n(x)-1\right)} \leq n \leq S_x^{(1)}+\ldots+S_x^{\left(V_n(x)\right)}
+\]
+Dividing through by $V_n(x)$ we obtain
+\[
+\frac{S_x^{(1)}+\ldots+S_x^{\left(V_n(x)-1\right)}}{V_n(x)} \leq \frac{n}{V_n(x)} \leq \frac{S_x^{(1)}+\ldots+S_x^{\left(V_n(x)\right)}}{V_n(x)},
+\]
+and hence taking the limit as $n \rightarrow \infty$ we deduce
+\[
+\lim _{n \rightarrow \infty} \frac{V_n(x)}{n}=\frac{1}{m_x}=\pi(x)
+\]
+and this concludes the proof.
+\end{proof}
 
 \end{document}

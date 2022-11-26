@@ -1917,7 +1917,7 @@ E.g., the indiscrete topology on a set is the coarsest topology on that set.
 \end{definition}
 
 \begin{note}
-    An infiite set with the cofinite topology is not Hausdorff. On the other hand, we have the following result.
+    An infinite set with the cofinite topology is not Hausdorff. On the other hand, we have the following result.
 \end{note}
 
 \begin{proposition}
@@ -2127,7 +2127,7 @@ On the other hand, an uncountable discrete topological space is not separable, s
       \end{enumerate}
 \end{remark}
 
-\begin{proposition}
+\begin{proposition}\label{prop:4.6}
     Let $X$ be a topological space, and let $A \subset Y \subset X$.
 
     \begin{enumerate}[(i)]
@@ -2512,5 +2512,205 @@ Then there is a unique function $\tilde{f}: X / R \rightarrow Y$ such that $f=\t
 
 Since $q$ is an open map, $q(U)$ and $q(V)$ are open sets in $X / R$ with $z=q(x) \in q(U)$ and $w=q(y) \in q(V)$. Finally, $q(U) \cap q(V)=\emptyset$ since otherwise, there exist $a \in U$ and $b \in V$ with $q(a)=q(b)$, and thus $(a, b) \in R \cap U \times V$, contradicting the choice of $U, V$.
 \end{proof}
+
+\section{Connectedness}
+\subsection{Definition}
+
+Recall the Intermediate Value Theorem (IVT): Let $f: I \rightarrow \mathbb{R}$ be a continuous function on the interval $I$. Given $x<y$ in $I$ and $c \in \mathbb{R}$ strictly between $f(x)$ and $f(y)$, there exists $z \in(x, y)$ such that $f(z)=c$.
+
+A subset $I$ of $\mathbb{R}$ is an interval if the following holds: for all $x, y, z \in \mathbb{R}$ if $x<y<z$ and $x, z \in I$, then $y \in I$. So the IVT says that the continunous image of an interval is an interval.
+
+\begin{sque}
+    For what topological spaces does the IVT hold?
+\end{sque}
+
+\begin{example}
+    The function
+    $$
+    f: X=[0,1) \cup(1,2] \rightarrow \mathbb{R} \quad x \mapsto \begin{cases}0 & \text { if } x \in[0,1) \\ 1 & \text { if } x \in(1,2]\end{cases}
+    $$
+    is continuous but its image is not an interval.
+\end{example}
+
+\begin{definition}
+    A topological space $X$ is \textbf{disconnected} if there exist subsets $U$ and $V$ of $X$ such that
+
+    \begin{enumerate}[(i)]
+    \item $U \neq \emptyset$ and $V \neq \emptyset$
+
+    \item $U$ and $V$ are open in $X$
+
+    \item $U \cap V=\emptyset$
+
+    \item $U \cup V=X$
+
+    \end{enumerate}
+
+    In this case, we say that the subsets $U$ and $V$ of $X$ \textbf{disconnect} $X$.
+
+    We say $X$ is \textbf{connected} if $X$ is not disconnected.
+\end{definition}
+
+\begin{theorem}\label{thm:connected tfae}
+    For a topological space $X$ the followings are equivalent.
+    \begin{enumerate}[(i)]
+        \item $X$ is connected.
+        \item $f: X \rightarrow \mathbb{R}$ continuous $\Longrightarrow f(X)$ is an interval.
+        \item $f: X \rightarrow \mathbb{Z}$ continuous $\Longrightarrow f$ is constant.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    ((i) $ \Rightarrow$ (ii)) Suppose $f: X \rightarrow \mathbb{R}$ is continuous but $f(X)$ is not an interval. So there exists $a<b<c$ in $\mathbb{R}$ with $a, c \in f(X)$ and $b \notin f(X)$. Choose $x, z \in X$ with $f(x)=a$ and $f(z)=c$. 
+    
+    We show that $U=f^{-1}(-\infty, b)$ and $V=f^{-1}(b, \infty)$ disconnect $X$, which will contradict (i). Indeed, $U$ and $V$ are non-empty ($x \in U$ and $z \in V$), open (as $f$ is continuous), disjoint and $U \cup V=X$ since $b \notin f(X)$.
+
+    ((ii) $\Rightarrow$ (iii)) The inclusion map $\iota: \mathbb{Z} \rightarrow \mathbb{R}$ is continuous. So if $f: X \rightarrow \mathbb{Z}$ is continuous, then so is $g=\iota \circ f: X \rightarrow \mathbb{R}$. Then $g(X)$ is an interval by (ii) but at the same time $g(X)=f(X) \subset \mathbb{Z}$. So $f$ must have been constant.
+ 
+    ((iii) $\Rightarrow$ (i)) Assume that $U$ and $V$ disconnect $X$. Define
+    $$
+    f: x \rightarrow \mathbb{Z} \quad x \mapsto \begin{cases}0 & \text { if } x \in U \\ 1 & \text { if } x \in V\end{cases}
+    $$
+    Then for any $A \subset \mathbb{Z}$, we have $f^{-1}(A)$ is one of $\emptyset, U, V$ or $X$ depending on whether $A \cap\{0,1\}$ is $\emptyset,\{0\},\{1\}$ or $\{0,1\}$, respectively. Thus, $f$ is continuous but not constant as $U$ and $V$ are non-empty.
+\end{proof}
+
+\begin{corollary}
+    Let $X \subset \mathbb{R}$. Then $X$ is connected $\Longleftrightarrow X$ is an interval.
+\end{corollary}
+\begin{proof}
+    ($ \Rightarrow $) The inclusion map $\iota: X \rightarrow \mathbb{R}$ is continuous, so its image $X$ is an interval. 
+    
+    Alternatively, if $X$ is not an interval, then there exist $a<b<c$ in $\mathbb{R}$ with $a, c \in X$ and $b \notin X$. It follows that $U=(-\infty, b) \cap X$ and $V=(b, \infty) \cap X$ disconnect $X$.
+
+    ($ \Leftarrow $) Suppose $X$ is an interval. By IVT and the previous theorem, $X$ is connected. 
+    
+    Alternatively, assume $U$ and $V$ disconnect $X$. Fix $x \in U$ and $y \in V$. Assume wlog $x<y$. Let $z=\sup (U \cap[x, y])$. Then $z \in[x, y] \subset X$. We show that $z \in U \cap V$. 
+    
+    For each $n \in \mathbb{N}$, there exists $x_{n} \in U \cap[x, y]$ with $z-\frac{1}{n}<x_{n} \leqslant z$. Then $x_{n} \rightarrow z$, and hence $z \in U$ as $U=X \setminus V$ is closed in $X$. It follows that $z<y$ (otherwise $z \in V$ and we are done). Hence for large $n$, we have $z+\frac{1}{n} \in[x, y]$ and so $z+\frac{1}{n} \in V$. Since $V=X \setminus U$ is closed in $X$, it follows that $z \in V$.
+\end{proof}
+
+\subsection{Consequences of definition}\ \vspace{-1.5em}
+
+\begin{example}
+    \begin{enumerate}
+        \item Any indiscrete space is connected.
+      
+        \item The cofinite topology on an infinite set is connected.
+      
+        \item The discrete topology on a set $X$ of size at least 2 is disconnected. Indeed, for any $x \in X$, the subsets $\{x\}$ and $X \setminus\{x\}$ disconnect $X$.
+      
+      \end{enumerate}
+\end{example}
+
+\begin{lemma}
+    Let $Y$ be a subspace of a topological space $X$. Then $Y$ is disconnected if and only if there exist open subsets $U$ and $V$ of $X$ such that $U \cap Y \neq \emptyset$, $V \cap Y \neq \emptyset, U \cap V \cap Y=\emptyset$ and $Y \subset U \cup V$.
+\end{lemma}
+\begin{proof}
+    ($ \Rightarrow $) Let subsets $U^{\prime}$ and $V^{\prime}$ of $Y$ disconnect $Y$. By definition of the subspace topology, there are open sets $U$ and $V$ in $X$ such that $U^{\prime}=U \cap Y$ and $V^{\prime}=V \cap Y$. Then $U \cap Y=U^{\prime} \neq \emptyset, V \cap Y=V^{\prime} \neq \emptyset$, $U \cap V \cap Y=U^{\prime} \cap V^{\prime}=\emptyset$ and $Y=U^{\prime} \cup V^{\prime} \subset U \cup V$.
+
+    ($ \Leftarrow $) Now assume that $U$ and $V$ are open subsets of $X$ such that $U \cap Y \neq \emptyset, V \cap Y \neq \emptyset, U \cap V \cap Y=\emptyset$ and $Y \subset U \cup V$. Then $U^{\prime}=U \cap Y$ and $V^{\prime}=V \cap Y$ disconnect $Y$.
+\end{proof}
+
+\begin{note}
+    If $Y$ is a subspace of $X$, and $U$ and $V$ are open subsets of $X$ such that $U \cap Y \neq \emptyset, V \cap Y \neq \emptyset, U \cap V \cap Y=\emptyset$ and $Y \subset U \cup V$, then we will say that the open subsets $U, V$ of $X$ disconnect $Y$.
+\end{note}
+
+\begin{proposition}\label{prop:closure connected}
+    Let $Y$ be a subspace of a topological space $X$. If $Y$ is connected, then its closure $\bar{Y}$ in $X$ is also connected.
+\end{proposition}
+\begin{proof}
+    Assume $\bar{Y}$ is disconnected. Then there are open subsets $U, V$ in $X$ such that $U \cap \bar{Y} \neq \emptyset, V \cap \bar{Y} \neq \emptyset, U \cap V \cap \bar{Y}=\emptyset$ and $\bar{Y} \subset U \cup V$. Then $U \cap V \cap Y=\emptyset$ and $Y \subset U \cup V$.
+
+    If in addition, we also have $U \cap Y \neq \emptyset$ and $V \cap Y \neq \emptyset$, then $Y$ is disconnected by lemma. So one of $U \cap Y$ and $V \cap Y$ must be empty. Wlog $U \cap Y=\emptyset$, and so $Y$ is a subset of the closed set $X \setminus U$. It follows that $\bar{Y} \subset X \setminus U$ contradicting $U \cap \bar{Y} \neq \emptyset$.
+\end{proof}
+
+\begin{remark}
+    \begin{enumerate}
+        \item More generally, if $Y$ is connected and $Y \subset Z \subset \bar{Y}$, then $Z$ is connected. Indeed, the closure of $Y$ in $Z$ is $\bar{Y} \cap Z$ (Proposition \ref{prop:4.6}).
+      
+        \item An alternative proof of Proposition \ref{prop:closure connected} is via Theorem \ref{thm:connected tfae} (iii).
+      
+      \end{enumerate}
+\end{remark}
+
+\begin{theorem}\label{thm:continuous image connected}
+    Let $f: X \rightarrow Y$ be a continuous function. If $X$ is connected, then $f(X)$ is also connected. (The continuous image of a connected space is connected.)
+\end{theorem}
+
+\begin{proof}
+    Assume that $U, V$ are open subsets of $Y$ that disconnect $f(X)$.
+
+    Then $f^{-1}(U)$ and $f^{-1}(V)$ are open in $X$ since $f$ is continuous.
+
+    $f^{-1}(U)$ is non-empty since $U \cap f(X) \neq \emptyset$, and similarly $f^{-1}(V)$ is non-empty.
+
+    If $x \in f^{-1}(U) \cap f^{-1}(V)$, then $f(x) \in U \cap V \cap f(X)=\emptyset$. This contradiction shows that $f^{-1}(U) \cap f^{-1}(V)=\emptyset$.
+
+    Finally, $f^{-1}(U) \cup f^{-1}(V)=f^{-1}(U \cup V)=X$ since $U \cup V \supset f(X)$.
+
+    So $f^{-1}(U)$ and $f^{-1}(V)$ disconnect $X$ contradicting the assumption that $X$ is connected.
+\end{proof}
+
+\begin{remark}
+    \begin{enumerate}
+        \item Connectedness is a topological property.
+      
+        \item If $f: X \rightarrow Y$ is a continuous function and $A \subset X$ is a connected subset of $X$, then $f(A)$ is connected. Apply Theorem \ref{thm:continuous image connected} to $f\restriction_{A}: A \rightarrow Y$.
+      \end{enumerate}
+\end{remark}
+
+Since the quotient map is continuous, we get
+\begin{corollary}
+    The quotient space of a connected space is connected.
+\end{corollary}
+
+\begin{example}
+    Consider the subset $Y=\left\{\left(x, \sin \frac{1}{x}\right): x>0\right\}$ of $\mathbb{R}^{2}$. 
+    
+    The function $f:(0, \infty) \rightarrow \mathbb{R}^{2}, x \mapsto\left(x, \sin \frac{1}{x}\right)$, is continuous, and hence its image $Y$ is connected. It follows that $\bar{Y}$ is also connected. Note that
+    $$
+    \bar{Y}=Y \cup\{(0, y):-1 \leqslant y \leqslant 1\}
+    $$
+    Indeed, let $-1 \leqslant y \leqslant 1$. For $n \in \mathbb{N}$, the function $x \mapsto \frac{1}{x} \operatorname{maps}\left(0, \frac{1}{n}\right)$ onto $(n, \infty)$, and hence sin $\frac{1}{x_{n}}=y$ for some $x_{n} \in\left(0, \frac{1}{n}\right)$. Then $\left(x_{n}, \sin \frac{1}{x_{n}}\right) \rightarrow(0, y)$, and hence $(0, y) \in \bar{Y}$. This shows that $\widetilde{Y}=Y \cup\{(0, y):-1 \leqslant y \leqslant 1\}$ is contained in $\bar{Y}$. 
+    
+    Conversely, $\bar{Y} \subset \widetilde{Y}$ follows if we show that $\widetilde{Y}$ is closed. So assume $\left(x_{n}, y_{n}\right) \rightarrow(x, y)$ in $\mathbb{R}^{2}$ with $\left(x_{n}, y_{n}\right) \in \widetilde{Y}$ for all $n \in \mathbb{N}$. Since $x_{n} \geqslant 0$ and $-1 \leqslant y_{n} \leqslant 1$ for all $n$, we have $x \geqslant 0$ and $-1 \leqslant y \leqslant 1$. So if $x=0$, then $(x, y) \in \widetilde{Y}$. Otherwise, $x>0$, so $x_{n}>0$ for all large $n$. Now, if $x_{n}>0$, then $y_{n}=\sin \frac{1}{x_{n}}$. Thus, $y_{n} \rightarrow \sin \frac{1}{x}$ and $(x, y)=\left(x, \sin \frac{1}{x}\right) \in \widetilde{Y}$.
+\end{example}
+
+\begin{lemma}\label{lma:union connected}
+    Let $X$ be a topological space and let $\mathcal{A}$ be a family of connected subsets of $X$. Assume that $A \cap B \neq \emptyset$ for all $A, B \in \mathcal{A}$. Then $\bigcup_{A \in \mathcal{A}} A$ is connected.
+\end{lemma}
+
+\begin{proof}
+    Set $Y=\bigcup_{A \in \mathcal{A}} A$ and assume that $f: Y \rightarrow \mathbb{Z}$ is continuous. We show that $f$ must be constant. Then by Theorem \ref{thm:connected tfae} it will follow that $Y$ is connected. For each $A \in \mathcal{A}$, the restriction $f\restriction_{A}: A \rightarrow \mathbb{Z}$ is continuous, and thus constant by Theorem \ref{thm:connected tfae}. For any $A, B \in \mathcal{A}$, the functions $f\restriction_{A}$ and $f\restriction_{B}$ must take the same constant value since $A \cap B \neq \emptyset$. It follows that $f$ itself must be a constant function.
+\end{proof}
+
+\begin{theorem}\label{thm:product connected}
+    Let $X$ and $Y$ be connected topological space. Then $X \times Y$ is connected in the product topology.
+\end{theorem}
+\begin{proof}
+    Wlog $X$ and $Y$ are non-empty.
+
+    Fix $x_{0} \in X$ and consider the map $f: Y \rightarrow X \times Y, y \mapsto\left(x_{0}, y\right)$. We show that $f$ is continuous. Given open sets $U$ in $X$ and $V$ in $Y$, if $x_{0} \in U$, then $f^{-1}(U \times V)=V$ and if $x_{0} \notin U$, then $f^{-1}(U \times V)=\emptyset$. It follows that $f$ is continuous.
+
+    Alternatively, recall that $q_{X}: X \times Y \rightarrow X$ and $q_{Y}: X \times Y \rightarrow Y$ denote coordinate projections. Then $q X \circ f: Y \rightarrow X$ is the constant function $y \mapsto x_{0}$ and $q_{Y} \circ f: Y \rightarrow Y$ is the identity function $y \mapsto y$, and thus both are continuous. It then follows that $f$ is continuous.
+
+    Since $Y$ is connected and $f$ is continuous, $\left\{x_{0}\right\} \times Y$, the image of $f$, is connected. Similarly, for any $y_{0} \in Y$, the subspace $X \times\left\{y_{0}\right\}$ of $X \times Y$ is connected.
+
+    From here, we give two ways of completing the proof of the theorem. In the first method, we assume that $U$ and $V$ disconnect $X \times Y$. Fix $x_{0} \in X$. Since $\left\{x_{0}\right\} \times Y$ is connected, $U, V$ cannot disconnect $\left\{x_{0}\right\} \times Y$. Hence either $U$ or $V$ has empty intersection with $\left\{x_{0}\right\} \times Y$, and so wlog we may assume that $\left\{x_{0}\right\} \times Y \subset U$. Similarly, for any $y \in Y$, the set $X \times\{y\}$ is contained either in $U$ or in $V$, and since $\left(x_{0}, y\right) \in U$, we must in fact have $X \times\{y\} \subset U$. Thus, $X \times Y \subset U$ and $V=\emptyset$, a contradiction.
+
+    In the second method we first observe that for $x_{0} \in X$ and $y_{0} \in Y$, the connected sets $\left\{x_{0}\right\} \times Y$ and $X \times\left\{y_{0}\right\}$ have non-empty intersection $\left\{\left(x_{0}, y_{0}\right)\right\}$. It follows by Lemma \ref{lma:union connected} that $\left\{x_{0}\right\} \times Y \cup X \times\left\{y_{0}\right\}$ is connected. Now fix $x_{0} \in X$ and for each $y \in Y$ set $A_{y}=\left\{x_{0}\right\} \times Y \cup X \times\{y\}$. For $y, y^{\prime} \in Y$, we have $A_{y} \cap A_{y^{\prime}} \supset\left\{x_{0}\right\} \times Y$, and hence $A_{y} \cap A_{y^{\prime}}$ is non-empty. Hence by Lemma \ref{lma:union connected} it follows that $\bigcup_{y \in Y} A_{y}=X \times Y$ is connected.
+\end{proof}
+
+\begin{example}
+    $\mathbb{R}^{n}$ is connected for any $n \in \mathbb{N}$.
+\end{example}
+
+\begin{remark}
+    \begin{enumerate}
+        \item In the proof we showed that $y \mapsto(x, y)$ is a continuous map $Y \rightarrow X \times Y$ with image $\{x\} \times Y$. In fact, this map is injective with inverse $\{x\} \times Y \rightarrow Y$ being the second coordinate projection, which is continuous. It follows that $\{x\} \times Y$ is homeomorphic to $Y$ for any $x \in X$. Similarly, $X \times\{y\}$ is homeomorphic to $X$ for any $y \in Y$.
+      
+        \item The converse of Theorem \ref{thm:product connected} also holds provided $X$ and $Y$ are non-empty: If $X \times Y$ is connected, then so are $X$ and $Y$. Simply apply Theorem \ref{thm:continuous image connected} to the coordinate projections.
+      \end{enumerate}
+\end{remark}
 
 \end{document}

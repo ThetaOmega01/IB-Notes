@@ -1695,6 +1695,418 @@ See Dr Ubiali's notes for proofs.
 		\dot x = \frac{p}{m}
 	\]
 \end{example}
+\clearpage
+\part{The 3D Schr\"odinger equation}
+\section{3D solutions to the Schr\"odinger equation}
+\subsection{TISE in spherical polar coordinates}
 
+For a spherically symmetric potential in \( \mathbb R^3 \), the time-independent Schr\"odinger equation is
+\[
+	-\frac{\hbar^2}{2m} \laplacian{\chi(\bfx)} + U(\bfx) \chi(\bfx) = E\chi(\bfx)
+\]
+Recall that the Laplacian operator can be expanded in spherical polar coordinates as
+\[
+	-\frac{\hbar^2}{2m} \qty( \frac{1}{r} \pdv[2]{r} r + \frac{1}{r^2\sin^2\theta}\qty[\sin \theta \pdv{\theta}\qty(\sin\theta \pdv{\theta}) + \pdv[2]{\phi}] )\chi(\bfx) + U(\bfx) \chi(\bfx) = E\chi(\bfx)
+\]
+where
+\[
+	x = r \cos \phi \sin \theta; \quad y = r \sin \phi \sin \theta;\quad z = r \cos \theta
+\]
 
+\begin{definition}
+	A \textbf{spherically symmetric potential} is a potential \( U \) which depends only on \( r \).
+\end{definition}
+We search for the particular solutions of the time-dependent Schr\"odinger equation with spherically symmetric potential that are radial eigenfunctions.
+If \( \chi(r) \) is a function of \( r \) alone,
+\[
+	\laplacian{\chi(r)} = \frac{1}{r} \pdv[2]{r} \qty(r\chi(r))
+\]
+Hence,
+\[
+	-\frac{\hbar^2}{2mr} \dv[2]{r} \qty(r \chi(r)) + U(r) \chi(r) = E \chi(r)
+\]
+This is equivalent to
+\[
+	-\frac{\hbar^2}{2m} \qty( \chi''(r) + \frac{2}{r} \chi'(r) ) + U(r) \chi(r) = E \chi(r)
+\]
+The normalisation condition is
+\[
+	\int_0^\infty \abs{\chi(r)}^2 r^2 \dd{r} < N
+\]
+The eigenfunctions \( \chi(r) \) must converge to zero sufficiently fast as \( r \to \infty \) in order to be normalisable.
+To solve the time-independent Schr\"odinger equation, we will define
+\[
+	\sigma(r) = r \chi(r)
+\]
+Then,
+\[
+	-\frac{\hbar^2}{2m} \sigma''(r) + U(r) \sigma(r) = E \sigma(r)
+\]
+This is defined for \( r \geq 0 \).
+The normalisation condition here is
+\[
+	\int_0^\infty \abs{\sigma(r)}^2 \dd{r} < N;\quad \sigma(0) = 0;\quad \sigma'(0) < \infty
+\]
+The conditions at zero force \( \chi \) to be defined and have finite derivative at zero. 
+
+\begin{note}
+	The condition $\sigma(r)=0$ at $r=0$ does \textit{not} comes strictly from integrability. It is from the Hermitian nature of the Hamiltonian operator. See Dr Ubiali's notes.
+\end{note}
+
+A trick is to solve Schr\"odinger equation on whole line $-\infty<r<+\infty$ by defining $U(r)$ also on the negative half life by the symmetry condition $U(-r)=U(r)$. The bound state wavefunctions on the whole real line must be either even or odd, but in this case the only acceptable solutions are the odd parity ones. 
+
+To solve the equation for \( \sigma \), we solve on \( \mathbb R \) and search for odd solutions \( \sigma^{(-)} \), so
+\[
+	\sigma^{(-)}(-r) = -\sigma^{(-)}(r)
+\]
+
+\begin{center}
+	\includegraphics[scale=0.3]{qm11.png}
+\end{center}
+
+\subsection{Spherically symmetric potential well}\ \vspace{-1.5em}
+\begin{example}
+	Consider the potential well given by
+\[
+	U(r) = \begin{cases}
+		0   & r \leq a \\
+		U_0 & r > a
+	\end{cases}
+\]
+where \( a, U_0 > 0 \).
+The time-independent Schr\"odinger equation is
+\[
+	-\frac{\hbar^2}{2m} \sigma''(r) + U(r) \sigma(r) = E \sigma(r)
+\]
+\end{example}
+We search for odd-parity bound states, \( 0 \le E \le U_0 \).
+Let
+\[
+	k = \sqrt{\frac{2mE}{\hbar^2}};\quad \overline k = \sqrt{\frac{2m(U_0 - E)}{\hbar^2}}
+\]
+The solution for \( \sigma \) is
+\[
+	\sigma(r) = \begin{cases}
+		A \sin(kr)           & r \leq a \\
+		B e^{-\overline k r} & r > a
+	\end{cases}
+\]
+The continuity condition at \( r = a \) can be imposed to find \( A \sin ka = B e^{-\overline k a} \).
+The continuity of the derivative gives \( kA \cos ka = -\overline k B e^{-\overline k a} \).
+Therefore,
+\[
+	-k \cot(ka) = \overline k;\quad k^2 + \overline k^2 = \frac{2mU_0}{\hbar^2}
+\]
+by rescaling
+\[
+	-\xi \cot \xi = \eta; \quad \xi^2 + \eta^2 = r_0^2
+\]
+where \( \xi = ka \) and \( \eta = \overline k a \), and \( r_0 = a\sqrt{2mU_0/\hbar} \).
+\begin{center}
+	\includegraphics[scale=0.22]{qm12.png}
+\end{center}
+If \( r_0 < \frac{\pi}{2} \), we have no solutions because \( \xi \geq 0 \).
+Equivalently, there are no solutions if
+\[
+	U_0 < \frac{\pi^2 \hbar^2}{8ma^2}
+\]
+There are two differences between the solution in 1D: 
+\begin{enumerate}
+	\item Below a given threshold for $U_0$, there does not exist any bound state in 3D, unlike one-dimensional case where we always ﬁnd at least one bound state. 
+	\item The solution 
+	\[
+		\chi(r) = \begin{cases}
+			A \sin(kr)/r           & r \leq a \\
+			B e^{-\overline k r}/r & r > a
+		\end{cases}
+	\]
+	is bounded above by $ 1/r $ (up to a constant multiplication). 
+\end{enumerate}
+
+\section{Angular momentum in QM}
+\subsection{Definition of angular momentum}
+Recall that classically the angular momentum \( \bfL \) is given by
+\[
+	\bfL = \bfx \times \bfp
+\]
+Spherically symmetric potentials conserve classical angular momentum:
+\[
+	\dv{\bfL}{t} = \dot \bfx \times \bfp + \bfx \times \dot \bfp = 0
+\]
+Solving classical problems in this way allows us to reduce a three-dimensional problem into a two-dimensional problem, by considering motion on the plane \( \bfL \cdot \bfx = 0 \).
+Then we reduce to one dimension by considering \( \hat \bfe_r \).
+In quantum mechanics, we can do an analogous simplification.
+
+\begin{definition}
+	In Quantum Mechanics, the orbital angular momentum is an observable which corresponds to the operator,
+	\[
+	\begin{aligned}
+	\hat{\mathbf{L}} &=\hat{\mathbf{x}} \times \hat{\mathbf{p}} \\
+	&=-i \hbar \mathbf{x} \times \nabla
+	\end{aligned}
+	\]
+	In index notation for Cartesian coordinates $\mathbf{x}=\left(x_1, x_2, x_3\right)$
+	\[
+	\hat{L}_i=\varepsilon_{i j k} \hat{x}_j \hat{p}_k=-i \hbar \varepsilon_{i j k} x_j \frac{\partial}{\partial x_k}
+	\]
+	where $\varepsilon_{i j k}$ is the Levi-Civita alternating tensor. Explicitly,
+	\[
+	\hat{\mathbf{L}}=-i \hbar\left(x_2 \frac{\partial}{\partial x_3}-x_3 \frac{\partial}{\partial x_2}, x_3 \frac{\partial}{\partial x_1}-x_1 \frac{\partial}{\partial x_3}, x_1 \frac{\partial}{\partial x_2}-x_2 \frac{\partial}{\partial x_1}\right)
+	\]
+\end{definition}
+
+The difference between 1D and 3D are given as follows. 
+\begin{center}
+	\begin{tabular}{cc}
+		\toprule 
+		\textbf{1D} & \textbf{3D} \\ \midrule 
+		$\displaystyle \pdv[2]{}{x}$  &  $\displaystyle \laplacian = \pdv[2]{}{x_1} + \pdv[2]{}{x_2} + \pdv[2]{}{x_3}$ \\[1em]
+		$\displaystyle \hat p = -i \hbar \pdv{}{x}$ & $\displaystyle \hat{\mathbf{p}} = - i \hbar \grad = -i \hbar \left( \pdv{}{x_1},\pdv{}{x_2},\pdv{}{x_3} \right)$  \\ 
+		$\displaystyle \hat{p}^2 = - \hbar^2 \pdv[2]{}{x}$ & $\displaystyle |\hat{\mathbf{p}}|^2 = - \hbar^2 \laplacian$\\ \bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Properties of angular momentum}
+
+\begin{enumerate}
+	\item The operators $\hat{L}_i$ are Hermitian, as all operators associated to physical observables.
+	\item The different components of the angular momentum operator do not commute with each other: $\left[\hat{L}_i, \hat{L}_j\right] \neq 0$ for $i \neq j$. Thus, different components of angular momentum cannot be measured simultaneously.
+	We can check this explicitly by computing the commutator,
+	\[
+	\begin{aligned}
+	\left[\hat{L}_1, \hat{L}_2\right] &f\left(x_1, x_2, x_3\right)\\ 
+	=\,&-\hbar^2\left[\left(x_2 \frac{\partial}{\partial x_3}-x_3 \frac{\partial}{\partial x_2}\right)\left(x_3 \frac{\partial}{\partial x_1}-x_1 \frac{\partial}{\partial x_3}\right)\right.\\ 
+	&\left.-\left(x_3 \frac{\partial}{\partial x_1}-x_1 \frac{\partial}{\partial x_3}\right)\left(x_2 \frac{\partial}{\partial x_3}-x_3 \frac{\partial}{\partial x_2}\right)\right] f\left(x_1, x_2, x_3\right)
+	\end{aligned}
+	\]
+	In the above equation many term cancels leaving,
+	\[
+	\begin{aligned}
+	{\left[\hat{L}_1, \hat{L}_2\right] f } &=-\hbar^2\left(x_2 \frac{\partial}{\partial x_1}-x_1 \frac{\partial}{\partial x_2}\right) f\left(x_1, x_2, x_3\right) \\
+	&=i \hbar \hat{L}_3 f\left(x_1, x_2, x_3\right)
+	\end{aligned}
+	\]
+	A similar calculation for the other components confirms the commutation relations,
+	\[
+	\left[\hat{L}_2, \hat{L}_3\right]=i \hbar \hat{L}_1 \quad \text { and } \quad\left[\hat{L}_1, \hat{L}_3\right]=-i \hbar \hat{L}_2
+	\]
+	\item $\left[\hat{L}_i, \hat{L}_j\right]=i \hbar \varepsilon_{i j k} \hat{L}_k$, which combines the three independent commutation relations that we found above, using index notation.
+\end{enumerate}
+
+\subsection{Total angular momentum}
+
+In Classical Mechanics the magnitude of the angular momentum is $L=|\mathbf{L}|$. Thus,
+\[
+L^2=L_1^2+L_2^2+L_3^2
+\]
+\begin{definition}
+	In Quantum Mechanics we define the total angular momentum operator,
+	\[
+	\hat{L}^2=\hat{L}_1^2+\hat{L}_2^2+\hat{L}_3^2
+	\]
+\end{definition}
+
+\subsection{Properties of total angular momentum}
+For proofs, see Dr Ubiali's notes. 
+\begin{enumerate}
+	\item The total angular momentum $\hat{L}^2$ commutes with each of the components of angular momentum $\hat{L}_i, i=1,2,3$
+	\item The total angular momentum operator commutes with an Hamiltonian featuring a spherically symmetric potential, i.e. 
+	\[
+		\qty[\hat H, \hat L^2] = \qty[\hat H, \hat L_i] = 0. 
+	\]
+	This means that the angular momentum operators care nothing for how the wavefunctions depend on the radial coordinate $r$. The angular momentum of a state is, perhaps unsurprisingly, encoded in how the wavefunction varies in the angular directions $\theta$ and $\Phi$.
+\end{enumerate}
+
+\subsection{Commutativity of angular momentum operators}
+The set \( \qty{ \hat H, \hat L^2, \hat L_i } \) commutes pairwise.
+By convention, we choose \( i = 3 \) to extract the \( z \) component of the angular momentum.
+Hence,
+\begin{enumerate}
+	\item We can find joint eigenstates of the three operators, and such eigenstates can be chosen to form a basis for the Hilbert space \( \mathcal H \).
+	\item The corresponding eigenvalues \( \abs{L}, L_z, E \) can be measured simultaneously to an arbitrary precision.
+	\item The set of operators is maximal, in other words, we cannot construct another independent operator (other than the unit operator) which commutes with each of $\hat{H}, \hat{L}^2$ and $\hat{L}_3$.
+\end{enumerate}
+
+\subsection{Joint eigenfunctions of anglar momentum}
+To find joint eigenfunctions of $ \hat{L}^2 $ and $ \hat{L}_3 $, write $ \hat{\mathbf{L}} $ in spherical coordinates (see Appendix A.7 of Dr Ubiali's notes): 
+\[
+	\begin{aligned}
+		\hat{L}^2 &=-\frac{\hbar^2}{\sin ^2(\theta)}\left[\sin (\theta) \frac{\partial}{\partial \theta}\left(\sin (\theta) \frac{\partial}{\partial \theta}\right)+\frac{\partial^2}{\partial \phi^2}\right] \\
+		\hat{L}_3 &=-i \hbar \frac{\partial}{\partial \phi}
+	\end{aligned}
+\]
+Now we search for eigenfunctions of these operators.
+\[
+	\hat L^2 Y(\theta, \phi) = \lambda Y(\theta, \phi);\quad \hat L_3 Y(\theta, \phi) = \hbar m Y(\theta, \phi)
+\]
+Consider the eigenvalue equation for $ \hat L_3 $
+\[
+	- i \hbar \pdv{}{\phi} Y(\theta,\phi) = \hbar m Y(\theta,\phi)
+\] 
+We find solutions of the form $ Y(\theta,\phi) = y(\theta) x(\phi) $. Note that plugging in back we find
+\[
+	-i\hbar y(\theta) x'(\phi) = \hbar m y(\theta) x(\phi)
+\]
+Hence \( y(\theta) \) is arbitrary, and further
+\[
+	-i\hbar x'(\phi) = \hbar m x(\phi) \implies x(\phi) = e^{i m \phi}
+\]
+But wavefunctions must be single-valued functions on $\mathbb{R}^3$ and should therefore be invariant under $\phi \rightarrow \phi+2 \pi$. The function $\exp (i m \phi)$ is invariant provided,
+\[
+\exp (2 \pi i m)=1  \implies  m \in \mathbb{Z}. 
+\]
+Thus the eigenvalues of $\hat{L}_3$ have the form $\hbar m$ for integer $m$. Equivalently, the $z$-component of angular momentum is \textit{quantised} in integer multiples of $\hbar$. This agrees with Bohr's quantisation condition.
+Similarly we must have,
+\[
+\hat{L}^2 y(\theta) \exp (i m \phi)=\lambda y(\theta) \exp (i m \phi)
+\]
+for some eigenvalue $\lambda$. Using the explicit form for $\hat{L}^2$ we find that $y(\theta)$ must obey the equation,
+\[
+\frac{1}{\sin (\theta)} \frac{\partial}{\partial \theta}\left(\sin (\theta) \frac{\partial y(\theta)}{\partial \theta}\right)-\frac{m^2}{\sin ^2(\theta)} y(\theta)=-\frac{\lambda}{\hbar^2} Y(\theta)
+\]
+
+This is the associate Legendre equation.
+The solutions of \( y(\theta) \) are the associate Legendre functions.
+\[
+	y(\theta) = P_{\ell,m}(\cos \theta) = (\sin \theta)^{\abs{m}} \dv[\abs{m}]{(\cos \theta)}  P_\ell(\cos \theta)
+\]
+where the \( P_\ell \) are the Legendre polynomials.
+Since the ordinary Legendre polynomials are of degree \( \ell \), we must have \( \abs{m} \leq \ell \) to obtain a nonzero solution.
+This corresponds to the classical notion that \( \abs{L_z} \leq \abs{L} \) for a physical solution.
+The eigenvalues of \( \hat L^2 \) are
+\[
+	\lambda = \ell(\ell+1) \hbar^2
+\]
+with \( \ell \in \qty{0, 1, 2, \dots} \).
+Thus,
+\[
+	Y_{\ell, m}(\theta, \phi) = P_{\ell,m}(\cos\theta) e^{im\phi}
+\]
+The \( Y \) functions are called the \textbf{spherical harmonics}.
+The parameters \( \ell, m \) are known as the \textbf{quantum numbers} of the eigenfunction; \( \ell \) is the \textbf{total angular momentum} quantum number and \( m \) is the \textbf{azimuthal} quantum number.
+
+The constraint $-\ell \leq m \leq \ell$ is the quantum version of the classical inequality,
+\[
+-|\mathbf{L}| \leq L_z \leq+|\mathbf{L}|
+\]
+which follows because $L_z=|\mathbf{L}| \cos (\theta)$.
+
+Examples of normalised eigenfunctions are
+\begin{align*}
+	Y_{0,0}     & = \frac{1}{\sqrt{4 \pi}}                             \\
+	Y_{1,0}     & = \sqrt{\frac{3}{4 \pi}} \cos \theta                 \\
+	Y_{1,\pm 1} & = \mp \sqrt{\frac{3}{8 \pi}} \sin \theta e^{-i \phi}
+\end{align*}
+All spherical harmonics can be shown to be orthornormal:
+\[
+	\int_0^{2 \pi} \dd \phi \int_{-1}^{+1} \dd \cos \theta\; Y_{l^{\prime}, m^{\prime}}^*(\theta, \phi) Y_{l, m}(\theta, \phi)=\delta_{l l^{\prime}} \delta_{m m^{\prime}}
+\]
+
+\section{The hydrogen atom}
+We now apply the above to solve the hydrogen atom. 
+\begin{definition}
+	The hydrogen $(\mathrm{H})$ atom consists of a single proton $p^{+}$and an electron $e^{-}$.
+\end{definition}
+
+As before treat the proton as stationary at the origin of spherical polar coordinates, i.e. we model the hydrogen atom by treating the proton as infinitely massive and at rest at the origin. The Coulomb attraction,
+\[
+F(r)=-\frac{\partial U(r)}{\partial r}=-\frac{e^2}{4 \pi \varepsilon_0 r^2}
+\]
+corresponds to a potential
+\[
+U(r)=-\frac{e^2}{4 \pi \varepsilon_0 r}.
+\]
+The time-independent Schr\"odinger equation for the hydrogen atom is
+\[
+	-\frac{\hbar^2}{2m_e} \laplacian{\chi(r, \theta, \phi)} - \frac{e^2}{4 \pi \varepsilon_0} \frac{1}{r} \chi(r, \theta, \phi) = E \chi(r,\theta, \phi)
+\]
+Writing the Laplacian in spherical polar coordinates,
+\[
+	\laplacian{} = \frac{1}{r} \pdv[2]{r} + \frac{1}{r^2 \sin^2 \theta} \qty( \sin \theta \pdv{\theta} \sin \theta \pdv{\theta} + \pdv[2]{\phi} )
+\]
+Hence,
+\[
+	\hat L^2 = \frac{\hbar^2}{\sin^2\theta} \qty[ \sin \theta \pdv{\theta} \sin \theta \pdv{\theta} + \pdv[2]{\phi} ] \implies -\hbar^2 \laplacian{} = -\frac{\hbar^2}{r} \pdv[2]{r} r + \frac{\hat L^2}{r^2}
+\]
+Thus we can rewrite the TISE as
+\[
+	-\frac{\hbar^2}{2m_e} \frac{1}{r} \qty( \pdv[2]{r} \qty(r \chi) ) + \frac{\hat L^2}{2 m_e r^2} \chi - \frac{e^2}{4 \pi \varepsilon_0 r} \chi = E \chi
+\]
+Because eigenfunctions of $ \hat H $ are also eigenfunctions of $ \hat L^2, \hat L_3 $, we now look for a simultaneous eigenstate of
+\[
+\left\{\hat{H}, \hat{L}^2, \hat{L}_3\right\}
+\]
+by setting
+\[
+\chi(r, \theta, \phi)=R(r) Y_{l, m}(\theta, \phi)
+\]
+where $Y_{l, m}$ is a spherical harmonic.
+
+Since \( \chi \) is an eigenfunction of \( \hat L^2 \),
+\[
+	\hat L^2 (R(r) Y_{\ell,m}(\theta,\phi)) = R(r) \hbar^2 \ell (\ell+1)Y_{\ell,m}(\theta, \phi)
+\]
+Substituting into the TISE,
+\begin{align*}
+	&-\frac{\hbar^2}{2m_e} \qty( \pdv[2]{R}{r} 
+	+ \frac{2}{r} \pdv{R}{r} ) Y_{\ell,m}(\theta, \phi) \\ 
+	&+ \frac{\hbar^2}{2 m_e r^2} \ell(\ell+1) R(r)Y_{\ell,m}(\theta, \phi) \\ 
+	&-\frac{e^2}{4 \pi \varepsilon_0 r} R(r)Y_{\ell,m}(\theta,\phi) = E R(r)Y_{\ell,m}(\theta,\phi)
+\end{align*}
+Cancelling the spherical harmonic, we end up with an 1D equation for the radial part:
+\[
+	-\frac{\hbar^2}{2m_e} \qty( \dv[2]{R}{r} + \frac{2}{r} \dv{R}{r} ) + \underbrace{\qty(\frac{\hbar^2}{2 m_e r^2} \ell(\ell+1) - \frac{e^2}{4 \pi \varepsilon_0 r})}_{U_{\mathrm{eff}} = \text{ effective potential}} R(r) = E R(r)
+\]
+\subsection{The radial wavefunction $ \ell=0 $}
+
+When $ \ell=0 $, $ U_{\text{eff}} = U_{\text{Coulomb}} $, and by grouping quantaties up
+\[
+	\nu^2 = - \frac{2m E}{\hbar^2} \quad \beta = \frac{e^2m}{2\pi\epsilon_0 \hbar^2}
+\]
+we get
+\[
+	R'' + \frac{2}{r} R' + \qty(\frac{\beta}{r} - \nu^2 )R = 0
+\]
+We have 2 observations:
+\begin{enumerate}
+	\item The asymptotic behaviour as $ r\to \infty $ is determined by 
+	\[
+		R'' - \nu^2 R = 0 \iff R(r) \sim e^{\pm r \nu}
+	\]
+	Take $ R(r) = e^{-r\nu} $ for normalisation condition. 
+	\item At $r=0$, $R$ must be finite. 
+\end{enumerate}
+
+As in the analysis of the harmonic oscillator, it is convenient to separate out the exponential dependence of the eigenfunction and look for a solution of the form,
+\[
+R(r)=f(r) \exp (-\nu r) .
+\]
+If we plug it into the Schrödinger equation, it becomes
+\[
+\frac{\rmd^2 f}{\rmd r^2}+\frac{2}{r}(1-\nu r) \frac{\rmd f}{\rmd r}+\frac{1}{r}(\beta-2 \nu) f=0
+\]
+It is homogeneous and linear with $r=0$ as a regular point, so we can use series method:
+\[
+	f(r)=r^c \sum_{n=0}^{\infty} a_n r^n
+\]
+Substituting back we get 
+\[
+	\sum_{n=0}^{\infty}\left[a_n(c+n)(c+n-1) r^{c+n-2}+\frac{2}{r}(1-\nu r) a_n(c+n) r^{c+n-1}+(\beta-2 \nu) a_n r^{c+n-1}\right]=0
+\]
+The lowest power of $r$ which occurs on the LHS is $a_0 r^{c-2}$ with coefficient $c(c-1)+2 c=$ $c(c+1)$. Equating this to zero yields the indicial equation
+\[
+c(c+1)=0
+\]
+with roots $c=0$ and $c=-1$. However, the root ${c}=-1$ would imply $\chi(r) \sim 1 / r$ near $r=0$. This yields a singular eigenfunction which violates the boundary condition at the origin. Thus we choose root $c=0$ and our series solution simplifies to
+\[
+f(r)=\sum_{n=0}^{\infty} a_n r^n
+\]
+If we now collect all terms of order $r^{n-2}$ on the LHS and equate them to zero to get
+\[
+n(n-1) a_n+2 n a_n-2 \nu(n-1) a_{n-1}+(\beta-2 \nu) a_{n-1}=0
+\]
+or more simply
+\[
+a_n=\frac{(2 \nu n-\beta)}{n(n+1)} a_{n-1}
+\]
 \end{document}

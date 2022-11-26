@@ -11,7 +11,7 @@
 \clearpage
 \part{Self-adjoint ODEs}
 \section{Fourier Series}
-\subsection{Periodic functions}
+\subsection{Periodic functions}\ \vspace{-1.5em}
 \begin{definition}
     A function $f$ is \textit{periodic} if $ f(x+T)=f(x), \forall x $, where $T$ is the period.
 \end{definition}
@@ -67,6 +67,7 @@ Define an inner product of the set
 $g_n,h_n$ form a complete orthogonal set, i.e. they span the space of well-behaved periodic functions $ [0,2L) $ and they are linearly independent.
 
 \subsection{Definition of Fourier series}
+\ \vspace{-1.5em}
 \begin{definition}
     We can express any well-behaved periodic function of period $2L$ as 
 \begin{equation}\label{1.eq.4:FS}
@@ -276,7 +277,7 @@ because of orthogonality
 By thinking them as a set of basis of a space of nice-enough functions in the way we did for $\sin$ and $\cos$.
 Parseval's Theorem can then be stated as
 $$\int_{-L}^L|f(x)|^2\,\mathrm dx=2L\sum_{n=-\infty}^\infty|c_n|^2$$
-\subsection{Some Motivations of Fourier Series}
+\subsection{Some Motivations of Fourier Series}\ \vspace{-1.5em}
 \begin{definition}
     The complex inner product $\langle\cdot\rangle:\mathbb C^N\times\mathbb C^N\to\mathbb C$ is defined by
     \begin{equation}
@@ -423,7 +424,7 @@ To solve $\mathcal Ly=f$ using eigenvalue decompositions like we did previously,
 \end{equation}
 where $\rho$ is nonegative.
 This form often occurs after seperation of variables in a PDE.
-\subsection{Self-Adjoint Operators}
+\subsection{Self-Adjoint Operators}\ \vspace{-1.5em}
 \begin{definition}
     For two functions $f,g:[a,b]\to\mathbb C$ we define their inner product to be
     $$\langle f,g\rangle=\int_a^bf^*(x)g(x)\,\mathrm dx$$
@@ -2064,4 +2065,305 @@ This satisfies
 \]
 where $ \alpha $ is defined in the original ODE above. 
 
+\subsection{Explicit form for Green's functions}
+We want to solve
+\[
+	\mathcal L G(x,\xi) = \delta(x-\xi)
+\]
+on \( a \leq x \leq b \), subject to homogeneous boundary conditions \( G(a,\xi) = G(b,\xi) = 0 \).
+The functions \( G_1, G_2 \) satisfy the homogeneous equation, so \( \mathcal L G_i(x,\xi) = 0 \).
+Suppose there exist two independent homogeneous solutions \( y_1(x), y_2(x) \) to \( \mathcal L y = 0 \).
+Then, \( G_1 = A y_1 + B y_2 \), such that \( A y_1(a) + B y_2(a) = 0 \), which gives a constraint between \( A \) and \( B \).
+This defines a complementary function \( y_-(x) \) such that \( y_-(a) = 0 \).
+The general homogeneous solution with \( G_1(a) = 0 \) is
+\[
+	G_1 = C y_-
+\]
+\( C \) will be found later.
+Similarly we can define \( y_+ \) as a linear combination of \( y_1, y_2 \) such that \( y_+(b) = 0 \).
+\[
+	G_2 = D y_+
+\]
+We require \( G_1(\xi, \xi) = G_2(\xi, \xi) \) for continuity, hence
+\[
+	C y_-(\xi) = D y_+(\xi)
+\]
+Since \( [G']_{\xi_-}^{\xi^+} = \frac{1}{\alpha(\xi)} \), we have
+\[
+	Dy'_+(\xi) - C Y_-'(\xi) = \frac{1}{\alpha(\xi)}
+\]
+We can solve these equations for \( C, D \) simultaneously to find
+\[
+	C(\xi) = \frac{y_+(\xi)}{\alpha(\xi)W(\xi)};\quad D(\xi) = \frac{y_-(\xi)}{\alpha(\xi)W(\xi)}
+\]
+where \( W(\xi) \) is the Wronskian
+\[
+	W(\xi) = y_-(\xi) y_+'(\xi) - y_+(\xi) y_-'(\xi)
+\]
+which is nonzero if \( y_-, y_+ \) are linearly independent.
+Hence,
+\[
+	G(x,\xi) = \begin{cases}
+		\dfrac{y_-(x) y_+(\xi)}{\alpha(\xi)W(\xi)} & a \leq x \leq \xi \\[1em]
+		\dfrac{y_-(\xi) y_+(x)}{\alpha(\xi)W(\xi)} & \xi \leq x \leq b
+	\end{cases}
+\]
+
+\subsection{Aside: Continuity of $G,G'$}
+Why $G$ must be continuous at $\xi$ and have a jump discontinuity in its derivative?
+\begin{proposition}
+    $G$ is continuous at $x=\xi$. 
+\end{proposition}
+\begin{proof}
+    Suppose $G$ is discontinuous at $\xi$. Then near $\xi$ we have 
+    \[
+        G \propto H(x-\xi) + \cdots 
+    \]
+    where $H$ is the Heaviside step function that will dominate as $x\to \xi$. Then $ G' \propto \delta(x-\xi) $ and $ G'' \propto \delta'(x-\xi) $, and the ODE becomes 
+    \[
+        \mathcal{L} G \propto \alpha \delta'(x-\xi) + \beta \delta(x-\xi) + \gamma H(x-\xi)
+    \]
+    But RHS there is no $ \delta' $ term, so contradiction. Hence $G$ must be continuous at $\xi$. 
+\end{proof}
+
+\begin{proposition}
+    $G'$ has a jump discontinuity at $\xi$. 
+\end{proposition}
+\begin{proof}
+    Integrate $ \mathcal{L} G(x,\xi)=\delta(x-\xi) $ across $ x=\xi $ by parts we get 
+    \begin{align*}
+        \text{LHS} &= \int_{\xi_-}^{\xi_+} \mathcal{L} G(x,\xi) \,\mathrm{d}x
+        = \int_{\xi_-}^{\xi_+} \alpha G'' + \beta G' + \gamma G \,\mathrm{d}x
+        = \cdots (\text{by parts}) \\
+        &= \alpha(\xi) \qty[G']_{\xi_-}^{\xi_+} + (\beta-\alpha') \qty[G]_{\xi_-}^{\xi_+}  + 
+        \int_{\xi_-}^{\xi_+} (\gamma-\beta'+\alpha'')G \,\mathrm{d}x\\ 
+        &= \alpha(\xi) \qty[G']_{\xi_-}^{\xi_+}
+    \end{align*}
+    But RHS is 1, so we get 
+    \[
+         \qty[G']_{\xi_-}^{\xi_+} = \frac{1}{\alpha(\xi)}.\qedhere
+    \]
+\end{proof}
+
+\subsection{Solving boundary value problems}
+We know that the solution of \( \mathcal L y = f \) is
+\[
+	y(x) = \int_a^b G(x,\xi) f(\xi) \dd{\xi}
+\]
+We can split this into two intervals given that \( G = G_1 \) for \( \xi > x \) and \( G = G_2 \) for \( \xi < x \).
+\begin{align*}
+	y(x) & = \int_a^x G_2(x,\xi) f(\xi) \dd{\xi} + \int_x^b G_1(x,\xi) f(\xi) \dd{\xi}                                                               \\
+	     & = y_+(x) \int_a^x \frac{y_-(\xi) f(\xi)}{\alpha(\xi)W(\xi)} \dd{\xi} + y_-(x) \int_a^x \frac{y_+(\xi) f(\xi)}{\alpha(\xi)W(\xi)} \dd{\xi}
+\end{align*}
+\begin{note}
+    If \( \mathcal L \) is in Sturm-Liouville form, then \( \beta = \alpha' \), and the denominator \( \alpha(\xi)W(\xi) \) is a constant.
+
+    Further, \( G \) is symmetric; \( G(x,\xi) = G(\xi,x) \).
+Often, by convention, we take \( \alpha = 1 \) (however Sturm-Liouville form typically takes \( \alpha < 0 \)).
+
+The indefinite integrals $ \int_{x} $ are particular integrals of solution. 
+\end{note}
+
+\begin{example}
+	Consider \( y'' - y = f(x) \) with \( y(0) = y(1) = 0 \).
+	Homogeneous solutions are \( y_1 = e^x \), \( y_2 = e^{-x} \).
+	Imposing boundary conditions,
+	\[
+		G = \begin{cases}
+			C \sinh x    & 0 \leq x < \xi \\
+			D \sinh(1-x) & \xi < x \leq 1
+		\end{cases}
+	\]
+	Continuity at \( x = \xi \) implies
+	\[
+		C \sinh \xi = D \sinh (1 - \xi) \implies C = D \frac{\sinh (1-\xi)}{\sinh \xi}
+	\]
+	The jump condition is
+	\[
+		-D \cosh(1-\xi) - C \cosh \xi = 1
+	\]
+	Substituting $C$ gives
+	\begin{align*}
+		-D\qty[\cosh(1-\xi)\sinh \xi + \sinh(1-\xi)\cosh \xi] & = \sinh \xi                     \\
+		-D\qty[\sinh((1-\xi) + \xi)]                          & = \sinh \xi                     \\
+		-D\sinh 1                                             & = \sinh \xi                     \\
+		D                                                     & = \frac{\sinh \xi}{\sinh 1}     \\
+		\implies C                                          & = \frac{-\sinh(1-\xi)}{\sinh 1}
+	\end{align*}
+	Therefore,
+	\[
+		y(x) = \frac{-\sinh(1-x)}{\sinh 1} \int_0^x \sinh \xi f(\xi) \dd{\xi} - \frac{\sinh x}{\sinh 1} \int_x^1 \sinh (1-\xi) f(\xi) \dd{\xi}
+	\]
+\end{example}
+
+\paragraph{Inhomogeneous BCs}
+Suppose we have inhomogeneous boundary conditions.
+In this case, we want to find a homogeneous solution \( y_p \) that solves the inhomogeneous boundary conditions.
+
+That is, \( \mathcal L y_p = 0 \) but \( y_p(a), y_p(b) \) are as required for the boundary conditions.
+
+Then, by subtracting this solution from the original equation, we can solve using a homogeneous set of boundary conditions.
+For instance, in the above example, suppose \( y(0) = 0, y(1) = 1 \).
+
+We can find a solution \( y_p = \frac{\sinh x}{\sinh 1} \) which has the inhomogeneous boundary conditions but solves the homogeneous problem.
+
+\subsection{Higher-order ODEs}
+Suppose \( \mathcal L y = f(x) \) where \( \mathcal L \) is an \( n \)th order linear differential operator, and \( \alpha(x) \) is the coefficient for the highest degree derivative.
+Suppose that homogeneous boundary conditions are satisfied.
+Then we can define the Green's function in this case to be the function that solves
+\[
+	\mathcal L G(x,\xi) = \delta(x-\xi)
+\]
+which has the properties:
+\begin{enumerate}
+	\item \( G_1, G_2 \) are homogeneous solutions satisfying the homogeneous boundary conditions;
+	\item \( G_1^{(k)}(\xi) = G_2^{(k)}(\xi) \) for \( k \in \qty{0, \dots, n-2} \);
+	\item \( G_2^{(n-1)}(\xi^+) - G_1^{(n-1)}(\xi^-) = \frac{1}{\alpha(\xi)} \).
+\end{enumerate}
+
+\subsection{Eigenfunction expansions of Green's functions}
+Suppose \( \mathcal L \) is in Sturm-Liouville form with eigenfunctions \( y_n(x) \) and eigenvalues \( \lambda_n \).
+We seek \( G(x,\xi) = \sum_{n=1}^\infty A_n y_n(x) \) satisfying \( \mathcal L G = \delta(x-\xi) \).
+\begin{align*}
+	\mathcal L G & = \sum_n A_n \mathcal L y_n        \\
+	             & = \sum_n A_n \lambda_n w(x) y_n(x)
+\end{align*}
+The \( \delta \) function has expansion
+\[
+	\delta(x-\xi) = w(x) \sum_n \frac{y_n(\xi) y_n(x)}{N_n};\quad N_n = \int w y_n^2 \dd{x}
+\]
+Hence,
+\[
+	A_n(\xi) = \frac{y_n(\xi)}{\lambda_n N_n}
+\]
+Thus,
+\[
+	G(x,\xi) = \sum_{n=1}^\infty \frac{y_n(\xi) y_n(x)}{\lambda_n \int w y_n^2 \dd{x}} = \sum_{n=1}^\infty \frac{Y_n(\xi) Y_N(x)}{\lambda_n}
+\]
+which was already obtained earlier in the course when studying Sturm-Liouville theory.
+
+\subsection{Constructing Green's function for an initial value problem}
+Suppose we want to solve \( \mathcal L y = f(t) \) for \( t \geq a \) with \( y(a) = y'(a) = 0 \), using \( G(t, \tau) \) satisfying \( \mathcal L g = \delta(t - \tau) \).
+
+For \( t < \tau \), we have
+\[
+	G_1 = A y_1(t) + B y_2(t);\quad A y_1(a) + B y_2(a) = 0;\quad A y_1'(a) + B y_2'(a) = 0
+\]
+If \( A \neq B \neq 0 \), then we can solve this by dividing out \( A, B \) and find \( y_1 y_2' - y_2 y_1' = 0 \).
+Since the Wronskian at \( a \) cannot be zero, \( A = B = 0 \).
+So \( G_1(t,\tau) \equiv 0 \) for \( a \leq t < \tau \), so there is no change until the `impulse' at \( t = \tau \).
+
+For \( t > \tau \), by continuity we must have \( G_2(\tau, \tau) = 0 \).
+So we choose a complementary function \( G_2 = D y_+(t) \) with \( y_+(t) = A y_1(t) + B y_2(t) \), and \( y_+(\tau) = 0 \).
+
+The discontinuity in the derivative implies that
+\[
+	G_2'(\tau, \tau) = Dy_+'(\tau) = \frac{1}{\alpha(\tau)}
+\]
+Hence,
+\[
+	A y_1'(\tau) + B y_2'(\tau) = \frac{1}{\alpha(\tau)} \implies D(\tau) = \frac{1}{\alpha(\tau) y_+'(\tau)}
+\]
+Hence we have a non-trivial solution
+\[
+	G(t, \tau) = \begin{cases}
+		0                                      & t < \tau \\
+		\dfrac{y_+(t)}{\alpha(\tau) y_+'(\tau)} & t > \tau
+	\end{cases}
+\]
+The initial value problem has solution
+\[
+	y(t) = \int_a^t G_2(t, \tau) f(\tau) \dd{\tau} = \int_a^t \frac{y_+(t) f(\tau)}{y_+'(\tau)} \dd{\tau}
+\]
+Causality is `built in' to this solution.
+Only forces which occur before \( t \) may have an impact on \( y(t) \).
+\begin{example}
+	Let us solve \( y''-y = f(t) \) with \( y(0) = y'(0) = 0 \).
+	The homogeneous solution and initial conditions are
+	\[
+		t < \tau \implies G_1 \equiv 0
+	\]
+	and
+	\[
+		t > \tau \implies G_2 = A e^t + Be^{-t} = D \sinh (t - \tau)
+	\]
+	Now,
+	\[
+		[G']_{\tau_-}^{\tau_+} = \frac{1}{\alpha(\tau)} = 1 \implies G'(\tau, \tau) = D \cosh 0 = D = 1
+	\]
+	Hence, the solution is
+	\[
+		y(t) = \int_0^t f(\tau) \sinh (t - \tau) \dd{\tau}
+	\]
+\end{example}
+
+\section{Fourier transform}
+\subsection{Introduction}
+\ \vspace{-1.5em}
+\begin{definition}
+	The \textbf{Fourier transform} of a function \( f(x) \) is
+	\[
+		\widetilde f(k) = \mathcal F(f)(k) = \int_{-\infty}^\infty f(x) e^{-ikx} \dd{x}
+	\]
+	The \textbf{inverse Fourier transform} is
+	\[
+		f(x) = \mathcal F^{-1}\qty(\widetilde f)(x) = \frac{1}{2\pi} \int_{-\infty}^\infty \widetilde f(k) e^{ikx} \dd{k}
+	\]
+	Different internally-consistent definitions exist, which distribute the multiplicative constants in different ways.
+\end{definition}
+\begin{theorem}[Fourier inversion theorem]
+	For a function \( f(x) \),
+	\[
+		\mathcal F^{-1} (\mathcal F (f))(x) = f(x)
+	\]
+	with a sufficient condition that \( f \) and \( \widetilde f \) are absolutely integrable, so
+	\[
+		\int_{-\infty}^\infty \abs{f(x)} \dd{x} = M < \infty
+	\]
+	In particular, \( f \to 0 \) as \( x \to \pm \infty \).
+\end{theorem}
+
+
+\begin{example}
+	Consider the Gaussian,
+	\[
+		f(x) = \frac{1}{\sigma \sqrt{\pi}} \exp[-\frac{x^2}{\sigma^2}]
+	\]
+	We wish to compute its Fourier transform.
+	Since \( i \sin kx \) is an odd function,
+	\[
+		\widetilde f(k) = \frac{1}{\sigma \sqrt{\pi}} \int_{-\infty}^\infty \exp[-\frac{x^2}{\sigma^2}] \exp[-ikx] \dd{x} = \frac{1}{\sigma \sqrt{\pi}} \int_{-\infty}^\infty \exp[-\frac{x^2}{\sigma^2}] \cos(kx) \dd{x}
+	\]
+	Consider, using Leibniz' rule,
+	\[
+		\dv{\widetilde f}{k} = \frac{-1}{\sigma \sqrt{\pi}} \int_{-\infty}^\infty x\exp[\frac{-x^2}{\sigma^2}] \sin kx \dd{x}
+	\]
+	Integrating by parts,
+	\begin{align*}
+		\dv{\widetilde f}{k} & = \frac{1}{\sigma \sqrt{\pi}} \qty[\frac{\sigma^2}{2} \exp[\frac{-x^2}{\sigma^2}] \sin kx]_{-\infty}^\infty - \frac{1}{\sigma \sqrt{\pi}} \int_{-\infty}^\infty \frac{k\sigma^2}{2} \exp[\frac{-x^2}{\sigma^2}] \cos kx \dd{x} \\
+		                     & = \frac{1}{\sigma \sqrt{\pi}} \int_{-\infty}^\infty \frac{k\sigma^2}{2} \exp[\frac{-x^2}{\sigma^2}] \cos kx \dd{x}                                                                                                             \\
+		                     & = -\frac{k\sigma^2}{2} \widetilde f(k)
+	\end{align*}
+	This is a differential equation for \( \widetilde f \), which gives
+	\[
+		\widetilde f(k) = C \exp[-\frac{k^2\sigma^2}{4}]
+	\]
+	Suppose \( k = 0 \).
+	Then, in the original expression for the Fourier transform, we can directly find \( \widetilde f(0) = 1 \).
+	Hence \( C \exp[-\frac{0^2\sigma^2}{4}] = 1 \implies C = 1 \).
+	Hence,
+	\[
+		\widetilde f(k) = \exp[-\frac{k^2\sigma^2}{4}]
+	\]
+	which is another Gaussian with the width parameter inverted.
+\end{example}
+\begin{example}
+    $ f(x) = e^{-a |x|} $ has Fourier transform $ \widetilde{f}(k) = 2a/(a^2+k^2) $. Note that
+    \[
+        f(x) = \begin{cases}
+        e^{-ax} &x>0\\
+        0 &x\le 0\\
+        \end{cases} \implies \widetilde{f}(k) = \frac{1}{ik+a}. 
+    \]
+\end{example}
 \end{document}
