@@ -2242,4 +2242,204 @@ But note that, for all \( n \),
 	Since the trace is invariant under a change of basis, this is exactly the trace as required.
 \end{proof}
 
+
+\subsection{Diagonalisation}
+Let \( p(t) \) be a polynomial over \( \bbF \).
+We will write
+\[
+	p(t) = a_n t^n + \dots + a_0
+\]
+For a matrix \( A \in \mcM_n(\bbF) \), we write
+\[
+	p(A) = a_n A^n + \dots + a_0 \in \mcM_n(\bbF)
+\]
+For an endomorphism \( \alpha \in L(V) \),
+\[
+	p(\alpha) = a_n \alpha^n + \dots + a_0 I \in L(V);\quad \alpha^k \equiv \underbrace{\alpha \circ \dots \circ \alpha}_{k \text{ times}}
+\]
+
+\begin{theorem}[Sharp criterion of diagonalisability]
+	Let $V$ be a finite-dimensional vector space over $\mathbb{F}$. Let $\alpha\in L(V)$. Then $\alpha$ is diagonalisable if and only if there exists a polynomial \( p \) which is a product of \textit{distinct} linear factors, such that \( p(\alpha) = 0 \).
+	In other words, there exist distinct \( \lambda_1, \dots, \lambda_k \) such that
+	\[
+		p(t) = \prod_{i=1}^n (t - \lambda_i) \implies p(\alpha) = 0
+	\]
+\end{theorem}
+
+\begin{proof}
+	($ \Rightarrow $) Suppose that $\alpha$ is diagonalisable with distinct eigenvalues $ \lambda_1,\dots \lambda_k $. Let
+	\[
+		p(t)= \prod_{i=1}^k (t - \lambda_i). 
+	\]
+	Let $ B $ be the basis of eigenvectors of $V$ and let $ \mathbf{v}\in B $. Then $\alpha(\mathbf{v}) = \lambda_i \mathbf{v}$ for some $i$, so 
+	\[
+		(\alpha - \lambda_i I) \mathbf{v} = 0 \implies p(\alpha)(\mathbf{v}) = \prod_{i=1}^k (\alpha - \lambda_i I) (\mathbf{v}) = 0. 
+	\]
+	Since this holds for all $\mathbf{v}\in B$, $ p(\alpha) = 0. $
+
+	($ \Leftarrow $) Suppose $ p(\alpha) = 0 $ for some polynomial 
+	\[
+		p(t) = \prod_{i=1}^k (t - \lambda_i), \quad \lambda_i\neq \lambda_j,\ \forall i\neq j. 
+	\]
+	Let $ V_{\lambda_i} = \ker(\alpha - \lambda_i I) $. 
+	\begin{claim}
+		$\displaystyle V = \bigoplus_{i=1}^{k} V_{\lambda_i}$. 
+	\end{claim}
+	Indeed, let 
+	\[
+		q_{j}(t) = \prod_{\substack{i = 1 \\ i\neq j}}^{k} \frac{(t-\lambda_i)}{\lambda_j-\lambda_i}\quad 1\le j\le k,
+	\]
+	then 
+	\[
+		q_j (\lambda_i) = \delta_{ij}. 
+	\]
+	Define 
+	\[
+		q(t) = q_{1}(t) + q_2(t) + \cdots + q_k(t). 
+	\]
+	Then $q(t)$ has degree at most $k-1$ and 
+	\begin{align*}
+		q(\lambda_i) = 1,\ \forall 1\le i\le k &\implies \forall t,\ q(t) = 1\\ 
+		& \implies q_1(t)+\cdots + q_k(t) = 1, \ \forall t. 
+	\end{align*}
+	Let $ \pi_j = q_j ( \alpha)\in L(V) $. These are called the `projection operators'. By construction, 
+	\[
+		\sum_{j=1}^{k} \pi_j(\alpha) = q(\alpha) = I. 
+	\]
+	This means that for all $ \mathbf{v}\in V $, 
+	\[
+		\mathbf{v} = q(\alpha) (\mathbf{v}) = \sum_{j=1}^{k} \pi_j(\mathbf{v}) = \sum_{j=1}^{k} q_j(\alpha)(\mathbf{v}) =\sum_{j=1}^{k} \pi_j(\mathbf{v}) . 
+	\]
+	Observe that 
+	\begin{align*}
+		(\alpha - \lambda_j I) q_j(\alpha)(\bfv) & = \frac{1}{\prod_{i \neq j} (\lambda_j - \lambda_i)} (\alpha - \lambda_j I) \qty[\prod_{i \neq j} (\alpha - \lambda_i)] (\mathbf{v}) \\
+		                                      & = \frac{1}{\prod_{i \neq j} (\lambda_j - \lambda_i)} \prod_{i=1}^k (\alpha - \lambda_i I)(\bfv)                                \\
+		                                      & = \frac{1}{\prod_{i \neq j} (\lambda_j - \lambda_i)} p(\alpha)(\bfv) = 0
+	\end{align*}
+	Since $ q_j(\alpha) = \pi_j, $
+	\[
+		(\alpha - \lambda_j I) \pi_j(\bfv) = 0 \implies \pi_j(\bfv) \in \ker(\alpha - \lambda_j I) = V_{\lambda_j}
+	\]
+	and this completes the proof that 
+	\[
+		V = \sum_{j=1}^{k} V_{\lambda_j}. 
+	\]
+	It remains to prove that the sum is direct. Let 
+	\[
+		\mathbf{v} \in V_{\lambda_j} \cap \left( \sum_{j\neq j} V_{\lambda_i} \right),
+	\]
+	applying $\pi_j$ to $\mathbf{v}$ gives 
+	\begin{align*}
+		\mathbf{v}\in V_{\lambda_j} &\implies \pi_j(\mathbf{v}) = \prod_{i\neq j} \frac{\lambda_j-\lambda_i}{\lambda_j-\lambda_i}\mathbf{v} = \mathbf{v}\\ 
+		\mathbf{v}\in \sum_{j\neq j} V_{\lambda_i} &\implies \pi_j(\mathbf{w}) = 0 \text{ for } \mathbf{w} \in V_{\lambda_i},\ i\neq j\\ 
+		&\implies \pi_j(\mathbf{v}) = 0. 
+	\end{align*}
+	This implies $ \mathbf{v} = \pi_j(\mathbf{v}) = 0 $ and thus the sum is distinct. 
+
+	Hence, \( B = (B_1, \dots, B_k) \) is a basis of \( V \), where the \( B_i \) are bases of \( V_{\lambda_i} \).
+	Then \( [\alpha]_B \) is diagonal, and this completes the proof. 
+\end{proof} 
+
+\begin{remark}
+	We have shown further that if \( \lambda_1, \dots, \lambda_k \) are distinct eigenvalues of \( \alpha \), then
+	\[
+		\sum_{i=1}^k V_{\lambda_i} = \bigoplus_{i=1}^k V_{\lambda_i}
+	\]
+	Therefore, the only way that diagonalisation fails is when this sum is not direct, i.e.
+	\[
+		\sum_{i=1}^k V_{\lambda_i} \le V
+	\]
+\end{remark}
+
+\begin{example}
+	Let \( \bbF = \mathbb C \).
+	Let \( A \in \mcM_n(\bbF) \) such that \( A \) has finite order; there exists \( m \in \mathbb N \) such that \( A^m = I \).
+	Then \( A \) is diagonalisable.
+	This is because
+	\[
+		t^m - 1 = p(t) = \prod_{j=1}^m (t - \xi_m^j);\quad \xi_m = e^{2 \pi i/m}
+	\]
+	and \( p(A) = 0 \).
+\end{example}
+
+\begin{theorem}[Simultaneous diagonalisation]
+	Let \( \alpha, \beta \in L(V)\) that are diagonalisable.
+	Then \( \alpha, \beta \) are \textbf{simultaneously diagonalisable} (there exists a basis \( B \) of \( V \) such that \( [\alpha]_B, [\beta]_B \) are diagonal) if and only if \( \alpha \) and \( \beta \) commute.
+\end{theorem}
+\begin{proof}
+	($ \Rightarrow $)
+	Suppose there exists a basis $B$ such that 
+	\[
+		[\alpha]_{B} = D_1,\ [\beta]_B = D_2,\quad D_1,D_2 \text{ diagonal}, 
+	\]
+	then $ D_1D_2 = D_2D_1 $, i.e. $ \alpha \beta = \beta \alpha $. 
+
+	($ \Leftarrow $)
+	Suppose $\alpha,\beta$ are diagonalisable and commute. We have
+	\[
+		V = \bigoplus_{i=1}^k V_{\lambda_i},\quad \lambda_i, \dots, \lambda_k \text{ distinct eigenvalues of } \alpha. 
+	\]
+	\begin{claim}
+		$ \beta(V_{\lambda_j}) \le V_{\lambda_j} $. 
+	\end{claim}
+	Indeed, for \( v \in V_{\lambda_j} \),
+	\[
+		\alpha \beta(v) = \beta \alpha(v) = \beta(\lambda_j v) = \lambda_j \beta(v) \implies \alpha(\beta(v)) = \lambda_j \beta(v)
+	\]
+	Hence, \( \beta(v) \in V_{\lambda_j} \). 
+
+	By assumption, \( \beta \) is diagonalisable, so there exists a polynomial \( p \) with distinct linear factors such that \( p(\beta) = 0 \). This implies that
+	\[
+		p(\beta \restriction_{V_{\lambda_i}}) = 0 \implies \beta \restriction_{V_{\lambda_i}}\in L(V_{\lambda_i}) \text{ is diagonalisable.}
+	\]
+	Let \( B_i \) be the basis of \( V_{\lambda_i} \) in which \( \beta\restriction_{V_{\lambda_j}} \) is diagonal.
+	Since \( V = \bigoplus V_{\lambda_i} \), \( B = (B_1, \dots, B_k) \) is a basis of \( V \).
+	Then the matrices of \( \alpha \) and \( \beta \) in \( V \) are diagonal.
+\end{proof}
+
+\subsection{Minimal polynomials}
+{\color{blue}Recall from IB Groups, Rings and Modules} (\textit{Wow good job Professor Raphael}) the Euclidean algorithm for dividing polynomials.
+Given \( a, b \) polynomials over \( \bbF \) with \( b \) nonzero, there exist polynomials \( q, r \) over \( \bbF \) with \( \deg r < \deg b \) and \( a = qb + r \).
+\begin{definition}
+	Let \( V \) be a finite dimensional \( \bbF \)-vector space.
+	Let \( \alpha \) be an endomorphism on \( V \).
+	The \textbf{minimal polynomial} \( m_\alpha \) of \( \alpha \) is the nonzero polynomial with smallest degree such that \( m_\alpha(\alpha) = 0 \).
+\end{definition}
+\begin{remark}
+	If \( \dim V = n < \infty \), then \( \dim L(V) = n^2 \).
+	In particular, the family \( \qty{I, \alpha, \dots, \alpha^{n^2}} \) cannot be linearly independent since it has \( n^2+1 \) entries.
+	This generates a polynomial in \( \alpha \) which evaluates to zero.
+	Hence, a minimal polynomial always exists.
+\end{remark}
+\begin{lemma}
+	Let \( \alpha \in L(V) \) and \( p \in \bbF[t] \) be a polynomial.
+	Then \( p(\alpha) = 0 \) if and only if \( m_\alpha \) is a factor of \( p \).
+	In particular, \( m_\alpha \) is well-defined and unique up to a constant multiple.
+\end{lemma}
+\begin{proof}
+	Let \( p \in \bbF[t] \) such that \( p(\alpha) = 0 \).
+	If \( m_\alpha(\alpha) = 0 \) and \( \deg m_\alpha < \deg p \), we can perform the division \( p = m_\alpha q + r \) for \( \deg r < \deg m_\alpha \).
+	Then \( p(\alpha) = m_\alpha(\alpha) q(\alpha) + r(\alpha) \).
+	But \( m_\alpha(\alpha) = 0 \).
+	But \( \deg r < \deg m_\alpha \) and \( m_\alpha \) is the smallest degree polynomial which evaluates to zero for \( \alpha \), so \( r \equiv 0 \) so \( p = m_\alpha q \).
+	In particular, if \( m_1, m_2 \) are both minimal polynomials that evaluate to zero for \( \alpha \), we have \( m_1 \) divides \( m_2 \) and \( m_2 \) divides \( m_1 \).
+	Hence they are equivalent up to a constant.
+\end{proof}
+\begin{example}
+	Let \( V = \bbF^2 \) and
+	\[
+		A= \begin{pmatrix}
+			1 & 0 \\
+			0 & 1
+		\end{pmatrix};\quad B = \begin{pmatrix}
+			1 & 1 \\
+			0 & 1
+		\end{pmatrix}
+	\]
+	We can check \( p(t) = (t-1)^2 \) gives \( p(A) = p(B) = 0 \).
+	So the minimal polynomial of \( A \) or \( B \) must be either \( (t-1) \) or \( (t-1)^2 \).
+	For \( A \), we can find the minimal polynomial is \( (t-1) \), and for \( B \) we require \( (t-1)^2 \).
+	So \( B \) is not diagonalisable, since its minimal polynomial is not a product of distinct linear factors.
+\end{example}
+
 \end{document}
