@@ -410,6 +410,10 @@ decoration={snake,
 \renewcommand{\restriction}{\mathord{\upharpoonright}}
 \renewcommand{\bar}{\overline}
 \DeclareMathOperator{\closure}{cl}
+\DeclareMathOperator{\lcm}{lcm}
+\newcommand{\genset}[1]{\left\langle{} #1 \right\rangle}
+\newcommand{\ngenset}[1]{\left\langle\!\left\langle{} #1 \right\rangle\!\right\rangle}
+\DeclareMathOperator{\sgn}{sgn}
 
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
@@ -455,5 +459,5 @@ decoration={snake,
   headheight=24pt}
 \pagestyle{fancy}
 \rhead{{\triposcourse{}}}
-\author{jt775}
+\author{JT}
 \AddToHook{cmd/section/before}{\clearpage}

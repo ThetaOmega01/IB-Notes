@@ -2713,4 +2713,41 @@ Since the quotient map is continuous, we get
       \end{enumerate}
 \end{remark}
 
+\subsection{Components}
+We define a relation $\sim$ on a topological space $X$ as follows:
+$$
+\forall x, y \in X \quad x \sim y \Longleftrightarrow \exists \text { connected subset } A \text { of } X \text { such that } x, y \in A
+$$
+We check that this is an equivalence relation. For any $x \in X$, the set $\{x\}$ is connected, and so $x \sim x$. Symmetry is immediate from the definition. Finally, if $x \sim y$ and $y \sim z$, then there exist connected subsets $A, B$ of $X$ with $x, y \in A$ and $y, z \in B$. Since $A \cap B \neq \emptyset$, it follows from Lemma \ref{lma:union connected} that $A \cup B$ is connected, and hence $x \sim z$. 
+\begin{definition}
+    For $x \in X$, we shall write $C_{x}$ for the equivalence class containing $x$. Equivalence classes are called \textbf{connected components} of $X$.
+\end{definition}
+
+\begin{proposition}\label{prop: connected components are maximal and partition}
+    Connected components of a topological space $X$ are non-empty, maximal (with respect to inclusion) connected subsets of $X$. Connected components are closed and they partition $X$ (i.e., $X$ is the disjoint union of its connected components).
+\end{proposition}
+\begin{proof}
+    Let $C$ be a connected component of $X$. Then $C=C_{x}$ for some $x \in X$. Thus $C \neq \emptyset$ since $x \in C$.
+
+If $A$ is a connected subset of $X$ with $x \in A$, then $y \sim x$ for all $y \in A$, and hence $A \subset C$. It follows that if $A$ is a connected subset of $X$ with $A \supset C$, then $A=C$.
+
+For each $y \in C$ there is a connected subset $A_{y}$ of $X$ such that $x, y \in A_{y}$. Then $A_{y} \cap A_{y^{\prime}} \neq \emptyset$ for all $y, y^{\prime} \in C$, and hence $A=\bigcup_{y \in C} A_{y}$ is connected by Lemma \ref{lma:union connected} and $A \supset C$. By above, $A=C$, and thus $C$ is connected. By Proposition \ref{prop:closure connected}, the closure $\bar{C}$ of $C$ in $X$ is also connected. Hence by the maximality of $C$, we have $C=\bar{C}$ and $C$ is closed. 
+
+Finally, $X$ is the disjoint union of components, since in general, equivalence classes of an equivalence relation on a set partition the set.
+\end{proof}
+
+\subsection{Path connectedness}
+Apart from connectedness, we have a stronger property: joining any two points with a `path'.
+\begin{definition}
+    Let $X$ be a topological space. For $x, y \in X$, a \textbf{path} from $x$ to $y$ in $X$ is a continuous function $\gamma:[0,1] \rightarrow X$ such that $\gamma(0)=x$ and $\gamma(1)=y$. We say that a topological space $X$ is \textbf{path-connected} if for all $x, y \in X$ there is a path from $x$ to $y$ in $X$.
+\end{definition}
+
+\begin{note}
+    What we called a path is sometimes called a \textbf{continuous path}.
+\end{note}
+
+\begin{theorem}\label{thm:path connected is connected}
+    Every path-connected topological space is connected.
+\end{theorem}
+
 \end{document}

@@ -788,8 +788,8 @@ If we have a linear map $ [\alpha]_{B,C} $, we are interested in finding the com
 
 \subsection{Rank of matrices}\ \vspace*{-1.5em}
 \begin{definition}
-	Let \( A \in M_{m,n}(\bbF) \).
-	Then, the \textbf{column rank} of \( A \), \( r_c(A) \), is the dimension of the subspace of \( \mathbb{F}^n \) spaned by the column vectors.
+	Let $ A \in M_{m,n}(\bbF) $.
+	Then, the \textbf{column rank} of $ A $, $ r_c(A) $, is the dimension of the subspace of $ \mathbb{F}^n $ spaned by the column vectors.
 	\[
 		r_c(A) = \dim \operatorname{span} \qty{\bfc_1, \dots, \bfc_n}.
 	\]
@@ -798,7 +798,7 @@ If we have a linear map $ [\alpha]_{B,C} $, we are interested in finding the com
 \end{definition}
 
 \begin{remark}
-	If \( \alpha \) is a linear map, represented in bases \( B, C \) by the matrix \( A \), then
+	If $ \alpha $ is a linear map, represented in bases $ B, C $ by the matrix $ A $, then
 	\[
 		\rank \alpha = r_c(A). 
 	\]
@@ -812,19 +812,19 @@ If we have a linear map $ [\alpha]_{B,C} $, we are interested in finding the com
 	\]
 \end{proposition}
 \begin{proof}
-	If the matrices are equivalent, then \( A = [\alpha]_{BC}, A' = [\alpha]_{B',C'} \).
+	If the matrices are equivalent, then $ A = [\alpha]_{BC}, A' = [\alpha]_{B',C'} $.
 	Then
 	\[
 		r_c(A) = r_c(\alpha) = r_c(A')
 	\]
-	Conversely, if \( r_c(A) = r_c(A') = r \), then \( A, A' \) are equivalent to
+	Conversely, if $ r_c(A) = r_c(A') = r $, then $ A, A' $ are equivalent to
 	\[
 		\begin{pmatrix}
 			I_r & 0 \\
 			0   & 0
 		\end{pmatrix}
 	\]
-	which indicates \( A, A' \) are equivalent.
+	which indicates $ A, A' $ are equivalent.
 \end{proof}
 
 \begin{theorem}
@@ -855,19 +855,19 @@ Hence we can just write $ r(A) $, without subscript.
 
 \subsection{Elementary operations and elementary matrices}
 \paragraph{Aside: change of basis in the same space} Consider the following special case of changing basis.
-If \( \alpha \colon V \to V \) is linear, \( \alpha \) is called an \textbf{endomorphism}.
-If \( B = C, B' = C' \) then the special case of the change of basis formula is
+If $ \alpha \colon V \to V $ is linear, $ \alpha $ is called an \textbf{endomorphism}.
+If $ B = C, B' = C' $ then the special case of the change of basis formula is
 \[
 	[\alpha]_{B',B'} = P^{-1} [\alpha]_{B,B} P
 \]
-Then, we say square matrices \( A, A' \) are \textbf{similar} or \textbf{conjugate} if there exists \( P \) such that \( A' = P^{-1} A P \).
+Then, we say square matrices $ A, A' $ are \textbf{similar} or \textbf{conjugate} if there exists $ P $ such that $ A' = P^{-1} A P $.
 
 \begin{definition}
 	An \textbf{elementary column operation} is
 	\begin{enumerate}[(i)]
-		\item swap columns \( i, j \)
-		\item replace column \( i \) by \( \lambda \) multiplied by the column
-		\item add \( \lambda \times\) column \( i \) to column \( j \ (i\neq j)\)
+		\item swap columns $ i, j $
+		\item replace column $ i $ by $ \lambda $ multiplied by the column
+		\item add $ \lambda \times$ column $ i $ to column $ j \ (i\neq j)$
 	\end{enumerate}
 \end{definition}
 
@@ -909,9 +909,9 @@ These operations can be described through the action of \textbf{elementary matri
     \end{enumerate}
 \end{definition}
 
-An elementary column (or row) operation can be performed by multiplying \( A \) by the corresponding elementary matrix from the right (on the left for row operations).
+An elementary column (or row) operation can be performed by multiplying $ A $ by the corresponding elementary matrix from the right (on the left for row operations).
 
-This provides a constructive proof that any \( n \times n \) matrix is equivalent to
+This provides a constructive proof that any $ n \times n $ matrix is equivalent to
 \[
 	\begin{pmatrix} I_r & 0 \\ 0 & 0 \end{pmatrix}
 \]
@@ -960,10 +960,10 @@ where the `1's are pivots. The algorithm is described as follows
 This process is exactly the process used to solve a linear system of equations (Gaussian elimination).
 
 \begin{lemma}
-	If \( A \) is an \( n \times n \) square invertible matrix, then we can obtain \( I_n \) using only row elementary operations, or only column elementary operations.
+	If $ A $ is an $ n \times n $ square invertible matrix, then we can obtain $ I_n $ using only row elementary operations, or only column elementary operations.
 \end{lemma}
 \begin{proof}
-	We show an algorithm that constructs this \( I_n \).
+	We show an algorithm that constructs this $ I_n $.
 	This is exactly going to invert the matrix, since the resultant operations can be combined to get the inverse matrix.
 	We will show here the proof for column operations.
 	We argue by induction on the number of rows.
@@ -971,19 +971,19 @@ This process is exactly the process used to solve a linear system of equations (
 	\[
 		\begin{pmatrix} I_k & 0 \\ A & B \end{pmatrix}
 	\]
-	We want to obtain the same structure with \( k+1 \) rows.
-	We claim that there exists \( j > k \) such that \( a_{k+1,j} \neq 0 \).
+	We want to obtain the same structure with $ k+1 $ rows.
+	We claim that there exists $ j > k $ such that $ a_{k+1,j} \neq 0 $.
 	Indeed, otherwise we can show that the vector
 	\[
 		\begin{pmatrix} 0 \\ \vdots \\ 1 \\ \vdots \\ 0 \end{pmatrix} = \delta_{k+1,i}
 	\]
-	is not in the span of the column vectors of \( A \).
+	is not in the span of the column vectors of $ A $.
 	This contradicts the invertibility of the matrix.
-	Now, we will swap columns \( k+1, j \) and divide this column by \( \lambda \).
-	We can now use this 1 to clear the rest of the \( k+1 \) row.
+	Now, we will swap columns $ k+1, j $ and divide this column by $ \lambda $.
+	We can now use this 1 to clear the rest of the $ k+1 $ row.
 
-	Inductively, we have found \( A E_1 \dots E_n = I_n \) where \( E_n \) are elementary.
-	Thus, we can find \( A^{-1} \).
+	Inductively, we have found $ A E_1 \dots E_n = I_n $ where $ E_n $ are elementary.
+	Thus, we can find $ A^{-1} $.
 \end{proof}
 \begin{proposition}
 	Any invertible square matrix is a product of elementary matrices.
@@ -994,32 +994,32 @@ The proof is exactly the proof of the lemma above.
 \section{Dual spaces and dual maps}
 \subsection{Dual spaces}\ \vspace*{-1.5em}
 \begin{definition}
-	Let \( V \) be an \( \mathbb{F} \)-vector space.
-	Then \( V^* \) is the \textbf{dual} of \( V \), defined by
+	Let $ V $ be an $ \mathbb{F} $-vector space.
+	Then $ V^* $ is the \textbf{dual} of $ V $, defined by
 	\[
-		V^* = L(V,\mathbb F) = \qty{\alpha \colon V \to \mathbb F}
+		V^* = \mcL(V,\mathbb F) = \qty{\alpha \colon V \to \mathbb F}
 	\]
-	where the \( \alpha \) are linear.
-	If \( \alpha \colon V \to \mathbb F \) is linear, then we say \( \alpha \) is a linear form.
-	So the dual of \( V \) is the set of linear forms on \( V \).
+	where the $ \alpha $ are linear.
+	If $ \alpha \colon V \to \mathbb F $ is linear, then we say $ \alpha $ is a linear form.
+	So the dual of $ V $ is the set of linear forms on $ V $.
 \end{definition}
 \begin{example}
-	The trace \( \operatorname{tr} \colon M_{n,n}(\mathbb F) \to \mathbb F \) is a linear form on \( M_{n,n}(\mathbb F) \).
+	The trace $ \operatorname{tr} \colon M_{n,n}(\mathbb F) \to \mathbb F $ is a linear form on $ M_{n,n}(\mathbb F) $.
 \end{example}
 \begin{example}
-	Consider functions \( [0,1] \to \mathbb R \).
-	We can define \( T_f \colon C^\infty([0,1], \mathbb R) \to \mathbb R \) such that \( \phi \mapsto \int_0^1 f(x) \phi(x) \dd{x} \).
-	Then \( T_f \) is a linear form on \( C^{\infty}([0,1], \mathbb R) \).
-	We can then reconstruct \( f \) given \( T_f \).
+	Consider functions $ [0,1] \to \mathbb R $.
+	We can define $ T_f \colon C^\infty([0,1], \mathbb R) \to \mathbb R $ such that $ \phi \mapsto \int_0^1 f(x) \phi(x) \dd{x} $.
+	Then $ T_f $ is a linear form on $ C^{\infty}([0,1], \mathbb R) $.
+	We can then reconstruct $ f $ given $ T_f $.
 	This mathematical formulation is called distribution.
 \end{example}
 \begin{lemma}
-	Let \( V \) be an \( \mathbb F \)-vector space with a finite basis \( B = \qty{\bfe_1, \dots, \bfe_n} \).
-	Then there exists a basis \( B^* \) for \( V^* \) given by
+	Let $ V $ be an $ \mathbb F $-vector space with a finite basis $ B = \qty{\bfe_1, \dots, \bfe_n} $.
+	Then there exists a basis $ B^* $ for $ V^* $ given by
 	\[
 		B^* = \qty{\varepsilon_1, \dots, \varepsilon_n}; \quad \varepsilon_j \qty( \sum_{i=1}^n a_i \bfe_i ) = a_j
 	\]
-	We call \( B^* \) the \textbf{dual basis} for \( B \).
+	We call $ B^* $ the \textbf{dual basis} for $ B $.
 \end{lemma}
 We know
 \[
@@ -1031,15 +1031,15 @@ Equivalently,
 \]
 \begin{proof}
 	First, we will show that the set of linear forms as defined is linearly independent.
-	For all \( i \),
+	For all $ i $,
 	\[
         \sum_{j=1}^n \lambda_j \varepsilon_j= 0 \implies
 		\qty( \sum_{j=1}^n \lambda_j \varepsilon_j ) \bfe_i = 0 \implies
 		\sum_{j=1}^n \lambda_j \varepsilon_j(e_i)                   = 0 \implies
 		\lambda_i = 0.
     \]
-	Now we show that the set spans \( V^* \).
-	Suppose \( \alpha \in V^* \), \( x \in V \).
+	Now we show that the set spans $ V^* $.
+	Suppose $ \alpha \in V^* $, $ x \in V $.
 	\[
         \alpha(x) = \alpha\qty(\sum_{j=1}^n \lambda_j \bfe_j)
 		           = \sum_{i=1}^n \lambda_j \alpha(\bfe_j)
@@ -1063,12 +1063,12 @@ Equivalently,
 	as required.
 \end{proof}
 \begin{corollary}
-	If \( V \) is finite-dimensional, then $ \dim V = \dim V^* $.
+	If $ V $ is finite-dimensional, then $ \dim V = \dim V^* $.
 \end{corollary}
 \begin{remark}
-	It is sometimes convenient to think of \( V^* \) as the spaces of row vectors of length \( \dim V \) over \( \bbF \).
-	For instance, consider the basis \( B = (\bfe_1, \dots, \bfe_n) \), so \( \bfx = \sum_{i=1}^n x_i \bfe_i \).
-	Then we can pick \( (\varepsilon_1, \dots, \varepsilon_n) \) a basis of \( V^* \), so \( \alpha = \sum_{i=1}^n \alpha_i \varepsilon_i \).
+	It is sometimes convenient to think of $ V^* $ as the spaces of row vectors of length $ \dim V $ over $ \bbF $.
+	For instance, consider the basis $ B = (\bfe_1, \dots, \bfe_n) $, so $ \bfx = \sum_{i=1}^n x_i \bfe_i $.
+	Then we can pick $ (\varepsilon_1, \dots, \varepsilon_n) $ a basis of $ V^* $, so $ \alpha = \sum_{i=1}^n \alpha_i \varepsilon_i $.
 	Then
 	\[
 		\alpha(\bfx) = \sum_{i=1}^n \alpha_i \varepsilon_i(\bfx) = \sum_{i=1}^n \alpha_i \varepsilon\qty(\sum_{j=1}^n x_j \bfe_j) = \sum_{i=1}^n \alpha_i x_i
@@ -1082,45 +1082,45 @@ Equivalently,
 
 \subsection{Annihilators}\ \vspace*{-1.5em}
 \begin{definition}
-	Let \( U \subseteq V \).
-	Then the annihilator of \( U \) is
+	Let $ U \subseteq V $.
+	Then the annihilator of $ U $ is
 	\[
 		U^0 = \qty{\alpha \in V^* \colon \forall \bfu \in U, \alpha(\bfu) = 0}
 	\]
 \end{definition}
 \begin{lemma}
 	\begin{enumerate}[(i)]
-		\item \( U^0 \leq V^* \);
-		\item If \( U \leq V \) and \( \dim V < \infty \), then \( \dim V = \dim U + \dim U^0 \).
+		\item $ U^0 \leq V^* $;
+		\item If $ U \leq V $ and $ \dim V < \infty $, then $ \dim V = \dim U + \dim U^0 $.
 	\end{enumerate}
 \end{lemma}
 \begin{proof}
 	\begin{enumerate}[(i)]
-		\item First, note that \( 0 \in U^0 \) since \( \alpha(0) = 0 \) by linearity.
-		      If \( \alpha, \alpha' \in U^0 \), then for all \( \bfu \in U \),
+		\item First, note that $ 0 \in U^0 $ since $ \alpha(0) = 0 $ by linearity.
+		      If $ \alpha, \alpha' \in U^0 $, then for all $ \bfu \in U $,
 		      \[
 			      (\alpha + \alpha')(\bfu) = \alpha(\bfu) + \alpha'(\bfu) = 0
 		      \]
-		      Further, for all \( \lambda \in F \),
+		      Further, for all $ \lambda \in F $,
 		      \[
 			      (\lambda \alpha)(\bfu) = \lambda \alpha(\bfu) = 0
 		      \]
-		      Hence \( U^0 \leq V^* \).
-		\item Let \( (\bfe_1, \dots, \bfe_k) \) be a basis of \( U \) and extend it to a basis
+		      Hence $ U^0 \leq V^* $.
+		\item Let $ (\bfe_1, \dots, \bfe_k) $ be a basis of $ U $ and extend it to a basis
 		\[
             B = (\bfe_1, \dots, \bfe_k, \bfe_{k+1}, \dots, \bfe_n)
         \]
-		      Let \( (\varepsilon_1, \dots, \varepsilon_n) \) be the dual basis \( B^* \).
+		      Let $ (\varepsilon_1, \dots, \varepsilon_n) $ be the dual basis $ B^* $.
 		      We then will prove that
 		      \[
 			      U^0 = \langle\varepsilon_{k+1}, \dots, \varepsilon_n\rangle
 		      \]
-		      If \( i > k \), then \( \varepsilon_i(e_k) = \delta_{ik} = 0 \).
-		      Hence \( \varepsilon_i \in U^0 \).
-		      Thus \( \langle{\varepsilon_{k+1}, \dots, \varepsilon_n}\rangle \subset U^0 \).
-		      Let \( \alpha \in U^0 \).
-		      Then \( \alpha = \sum_{i=1}^n \alpha_i \varepsilon_i \).
-		      For \( i \leq k \), \( \alpha \in U^0 \) hence \( \alpha(e_i) = 0 \).
+		      If $ i > k $, then $ \varepsilon_i(e_k) = \delta_{ik} = 0 $.
+		      Hence $ \varepsilon_i \in U^0 $.
+		      Thus $ \langle{\varepsilon_{k+1}, \dots, \varepsilon_n}\rangle \subset U^0 $.
+		      Let $ \alpha \in U^0 $.
+		      Then $ \alpha = \sum_{i=1}^n \alpha_i \varepsilon_i $.
+		      For $ i \leq k $, $ \alpha \in U^0 $ hence $ \alpha(e_i) = 0 $.
 		      Hence,
 		      \[
 			      \alpha = \sum_{i=k+1}^n \alpha_i \varepsilon_i
@@ -1135,17 +1135,17 @@ Equivalently,
 
 \subsection{Dual maps}\ \vspace{-1.5em}
 \begin{lemma}
-	Let \( V, W \) be \( \bbF \)-vector spaces.
-	Let \( \alpha \in L(V,W) \).
-	Then there exists a unique \( \alpha^* \in L(W^*, V^*) \) such that
+	Let $ V, W $ be $ \bbF $-vector spaces.
+	Let $ \alpha \in \mcL(V,W) $.
+	Then there exists a unique $ \alpha^* \in L(W^*, V^*) $ such that
 	\[
 		\varepsilon \mapsto \varepsilon \circ \alpha
 	\]
 	It is called the \textbf{dual map}.
 \end{lemma}
 \begin{proof}
-	\( \varepsilon(\alpha) \colon V \to \bbF \) linear by linearity of $ \varepsilon, \alpha $,	so \( \varepsilon \circ \alpha \in V^* \).
-	Now we show \( \alpha^* \) is linear:
+	$ \varepsilon(\alpha) \colon V \to \bbF $ linear by linearity of $ \varepsilon, \alpha $,	so $ \varepsilon \circ \alpha \in V^* $.
+	Now we show $ \alpha^* $ is linear:
 	\[
 		\alpha^*(\theta_1 + \theta_2) = (\theta_1 + \theta_2)(\alpha) = \theta_1 \circ \alpha + \theta_2 \circ \alpha = \alpha^*(\theta_1) + \alpha^*(\theta_2)
 	\]
@@ -1154,26 +1154,26 @@ Equivalently,
 		\alpha^*(\lambda \theta) = \lambda \alpha^*(\theta)
 	\]
 	as required.
-	Hence \( \alpha^* \in L(W^*, V^*) \).
+	Hence $ \alpha^* \in L(W^*, V^*) $.
 \end{proof}
 \begin{proposition}
-	Let \( V, W \) be finite-dimensional \( \bbF \)-vector spaces with bases \( B, C \) respectively.
+	Let $ V, W $ be finite-dimensional $ \bbF $-vector spaces with bases $ B, C $ respectively.
 	Then
 	\[
 		[\alpha^*]_{C^*, B^*} = [\alpha]^\top_{B, C}
 	\]
-	Thus, we can think of the dual map as the \textit{adjoint} of \( \alpha \).
+	Thus, we can think of the dual map as the \textit{adjoint} of $ \alpha $.
 \end{proposition}
 \begin{proof}
-	Let \( B = (b_1, \dots, b_n) \), \( C = (c_1, \dots, c_m) \), \( B^* = (\beta_1, \dots, \beta_n) \), \( C^* = (\gamma_1, \dots, \gamma_m) \).
-	Let \( [\alpha]_{B,C} = (a_{ij}) \).
+	Let $ B = (b_1, \dots, b_n) $, $ C = (c_1, \dots, c_m) $, $ B^* = (\beta_1, \dots, \beta_n) $, $ C^* = (\gamma_1, \dots, \gamma_m) $.
+	Let $ [\alpha]_{B,C} = (a_{ij}) $.
 	Then
 	\begin{align*}
 		\alpha^*(\gamma_r)(b_s) & = \gamma_r \circ \alpha(b_s)= \gamma_r \qty( \sum_t a_{ts} c_t ) \\
 		                            & = \sum_t a_{ts} \gamma_r(c_t) = \sum_t a_{ts} \delta_{tr}          \\
 		                            & = a_{rs}
 	\end{align*}
-	We can conversely write \( [\alpha^*]_{C^*, B^*} = (m_{ij}) \) and
+	We can conversely write $ [\alpha^*]_{C^*, B^*} = (m_{ij}) $ and
 	\begin{align*}
 		\alpha^*(\gamma_r)      & = \sum_{i=1}^n m_{ir} \beta_i      \\
 		\alpha^*(\gamma_r)(b_s) & = \sum_{i=1}^n m_{ir} \beta_i(b_s)= \sum_{i=1}^n m_{ir} \delta_{is}  \\
@@ -1184,17 +1184,17 @@ Equivalently,
 
 \subsection{Properties of the dual map, double dual}
 
-Let \( \alpha \in L(V,W) \), and \( \alpha^* \in L(W^*, V^*) \).
-Let \( B \) and \( C \) be bases of \( V, W \) respectively, and \( B^*, C^* \) be their duals.
+Let $ \alpha \in \mcL(V,W) $, and $ \alpha^* \in L(W^*, V^*) $.
+Let $ B $ and $ C $ be bases of $ V, W $ respectively, and $ B^*, C^* $ be their duals.
 We have proven that
 \[
 	[\alpha]_{B,C} = [\alpha^*]^\top_{B,C}
 \]
 \begin{lemma}
-	Suppose that \( E = (e_1, \dots, e_n) \) and \( F = (f_1, \dots, f_n) \) are bases of \( V \).
-	Let \( P = [I]_{F, E} \) be a change of basis matrix from \( F \) to \( E \).
-	The bases \( E^* = (\varepsilon_1, \dots, \varepsilon_n) \), \( F^* = (\eta_1, \dots, \eta_n) \) are the corresponding dual bases.
-	Then, the change of basis matrix from \( F^* \) to \( E^* \) is
+	Suppose that $ E = (e_1, \dots, e_n) $ and $ F = (f_1, \dots, f_n) $ are bases of $ V $.
+	Let $ P = [I]_{F, E} $ be a change of basis matrix from $ F $ to $ E $.
+	The bases $ E^* = (\varepsilon_1, \dots, \varepsilon_n) $, $ F^* = (\eta_1, \dots, \eta_n) $ are the corresponding dual bases.
+	Then, the change of basis matrix from $ F^* $ to $ E^* $ is
 	\[
 		\qty(P^{-1})^\top
 	\]
@@ -1206,18 +1206,18 @@ We have proven that
 	\]
 \end{proof}
 \begin{lemma}
-	Let \( V, W \) be \( \bbF \)-vector spaces.
-	Let \( \alpha \in L(V, W) \).
-	Let \( \alpha^* \) be the corresponding dual map.
-	Then, denoting \( N(\alpha) \) for the kernel of \( \alpha \),
+	Let $ V, W $ be $ \bbF $-vector spaces.
+	Let $ \alpha \in \mcL(V, W) $.
+	Let $ \alpha^* $ be the corresponding dual map.
+	Then, denoting $ N(\alpha) $ for the kernel of $ \alpha $,
 	\begin{enumerate}[(i)]
-		\item \( N(\alpha^*) = (\Im \alpha)^0 \), so \( \alpha^* \) is injective if and only if \( \alpha \) is surjective.
-		\item \( \Im \alpha^* \leq (N(\alpha))^0 \), with equality if \( V, W \) are finite-dimensional.
-		      In this finite-dimensional case, \( \alpha^* \) is surjective if and only if \( \alpha \) is injective.
+		\item $ N(\alpha^*) = (\Im \alpha)^0 $, so $ \alpha^* $ is injective if and only if $ \alpha $ is surjective.
+		\item $ \Im \alpha^* \leq (N(\alpha))^0 $, with equality if $ V, W $ are finite-dimensional.
+		      In this finite-dimensional case, $ \alpha^* $ is surjective if and only if $ \alpha $ is injective.
 	\end{enumerate}
 \end{lemma}
 \begin{remark}
-	In many applications, it is often simpler to understand the dual map \( \alpha^* \) than it is to understand \( \alpha \).
+	In many applications, it is often simpler to understand the dual map $ \alpha^* $ than it is to understand $ \alpha $.
 \end{remark}
 \begin{proof}
 	\begin{enumerate}[(i)]
@@ -1227,17 +1227,17 @@ We have proven that
             &\iff \forall \mathbf{v}\in V, \ \epsilon(\alpha(\mathbf{v})) = 0\\ 
             &\iff \epsilon\in (\Im(\alpha))^0. 
         \end{align*}
-        \item Let \( \varepsilon \in \Im \alpha^* \).
-        Then \( \alpha^*(\phi) = \varepsilon \) for some \( \phi \in W^* \).
-        Then, for all \( \bfu \in N(\alpha) \), \( \varepsilon(\bfu) = \qty(\alpha^*(\phi))(\bfu) = \phi \circ \alpha(\bfu) = \phi(\alpha(\bfu)) = 0 \).
-        So \( \Im \alpha^* \leq (N(\alpha))^0 \).
+        \item Let $ \varepsilon \in \Im \alpha^* $.
+        Then $ \alpha^*(\phi) = \varepsilon $ for some $ \phi \in W^* $.
+        Then, for all $ \bfu \in N(\alpha) $, $ \varepsilon(\bfu) = \qty(\alpha^*(\phi))(\bfu) = \phi \circ \alpha(\bfu) = \phi(\alpha(\bfu)) = 0 $.
+        So $ \Im \alpha^* \leq (N(\alpha))^0 $.
     
         In the finite-dimensional case, we can compare the dimension of these two spaces.
         \begin{align*}
             \dim \Im \alpha^* &= r(\alpha^*) = r\qty([\alpha^*]_{C^*, B^*}) \\ 
             &= r\qty([\alpha]_{B,C}^\top) = r\qty([\alpha]_{B,C}) = r(\alpha) = \dim \Im \alpha
         \end{align*}
-        Due to the rank-nullity theorem, \( \dim \Im \alpha^* = \dim V - \dim N(\alpha) = \dim\qty[(N(\alpha))^0] \).
+        Due to the rank-nullity theorem, $ \dim \Im \alpha^* = \dim V - \dim N(\alpha) = \dim\qty[(N(\alpha))^0] $.
         Hence,
         \[
             \Im \alpha^* \leq (N(\alpha))^0;\quad \dim \Im \alpha^* = \dim (N(\alpha))^0
@@ -1247,116 +1247,116 @@ We have proven that
 \end{proof}
 
 \begin{definition}
-	Let \( V \) be an \( \bbF \)-vector space.
-	Let \( V^* \) be the dual of \( V \).
-	The \textbf{double dual} or \text{bidual} of \( V \) is
+	Let $ V $ be an $ \bbF $-vector space.
+	Let $ V^* $ be the dual of $ V $.
+	The \textbf{double dual} or \text{bidual} of $ V $ is
 	\[
-		V^{* *} = L(V^*, \bbF) = (V^*)^*
+		V^{* *} = \mcL(V^*, \bbF) = (V^*)^*
 	\]
 \end{definition}
 \begin{remark}
-	In general, there is no obvious relation between \( V \) and \( V^* \).
-	However, the following useful facts hold about \( V \) and \( V^{* *} \).
+	In general, there is no obvious relation between $ V $ and $ V^* $.
+	However, the following useful facts hold about $ V $ and $ V^{* *} $.
 	\begin{enumerate}
-		\item There is a \textit{canonical embedding} from \( V \) to \( V^{* *} \).
-		      In particular, there exists \( i \) in \( L(V, V^{* *}) \) which is injective.
-		\item There are examples of infinite-dimensional spaces where \( V \simeq V^{* *} \).
+		\item There is a \textit{canonical embedding} from $ V $ to $ V^{* *} $.
+		      In particular, there exists $ i $ in $ \mcL(V, V^{* *}) $ which is injective.
+		\item There are examples of infinite-dimensional spaces where $ V \simeq V^{* *} $.
 		      These are called reflexive spaces.
 		      Such spaces are investigated in the study of Banach spaces.
 	\end{enumerate}
 \end{remark}
 \begin{theorem}
-	\( V \) embeds into \( V^{* *} \).
+	$ V $ embeds into $ V^{* *} $.
 \end{theorem}
 \begin{proof}
-	Choose a vector \( \bfv \in V \) and define the linear form \( \hat v \in L(V^*, F) \) such that
+	Choose a vector $ \bfv \in V $ and define the linear form $ \hat v \in \mcL(V^*, F) $ such that
 	\[
 		\hat v(\varepsilon) = \varepsilon(\mathbf{v})
 	\]
-	So clearly \( \hat v \) is linear.
-	We want to show \( \hat v \in V^{* *} \).
-	If \( \varepsilon \in V^*, \varepsilon(v) \in F \).
-	Further, \( \lambda_1, \lambda_2 \in F \) and \( \varepsilon_1, \varepsilon_2 \in V^* \) give
+	So clearly $ \hat v $ is linear.
+	We want to show $ \hat v \in V^{* *} $.
+	If $ \varepsilon \in V^*, \varepsilon(v) \in F $.
+	Further, $ \lambda_1, \lambda_2 \in F $ and $ \varepsilon_1, \varepsilon_2 \in V^* $ give
 	\[
 		\hat v (\lambda_1 \varepsilon_1 + \lambda_2 \varepsilon_2) = (\lambda_1 \varepsilon_1 + \lambda_2 \varepsilon_2)(v) = \lambda_1 \varepsilon_1(v) + \lambda_2 \varepsilon_2(v) = \lambda_1 \hat v(\varepsilon_1) + \lambda_2 \hat v(\varepsilon_2)
 	\]
 \end{proof}
 \begin{theorem}
-	If \( V \) is finite-dimensional, then \( i \colon V \to V^{* *} \) given by \( i(\bfv) = \hat v \) is an isomorphism.
+	If $ V $ is finite-dimensional, then $ i \colon V \to V^{* *} $ given by $ i(\bfv) = \hat v $ is an isomorphism.
 \end{theorem}
 \begin{proof}
-	We will show \( i \) is linear.
-	If \( \bfv_1, \bfv_2 \in V, \lambda_1, \lambda_2 \in F \), then
+	We will show $ i $ is linear.
+	If $ \bfv_1, \bfv_2 \in V, \lambda_1, \lambda_2 \in F $, then
 	\[
 		i(\lambda_1 \bfv_1 + \lambda_2 \bfv_2) (\varepsilon) = \varepsilon(\lambda_1 \bfv_1 + \lambda_2 \bfv_2) = \lambda_1 \varepsilon(\bfv_1) + \lambda_2 \varepsilon(\bfv_2) = \lambda_1 \hat v_1(\varepsilon) + \lambda_2 \hat v_2(\varepsilon)
 	\]
-	Now, we will show that \( i \) is injective for finite-dimensional \( V \).
-	Let \( \bfe \in V \setminus \qty{0} \).
-	We will show that \( \bfe \not\in \ker i \)
+	Now, we will show that $ i $ is injective for finite-dimensional $ V $.
+	Let $ \bfe \in V \setminus \qty{0} $.
+	We will show that $ \bfe \not\in \ker i $
     .
-	We extend \( \bfe \) into a basis \( (\bfe, \bfe_2, \dots, \bfe_n) \) of \( V \).
-	Now, let \( (\varepsilon, \varepsilon_2, \dots, \varepsilon_n) \) be the dual basis.
-	Then \( \hat e(\varepsilon) = \varepsilon(\bfe) = 1 \).
-	In particular, \( \hat e \neq 0 \).
-	Hence \( \ker i = \qty{0} \), so it is injective.
+	We extend $ \bfe $ into a basis $ (\bfe, \bfe_2, \dots, \bfe_n) $ of $ V $.
+	Now, let $ (\varepsilon, \varepsilon_2, \dots, \varepsilon_n) $ be the dual basis.
+	Then $ \hat e(\varepsilon) = \varepsilon(\bfe) = 1 $.
+	In particular, $ \hat e \neq 0 $.
+	Hence $ \ker i = \qty{0} $, so it is injective.
 
-	We now show that \( i \) is an isomorphism.
-	We need to simply compute the dimension of the image under \( i \).
-	Certainly, \( \dim V = \dim V^* = \dim (V^*)^* = \dim V^{* *} \).
-	Since \( i \) is injective, \( \dim V = \dim V^{* *} \).
-	So \( i \) is surjective as required.
+	We now show that $ i $ is an isomorphism.
+	We need to simply compute the dimension of the image under $ i $.
+	Certainly, $ \dim V = \dim V^* = \dim (V^*)^* = \dim V^{* *} $.
+	Since $ i $ is injective, $ \dim V = \dim V^{* *} $.
+	So $ i $ is surjective as required.
 \end{proof}
 \begin{lemma}
-	Let \( V \) be a finite-dimensional \( \bbF \)-vector space.
-	Let \( U \leq V \).
+	Let $ V $ be a finite-dimensional $ \bbF $-vector space.
+	Let $ U \leq V $.
 	Then,
 	\[
 		i(U)=\hat U = U^{00}
 	\]
-	After identifying \( V \) and \( V^{* *} \), we typically say
+	After identifying $ V $ and $ V^{* *} $, we typically say
 	\[
 		U = U^{00}
 	\]
 	although this is is incorrect notation and not an equality.
 \end{lemma}
 \begin{proof}
-	We will show that \( \hat U \leq U^{00} \).
-	Indeed, let \( \bfu \in U \), then by definition
+	We will show that $ \hat U \leq U^{00} $.
+	Indeed, let $ \bfu \in U $, then by definition
 	\[
 		\forall \varepsilon \in U^0, \varepsilon(\bfu) = 0 \implies \hat u(\varepsilon) = 0
 	\]
-	Hence \( \hat u \in U^{00} \) and so \( \hat U \leq U^{00} \).
+	Hence $ \hat u \in U^{00} $ and so $ \hat U \leq U^{00} $.
 
-	Now, we will compute dimension:	\( \dim U^{00} = \dim V - \dim U^0 = \dim U \).
-	Since \( \hat U \simeq U \), their dimensions are the same, so \( U^{00} = \hat U \).
+	Now, we will compute dimension:	$ \dim U^{00} = \dim V - \dim U^0 = \dim U $.
+	Since $ \hat U \simeq U $, their dimensions are the same, so $ U^{00} = \hat U $.
 \end{proof}
 \begin{remark}
-	Due to this identification of \( V^{* *} \) and \( V \), we can define
+	Due to this identification of $ V^{* *} $ and $ V $, we can define
 	\[
 		T \leq V^*, T^0 = \qty{\bfv \in V \colon \forall \theta \in T, \theta(\bfv) = 0}
 	\]
 \end{remark}
 \begin{lemma}
-	Let \( V \) be a finite-dimensional \( \bbF \)-vector space.
-	Let \( U_1, U_2 \) be subspaces of \( V \).
+	Let $ V $ be a finite-dimensional $ \bbF $-vector space.
+	Let $ U_1, U_2 $ be subspaces of $ V $.
 	Then
 	\begin{enumerate}[(i)]
-		\item \( (U_1 + U_2)^0 = U_1^0 \cap U_2^0 \);
-		\item \( (U_1 \cap U_2)^0 = U_1^0 + U_2^0 \)
+		\item $ (U_1 + U_2)^0 = U_1^0 \cap U_2^0 $;
+		\item $ (U_1 \cap U_2)^0 = U_1^0 + U_2^0 $
 	\end{enumerate}
 \end{lemma}
 \begin{proof}
-	Let \( \theta \in V^* \).
-	Then \( \theta \in (U_1 + U_2)^0 \iff \forall \bfu_1 \in U_1, \bfu_2 \in U_2, \theta(\bfu_1 + \bfu_2) = 0 \).
-	Hence \( \theta(\bfu) = 0 \) for all \( \bfu \in U_1 \cup U_2 \) by linearity.
-	Hence \( \theta \in U_1^0 \cap U_2^0 \).
-	Now, take the annihilator of (i) and \( U^{00} = U \) to complete part (ii).
+	Let $ \theta \in V^* $.
+	Then $ \theta \in (U_1 + U_2)^0 \iff \forall \bfu_1 \in U_1, \bfu_2 \in U_2, \theta(\bfu_1 + \bfu_2) = 0 $.
+	Hence $ \theta(\bfu) = 0 $ for all $ \bfu \in U_1 \cup U_2 $ by linearity.
+	Hence $ \theta \in U_1^0 \cap U_2^0 $.
+	Now, take the annihilator of (i) and $ U^{00} = U $ to complete part (ii).
 \end{proof}
 
 \section{Bilinear forms}\ \vspace{-1.5em}
 \begin{definition}
-	Let \( U, V \) be \( \bbF \)-vector spaces.
-	Then \( \varphi \colon U \times V \to F \) is a \textit{bilinear form} if it is linear in both components:
+	Let $ U, V $ be $ \bbF $-vector spaces.
+	Then $ \varphi \colon U \times V \to F $ is a \textit{bilinear form} if it is linear in both components:
     \begin{align*}
         \varphi(\mathbf{u},\cdot)&: V \to \mathbb{F} \in V^* \quad \text{given }\mathbf{u}\\
         \varphi(\cdot, \mathbf{v})&: U \to \mathbb{F} \in U^* \quad \text{given }\mathbf{v}
@@ -1365,17 +1365,17 @@ We have proven that
 
 \begin{example}
 	\begin{enumerate}
-        \item Consider the map \( V \times V^* \to F \) given by
+        \item Consider the map $ V \times V^* \to F $ given by
         \[
             (v, \theta) \mapsto \theta(v)
         \]
     
-        \item The scalar product on \( U = V = \mathbb R^n \) is given by
+        \item The scalar product on $ U = V = \mathbb R^n $ is given by
         \[
             \psi(\bfx, \bfy) = \sum_{i=1}^n x_i y_i
         \]
     
-        \item Let \( U = V = C([0,1], \mathbb R) \) and consider the inner product
+        \item Let $ U = V = C([0,1], \mathbb R) $ and consider the inner product
         \[
             \varphi(f,g) = \int_0^1 f(t)g(t) \dd{t}
         \]
@@ -1383,7 +1383,7 @@ We have proven that
 \end{example}
 
 \begin{definition}
-	If \( B = (\bfe_1, \dots, \bfe_m) \) is a basis of \( U \) and \( C = (\bff_1, \dots, \bff_n) \) is a basis of \( V \), and \( \varphi \colon U \times V \to F \) is a bilinear form,.
+	If $ B = (\bfe_1, \dots, \bfe_m) $ is a basis of $ U $ and $ C = (\bff_1, \dots, \bff_n) $ is a basis of $ V $, and $ \varphi \colon U \times V \to F $ is a bilinear form,.
     
     The matrix of $ \varphi $ in $B,C$ is
 	\[
@@ -1392,14 +1392,14 @@ We have proven that
 \end{definition}
 
 \begin{lemma}
-	We can link \( \varphi \) with its matrix in a given basis as follows.
+	We can link $ \varphi $ with its matrix in a given basis as follows.
 	\[
 		\varphi(\bfu,\bfv) = [\bfu]_B^\top [\varphi]_{B, C} [\bfv]_C
 	\]
 \end{lemma}
 
 \begin{proof}
-	Let \( \bfu = \sum_{i=1}^m \lambda_i \bfe_i \) and \( v = \sum_{j=1}^n \mu_j \mathbf{f}_j \).
+	Let $ \bfu = \sum_{i=1}^m \lambda_i \bfe_i $ and $ v = \sum_{j=1}^n \mu_j \mathbf{f}_j $.
 	Then
 	\begin{align*}
         \varphi(\bfu,\bfv) &= \varphi\qty( \sum_{i=1}^m \lambda_i \mathbf{e}_i, \sum_{j=1}^n \mu_j \mathbf{f}_j ) \\ 
@@ -1422,8 +1422,8 @@ We have proven that
 \end{definition}
 
 \begin{lemma}
-	Let \( B = (\bfe_1, \dots, \bfe_m) \) be a basis of \( U \), and let \( B^* = (\varepsilon_1, \dots, \varepsilon_m) \) be its dual; and let \( C = (\bff_1, \dots, \bff_n) \) be a basis of \( V \), and let \( C^* = (\eta_1, \dots, \eta_n) \) be its dual.
-	Let \( A = [\varphi]_{B,C} \).
+	Let $ B = (\bfe_1, \dots, \bfe_m) $ be a basis of $ U $, and let $ B^* = (\varepsilon_1, \dots, \varepsilon_m) $ be its dual; and let $ C = (\bff_1, \dots, \bff_n) $ be a basis of $ V $, and let $ C^* = (\eta_1, \dots, \eta_n) $ be its dual.
+	Let $ A = [\varphi]_{B,C} $.
 	Then
 	\[
 		[\varphi_R]_{C, B^*} = A,\quad [\varphi_L]_{B, C^*} = A^\top.
@@ -1437,60 +1437,60 @@ We have proven that
     \end{itemize}
 \end{proof}
 \begin{definition}
-	\( \ker \varphi_L \) is called the \textbf{left kernel} of \( \varphi \).
-	\( \ker \varphi_R \) is the \textbf{right kernel} of \( \varphi \).
+	$ \ker \varphi_L $ is called the \textbf{left kernel} of $ \varphi $.
+	$ \ker \varphi_R $ is the \textbf{right kernel} of $ \varphi $.
 \end{definition}
 \begin{definition}
-	We say that \( \varphi \) is \textbf{non-degenerate} if \( \ker \varphi_L = \ker \varphi_R = \qty{0} \).
-	Otherwise, \( \varphi \) is \textbf{degenerate}.
+	We say that $ \varphi $ is \textbf{non-degenerate} if $ \ker \varphi_L = \ker \varphi_R = \qty{0} $.
+	Otherwise, $ \varphi $ is \textbf{degenerate}.
 \end{definition}
 
 \begin{lemma}
-	Let \( B \) be a basis of \( U \), and let \( C \) be a basis of \( V \), where \( U, V \) are finite-dimensional.
-	Let \( \varphi \colon U \times V \to F \) be a bilinear form.
-	Let \( A = [\varphi]_{B,C} \).
-	Then, \( \varphi \) is non-degenerate if and only if \( A \) is invertible.
+	Let $ B $ be a basis of $ U $, and let $ C $ be a basis of $ V $, where $ U, V $ are finite-dimensional.
+	Let $ \varphi \colon U \times V \to F $ be a bilinear form.
+	Let $ A = [\varphi]_{B,C} $.
+	Then, $ \varphi $ is non-degenerate if and only if $ A $ is invertible.
 \end{lemma}
 \begin{corollary}
-	If \( \varphi \) is non-degenerate, then \( \dim U = \dim V \).
+	If $ \varphi $ is non-degenerate, then $ \dim U = \dim V $.
 \end{corollary}
 \begin{proof}
-	Suppose \( \varphi \) is non-degenerate.
-	Then \( \ker \varphi_L = \ker \varphi_R = \qty{0} \).
-	This is equivalent to saying that \( n(A^\top) = n(A) = 0 \).
-	By rank-nullity theorem, \( r(A^\top) = \dim U \) and \( r(A) = \dim V \).
-	This is equivalent to saying that \( A \) is invertible.
-	Note that this forces \( \dim U = \dim V \).
+	Suppose $ \varphi $ is non-degenerate.
+	Then $ \ker \varphi_L = \ker \varphi_R = \qty{0} $.
+	This is equivalent to saying that $ n(A^\top) = n(A) = 0 $.
+	By rank-nullity theorem, $ r(A^\top) = \dim U $ and $ r(A) = \dim V $.
+	This is equivalent to saying that $ A $ is invertible.
+	Note that this forces $ \dim U = \dim V $.
 \end{proof}
 
 \begin{remark}
-	The canonical example of a non-degenerate bilinear form is the scalar product \( \mathbb R^n \times \mathbb R^n \to \mathbb R \) represented by the identity matrix in the standard basis.
+	The canonical example of a non-degenerate bilinear form is the scalar product $ \mathbb R^n \times \mathbb R^n \to \mathbb R $ represented by the identity matrix in the standard basis.
 \end{remark}
 
 \begin{corollary}
-	If \( U \) and \( V \) are finite-dimensional with \( \dim U = \dim V \), then choosing a non-degenerate bilinear form \( \varphi \colon U \times V \to \bbF \) is equivalent to choosing an isomorphism \( \varphi_L \colon U \simeq V^* \).
+	If $ U $ and $ V $ are finite-dimensional with $ \dim U = \dim V $, then choosing a non-degenerate bilinear form $ \varphi \colon U \times V \to \bbF $ is equivalent to choosing an isomorphism $ \varphi_L \colon U \simeq V^* $.
 \end{corollary}
 \begin{definition}
-	If \( T \subset U \), we define
+	If $ T \subset U $, we define
 	\[
 		T^\perp = \qty{ \bfv \in V \colon \forall \bft \in T, \varphi(\bft,\bfv) = 0 }
 	\]
-	Further, if \( S \subset V \), we define
+	Further, if $ S \subset V $, we define
 	\[
 		^\perp S = \qty{ \bfu \in U \colon \forall \bfs \in S, \varphi(\bfu,\bfs) = 0 }
 	\]
-	These are called the \textbf{orthogonals} of \( T \) and \( S \).
+	These are called the \textbf{orthogonals} of $ T $ and $ S $.
 \end{definition}
 
 \begin{proposition}
-	Let \( B, B' \) be bases of \( U \) and \( P = [I]_{B', B} \), let \( C, C' \) be bases of \( V \) and \( Q = [I]_{C', C} \), and finally let \( \varphi \colon U \times V \to \bbF \) be a bilinear form.
+	Let $ B, B' $ be bases of $ U $ and $ P = [I]_{B', B} $, let $ C, C' $ be bases of $ V $ and $ Q = [I]_{C', C} $, and finally let $ \varphi \colon U \times V \to \bbF $ be a bilinear form.
 	Then
 	\[
 		[\varphi]_{B', C'} = P^\top [\varphi]_{B,C} Q
 	\]
 \end{proposition}
 \begin{proof}
-	We have \( \varphi(\bfu,\bfv) = [\bfu]_B^\top [\varphi]_{B,C} [\bfv]_C \).
+	We have $ \varphi(\bfu,\bfv) = [\bfu]_B^\top [\varphi]_{B,C} [\bfv]_C $.
 	Changing coordinates, we have
 	\[
 		\varphi(\bfu,\bfv) = (P [\bfu]_{B'})^\top [\varphi]_{B,C} (Q [\bfv]_{C'}) = [\bfu]_{B'}^\top (P^\top [\varphi]_{B,C} Q) [\bfv]_{C'}. \qedhere
@@ -1498,27 +1498,27 @@ We have proven that
 \end{proof}
 
 \begin{lemma}
-	The \textbf{rank} of a bilinear form \( \varphi \), denoted \( r(\varphi) \), is the rank of any matrix representing \( \varphi \).
+	The \textbf{rank} of a bilinear form $ \varphi $, denoted $ r(\varphi) $, is the rank of any matrix representing $ \varphi $.
 	This quantity is well-defined.
 \end{lemma}
 \begin{remark}
-	\( r(\varphi) = r(\varphi_R) = r(\varphi_L) \), since \( r(A) = r(A^\top) \).
+	$ r(\varphi) = r(\varphi_R) = r(\varphi_L) $, since $ r(A) = r(A^\top) $.
 \end{remark}
 \begin{proof}
-	For any invertible matrices \( P, Q \), \( r(P^\top A Q) = r(A) \).
+	For any invertible matrices $ P, Q $, $ r(P^\top A Q) = r(A) $.
 \end{proof}
 
 \section{Determinant and trace}
 \subsection{Trace}\ \vspace{-1.5em}
 \begin{definition}
-	The \textit{trace} of a square matrix \( A \in M_{n,n}(\bbF) \equiv M_n(\bbF) \) is defined by
+	The \textit{trace} of a square matrix $ A \in M_{n,n}(\bbF) \equiv M_n(\bbF) $ is defined by
 	\[
 		\tr A = \sum_{i=1}^n a_{ii}
 	\]
 	The trace is a linear form.
 \end{definition}
 \begin{lemma}
-	\( \tr (AB) = \tr (BA) \) for any matrices \( A, B \in M_n(\bbF) \).
+	$ \tr (AB) = \tr (BA) $ for any matrices $ A, B \in M_n(\bbF) $.
 \end{lemma}
 \begin{proof}
 	We have
@@ -1536,15 +1536,15 @@ We have proven that
 \end{proof}
 
 \begin{definition}
-	If \( \alpha \colon V \to V \) is linear, we can define the trace of \( \alpha \) as
+	If $ \alpha \colon V \to V $ is linear, we can define the trace of $ \alpha $ as
 	\[
 		\tr \alpha = \tr [\alpha]_B
 	\]
-	for any basis \( B \).
+	for any basis $ B $.
 	This is well-defined by the corollary above.
 \end{definition}
 \begin{lemma}
-	If \( \alpha \colon V \to V \) is linear, \( \alpha^* \colon V^* \to V^* \) satisfies
+	If $ \alpha \colon V \to V $ is linear, $ \alpha^* \colon V^* \to V^* $ satisfies
 	\[
 		\tr \alpha = \tr \alpha^*
 	\]
@@ -1557,15 +1557,15 @@ We have proven that
 
 \subsection{Determinants}
 Recall the following facts about permutations and transpositions.
-\( S_n \) is the group of permutations of the set \( \qty{1, \dots, n} \); the group of bijections \( \sigma \colon \qty{1, \dots, n} \to \qty{1, \dots, n} \).
-A transposition \( \tau_{k \ell} = (k, \ell) \) is defined by \( k \mapsto \ell, \ell \mapsto k, x \mapsto x \) for \( x \neq k, \ell \).
-Any permutation \( \sigma \) can be decomposed as a product of transpositions.
+$ S_n $ is the group of permutations of the set $ \qty{1, \dots, n} $; the group of bijections $ \sigma \colon \qty{1, \dots, n} \to \qty{1, \dots, n} $.
+A transposition $ \tau_{k \ell} = (k, \ell) $ is defined by $ k \mapsto \ell, \ell \mapsto k, x \mapsto x $ for $ x \neq k, \ell $.
+Any permutation $ \sigma $ can be decomposed as a product of transpositions.
 This decomposition is not necessarily unique, but the parity of the number of transpositions is well-defined.
-We say that the signature of a permutation, denoted \( \varepsilon \colon S_n \to \qty{-1, 1} \), is \( 1 \) if the decomposition has even parity and \( -1 \) if it has odd parity.
-We can then show that \( \varepsilon \) is a homomorphism.
+We say that the signature of a permutation, denoted $ \varepsilon \colon S_n \to \qty{-1, 1} $, is $ 1 $ if the decomposition has even parity and $ -1 $ if it has odd parity.
+We can then show that $ \varepsilon $ is a homomorphism.
 
 \begin{definition}
-	Let \( A \in \mcM_n(\bbF) \).
+	Let $ A \in \mcM_n(\bbF) $.
 	We define
 	\[
 		\det A = \sum_{\sigma \in S_n} \varepsilon(\sigma) A_{\sigma(1) 1} \dots A_{\sigma(n) n}
@@ -1573,22 +1573,22 @@ We can then show that \( \varepsilon \) is a homomorphism.
 \end{definition}
 
 \begin{example}
-	Let \( n = 2 \).
+	Let $ n = 2 $.
 	Then,
 	\[
 		A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \implies \det A = a_{11} a_{22} - a_{12} a_{21}
 	\]
 \end{example}
 \begin{lemma}
-	If \( A = (a_{ij}) \) is an upper (or lower) triangular matrix (with zeroes on the diagonal), then \( \det A = 0 \).
+	If $ A = (a_{ij}) $ is an upper (or lower) triangular matrix (with zeroes on the diagonal), then $ \det A = 0 $.
 \end{lemma}
 \begin{proof}
-	Let \( (a_{ij}) = 0 \) for \( i > j \).
+	Let $ (a_{ij}) = 0 $ for $ i > j $.
 	Then
 	\[
 		\det A = \sum_{\sigma \in S_n} \varepsilon(\sigma) a_{\sigma(1) 1} \dots a_{\sigma(n) n}
 	\]
-	For the summand to be nonzero, \( \sigma(j) \leq j \) for all \( j \).
+	For the summand to be nonzero, $ \sigma(j) \leq j $ for all $ j $.
 	Thus,
 	\[
 		\det A = a_{1 1} \dots a_{n n} = 0\qedhere
@@ -1596,8 +1596,8 @@ We can then show that \( \varepsilon \) is a homomorphism.
 \end{proof}
 
 \begin{lemma}
-	Let \( A \in M_n(F) \).
-	Then, \( \det A = \det A^\top \).
+	Let $ A \in M_n(F) $.
+	Then, $ \det A = \det A^\top $.
 \end{lemma}
 \begin{proof}
 	\begin{align*}
@@ -1610,19 +1610,19 @@ We can then show that \( \varepsilon \) is a homomorphism.
 \end{proof}
 
 \begin{definition}
-	A \textbf{volume form} \( d \) on \( \bbF^n \) is a function 
+	A \textbf{volume form} $ d $ on $ \bbF^n $ is a function 
 	\[
 		d \colon \underbrace{F^n \times \dots \times F^n}_{n \text{ times}} \to \bbF
 	\]
 	satisfying
 	\begin{enumerate}[(i)]
-		\item \( d \) is multilinear: for all \( i \in \qty{1, \dots, n} \) and for all \( \bfv_1, \dots, \bfv_{i-1}, \bfv_{i+1}, \dots, \bfv_n \in F^n \), the map \( \bbF^n \to \bbF \) defined by
+		\item $ d $ is multilinear: for all $ i \in \qty{1, \dots, n} $ and for all $ \bfv_1, \dots, \bfv_{i-1}, \bfv_{i+1}, \dots, \bfv_n \in F^n $, the map $ \bbF^n \to \bbF $ defined by
 		      \[
 			      \bfv \mapsto (\bfv_1, \dots, \bfv_{i-1}, \bfv, \bfv_{i+1}, \dots, \bfv_n)
 		      \]
 		      is linear.
-		      In other words, this map is an element of \( (\bbF^n)^* \).
-		\item \( d \) is alternating: for \( \bfv_i = \bfv_j \) for some \( i \neq j \), \( d = 0 \).
+		      In other words, this map is an element of $ (\bbF^n)^* $.
+		\item $ d $ is alternating: for $ \bfv_i = \bfv_j $ for some $ i \neq j $, $ d = 0 $.
 	\end{enumerate}
 \end{definition}
 
@@ -1630,20 +1630,20 @@ So an alternating multilinear form is a volume form.
 We want to show that, up to multiplication by a scalar, the determinant is the only volume form.
 
 \begin{lemma}
-	The map \( (\bbF^n)^n \to \bbF \) defined by \( (A^{(1)}, \dots, A^{(n)}) \mapsto \det A \) is a volume form, where $ A^{(i)} $ is the $i$th column.
+	The map $ (\bbF^n)^n \to \bbF $ defined by $ (A^{(1)}, \dots, A^{(n)}) \mapsto \det A $ is a volume form, where $ A^{(i)} $ is the $i$th column.
 \end{lemma}
 \begin{proof}
 	Multilinear: 
-	Fix \( \sigma \in S_n \), and consider \( \prod_{i=1}^n a_{\sigma(i) i} \).
-	It contains exactly one term in each column of \( A \),
-	so the map \( (A^{(1)}, \dots, A^{(n)}) \mapsto \prod_{i=1}^n a_{\sigma(i) i} \) is multilinear.
+	Fix $ \sigma \in S_n $, and consider $ \prod_{i=1}^n a_{\sigma(i) i} $.
+	It contains exactly one term in each column of $ A $,
+	so the map $ (A^{(1)}, \dots, A^{(n)}) \mapsto \prod_{i=1}^n a_{\sigma(i) i} $ is multilinear.
 	This then implies that the determinant multilinear.
 
 	Alternating:
 	Suppose there are $k\neq \ell$ such that $ A^{(k)} = A^{(\ell)} $. 
-	Let \( \tau = ( k \ell ) \) be the transposition exchanging \( k \) and \( \ell \).
-	Then, for all \( i, j \in \qty{1, \dots, n} \), \( a_{ij} = a_{i \tau(j)} \).
-	We can decompose permutations into two disjoint sets: \( S_n = A_n \cup \tau A_n \), where \( A_n \) is the alternating group of order \( n \).
+	Let $ \tau = ( k \ell ) $ be the transposition exchanging $ k $ and $ \ell $.
+	Then, for all $ i, j \in \qty{1, \dots, n} $, $ a_{ij} = a_{i \tau(j)} $.
+	We can decompose permutations into two disjoint sets: $ S_n = A_n \cup \tau A_n $, where $ A_n $ is the alternating group of order $ n $.
 	Now, 
 	\begin{align*}
 		\det A &= \sum_{\sigma\in A_n} \prod_{i=1}^{n} a_{i \sigma(i)} - \sum_{\sigma\in A_n} \prod_{i=1}^{n} a_{i \tau\sigma(i)}\\ 
@@ -1653,7 +1653,7 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 \end{proof}
 
 \begin{lemma}
-	Let \( d \) be a volume form.
+	Let $ d $ be a volume form.
 	Then, swapping two entries changes the sign.
 \end{lemma}
 \begin{proof}
@@ -1671,31 +1671,31 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 \end{proof}
 
 \begin{corollary}
-	If \( \sigma \in S_n \) and \( d \) is a volume form,
+	If $ \sigma \in S_n $ and $ d $ is a volume form,
 	\[
 		d(\bfv_{\sigma(1)}, \dots, \bfv_{\sigma(n)}) = \varepsilon(\sigma) d(\bfv_1, \dots, \bfv_n)
 	\]
 \end{corollary}
 \begin{proof}
-	We can decompose \( \sigma \) as a product of transpositions \( \prod_{i=1}^{n_\sigma} \tau_i \).
+	We can decompose $ \sigma $ as a product of transpositions $ \prod_{i=1}^{n_\sigma} \tau_i $.
 \end{proof}
 
 \begin{theorem}
-	Let \( d \) be a volume form on \( \bbF^n \).
-	Let \( A \) be a matrix whose columns are \( A^{(i)} \).
+	Let $ d $ be a volume form on $ \bbF^n $.
+	Let $ A $ be a matrix whose columns are $ A^{(i)} $.
 	Then
 	\[
 		d(A^{(1)}, \dots, A^{(n)}) = \det A \cdot d(\bfe_1, \dots, \bfe_n)
 	\]
 	So there is a unique volume form up to a constant multiple.
-	Hence \( \det A \) is the only volume form such that \( d(\bfe_1, \dots, \bfe_n) = 1 \).
+	Hence $ \det A $ is the only volume form such that $ d(\bfe_1, \dots, \bfe_n) = 1 $.
 \end{theorem}
 
 \begin{proof}
 	\[
 		d(A^{(1)}, \dots, A^{(n)}) = d\qty(\sum_{i=1}^n a_{i1} \bfe_i, A^{(2)}, \dots, A^{(n)})
 	\]
-	Since \( d \) is multilinear,
+	Since $ d $ is multilinear,
 	\[
 		d(A^{(1)}, \dots, A^{(n)}) = \sum_{i=1}^n a_{i1} d\qty(\bfe_i, A^{(2)}, \dots, A^{(n)})
 	\]
@@ -1704,7 +1704,7 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 		d(A^{(1)}, \dots, A^{(n)}) &= \sum_{i=1}^n \sum_{j=1}^n a_{i1} a_{j2} d\qty(\bfe_i, \bfe_j, A^{(3)}, \dots, A^{(n)}) \\ 
 		&= \dots = \sum_{1 \leq i_1, \dots \leq n} \prod_{k=1}^n a_{i_k k} d(\bfe_{i_1}, \dots \bfe_{i_n})
 	\end{align*}
-	Since \( d \) is alternating, for \( d(\bfe_{i_1}, \dots, \bfe_{i_n}) \) to be nonzero, the \( i_k \) must be different, so this corresponds to a permutation \( \sigma \in S_n \).
+	Since $ d $ is alternating, for $ d(\bfe_{i_1}, \dots, \bfe_{i_n}) $ to be nonzero, the $ i_k $ must be different, so this corresponds to a permutation $ \sigma \in S_n $.
 	\[
 		d(A^{(1)}, \dots, A^{(n)}) = \sum_{\sigma \in S_n} \prod_{k=1}^n a_{\sigma(k) k} \varepsilon(\sigma) d(\bfe_1, \dots, \bfe_n)
 	\]
@@ -1714,20 +1714,20 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 \subsection{Some properties of determinant}
 
 \begin{lemma}
-	Let \( A, B \in \mcM_n(\bbF) \).
-	Then \( \det(AB) = \det(A) \det(B) \).
+	Let $ A, B \in \mcM_n(\bbF) $.
+	Then $ \det(AB) = \det(A) \det(B) $.
 \end{lemma}
 \begin{proof}
-	Given \( A \), we define the volume form \( d_A \colon (\bbF^n)^n \to \bbF \) by
+	Given $ A $, we define the volume form $ d_A \colon (\bbF^n)^n \to \bbF $ by
 	\[
 		d_A(\bfv_1, \dots, \bfv_n) \mapsto \det(A \bfv_1, \dots, A \bfv_n)
 	\]
-	\( \bfv_i \mapsto A \bfv_i \) is linear, and the determinant is multilinear, so \( d_A \) is multilinear.
-	If \( i \neq j \) and \( \bfv_i = \bfv_j \), then \( \det(\dots, A \bfv_i, \dots, A \bfv_j, \dots) = 0 \) so \( d_A \) is alternating.
-	Hence \( d_A \) is a volume form.
+	$ \bfv_i \mapsto A \bfv_i $ is linear, and the determinant is multilinear, so $ d_A $ is multilinear.
+	If $ i \neq j $ and $ \bfv_i = \bfv_j $, then $ \det(\dots, A \bfv_i, \dots, A \bfv_j, \dots) = 0 $ so $ d_A $ is alternating.
+	Hence $ d_A $ is a volume form.
 
-	Hence there exists a constant \( C_A \) such that \( d_A(\bfv_1, \dots, \bfv_n) = C_A \det(\bfv_1, \dots, \bfv_n) \).
-	We can compute \( C_A \) by considering the basis vectors; \( A \bfe_i = A_i \) where \( A_i \) is the \( i \)th column vector of \( A \).
+	Hence there exists a constant $ C_A $ such that $ d_A(\bfv_1, \dots, \bfv_n) = C_A \det(\bfv_1, \dots, \bfv_n) $.
+	We can compute $ C_A $ by considering the basis vectors; $ A \bfe_i = A_i $ where $ A_i $ is the $ i $th column vector of $ A $.
 	Then,
 	\[
 		C_A = d_A(\bfe_1, \dots, \bfe_n) = \det(A\bfe_1, \dots, A\bfe_n) = \det A
@@ -1739,32 +1739,32 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 \end{proof}
 
 \begin{definition}
-	Let \( A \in \mcM_n(\bbF) \).
+	Let $ A \in \mcM_n(\bbF) $.
 	We say that
 	\begin{enumerate}[(i)]
-		\item \( A \) is \textbf{singular} if \( \det A = 0 \),
-		\item \( A \) is \textbf{non-singular} if \( \det A \neq 0 \).
+		\item $ A $ is \textbf{singular} if $ \det A = 0 $,
+		\item $ A $ is \textbf{non-singular} if $ \det A \neq 0 $.
 	\end{enumerate}
 \end{definition}
 
 \begin{lemma}
-	If \( A \) is invertible, it is non-singular.
+	If $ A $ is invertible, it is non-singular.
 \end{lemma}
 \begin{proof}
-	If \( A \) is invertible, there exists \( A^{-1} \).
+	If $ A $ is invertible, there exists $ A^{-1} $.
 	Then, since the determinant is a homomorphism,
 	\[
 		\det(A A^{-1}) = \det I = 1
 	\]
-	Thus \( \det A \det A^{-1} = 1 \) and hence neither of these determinants can be zero.
+	Thus $ \det A \det A^{-1} = 1 $ and hence neither of these determinants can be zero.
 \end{proof}
 \begin{theorem}
-	Let \( A \in \mcM_n(\bbF) \).
+	Let $ A \in \mcM_n(\bbF) $.
 	The following are equivalent.
 	\begin{enumerate}[(i)]
-		\item \( A \) is invertible;
-		\item \( A \) is non-singular;
-		\item \( r(A) = n \).
+		\item $ A $ is invertible;
+		\item $ A $ is non-singular;
+		\item $ r(A) = n $.
 	\end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -1772,27 +1772,27 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 	(i) and (iii) are equivalent by the rank-nullity theorem.
 	So it suffices to show that (ii) implies (iii).
 
-	Suppose \( r(A) < n \).
-	Then we will show \( A \) is singular.
+	Suppose $ r(A) < n $.
+	Then we will show $ A $ is singular.
 	
-	We have \( \dim \spn(A_1, \dots, A_n) < n \).
-	Therefore, since there are \( n \) vectors, \( (A_1, \dots, A_n) \) is not free.
-	So there exist scalars \( \lambda_i \) not all zero such that \( \sum_i \lambda_i A_i = 0 \).
-	Choose \( j \) such that \( \lambda_j \neq 0 \).
+	We have $ \dim \spn(A_1, \dots, A_n) < n $.
+	Therefore, since there are $ n $ vectors, $ (A_1, \dots, A_n) $ is not free.
+	So there exist scalars $ \lambda_i $ not all zero such that $ \sum_i \lambda_i A_i = 0 $.
+	Choose $ j $ such that $ \lambda_j \neq 0 $.
 	Then,
 	\[
 		A_j = -\frac{1}{\lambda_j} \sum_{i \neq j} \lambda_i A_i
 	\]
-	So we can compute the determinant of \( A \) by
+	So we can compute the determinant of $ A $ by
 	\[
 		\det A = \det(A_1, \dots, -\frac{1}{\lambda_j} \sum_{i \neq j} \lambda_i A_i, \dots, A_n)
 	\]
-	Since the determinant is alternating and linear in the \( j \)th entry, its value is zero.
-	So \( A \) is singular as required.
+	Since the determinant is alternating and linear in the $ j $th entry, its value is zero.
+	So $ A $ is singular as required.
 \end{proof}
 
 \begin{remark}
-	The above theorem gives necessary and sufficient conditions for invertibility of a set of \( n \) linear equations with \( n \) unknowns.
+	The above theorem gives necessary and sufficient conditions for invertibility of a set of $ n $ linear equations with $ n $ unknowns.
 \end{remark}
 
 \subsection{Determinant of linear maps}\ \vspace{-1.5em}
@@ -1807,20 +1807,20 @@ We want to show that, up to multiplication by a scalar, the determinant is the o
 \end{proof}
 
 \begin{definition}
-	If \( \alpha :V\to V \) is an endomorphism, then we define
+	If $ \alpha :V\to V $ is an endomorphism, then we define
 	\[
 		\det \alpha = \det [\alpha]_{B}
 	\]
-	where \( B \) is any basis of the vector space.
+	where $ B $ is any basis of the vector space.
 	This value does not depend on the choice of basis.
 \end{definition}
 
 \begin{theorem}
-	\( \det \colon L(V,V) \to \bbF \) satisfies the following properties.
+	$ \det \colon \mcL(V,V) \to \bbF $ satisfies the following properties.
 	\begin{enumerate}[(i)]
-		\item \( \det I = 1 \);
-		\item \( \det (\alpha\beta) = \det\alpha \det\beta \);
-		\item \( \det \alpha \neq 0 \) if and only if \( \alpha \) is invertible, and in this case, \( \det(\alpha^{-1}) \det \alpha = 1 \).
+		\item $ \det I = 1 $;
+		\item $ \det (\alpha\beta) = \det\alpha \det\beta $;
+		\item $ \det \alpha \neq 0 $ if and only if $ \alpha $ is invertible, and in this case, $ \det(\alpha^{-1}) \det \alpha = 1 $.
 	\end{enumerate}
 \end{theorem}
 This is simply a reformulation of the previous theorem for matrices.
@@ -1828,7 +1828,7 @@ The proof is simple, and relies on the invariance of the determinant under a cha
 
 \subsection{Determinant of block-triangular matrices}\ \vspace{-1.5em}
 \begin{lemma}
-	Let \( A \in \mcM_k(\bbF) \), \( B \in \mcM_\ell(\bbF) \), \( C \in \mcM_{k, \ell}(\bbF) \).
+	Let $ A \in \mcM_k(\bbF) $, $ B \in \mcM_\ell(\bbF) $, $ C \in \mcM_{k, \ell}(\bbF) $.
 	Consider the matrix
 	\[
 		M = \begin{pmatrix}
@@ -1836,15 +1836,15 @@ The proof is simple, and relies on the invariance of the determinant under a cha
 			0 & B
 		\end{pmatrix},\quad M\in \mathcal{M}_{n}(\mathbb{F}),\quad n = k+\ell
 	\]
-	Then \( \det M = \det A \det B \).
+	Then $ \det M = \det A \det B $.
 \end{lemma}
 \begin{proof}
-	Let \( M = (m_{ij}) \).
+	Let $ M = (m_{ij}) $.
 	We need to compute
 	\[
 		\det M = \sum_{\sigma \in S_n} \varepsilon(\sigma) \prod_{i=1}^n m_{\sigma(i) i}
 	\]
-	Observe that \( m_{\sigma(i) i} = 0 \) if \( i \leq k \) and \( \sigma(i) > k \).
+	Observe that $ m_{\sigma(i) i} = 0 $ if $ i \leq k $ and $ \sigma(i) > k $.
 	Thus, we need only sum over $ \sigma\in S_n $ such that 
 	\begin{enumerate}
 		\item $ \forall j\in [1,k],\ \sigma(j)\in [1,k] $,
@@ -1878,7 +1878,7 @@ The proof is simple, and relies on the invariance of the determinant under a cha
 \begin{proof}
 By induction. 
 \end{proof}
-In particular, this implies that an upper-triangular matrix with diagonal elements \( \lambda_i \) has determinant \( \prod_i \lambda_i \).
+In particular, this implies that an upper-triangular matrix with diagonal elements $ \lambda_i $ has determinant $ \prod_i \lambda_i $.
 \begin{remark}
 	\begin{enumerate}
 		\item In general,
@@ -1900,21 +1900,21 @@ In particular, this implies that an upper-triangular matrix with diagonal elemen
 \section{Adjugate matrix}
 
 \subsection{Column and row expansions}
-Let \( A \in \mcM_n(\bbF) \) with column vectors \( A^{(i)} \).
+Let $ A \in \mcM_n(\bbF) $ with column vectors $ A^{(i)} $.
 We know that
 \[
 	\det(A^{(1)}, \dots, A^{(j)}, \dots, A^{(k)}, \dots, A^{(n)}) = -\det(A^{(1)}, \dots, A^{(k)}, \dots, A^{(j)}, \dots, A^{(n)})
 \]
-Using the fact that \( \det A = \det A^\top \) we can similarly see that swapping two rows will invert the sign of the determinant.
+Using the fact that $ \det A = \det A^\top $ we can similarly see that swapping two rows will invert the sign of the determinant.
 
 \begin{remark}
-	We could have proven all of the properties of the determinant above by using the decomposition of \( A \) into elementary matrices.
+	We could have proven all of the properties of the determinant above by using the decomposition of $ A $ into elementary matrices.
 \end{remark}
 
 \begin{definition}
-	Let \( A \in \mcM_n(\bbF) \).
-	Let \( i, j \in \qty{1, \dots, n} \).
-	We define the \textbf{minor} \( A_{\widehat{ij}} \in \mcM_{n-1}(\bbF) \) to be the matrix obtained by removing the \( i \)th row and the \( j \)th column.
+	Let $ A \in \mcM_n(\bbF) $.
+	Let $ i, j \in \qty{1, \dots, n} $.
+	We define the \textbf{minor} $ A_{\widehat{ij}} \in \mcM_{n-1}(\bbF) $ to be the matrix obtained by removing the $ i $th row and the $ j $th column.
 \end{definition}
 
 \begin{example}
@@ -1929,28 +1929,28 @@ Using the fact that \( \det A = \det A^\top \) we can similarly see that swappin
 \end{example}
 
 \begin{lemma}[Expansion of the determinant]
-	Let \( A \in \mcM_n(\bbF) \).
+	Let $ A \in \mcM_n(\bbF) $.
 	\begin{enumerate}[(i)]
-		\item Let \( j \in \qty{1, \dots, n} \).
-		      The determinant of \( A \) is given by the \textit{column expansion with respect to the \( j \)th column}:
+		\item Let $ j \in \qty{1, \dots, n} $.
+		      The determinant of $ A $ is given by the \textit{column expansion with respect to the $ j $th column}:
 		      \[
 			      \det A = \sum_{i=1}^n (-1)^{i+j} a_{ij} \det A_{\widehat{ij}}
 		      \]
-		\item Let \( i \in \qty{1, \dots, n} \).
-		      The same determinant is also given by the \textit{row expansion with respect to the \( i \)th row}:
+		\item Let $ i \in \qty{1, \dots, n} $.
+		      The same determinant is also given by the \textit{row expansion with respect to the $ i $th row}:
 		      \[
 			      \det A = \sum_{j=1}^n (-1)^{i+j} a_{ij} \det A_{\widehat{ij}}
 		      \]
 	\end{enumerate}
-	This is a process of reducing the computation of \( n \times n \) determinants to \( (n-1) \times (n-1) \) determinants.
+	This is a process of reducing the computation of $ n \times n $ determinants to $ (n-1) \times (n-1) $ determinants.
 \end{lemma}
 
 \begin{proof}
-	We will prove case (i), the column expansion with respect to the \( j \)th column.
+	We will prove case (i), the column expansion with respect to the $ j $th column.
 	Then (ii) will follow from the transpose of the matrix.
 
-	Pick \( j \in \qty{1, \dots, n} \).
-	Write \( A^{(j)} = \sum_{i=1}^n a_{ij} \bfe_i \) wrt the standard basis. Expand $A^{(j)}$ in the determinant gives
+	Pick $ j \in \qty{1, \dots, n} $.
+	Write $ A^{(j)} = \sum_{i=1}^n a_{ij} \bfe_i $ wrt the standard basis. Expand $A^{(j)}$ in the determinant gives
 	\begin{align*}
 		\det A & = \det\qty(A^{(1)}, \dots, \sum_{i=1}^n a_{ij} \bfe_i, \dots, A^{(n)})                                    \\
 		       & = \sum_{i=1}^n a_{ij} \det\qty(A^{(1)}, \dots, \bfe_i, \dots, A^{(n)})                                    \\
@@ -1982,8 +1982,8 @@ We have proven that
 
 \subsection{Adjugates}\ \vspace{-1.5em}
 \begin{definition}
-	Let \( A \in \mcM_n(\bbF) \).
-	The \textbf{adjugate matrix} of \( A \), denoted \( \adj A \), is the \( n \times n \) matrix given by
+	Let $ A \in \mcM_n(\bbF) $.
+	The \textbf{adjugate matrix} of $ A $, denoted $ \adj A $, is the $ n \times n $ matrix given by
 	\[
 		(\adj A)_{ij} = (-1)^{i+j} \det A_{\widehat{ji}}
 	\]
@@ -1996,7 +1996,7 @@ We have proven that
 \begin{theorem}
 	Let $ A \in \mathcal{M}_n (\mathbb{F}) $. Then $ \adj(A) A = (\det A) I $. 
 	
-	In particular, when \( A \) is invertible,
+	In particular, when $ A $ is invertible,
 	\[
 		A^{-1} = \frac{\adj A}{\det A}
 	\]
@@ -2024,19 +2024,19 @@ We have proven that
 
 \subsection{Cramer's rule}\ \vspace{-1.5em}
 \begin{proposition}[Cramer's rule]
-	Let \( A\in \mathcal{M}_n(\mathbb{F}) \) be invertible. 
-	Let \( \bfb \in \bbF^n \).
-	Then the unique solution to \( A\bfx = \bfb \) is given by
+	Let $ A\in \mathcal{M}_n(\mathbb{F}) $ be invertible. 
+	Let $ \bfb \in \bbF^n $.
+	Then the unique solution to $ A\bfx = \bfb $ is given by
 	\[
 		x_i = \frac{1}{\det A} \det (A_{\hat{i}b}),\quad 1\le i\le n
 	\]
-	where \( A_{\hat{i}b} \) is obtained by replacing the \( i\)th column of \( A \) by \( b \).
+	where $ A_{\hat{i}b} $ is obtained by replacing the $ i$th column of $ A $ by $ b $.
 	Algorithmically, this avoids computation of $A^{-1}$. 
 \end{proposition}
 
 \begin{proof}
-	Let \( A \) be invertible.
-	Then there exists a unique \( \bfx \in \bbF^n \) such that \(A \bfx = \bfb \).
+	Let $ A $ be invertible.
+	Then there exists a unique $ \bfx \in \bbF^n $ such that $A \bfx = \bfb $.
 	Then
 	\begin{align*}
 		\det (A_{\hat{i}b}) & = \det(A^{(1)}, \dots, A^{(i-1)}, \bfb, A^{(i+1)}, \dots, A^{(n)})                            \\
@@ -2049,16 +2049,16 @@ We have proven that
 
 \section{Eigenvectors, eigenvalues, and trigonal matrices}
 \subsection{Eigenvectors and eigenvalues}
-Let \( V \) be an \( \bbF \)-vector space with \( \dim V = n < \infty \), and let \( \alpha \) be an endomorphism of \( V \).
-We wish to find a basis \( B \) of \( V \) such that, in this basis, \( [\alpha]_B \equiv [\alpha]_{B,B} \) has a simple (e.g. diagonal, triangular) form.
+Let $ V $ be an $ \bbF $-vector space with $ \dim V = n < \infty $, and let $ \alpha $ be an endomorphism of $ V $.
+We wish to find a basis $ B $ of $ V $ such that, in this basis, $ [\alpha]_B \equiv [\alpha]_{B,B} $ has a simple (e.g. diagonal, triangular) form.
 
-Recall that if \( B' \) is another basis and \( P \) is the change of basis matrix, \( [\alpha]_{B'} = P^{-1} [\alpha]_B P \).
+Recall that if $ B' $ is another basis and $ P $ is the change of basis matrix, $ [\alpha]_{B'} = P^{-1} [\alpha]_B P $.
 
-Equivalently, given a square matrix \( A \in \mcM_n(\bbF) \) we want to conjugate it to a matrix with a ``simple'' form. 
+Equivalently, given a square matrix $ A \in \mcM_n(\bbF) $ we want to conjugate it to a matrix with a ``simple'' form. 
 
 \begin{definition}
 	\begin{enumerate}[(i)]
-		\item $ \alpha\in L(V) $ is \textbf{diagonalisable} if there exists a basis $B$ of $V$ such that $ [\alpha]_{B} $ is diagonal. 
+		\item $ \alpha\in \mcL(V) $ is \textbf{diagonalisable} if there exists a basis $B$ of $V$ such that $ [\alpha]_{B} $ is diagonal. 
 		\[
 			[\alpha]_B = \begin{pmatrix}
 				\lambda_1 & \cdots &  0 \\
@@ -2066,7 +2066,7 @@ Equivalently, given a square matrix \( A \in \mcM_n(\bbF) \) we want to conjugat
 				0 & \cdots  &  \lambda_n \\
 			\end{pmatrix}
 		\]
-		\item $ \alpha\in L(V) $ is \textbf{triangulable} if there exists a basis $B$ of $V$ wuch that $ [\alpha]_B $ is triangular.
+		\item $ \alpha\in \mcL(V) $ is \textbf{triangulable} if there exists a basis $B$ of $V$ wuch that $ [\alpha]_B $ is triangular.
 		\[
 			[\alpha]_B = \begin{pmatrix}
 				\lambda_1 & \cdots &  * \\
@@ -2083,7 +2083,7 @@ Equivalently, given a square matrix \( A \in \mcM_n(\bbF) \) we want to conjugat
 
 \begin{definition}
 	\begin{enumerate}[(i)]
-		\item $ \lambda\in \mathbb{F} $ is an \textbf{eigenvalue} of $ \alpha\in L(V) $ if and only if: 
+		\item $ \lambda\in \mathbb{F} $ is an \textbf{eigenvalue} of $ \alpha\in \mcL(V) $ if and only if: 
 		\[
 			\exists \mathbf{v}\in V \setminus \{0\}\quad \alpha(\mathbf{v}) = \lambda \mathbf{v}
 		\]
@@ -2096,66 +2096,66 @@ Equivalently, given a square matrix \( A \in \mcM_n(\bbF) \) we want to conjugat
 \end{definition}
 
 \begin{lemma}
-	\( \lambda \) is an eigenvalue if and only if \( \det(\alpha - \lambda I) = 0 \).
+	$ \lambda $ is an eigenvalue if and only if $ \det(\alpha - \lambda I) = 0 $.
 \end{lemma}
 \begin{proof}
-	If \( \lambda \) is an eigenvalue, there exists a nonzero vector \( \bfv \) such that \( \alpha(\bfv) = \lambda \bfv \), so \( (\alpha - \lambda)(\bfv) = 0 \).
+	If $ \lambda $ is an eigenvalue, there exists a nonzero vector $ \bfv $ such that $ \alpha(\bfv) = \lambda \bfv $, so $ (\alpha - \lambda)(\bfv) = 0 $.
 	So the kernel is non-trivial.
-	So \( \alpha - \lambda I \) is not injective, so it is not surjective by the rank-nullity theorem.
+	So $ \alpha - \lambda I $ is not injective, so it is not surjective by the rank-nullity theorem.
 	Hence this matrix is not invertible, so it has zero determinant.
 \end{proof}
 
 \begin{remark}
-	If \( \alpha(\bfv_j) = \lambda \bfv_j \) for \( j \in \qty{1, \dots, m} \), we can complete the family \( \bfv_j \) into a basis \( (\bfv_1, \dots, \bfv_n) \) of \( V \).
-	Then in this basis, the first \( m \) columns of the matrix \( \alpha \) has diagonal entries \( \lambda_j \).
+	If $ \alpha(\bfv_j) = \lambda \bfv_j $ for $ j \in \qty{1, \dots, m} $, we can complete the family $ \bfv_j $ into a basis $ (\bfv_1, \dots, \bfv_n) $ of $ V $.
+	Then in this basis, the first $ m $ columns of the matrix $ \alpha $ has diagonal entries $ \lambda_j $.
 \end{remark}
 \subsection{Polynomials}
 Recall the following facts about polynomials on a field, for instance
 \[
 	f(t) = a_n t^n + \dots + a_1 t + a_0
 \]
-We say that the degree of \( f \), written \( \deg f \) is \( n \).
-The degree of \( f + g \) is at most the maximum degree of \( f \) and \( g \).
-\( \deg (fg) = \deg f + \deg g \).
+We say that the degree of $ f $, written $ \deg f $ is $ n $.
+The degree of $ f + g $ is at most the maximum degree of $ f $ and $ g $.
+$ \deg (fg) = \deg f + \deg g $.
 
-Let \( \bbF[t] \) be the vector space of polynomials with coefficients in \( F \).
-If \( \lambda \) is a root of \( f \), then \( (t-\lambda) \) divides \( F \). Indeed, $ f(\lambda) = a_n \lambda^n + \dots + a_1 \lambda + a_0 = 0 $,
+Let $ \bbF[t] $ be the vector space of polynomials with coefficients in $ F $.
+If $ \lambda $ is a root of $ f $, then $ (t-\lambda) $ divides $ F $. Indeed, $ f(\lambda) = a_n \lambda^n + \dots + a_1 \lambda + a_0 = 0 $,
 which implies that
 \[
 	f(t) = f(t) - f(\lambda) = a_n(t^n - \lambda^n) + \dots + a_1(t - \lambda)
 \]
-But note that, for all \( n \),
+But note that, for all $ n $,
 \[
 	t^n - \lambda^n = (1-\lambda)(t^{n-1} + \lambda t^{n-2} + \dots + \lambda^{n-2} t + \lambda^{n-1}).\qed
 \]
 
 \begin{remark}
-	We say that \( \lambda \) is a root of \textit{multiplicity} \( k \) if \( (t-\lambda)^k \) divides \( f \) but \( (t-\lambda)^{k+1} \) does not.
+	We say that $ \lambda $ is a root of \textit{multiplicity} $ k $ if $ (t-\lambda)^k $ divides $ f $ but $ (t-\lambda)^{k+1} $ does not.
 \end{remark}
 
 \begin{corollary}
-	A nonzero polynomial of degree \( n \) has at most \( n \) roots, counted with multiplicity.
+	A nonzero polynomial of degree $ n $ has at most $ n $ roots, counted with multiplicity.
 \end{corollary}
 \begin{corollary}
-	If \( f_1, f_2 \) are two polynomials of degree less than \( n \) such that \( f_1(t_i) = f_2(t_i) \) for \( i \in \qty{1, \dots, n} \) and \( t_i \) distinct, then \( f_1 \equiv f_2 \).
+	If $ f_1, f_2 $ are two polynomials of degree less than $ n $ such that $ f_1(t_i) = f_2(t_i) $ for $ i \in \qty{1, \dots, n} $ and $ t_i $ distinct, then $ f_1 \equiv f_2 $.
 \end{corollary}
 \begin{proof}
-	\( f_1 - f_2 \) has degree less than \( n \), but has \( n \) roots.
+	$ f_1 - f_2 $ has degree less than $ n $, but has $ n $ roots.
 	Hence it is zero.
 \end{proof}
 
 \begin{theorem}[Fundamental Theorem of Algebra]
-	Any polynomial \( f \in \mathbb C[t] \) of positive degree has a complex root.
-	When counted with multiplicity, \( f \) has exactly $ \deg f $ roots when counted with multiplicity. 
+	Any polynomial $ f \in \mathbb C[t] $ of positive degree has a complex root.
+	When counted with multiplicity, $ f $ has exactly $ \deg f $ roots when counted with multiplicity. 
 \end{theorem}
 \begin{corollary}
-	Any polynomial \( f \in \mathbb C[t] \) can be factorised into an amount of linear factors equal to its degree.
+	Any polynomial $ f \in \mathbb C[t] $ can be factorised into an amount of linear factors equal to its degree.
 \end{corollary}
 
 \subsection{Characteristic polynomials}\ \vspace{-1.5em}
 \begin{definition}
-	Let \( \alpha \) be an endomorphism.
-	The \textbf{characteristic polynomial} of \( \alpha \) is
+	Let $ \alpha $ be an endomorphism.
+	The \textbf{characteristic polynomial} of $ \alpha $ is
 	\[
 		\chi_\alpha(\lambda) = \det(\alpha - \lambda I)
 	\]
@@ -2170,9 +2170,9 @@ But note that, for all \( n \),
 	\end{enumerate}
 \end{remark}
 
-\begin{theorem}
-	Let \( \alpha \in L(V) \).
-	\( \alpha \) is triangulable if and only if \( \chi_\alpha \) can be written as a product of linear factors over \( \bbF \) 
+\begin{theorem}\label{thm:test if triangulable}
+	Let $ \alpha \in \mcL(V) $.
+	$ \alpha $ is triangulable if and only if $ \chi_\alpha $ can be written as a product of linear factors over $ \bbF $ 
 	\[
 		\chi_\alpha(t) = c \prod_{i=1}^{n}(t-\lambda I)
 	\]
@@ -2199,7 +2199,7 @@ But note that, for all \( n \),
 		\item Suppose it is true for $n=k>1$. By assumption, $ \chi_\alpha $ has a root $ \lambda $, i.e. $\alpha$ has an eigenvalue $\lambda$. 
 		\item Let $U = V_\lambda$ be the corresponding eigenspace for $\lambda$. 
 		\item Let $ \{\mathbf{v}_1,\dots,\mathbf{v}_k\} $ be a basis of $U$, and extend to a basis $ \{\mathbf{v}_1,\dots,\mathbf{v}_k,\mathbf{v}_{k+1},\dots,\mathbf{v}_n\} $ of $V$. 
-		\item Let \( W = \spn\qty{\bfv_{k+1}, \dots, \bfv_n} \), and then \( V = V_\lambda \oplus W \).
+		\item Let $ W = \spn\qty{\bfv_{k+1}, \dots, \bfv_n} $, and then $ V = V_\lambda \oplus W $.
 		\item Then
 		\[
 			[\alpha]_B = \begin{pmatrix}
@@ -2207,16 +2207,16 @@ But note that, for all \( n \),
 				0         & C
 			\end{pmatrix}
 		\]
-		where \( * \) is arbitrary, and \( C \) is a block of size \( (n-k) \times (n-k) \).
-		\item Then \( \alpha \) induces an endomorphism \( \overline \alpha \colon V/U \to V/U \) with respect to the basis \( (\bfv_{k+1}, \dots, \bfv_n) \), where \( U = V_\lambda \).
-		\item By induction on the dimension, we can find a basis \( (\bfw_{k+1}, \dots, \bfw_n) \) for which \( C \) has a triangular form.
-		Then the basis \( (\bfv_1, \dots, \mathbf{v}_k, \bfw_{k+1}, \dots, \bfw_n) \) is a basis for which \( \alpha \) is triangular.
+		where $ * $ is arbitrary, and $ C $ is a block of size $ (n-k) \times (n-k) $.
+		\item Then $ \alpha $ induces an endomorphism $ \overline \alpha \colon V/U \to V/U $ with respect to the basis $ (\bfv_{k+1}, \dots, \bfv_n) $, where $ U = V_\lambda $.
+		\item By induction on the dimension, we can find a basis $ (\bfw_{k+1}, \dots, \bfw_n) $ for which $ C $ has a triangular form.
+		Then the basis $ (\bfv_1, \dots, \mathbf{v}_k, \bfw_{k+1}, \dots, \bfw_n) $ is a basis for which $ \alpha $ is triangular.
 	\end{itemize}
 \end{proof}
 
 \begin{lemma}
-	Let \( n = \dim V \), and \( V \) be a vector space over \( \mathbb R \) or \( \mathbb C \).
-	Let \( \alpha \) be an endomorphism on \( V \).
+	Let $ n = \dim V $, and $ V $ be a vector space over $ \mathbb R $ or $ \mathbb C $.
+	Let $ \alpha $ be an endomorphism on $ V $.
 	Then
 	\[
 		\chi_\alpha(t) = (-1)^n t^n + c_{n-1} t^{n-1} + \dots + c_0
@@ -2230,8 +2230,8 @@ But note that, for all \( n \),
 	\[
 		\chi_\alpha(t) = \det(\alpha - t I) \implies \chi_\alpha(0) = \det(\alpha)
 	\]
-	Further, for \( \mathbb R, \mathbb C \) we know that \( \alpha \) is triangulable over \( \mathbb C \).
-	Hence \( \chi_\alpha(t) \) is the determinant of a triangular matrix;
+	Further, for $ \mathbb R, \mathbb C $ we know that $ \alpha $ is triangulable over $ \mathbb C $.
+	Hence $ \chi_\alpha(t) $ is the determinant of a triangular matrix;
 	\[
 		\chi_\alpha(t) = \prod_{i=1}^n (a_i - t)
 	\]
@@ -2244,23 +2244,23 @@ But note that, for all \( n \),
 
 
 \subsection{Diagonalisation}
-Let \( p(t) \) be a polynomial over \( \bbF \).
+Let $ p(t) $ be a polynomial over $ \bbF $.
 We will write
 \[
 	p(t) = a_n t^n + \dots + a_0
 \]
-For a matrix \( A \in \mcM_n(\bbF) \), we write
+For a matrix $ A \in \mcM_n(\bbF) $, we write
 \[
 	p(A) = a_n A^n + \dots + a_0 \in \mcM_n(\bbF)
 \]
-For an endomorphism \( \alpha \in L(V) \),
+For an endomorphism $ \alpha \in \mcL(V) $,
 \[
-	p(\alpha) = a_n \alpha^n + \dots + a_0 I \in L(V);\quad \alpha^k \equiv \underbrace{\alpha \circ \dots \circ \alpha}_{k \text{ times}}
+	p(\alpha) = a_n \alpha^n + \dots + a_0 I \in \mcL(V);\quad \alpha^k \equiv \underbrace{\alpha \circ \dots \circ \alpha}_{k \text{ times}}
 \]
 
 \begin{theorem}[Sharp criterion of diagonalisability]
-	Let $V$ be a finite-dimensional vector space over $\mathbb{F}$. Let $\alpha\in L(V)$. Then $\alpha$ is diagonalisable if and only if there exists a polynomial \( p \) which is a product of \textit{distinct} linear factors, such that \( p(\alpha) = 0 \).
-	In other words, there exist distinct \( \lambda_1, \dots, \lambda_k \) such that
+	Let $V$ be a finite-dimensional vector space over $\mathbb{F}$. Let $\alpha\in \mcL(V)$. Then $\alpha$ is diagonalisable if and only if there exists a polynomial $ p $ which is a product of \textit{distinct} linear factors, such that $ p(\alpha) = 0 $.
+	In other words, there exist distinct $ \lambda_1, \dots, \lambda_k $ such that
 	\[
 		p(t) = \prod_{i=1}^n (t - \lambda_i) \implies p(\alpha) = 0
 	\]
@@ -2302,7 +2302,7 @@ For an endomorphism \( \alpha \in L(V) \),
 		q(\lambda_i) = 1,\ \forall 1\le i\le k &\implies \forall t,\ q(t) = 1\\ 
 		& \implies q_1(t)+\cdots + q_k(t) = 1, \ \forall t. 
 	\end{align*}
-	Let $ \pi_j = q_j ( \alpha)\in L(V) $. These are called the `projection operators'. By construction, 
+	Let $ \pi_j = q_j ( \alpha)\in \mcL(V) $. These are called the `projection operators'. By construction, 
 	\[
 		\sum_{j=1}^{k} \pi_j(\alpha) = q(\alpha) = I. 
 	\]
@@ -2336,12 +2336,12 @@ For an endomorphism \( \alpha \in L(V) \),
 	\end{align*}
 	This implies $ \mathbf{v} = \pi_j(\mathbf{v}) = 0 $ and thus the sum is distinct. 
 
-	Hence, \( B = (B_1, \dots, B_k) \) is a basis of \( V \), where the \( B_i \) are bases of \( V_{\lambda_i} \).
-	Then \( [\alpha]_B \) is diagonal, and this completes the proof. 
+	Hence, $ B = (B_1, \dots, B_k) $ is a basis of $ V $, where the $ B_i $ are bases of $ V_{\lambda_i} $.
+	Then $ [\alpha]_B $ is diagonal, and this completes the proof. 
 \end{proof} 
 
 \begin{remark}
-	We have shown further that if \( \lambda_1, \dots, \lambda_k \) are distinct eigenvalues of \( \alpha \), then
+	We have shown further that if $ \lambda_1, \dots, \lambda_k $ are distinct eigenvalues of $ \alpha $, then
 	\[
 		\sum_{i=1}^k V_{\lambda_i} = \bigoplus_{i=1}^k V_{\lambda_i}
 	\]
@@ -2352,19 +2352,19 @@ For an endomorphism \( \alpha \in L(V) \),
 \end{remark}
 
 \begin{example}
-	Let \( \bbF = \mathbb C \).
-	Let \( A \in \mcM_n(\bbF) \) such that \( A \) has finite order; there exists \( m \in \mathbb N \) such that \( A^m = I \).
-	Then \( A \) is diagonalisable.
+	Let $ \bbF = \mathbb C $.
+	Let $ A \in \mcM_n(\bbF) $ such that $ A $ has finite order; there exists $ m \in \mathbb N $ such that $ A^m = I $.
+	Then $ A $ is diagonalisable.
 	This is because
 	\[
 		t^m - 1 = p(t) = \prod_{j=1}^m (t - \xi_m^j);\quad \xi_m = e^{2 \pi i/m}
 	\]
-	and \( p(A) = 0 \).
+	and $ p(A) = 0 $.
 \end{example}
 
 \begin{theorem}[Simultaneous diagonalisation]
-	Let \( \alpha, \beta \in L(V)\) that are diagonalisable.
-	Then \( \alpha, \beta \) are \textbf{simultaneously diagonalisable} (there exists a basis \( B \) of \( V \) such that \( [\alpha]_B, [\beta]_B \) are diagonal) if and only if \( \alpha \) and \( \beta \) commute.
+	Let $ \alpha, \beta \in \mcL(V)$ that are diagonalisable.
+	Then $ \alpha, \beta $ are \textbf{simultaneously diagonalisable} (there exists a basis $ B $ of $ V $ such that $ [\alpha]_B, [\beta]_B $ are diagonal) if and only if $ \alpha $ and $ \beta $ commute.
 \end{theorem}
 \begin{proof}
 	($ \Rightarrow $)
@@ -2382,51 +2382,51 @@ For an endomorphism \( \alpha \in L(V) \),
 	\begin{claim}
 		$ \beta(V_{\lambda_j}) \le V_{\lambda_j} $. 
 	\end{claim}
-	Indeed, for \( v \in V_{\lambda_j} \),
+	Indeed, for $ v \in V_{\lambda_j} $,
 	\[
 		\alpha \beta(v) = \beta \alpha(v) = \beta(\lambda_j v) = \lambda_j \beta(v) \implies \alpha(\beta(v)) = \lambda_j \beta(v)
 	\]
-	Hence, \( \beta(v) \in V_{\lambda_j} \). 
+	Hence, $ \beta(v) \in V_{\lambda_j} $. 
 
-	By assumption, \( \beta \) is diagonalisable, so there exists a polynomial \( p \) with distinct linear factors such that \( p(\beta) = 0 \). This implies that
+	By assumption, $ \beta $ is diagonalisable, so there exists a polynomial $ p $ with distinct linear factors such that $ p(\beta) = 0 $. This implies that
 	\[
-		p(\beta \restriction_{V_{\lambda_i}}) = 0 \implies \beta \restriction_{V_{\lambda_i}}\in L(V_{\lambda_i}) \text{ is diagonalisable.}
+		p(\beta \restriction_{V_{\lambda_i}}) = 0 \implies \beta \restriction_{V_{\lambda_i}}\in \mcL(V_{\lambda_i}) \text{ is diagonalisable.}
 	\]
-	Let \( B_i \) be the basis of \( V_{\lambda_i} \) in which \( \beta\restriction_{V_{\lambda_j}} \) is diagonal.
-	Since \( V = \bigoplus V_{\lambda_i} \), \( B = (B_1, \dots, B_k) \) is a basis of \( V \).
-	Then the matrices of \( \alpha \) and \( \beta \) in \( V \) are diagonal.
+	Let $ B_i $ be the basis of $ V_{\lambda_i} $ in which $ \beta\restriction_{V_{\lambda_j}} $ is diagonal.
+	Since $ V = \bigoplus V_{\lambda_i} $, $ B = (B_1, \dots, B_k) $ is a basis of $ V $.
+	Then the matrices of $ \alpha $ and $ \beta $ in $ V $ are diagonal.
 \end{proof}
 
 \subsection{Minimal polynomials}
 {\color{blue}Recall from IB Groups, Rings and Modules} (\textit{Wow good job Professor Raphael}) the Euclidean algorithm for dividing polynomials.
-Given \( a, b \) polynomials over \( \bbF \) with \( b \) nonzero, there exist polynomials \( q, r \) over \( \bbF \) with \( \deg r < \deg b \) and \( a = qb + r \).
+Given $ a, b $ polynomials over $ \bbF $ with $ b $ nonzero, there exist polynomials $ q, r $ over $ \bbF $ with $ \deg r < \deg b $ and $ a = qb + r $.
 \begin{definition}
-	Let \( V \) be a finite dimensional \( \bbF \)-vector space.
-	Let \( \alpha \) be an endomorphism on \( V \).
-	The \textbf{minimal polynomial} \( m_\alpha \) of \( \alpha \) is the nonzero polynomial with smallest degree such that \( m_\alpha(\alpha) = 0 \).
+	Let $ V $ be a finite dimensional $ \bbF $-vector space.
+	Let $ \alpha $ be an endomorphism on $ V $.
+	The \textbf{minimal polynomial} $ m_\alpha $ of $ \alpha $ is the nonzero polynomial with smallest degree such that $ m_\alpha(\alpha) = 0 $.
 \end{definition}
 \begin{remark}
-	If \( \dim V = n < \infty \), then \( \dim L(V) = n^2 \).
-	In particular, the family \( \qty{I, \alpha, \dots, \alpha^{n^2}} \) cannot be linearly independent since it has \( n^2+1 \) entries.
-	This generates a polynomial in \( \alpha \) which evaluates to zero.
+	If $ \dim V = n < \infty $, then $ \dim \mcL(V) = n^2 $.
+	In particular, the family $ \qty{I, \alpha, \dots, \alpha^{n^2}} $ cannot be linearly independent since it has $ n^2+1 $ entries.
+	This generates a polynomial in $ \alpha $ which evaluates to zero.
 	Hence, a minimal polynomial always exists.
 \end{remark}
 \begin{lemma}
-	Let \( \alpha \in L(V) \) and \( p \in \bbF[t] \) be a polynomial.
-	Then \( p(\alpha) = 0 \) if and only if \( m_\alpha \) is a factor of \( p \).
-	In particular, \( m_\alpha \) is well-defined and unique up to a constant multiple.
+	Let $ \alpha \in \mcL(V) $ and $ p \in \bbF[t] $ be a polynomial.
+	Then $ p(\alpha) = 0 $ if and only if $ m_\alpha $ is a factor of $ p $.
+	In particular, $ m_\alpha $ is well-defined and unique up to a constant multiple.
 \end{lemma}
 \begin{proof}
-	Let \( p \in \bbF[t] \) such that \( p(\alpha) = 0 \).
-	If \( m_\alpha(\alpha) = 0 \) and \( \deg m_\alpha < \deg p \), we can perform the division \( p = m_\alpha q + r \) for \( \deg r < \deg m_\alpha \).
-	Then \( p(\alpha) = m_\alpha(\alpha) q(\alpha) + r(\alpha) \).
-	But \( m_\alpha(\alpha) = 0 \).
-	But \( \deg r < \deg m_\alpha \) and \( m_\alpha \) is the smallest degree polynomial which evaluates to zero for \( \alpha \), so \( r \equiv 0 \) so \( p = m_\alpha q \).
-	In particular, if \( m_1, m_2 \) are both minimal polynomials that evaluate to zero for \( \alpha \), we have \( m_1 \) divides \( m_2 \) and \( m_2 \) divides \( m_1 \).
+	Let $ p \in \bbF[t] $ such that $ p(\alpha) = 0 $.
+	If $ m_\alpha(\alpha) = 0 $ and $ \deg m_\alpha < \deg p $, we can perform the division $ p = m_\alpha q + r $ for $ \deg r < \deg m_\alpha $.
+	Then $ p(\alpha) = m_\alpha(\alpha) q(\alpha) + r(\alpha) $.
+	But $ m_\alpha(\alpha) = 0 $.
+	But $ \deg r < \deg m_\alpha $ and $ m_\alpha $ is the smallest degree polynomial which evaluates to zero for $ \alpha $, so $ r \equiv 0 $ so $ p = m_\alpha q $.
+	In particular, if $ m_1, m_2 $ are both minimal polynomials that evaluate to zero for $ \alpha $, we have $ m_1 $ divides $ m_2 $ and $ m_2 $ divides $ m_1 $.
 	Hence they are equivalent up to a constant.
 \end{proof}
 \begin{example}
-	Let \( V = \bbF^2 \) and
+	Let $ V = \bbF^2 $ and
 	\[
 		A= \begin{pmatrix}
 			1 & 0 \\
@@ -2436,10 +2436,658 @@ Given \( a, b \) polynomials over \( \bbF \) with \( b \) nonzero, there exist p
 			0 & 1
 		\end{pmatrix}
 	\]
-	We can check \( p(t) = (t-1)^2 \) gives \( p(A) = p(B) = 0 \).
-	So the minimal polynomial of \( A \) or \( B \) must be either \( (t-1) \) or \( (t-1)^2 \).
-	For \( A \), we can find the minimal polynomial is \( (t-1) \), and for \( B \) we require \( (t-1)^2 \).
-	So \( B \) is not diagonalisable, since its minimal polynomial is not a product of distinct linear factors.
+	We can check $ p(t) = (t-1)^2 $ gives $ p(A) = p(B) = 0 $.
+	So the minimal polynomial of $ A $ or $ B $ must be either $ (t-1) $ or $ (t-1)^2 $.
+	For $ A $, we can find the minimal polynomial is $ (t-1) $, and for $ B $ we require $ (t-1)^2 $.
+	So $ B $ is not diagonalisable, since its minimal polynomial is not a product of distinct linear factors.
 \end{example}
+
+\subsection{Cayley-Hamilton Theorem}
+For $ \alpha\in \mcL(V), p\in \mathbb{F}[t] $, recall that the minimal polynomial satisfies $ p(\alpha) = 0 \iff m_\alpha | p $. 
+
+\begin{theorem}[Cayley-Hamilton]
+	Let $V$ be an $\mathbb{F}$-vector space with finite dimension. Let $\alpha\in \mcL(V)$ with characteristic polynomial $ \chi_\alpha(t) = \det (\alpha - t I). $
+	Then $ \chi_\alpha(\alpha) = 0 $. 
+\end{theorem}
+\begin{corollary}
+	$ m_\alpha | \chi_\alpha $. We now have a way to find minimal polynomials.
+\end{corollary}
+We give two proofs. 
+\begin{proof}[Proof 1]
+	We first restrict to $ \mathbb{F} = \mathbb{C} $. 
+	
+	Let $ B = \qty{\bfv_1, \dots, \bfv_n} $ be a basis of $ V $ such that $ [\alpha]_B $ is triangular. This can be done by theorem \ref{thm:test if triangulable}. If the diagonal entries in this basis are $ a_i $,
+	\[
+		\chi_\alpha(t) = \prod_{i=1}^n (a_i - t) \implies \chi_\alpha(\alpha) = (\alpha - a_1 I) \dots (\alpha - a_n I)
+	\]
+	We want to show that this expansion evaluates to zero.
+	Let $ U_j = \spn \qty{\bfv_1, \dots, \bfv_j} $.
+	Let $ \bfv \in V = U_n $.
+	We want to compute $ \chi_\alpha(\alpha)(\bfv) $.
+	Note, by construction of the triangular matrix,
+	\begin{align*}
+		\chi_\alpha(\alpha)(\bfv) & = (\alpha - a_1 I) \dots \underbrace{(\alpha - a_n I)(\bfv)}_{\in U_{n-1}}                     \\
+		                       & = (\alpha - a_1 I) \dots \underbrace{(\alpha - a_{n-1} I)(\alpha - a_n I)(\bfv)}_{\in U_{n-2}} \\
+		                       & = \dots                                                                                     \\
+		                       & \in U_0 = 0. 
+	\end{align*}
+	Hence this evaluates to zero.
+\end{proof}
+
+\begin{proof}[Proof 2]
+	Now we prove this on any field $\mathbb{F}$. 
+
+	Let $ A\in \mathcal{M}_n(\mathbb{F}) $ be a matrix of $\alpha$. Note that 
+	\[
+		(-1)^n \chi_A(t) = \det (t I - A) = t^n + a_{n-1} t^{n-1} + \cdots + a_1 t + a_0.
+ 	\]
+	Recall that for any matrix $B$, $ B \adj B = (\det B) I. $ We apply this to $B = t I - A$. We can check that
+	\[
+		\adj B = \adj(tI - A) = B_{n-1} t^{n-1} + \dots + B_1 t + B_0
+	\]
+	since adjugate matrices are degree $ (n-1) $ polynomials for each element.
+	Then, by applying $ B \adj B = (\det B) I $,
+	\[
+		(tI - A) [ B_{n-1} t^{n-1} + \dots + B_1 t + B_0 ] = (\det B) I = (t^n + \dots + a_0) I
+	\]
+	Since this is true for all $ t $, we can equate coefficients.
+	This gives
+	\begin{align*}
+		t^n     & :       I          = B_{n-1}            \\
+		t^{n-1} & :       a_{n-1} I  = B_{n-2} - AB_{n-1} \\
+		        & \vdots                           \\
+		t^0     & :       a_0 I      = -A B_1
+	\end{align*}
+	Then, substituting $ A $ for $ t $ in each relation will give
+	\begin{align*}
+		A^n & \times (I = B_{n-1}) \\ 
+		A^{n-1} & \times (a_{n-1} I = B _{n-2} - AB_{n-1}) \\ 
+		A^{n-2} & \times (a_{n-2} I = B_{n-3} - AB_{n-2})\\
+		& \vdots \\ 
+		A^{0} & \times (a_0 I = - AB_0)
+	\end{align*}
+	Summing up the above equations, RHS forms a telescoping series and cancels out to $0$, giving
+	\[
+		A^n + a_{n-1} A^{n-1} + \dots + a_0 I = 0 \implies \chi_A(A) = 0
+	\]
+	as required. 
+\end{proof}
+
+\subsection{Algebraic and geometric multiplicity}
+We look closer at eigenvalues on how the behaviours will effect diagonalisation. 
+\begin{definition}
+	Let $ V $ be a finite dimensional $ \bbF $-vector space.
+	Let $ \alpha \in \mcL(V) $ and let $ \lambda $ be an eigenvalue of $ \alpha $.
+	Then
+	\[
+		\chi_\alpha(t) = (t-\lambda)^{a_\lambda} q(t)
+	\]
+	where $ q(t) $ is a polynomial over $ \bbF $ such that $ (t-\lambda) $ does not divide $ q $.
+
+	$ a_\lambda $ is known as the \textbf{algebraic multiplicity} of the eigenvalue $ \lambda $.
+	
+	We define the \textbf{geometric multiplicity} $ g_\lambda $ of $ \lambda $ to be the dimension of the eigenspace associated with $ \lambda $, i.e. $ g_\lambda = \dim \ker (\alpha - \lambda I) $.
+\end{definition}
+
+\begin{remark}
+	$ \lambda $ is an eigenvalue $\iff$ $\alpha-\lambda I$ is singular $\iff$ $\chi_a(\lambda) = \det (\alpha - \lambda I ) = 0$.  
+\end{remark}
+
+\begin{lemma}
+	If \( \lambda \) is an eigenvalue of \( \alpha \in \mcL(V) \), then \( 1 \leq g_\lambda \leq a_\lambda \).
+\end{lemma}
+\begin{proof}
+	We have \( g_\lambda = \dim \ker (\alpha - \lambda I) \).
+	There exists a nontrivial vector \( \bfv \in V \) such that \( \bfv \in \ker(\alpha - \lambda I) \) since \( \lambda \) is an eigenvalue.
+	Hence \( g_\lambda \geq 1 \).
+
+	We now show that \( g_\lambda \leq a_\lambda \).
+	Indeed, let \( \{\bfv_1, \dots, \bfv_{g_\lambda}\} \) be a basis of \( V_\lambda \equiv \ker (\alpha - \lambda I) \).
+	We complete this into a basis \( B \equiv \qty(\bfv_1, \dots, \bfv_{g_\lambda}, \bfv_{g_\lambda + 1}, \dots, \bfv_n) \) of \( V \).
+	Then note that
+	\[
+		[\alpha]_B = \begin{pmatrix}
+			\lambda I_{g_\lambda} & * \\
+			0                     & A_1
+		\end{pmatrix}
+	\]
+	for some matrix \( A_1 \).
+	Now,
+	\[
+		\det (\alpha - tI) = \det \begin{pmatrix}
+			(\lambda - t) I_{g_\lambda} & *     \\
+			0                           & A_1 - t I
+		\end{pmatrix}
+	\]
+	By the formula for determinants of block matrices with a zero block on the off diagonal,
+	\[
+		\det (\alpha - tI) = (\lambda-t)^{g_\lambda} \det(A_1 - t I)
+	\]
+	Hence \( g_\lambda \leq a_\lambda \) since the determinant is a polynomial that could have more factors of the same form.
+\end{proof}
+
+\begin{lemma}
+	Let \( V \) be a finite-dimensional \( \bbF \)-vector space.
+	Let \( \alpha \in \mcL(V) \) and let \( \lambda \) be an eigenvalue of \( \alpha \).
+	Let \( c_\lambda \) be the multiplicity of \( \lambda \) as a root of the \textit{minimal polynomial} of \( \alpha \).
+	Then \( 1 \leq c_\lambda \leq a_\lambda \).
+\end{lemma}
+\begin{proof}
+	By Cayley-Hamilton theorem, $ m_\alpha | \chi_\alpha $, and hence $ c_\lambda \le a_\lambda $. It remains to show that $ c_\lambda\ge 1 $. 
+	
+	Indeed, since $ \lambda $ is an eigenvalue, there exists $ \mathbf{v}\neq 0 $ such that $ \alpha(\mathbf{v}) = \lambda \mathbf{v} $. For such an eigenvector, $ \alpha^n (\mathbf{v}) = \lambda^n \mathbf{v} $ for any $ n \in \mathbb{N} $. 
+	It follows that for all $ p\in \mathbb{F}[t] $, $ p(\alpha)(\mathbf{v}) = p(\lambda)\mathbf{v} $. 
+
+	Take $p = m_\alpha$, 
+	\[
+		m_\alpha(\alpha)(\mathbf{v}) = m_\alpha(\lambda) \mathbf{v} = 0 \implies (t-\lambda) | m_\alpha \implies c_\lambda\ge 1. \qedhere
+	\]
+\end{proof}
+
+\begin{example}
+	Let
+	\[
+		A = \begin{pmatrix}
+			1 & 0 & -2 \\
+			0 & 1 & 1  \\
+			0 & 0 & 2
+		\end{pmatrix}
+	\]
+	The minimal polynomial can be computed by considering the characteristic polynomial
+	\[
+		\chi_A(t) = (t-1)^2(t-2)
+	\]
+	So the minimal polynomial is either \( (t-1)^2(t-2) \) or \( (t-1)(t-2) \).
+	We check \( (t-1)(t-2) \).
+	\( (A - I)(A - 2I) \) can be found to be zero.
+	So \( m_A(t) = (t-1)(t-2) \).
+	Since this is a product of distinct linear factors, \( A \) is diagonalisable.
+\end{example}
+
+\begin{example}
+	Let \( A \) be a \textbf{Jordan block} of size \( n \geq 2 \): 
+	\[
+		A = \begin{pmatrix}
+			\lambda & 1 &  &  &  0 \\
+			 & \lambda & 1  &  &   \\
+			 &  & \ddots & \ddots &   \\
+			 &  &  &  & 1  \\
+			0 &  &  &  &  \lambda \\
+		\end{pmatrix}
+	\]
+	Then \( g_\lambda = \ker(A-\lambda I) =1 \), \( a_\lambda = n \), and \( c_\lambda = n \).
+\end{example}
+
+\begin{example}
+	Let $ A = \lambda I $, thjen $ g_\lambda = n, a_\lambda = n, c_\lambda = 1 $. 
+\end{example}
+
+\begin{lemma}[Characterisation of diagonalisable complex endomorphisms]
+	Let \( \bbF = \mathbb C \).
+	Let \( V \) be a finite-dimensional \( \mathbb C \)-vector space.
+	Let \( \alpha \) be an endomorphism of \( V \).
+	Then the following are equivalent.
+	\begin{enumerate}[(i)]
+		\item \( \alpha \) is diagonalisable;
+		\item for all \( \lambda \) eigenvalues of \( \alpha \), we have \( a_\lambda = g_\lambda \);
+		\item for all \( \lambda \) eigenvalues of \( \alpha \), \( c_\lambda = 1 \).
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	(i) $\iff$ (iii): We have already shown this. 
+
+	(i) $\iff$ (ii): Let \( \lambda_1, \dots, \lambda_k \) be the distinct eigenvalues of \( \alpha \).
+	We have already found that \( \alpha \) is diagonalisable if and only if \( V = \bigoplus V_{\lambda_i} \).
+	The sum was found to be always direct, regardless of diagonalisability.
+	We will compute the dimension of \( V \) in two ways;
+	\[
+		n = \dim V = \deg \chi_\alpha;\quad n = \dim V = \sum_{i=1}^k a_{\lambda_i}
+	\]
+	since \( \chi_\alpha \) is a product of \( (t-\lambda_i) \) factors as \( \bbF = \mathbb C \).
+	Since the sum is direct,
+	\[
+		\dim \qty(\bigoplus_{i=1}^k V_{\lambda_i}) = \sum_{i=1}^k g_{\lambda_i}
+	\]
+	\( \alpha \) is diagonalisable if and only if the dimensions are equal, so
+	\[
+		\sum_{i=1}^k g_{\lambda_i} = \sum_{i=1}^k a_{\lambda_i}
+	\]
+	We know that for all eigenvalues \( \lambda_i \), \( g_{\lambda_i} \leq a_{\lambda_i} \).
+	Hence, \( \sum_{i=1}^k g_{\lambda_i} = \sum_{i=1}^k a_{\lambda_i} \) holds if and only if \( g_{\lambda_i} = a_{\lambda_i} \) for all \( i \).
+\end{proof}
+
+In summary, over $ \mathbb{C} $ we have 
+\begin{align*}
+	\chi_\alpha(t) & = (t-\lambda_1)^{a_{\lambda_1}}\cdots (t-\lambda_k)^{a_{\lambda_k}}\\ 
+	m_\alpha(t) & = (t-\lambda_1)^{c_{\lambda_1}}\cdots (t-\lambda_k)^{c_{\lambda_k}}\\ 
+	g_{\lambda_i} &= \dim \ker (\alpha- \lambda_i I)
+\end{align*}
+Note that $ m_\alpha $ must include all linear factors with degree at least 1. Indeed, if it is not the case then there is some eigenvalue $ \lambda_j $ such that $ (t-\lambda_j) $ does not divide $p$, and $ m_\alpha(\alpha)(\mathbf{v}_j)\neq 0 $, where $\mathbf{v}_j$ is an eigenvector associated with $\lambda_j$.
+
+\section{Jordan normal form}
+For this section, let \( \bbF = \mathbb C \).
+\subsection{Definition}
+A weaker form compared to diagonalisation, but more general. 
+\begin{definition}
+	Let \( A \in \bbM_n(\mathbb C) \).
+	We say that \( A \) is in \textbf{Jordan normal form} if it is a block diagonal matrix
+	\[
+		\begin{pmatrix}
+		  J_{n_1}(\lambda_1) & & & 0\\
+		  & J_{n_2}(\lambda_2)\\
+		  & & \ddots\\\
+		  0 & & & J_{n_k} (\lambda_k)
+		\end{pmatrix}
+	\]
+	where $k \geq 1$, $n_1, \cdots, n_k \in \bbN$ such that $n = \sum n_i$, $\lambda_1, \cdots, \lambda_k$ not necessarily distinct, and
+	\[
+		J_{n_i}(\lambda) =
+		\begin{pmatrix}
+			\lambda & 1       & 0       & \cdots & 0       \\
+			0       & \lambda & 1       & \cdots & 0       \\
+			0       & 0       & \lambda & \cdots & 0       \\
+			\vdots  & \vdots  & \vdots  & \ddots & \vdots  \\
+			0       & 0       & 0       & \cdots & \lambda
+		\end{pmatrix},\quad J_{n_i}\in \mathcal{M}_{n_i\times n_i}(\mathbb{C})
+	\]
+	We say that \( J_{n_i}(\lambda) \in M_{n_i}(\mathbb C) \) are \textbf{Jordan blocks}.
+\end{definition}
+For example, it might look something like
+\[\arraycolsep=1.4pt
+  \begin{pmatrix}
+    \lambda_1 & 1\\
+    & \lambda_1 & 1\\
+    & & \lambda_1 & 0\\
+    & & & \lambda_2 & 0\\
+    & & & & \lambda_3 & 1\\
+    & & & & & \lambda_3 & 0\\
+    & & & & & & \ddots & \ddots\\
+    & & & & & & & \lambda_n & 1\\
+    & & & & & & & & \lambda_n
+  \end{pmatrix}
+\]
+\begin{remark}
+	In three dimensions,
+	\[
+		A =
+		\begin{pmatrix}
+			\lambda & 0       & 0       \\
+			0       & \lambda & 0       \\
+			0       & 0       & \lambda
+		\end{pmatrix}
+	\]
+	is in Jordan normal form, with three one-dimensional Jordan blocks with the same \( \lambda \) value.
+\end{remark}
+
+\subsection{Similarity to Jordan normal form}
+We can convert \textit{any} matrix over $\mathbb{C}$ to a JNF. 
+\begin{theorem}
+	Any complex matrix \( A \in \bbM_n(\mathbb C) \) is similar to a matrix in Jordan normal form, which is unique up to reordering the Jordan blocks.
+\end{theorem}
+
+The proof is non-examinable.
+This follows from IB Groups, Rings and Modules.
+
+\begin{example}
+	Let \( \dim V = 2 \).
+	Then any matrix is similar to one of (with corresponding minimal polynomials) 
+	\begin{center}
+		\begin{tabular}{cccc}
+		  \toprule
+		  Jordan normal form & $\chi_A$ & $m_A$\\
+		  \midrule
+		  $\begin{pmatrix} \lambda & 0\\ 0 & \lambda \end{pmatrix}$ & $(t - \lambda)^2$ & $(t - \lambda)$\\\addlinespace
+		  $\begin{pmatrix} \lambda & 0\\ 0 & \mu \end{pmatrix}$ & $(t - \lambda)(t - \mu)$ & $(t - \lambda)(t - \mu)$\\\addlinespace
+		  $\begin{pmatrix} \lambda & 1\\ 0 & \lambda \end{pmatrix}$ & $(t - \lambda)^2$ & $(t - \lambda)^2$\\
+		  \bottomrule
+		\end{tabular}
+	  \end{center}
+	  with $\lambda, \mu \in \bbC$ distinct. We see that $m_A$ determines the Jordan normal form of $A$, but $\chi_A$ does not.
+\end{example}
+
+\begin{example}
+	Every $3\times 3$ matrix in Jordan normal form is one of the six types. Here $\lambda_1, \lambda_2$ and $\lambda_3$ are distinct complex numbers.
+  \begin{center}
+    \begin{tabular}{ccccccc}
+      \toprule
+      Jordan normal form & $\chi_A$ & $m_A$\\
+      \midrule
+      $\begin{pmatrix} \lambda_1 & 0 & 0\\ 0 & \lambda_2 & 0\\ 0 & 0 & \lambda_3 \end{pmatrix}$ & $(t - \lambda_1)(t - \lambda_2)(t- \lambda_3)$ & $(t - \lambda_1)(t - \lambda_2)(t- \lambda_3)$\\\addlinespace
+      $\begin{pmatrix} \lambda_1 & 0 & 0\\ 0 & \lambda_1 & 0\\ 0 & 0 & \lambda_2 \end{pmatrix}$ & $(t - \lambda_1)^2 (t - \lambda_2)$ & $(t - \lambda_1) (t - \lambda_2)$\\\addlinespace
+      $\begin{pmatrix} \lambda_1 & 1 & 0\\ 0 & \lambda_1 & 0\\ 0 & 0 & \lambda_2 \end{pmatrix}$ & $(t - \lambda_1)^2 (t - \lambda_2)$ & $(t - \lambda_1)^2 (t - \lambda_2)$\\\addlinespace
+      $\begin{pmatrix} \lambda_1 & 0 & 0\\ 0 & \lambda_1 & 0\\ 0 & 0 & \lambda_1 \end{pmatrix}$ & $(t - \lambda_1)^3$ & $(t - \lambda_1)$\\\addlinespace
+      $\begin{pmatrix} \lambda_1 & 1 & 0\\ 0 & \lambda_1 & 0\\ 0 & 0 & \lambda_1 \end{pmatrix}$ & $(t - \lambda_1)^3$ & $(t - \lambda_1)^2$\\\addlinespace
+      $\begin{pmatrix} \lambda_1 & 1 & 0\\ 0 & \lambda_1 & 1\\ 0 & 0 & \lambda_1 \end{pmatrix}$ & $(t - \lambda_1)^3$ & $(t - \lambda_1)^3$\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  Notice that $\chi_A$ and $m_A$ together determine the Jordan normal form of a $3\times 3$ complex matrix. We do indeed need $\chi_A$ in the second case, since if we are given $m_A = (t - \lambda_1)(t - \lambda_2)$, we know one of the roots is double, but not which one.
+\end{example}
+
+\subsection{Generalised eigenspace decomposition}
+Generalise the direct sum of eigenspaces in JNF case. 
+\begin{theorem}[Generalised eigenspace decomposition]
+	Let $ V $ be a finite-dimensional vector space over $\mathbb{C}$, and let $ \alpha\in \mcL(V) $ with
+	\[
+		m_\alpha(t) = \prod_{i=1}^k (t - \lambda_i)^{c_i}
+	\]
+	where $ (\lambda_i)_{1\le i\le k} $ are \textit{distinct} eigenvalues. Then 
+	\[
+		V = \bigoplus_{j=1}^k V_j
+	\]
+	where \( V_j = \ker[(\alpha - \lambda_j I)^{c_j}] \) is called a \textbf{generalised eigenspace} associated with \( \lambda_j \).	
+\end{theorem}
+\begin{definition}
+	We say $\alpha \in \mathcal{L}(V)$ is \textbf{nilpotent} if there is some $r$ such that $\alpha^r = 0$.
+  \end{definition}
+
+  \begin{remark}
+	Note that \( V_j \) is stable by \( \alpha \), that is, \( \alpha(V_j) = V_j \).
+	Note further that \( {(\alpha - \lambda_j I)}\restriction_{V_j} = \mu_j \) gives that \( \mu_j \) is a nilpotent endomorphism; \( \mu_j^{c_j} = 0 \).
+	So the Jordan normal form theorem is a statement about nilpotent matrices.
+
+	The decomposition can be used to reduce the proof of JNF to a single eigenvalue. 
+
+	Note, when \( \alpha \) is diagonalisable, \( c_j = 1 \) and hence we recover \( V_j = \ker(\alpha - \lambda_j I) \) and \( V = \bigoplus V_j \).
+\end{remark}
+
+\begin{proof}
+	Projectors onto $V_j$ are explicit. Indeed: 
+	\[
+		p_j(t) = \prod_{i\neq j} (t-\lambda_i)^{c_i}
+	\]
+	Then $p_j$ have no common factors, so by Euclid's algorithm, we can find polynomial $ q_1,\dots,q_k $ over $\mathbb{C}$ such that
+	\[
+		\sum_{i=1}^{k}p_i q_i = 1
+	\]
+	Define $ \pi_j = q_j p_j (\alpha) $. 
+	\begin{enumerate}
+		\item By construction, for all \( \bfv \in V \), we have
+		\[
+			\sum_{j=1}^k \pi_j(\bfv) = \sum_{j=1}^k q_j p_j(\alpha(\bfv)) = I(\bfv) = \bfv
+		\]
+		Hence,
+		\[
+			\bfv = \sum_{i=1}^k \pi_i(\bfv)
+		\]
+		\item Observe further that \( \pi_j(\bfv) \in V_j \).
+		Indeed,
+		\[
+			(\alpha - \lambda_j I)^{c_j} \pi_j(\bfv) = (\alpha - \lambda_j I)^{c_j} q_j p_j(\alpha(\bfv)) = q_j m_\alpha (\alpha(\bfv)) = 0
+		\]
+		Hence \( \pi_j(\bfv) \in V_j \).
+		In particular, \( V = \sum_{j=1}^k V_j \).
+		\item Note, for \( i \neq j \), \( \pi_i \pi_j = 0 \) from the definition of \( \pi \).
+		Hence, observe that
+		\[
+			\pi_i = \pi_i I =  \pi_i \qty(\sum_{j=1}^k \pi_j) \implies \pi_i = \pi_i \pi_i
+		\]
+		Thus, \( \pi \) is a projector.
+		In particular, this implies that \( {\pi_i}\restriction_{V_j} \) is the identity if \( i = j \) and zero if \( i \neq j \).
+		This immediately implies that th sum is direct:
+		\[
+			V = \bigoplus_{j=1}^k V_j
+		\]
+		Indeed, suppose
+		\[
+			\sum_{j=1}^k \alpha_j \bfv_j = 0;\quad \bfv_j \in V_j;\quad \alpha_i \neq 0
+		\]
+		Then
+		\[
+			\bfv_1 = -\frac{1}{\alpha_1} \sum_{j=2}^k \alpha_j \bfv_j
+		\]
+		Applying \( \pi_1 \),
+		\[
+			\bfv_1 = -\frac{1}{\alpha_1} \sum_{j=2}^k \alpha_j \pi_1(\bfv_j) = 0
+		\]
+		Iterating, we find \( \bfv = 0 \).\qedhere
+	\end{enumerate}
+\end{proof}
+
+We can compute the quantities \( a_\lambda, g_\lambda, c_\lambda \) on the Jordan normal form of a matrix.
+Indeed, let \( m \geq 2 \) and consider a Jordan block \( J_m(\lambda) \).
+\[
+	\begin{pmatrix}
+		\lambda & 1       & 0       & \cdots & 0       \\
+		0       & \lambda & 1       & \cdots & 0       \\
+		0       & 0       & \lambda & \cdots & 0       \\
+		\vdots  & \vdots  & \vdots  & \ddots & \vdots  \\
+		0       & 0       & 0       & \cdots & \lambda
+	\end{pmatrix}
+\]
+Then \( J_m(\lambda) - \lambda I \) is the zero matrix with ones on the off-diagonal.
+\[
+	\begin{pmatrix}
+		0 & 1       & 0       & \cdots & 0       \\
+		0       & 0 & 1       & \cdots & 0       \\
+		0       & 0       & 0 & \cdots & 0       \\
+		\vdots  & \vdots  & \vdots  & \ddots & \vdots  \\
+		0       & 0       & 0       & \cdots & 0
+	\end{pmatrix}
+\]
+\( (J_m(\lambda) - \lambda I)^k \) pushes the ones onto the next line iteratively, so
+\[
+	(J_m(\lambda) - \lambda I)^k = \begin{pmatrix}
+		0 & I_{m-k} \\
+		0 & 0
+	\end{pmatrix}
+\]
+If $k \geq n$, then we have $(J_n(\lambda) - \lambda I)^k = 0$.
+Hence we can summarize this as
+\[
+\nullity((J_m(\lambda) - \lambda I_m)^r) = \min\{r, m\}.
+\]
+Hence \( J_m(\lambda) - \lambda I \) is nilpotent of order \( m \).
+
+Note that if $A = J_n(\lambda)$, then $\chi_A(t) = m_A(t) = (t - \lambda)^n$. So $\lambda$ is the only eigenvalue of $A$. So $a_\lambda = c_\lambda = n$. We also know that $\nullity(A - \lambda I) = \nullity - \rank(A - \lambda I) = 1$. So $g_\lambda = 1$.
+
+If $A$ is the block diagonal matrix
+\[
+  A =
+  \begin{pmatrix}
+    A_1\\
+    & A_2\\
+    & & \ddots\\
+    & & & A_k
+  \end{pmatrix},
+\]
+then
+\[
+  \chi_A(t) = \prod_{i = 1}^k \chi_{A_i}(k).
+\]
+Moreover, if $p \in \bbF[t]$, then
+\[
+  p (A) =
+  \begin{pmatrix}
+    p(A_1)\\
+    & p(A_2)\\
+    & & \ddots\\
+    & & & p(A_k)
+  \end{pmatrix}.
+\]
+Hence
+\[
+  m_A(t) = \lcm (m_{A_1}(t), \cdots, m_{A_k} (t)).
+\]
+By rank-nullity theorem, we have
+\[
+  \nullity(p(A)) = \sum_{i = 1}^k \nullity(p(A_i)).
+\]
+Thus if $A$ is in Jordan normal form, we get the following:
+\begin{itemize}
+  \item $g_\lambda$ is the number of Jordan blocks in $A$ with eigenvalue $\lambda$.
+  \item $a_\lambda$ is the sum of sizes of the Jordan blocks of $A$ with eigenvalue $\lambda$. This is the amount of times \( \lambda \) is seen on the diagonal.
+  \item $c_\lambda$ is the size of the largest Jordan block with eigenvalue $\lambda$.
+\end{itemize}
+
+\begin{example}
+	Let
+	\[
+		A = \begin{pmatrix}
+			0 & -1 \\
+			1 & 2
+		\end{pmatrix}
+	\]
+	We wish to convert this matrix into Jordan normal form; so we seek a basis for which this matrix becomes Jordan normal form.
+	\[
+		\chi_A(t) = (t-1)^2
+	\]
+	Hence there exists only one eigenvalue, \( \lambda = 1 \).
+	\( A - I \neq 0 \) hence \( m_\alpha(t) = (t-1)^2 \).
+	By previous result, the Jordan normal form of \( A \) is of the form
+	\[
+		B = \begin{pmatrix}
+			1 & 1 \\
+			0 & 1
+		\end{pmatrix}
+	\]
+	Now,
+	\[
+		\ker(A - I) = \genset{\bfv_1};\quad \bfv_1 = \begin{pmatrix}
+			1 \\ -1
+		\end{pmatrix}
+	\]
+	Further, we seek a \( \bfv_2 \) such that
+	\[
+		(A - I)\bfv_2 = \bfv_1 \implies \bfv_2 = \begin{pmatrix}
+			-1 \\ 0
+		\end{pmatrix}
+	\]
+	Such a \( \bfv_2 \) is not unique.
+	Now,
+	\[
+		A = \begin{pmatrix}
+			1  & -1 \\
+			-1 & 0
+		\end{pmatrix}
+		\begin{pmatrix}
+			1 & 1 \\
+			0 & 1
+		\end{pmatrix}
+		\begin{pmatrix}
+			1  & -1 \\
+			-1 & 0
+		\end{pmatrix}^{-1}
+	\]
+	This is how we find a basis. 
+\end{example}
+
+\begin{example}
+	Let
+	\[
+	  A =
+	  \begin{pmatrix}
+		3 & -2 & 0\\
+		1 & 0 & 0\\
+		1 & 0 & 1
+	  \end{pmatrix}
+	\]
+	We know we can find the Jordan normal form by just computing the minimal polynomial and characteristic polynomial. But we can do better and try to find a $P$ such that $P^{-1}AP$ is in Jordan normal form.
+  
+	We first compute the eigenvalues of $A$. The characteristic polynomial is
+	\[
+	  \det \begin{pmatrix}
+		t - 3 & -2 & 0\\
+		1 & t & 0\\
+		1 & 0 & t - 1
+	  \end{pmatrix} = (t - 1)((t - 3)t + 2) = (t - 1)^2 (t - 2).
+	\]
+	We now compute the eigenspaces of $A$. We have
+	\[
+	  A - I =
+	  \begin{pmatrix}
+		2 & -2 & 0\\
+		1 & -1 & 0\\
+		1 & 0 & 0
+	  \end{pmatrix}
+	\]
+	We see this has rank $2$ and hence nullity $1$, and the eigenspace is the kernel
+	\[
+	  V_1 = \genset{
+	  \begin{pmatrix}
+		0\\0\\1
+	  \end{pmatrix}}
+	\]
+	We can also compute the other eigenspace. We have
+	\[
+	  A - 2I =
+	  \begin{pmatrix}
+		1 & -2 & 0\\
+		1 & -2 & 0\\
+		1 & 0 & -1
+	  \end{pmatrix}
+	\]
+	This has rank $2$ and
+	\[
+	  V_2 = \genset{
+	  \begin{pmatrix}
+		2 \\ 1 \\ 2
+	  \end{pmatrix}}
+	\]
+	Since
+	\[
+	  \dim V_1 + \dim V_2 = 2 < 3,
+	\]
+	this is not diagonalizable. So the minimal polynomial must also be $m_A(t) = \chi_A(t) = (t - 1)^2 (t - 2)$. From the classificaion last time, we know that $A$ is similar to
+	\[
+	  \begin{pmatrix}
+		1 & 1 & 0\\
+		0 & 1 & 0\\
+		0 & 0 & 2
+	  \end{pmatrix}
+	\]
+	We now want to compute a basis that transforms $A$ to this. We want a basis $(\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3)$ of $\bbC^3$ such that
+	\[
+	  A\mathbf{v}_1 = \mathbf{v}_1,\quad A\mathbf{v}_2 = \mathbf{v}_1 + \mathbf{v}_2,\quad A \mathbf{v}_3 = 2\mathbf{v}_3.
+	\]
+	Equivalently, we have
+	\[
+	  (A - I)\mathbf{v}_1 = 0,\quad (A - I)\mathbf{v}_2 = \mathbf{v}_1, \quad (A - 2I)\mathbf{v}_3 = 0.
+	\]
+	There is an obvious choices $\mathbf{v}_3$, namely the eigenvector of eigenvalue $2$.
+  
+	To find $\mathbf{v}_1$ and $\mathbf{v}_2$, note that 
+	\[
+		\ker (A-I) = \genset{\mathbf{v}_1},\quad \mathbf{v}_1 = \begin{pmatrix}
+			 0 \\
+			 0 \\
+			 1 \\
+		\end{pmatrix}
+	\]
+	Solving $ (A-\lambda I)\mathbf{v}_2 = \mathbf{v}_1 $ we get 
+	\[
+		\mathbf{v}_2 =
+		\begin{pmatrix}
+		  1\\1\\0
+		\end{pmatrix},\quad
+		\mathbf{v}_1 =
+		\begin{pmatrix}
+		  0\\0\\1
+		\end{pmatrix},\quad
+		\mathbf{v}_3 =
+		\begin{pmatrix}
+		  2\\1\\2
+		\end{pmatrix}.
+	  \]
+	Hence we have
+	\[
+	  P =
+	  \begin{pmatrix}
+		0 & 1 & 2\\
+		0 & 1 & 1\\
+		1 & 0 & 2
+	  \end{pmatrix}
+	\]
+	and
+	\[
+	  P^{-1} AP = \begin{pmatrix}
+		1 & 1 & 0\\
+		0 & 1 & 0\\
+		0 & 0 & 2
+	  \end{pmatrix}.
+	\]
+  \end{example}
+
 
 \end{document}
