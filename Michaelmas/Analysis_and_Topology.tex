@@ -2750,4 +2750,483 @@ Apart from connectedness, we have a stronger property: joining any two points wi
     Every path-connected topological space is connected.
 \end{theorem}
 
+\begin{proof}
+    Assume $X$ is path-connected but not connected. Let $U, V$ disconnect $X$. Fix $x \in U, y \in V$ and a continuous function $\gamma:[0,1] \rightarrow X$ with $\gamma(0)=x$ and $\gamma(1)=y$. It is straightforward to check that $\gamma^{-1}(U)$ and $\gamma^{-1}(V)$ disconnect $[0,1]$ contradicting that $[0,1]$ is connected.
+\end{proof}
+The converse of above is FALSE.
+\begin{example}
+    Recall that the subset
+    \[
+        X=\left\{\left(x, \sin \frac{1}{x}\right): x>0\right\} \cup\{(0, y):-1 \leqslant y \leqslant 1\}
+    \]
+    of $\mathbb{R}^{2}$ is connected. We now show that $X$ is not path-connected.
+
+    Assume $\gamma:[0,1] \rightarrow X$ is continuous with $\gamma(0)=(0,0)$ and $\gamma(1)=(1, \sin 1)$.
+
+    Let $\gamma_{1}$ and $\gamma_{2}$ be the components of $\gamma$. So $\gamma(t)=\left(\gamma_{1}(t), \gamma_{2}(t)\right)$ for all $t \in[0,1]$. Since $\gamma$ is continuous, so are $\gamma_{1}$ and $\gamma_{2}$.
+
+    Assume that $x=\gamma_{1}(t)>0$ for some $t$ (e.g., this is true for $t=1$). By the IVT, the image of $(0, t)$ under $\gamma_{1}$ contains $(0, x)$. Choose $n \in \mathbb{N}$ such that $\frac{1}{2 \pi n} \in(0, x)$ and $s \in(0, t)$ such that $\gamma_{1}(s)=\frac{1}{2 \pi n}$. Then $\gamma_{2}(s)=\sin \frac{1}{\gamma_{1}(s)}=0$. Similarly, there exists $s \in(0, t)$ with $\gamma_{1}(s)=\frac{1}{2 \pi n+\frac{\pi}{2}}$ and $\gamma_{2}(s)=1$. 
+    
+    We now inductively construct $t_{1}>t_{2}>\cdots>0$ in $[0,1]$ such that $\gamma_{2}\left(t_{n}\right)=0$ if $n$ is even and $\gamma_{2}\left(t_{n}\right)=1$ otherwise. 
+    Let $t_1$ be such that $ \gamma_1(t_1) = \frac{1}{2\pi n} $. We can find $ t_2 \in (0,t_1) $ such that $ \gamma_1(t_2) =\frac{1}{2\pi n+\frac{\pi}{2} } $ and $\gamma_2(t_2)=0$. This process continues inductively.
+    
+    Let $t_{n} \rightarrow t$ in $[0,1]$. Then $\gamma_{2}\left(t_{n}\right) \rightarrow \gamma_{2}(t)$. However, $\left(\gamma_{2}\left(t_{n}\right)\right)$ is not convergent --- a contradiction.
+\end{example}
+
+\begin{lemma}[Gluing lemma]\label{lma:Gluing lemma}
+    Let $X$ be a topological space and let $A, B$ be closed subsets with $X=A \cup B$. If $f: X \rightarrow Y$ is a function such that $f\restriction_{A}: A \rightarrow Y$ and $f\restriction_{B}: B \rightarrow Y$ are continuous, then $f$ is continuous.
+\end{lemma}
+
+\begin{proof}
+    Let $V$ be a closed subset of $Y$. Since $f\restriction_{A}$ is continuous, it follows that $\left(f\restriction_{A}\right)^{-1}(V)=A \cap f^{-1}(V)$ is closed in $A$, and hence also in $X$ (Proposition \ref{prop:4.6}). Similarly, $B \cap f^{-1}(V)$ is closed in $X$. It follows that
+
+$$
+f^{-1}(V)=\left(A \cap f^{-1}(V)\right) \cup\left(B \cap f^{-1}(V)\right)
+$$
+
+is also closed in $X$. Finally, $f$ is continuous by Proposition \ref{prop:4.8} (i).
+\end{proof}
+
+\subsection{Path-connected components}
+Similar to connected components, we have path-connected components.
+
+Let $X$ be a topological space. We define a relation on $X$ as follows.
+$$
+\forall x, y \in X \quad x \sim y \Longleftrightarrow \exists \text { path from } x \text { to } y \text { in } X
+$$
+For $x \in X$, the constant function with value $x$ is continuous, which shows that $x \sim x$. 
+
+If $\gamma$ is a path from $x$ to $y$, then $t \mapsto \gamma(1-t)$ is a path from $y$ to $x$, which shows symmetry. 
+
+Finally, if $\gamma$ is a path from $x$ to $y$ and $\delta$ is a path from $y$ to $z$, then
+$$
+\eta(t)= \begin{cases}\gamma(2 t) & \text { if } t \in\left[0, \frac{1}{2}\right] \\ \delta(2 t-1) & \text { if } t \in\left[\frac{1}{2}, 1\right]\end{cases}
+$$
+defines a path from $x$ to $z$. Indeed, firstly this well-defined at $\frac{1}{2}$ since
+$\gamma(1)=\delta(0)=y$. Secondly, the sets $\left[0, \frac{1}{2}\right]$ and $\left[\frac{1}{2}, 1\right]$ are closed in $[0,1]$, $[0,1]=\left[0, \frac{1}{2}\right] \cup\left[\frac{1}{2}, 1\right]$ and the functions $\eta\restriction_{\left[0, \frac{1}{2}\right]}, \eta \restriction_{\left[\frac{1}{2}, 1\right]}$ are continuous. So $\eta$ is continuous by Lemma \ref{lma:Gluing lemma}. This shows that $\sim$ is transitive.
+
+\begin{definition}
+    Equivalence classes of this relation are called \textbf{path-connected components} of $X$. 
+\end{definition}
+\begin{note}
+    It is immediate from the fact that $\sim$ is an equivalence relation that path-connected components are path-connected.
+\end{note}
+
+\begin{theorem}\label{thm:Rn connected iff path-connected}
+    An open subset $U$ of $\mathbb{R}^{n}$ is connected $\Longleftrightarrow$ path-connected.
+\end{theorem}
+\begin{proof}
+    $(\Longleftarrow)$ This is true in general by Theorem \ref{thm:path connected is connected}.
+
+$(\Longrightarrow)$ Fix $x_{0} \in U$ and set $P=\left\{x \in U: \exists\right.$ path from $x_{0}$ to $\left.x\right\}$. In other words, $P$ is the path-connected component of $x_{0}$ in $U$. We show that $P$ is both open and closed in $U$. (Such a set is called \textbf{clopen}.) Since $P$ and $U \setminus P$ cannot disconnect $U$, one of them has to be empty. Since $x_{0} \in P$, it follows that $P=U$, and thus $U$ is path-connected.
+
+Fix $x \in P$. Since $U$ is open, there exists $r>0$ such that $D_{r}(x) \subset U$. Now, for any $y \in D_{r}(x)$, there is a path from $x$ to $y$ inside $D_{r}(x)$ (and hence inside $U$ ). For example, the straight line segment $t \mapsto(1-t) x+t y$ is continuous and takes values in $D_{r}(x):\|((1-t) x+t y)-x\|=\|t(y-x)\|=t\|y-x\|<r$ This shows that $D_{r}(x) \subset P$, and thus $P$ is open in $U$.
+
+Now fix $x \in U \setminus P$ and again choose $r>0$ such that $D_{r}(x) \subset U$. As before, for any $y \in D_{r}(x)$, we have $y \sim x$. Hence, if there exists $y \in D_{r}(x) \cap P$, then $y \sim x$ and $y \sim x_{0}$, which gives the contradiction $x \in P$. It follows that $D_{r}(x) \subset U \setminus P$, and thus $U \setminus P$ is open in $U$.
+\end{proof}
+
+\subsection{An application of connectedness}
+By considering connectedness, we can show that
+\begin{theorem}\label{th,:R, Rn not homeo}
+    For $n \geqslant 2, \mathbb{R}$ and $\mathbb{R}^{n}$ are not homeomorphic.
+\end{theorem}
+
+\begin{proof}
+    Assume that $f: \mathbb{R} \rightarrow \mathbb{R}^{n}$ is a homeomorphism with inverse $g: \mathbb{R}^{n} \rightarrow \mathbb{R}$. Then $f\restriction_{\mathbb{R} \setminus\{0\}}$ is a continuous bijection from $\mathbb{R} \setminus\{0\}$ onto $\mathbb{R}^{n} \setminus\{f(0)\}$ whose inverse is $g\restriction_{\mathbb{R}^{n} \setminus\{f(0)\}}$ which is also continuous. Thus, $\mathbb{R} \setminus\{0\}$ and $\mathbb{R}^{n} \setminus\{f(0)\}$ are homeomorphic. Now, $\mathbb{R} \setminus\{0\}$ is not connected since it is not an interval. However, it is easy to see that $\mathbb{R}^{n} \setminus\{f(0)\}$ is path-connected, and hence connected. Since connectedness is a topological property, we have reached the desired contradiction.
+\end{proof}
+
+\section{Compactness}
+\subsection{Definition and motivation of compactness}
+Recall that a continuous real-valued function on a closed bounded interval is bounded and attains its bounds.
+
+\begin{sque}
+    For which topological spaces $X$ is it true that every continuous function $X \rightarrow \mathbb{R}$ is bounded?
+\end{sque}
+
+Some answers:
+
+\begin{enumerate}
+  \item For finite spaces.
+
+  \item For spaces $X$ with the following property:
+
+  For every continuous function $f: X \rightarrow \mathbb{R}$ there exist $n \in \mathbb{N}$ and subsets $A_{1}, \ldots, A_{n}$ of $X$ such that $X=\bigcup_{k=1}^{n} A_{k}$ and $f$ is bounded on each $A_{k}$.
+\end{enumerate}
+
+\begin{note}
+    Let $X$ be a topological space and $f: X \rightarrow \mathbb{R}$ continuous. For $x \in X$ let $U_{x}=f^{-1}(f(x)-1, f(x)+1)$. Then $U_{x}$ is open, $x \in U_{x}$ and for every $y \in U_{x}$ we have
+    $$
+    |f(y)| \leqslant|f(y)-f(x)|+|f(x)| \leqslant|f(x)|+1
+    $$
+    So $X=\bigcup_{x \in X} U_{x}$ and $f$ is bounded on each $U_{x}$. If there exists a finite set $F \subset X$ such that $X=\bigcup_{x \in F} U_{x}$, then $f$ is bounded.
+\end{note}
+
+\begin{definition}
+    Let $X$ be a topological space.
+
+    An \textbf{open cover} for $X$ is a family $\mathcal{U}$ of open subsets of $X$ such that $\bigcup_{U \in \mathcal{U}} U=X$.
+
+    A \textbf{subcover} of an open $\operatorname{cover} \mathcal{U}$ for $X$ is a subfamily $\mathcal{V} \subset \mathcal{U}$ such that
+    $\bigcup_{U \in \mathcal{V}} U=X$. If $\mathcal{V}$ is finite, then we call this a \textbf{finite subcover} of $\mathcal{U}$.
+
+    A topological space is \textbf{compact} if every open cover for $X$ has a finite subcover.
+\end{definition}
+
+\begin{theorem}\label{thm:continuous on compact -> bounded}
+    Let $X$ be a compact topological space and $f: X \rightarrow \mathbb{R}$ a continuous function.
+Then $f$ is bounded, and moreover, if $X \neq \emptyset$, then $f$ attains its bounds.
+\end{theorem}
+\begin{proof}
+    The proof of boundedness was essentially given in the Note above. Here is another proof.
+
+    For $n \in \mathbb{N}$ let $U_{n}=\{x \in X:|f(x)|<n\}$. Then $U_{n}=f^{-1}(-n, n)$ is open in $X$.
+
+    For every $x \in X$ there exists $n \in \mathbb{N}$ with $|f(x)|<n$. It follows that
+    $X=\bigcup_{n \in \mathbb{N}} U_{n}$. Since $X$ is compact, there is a finite $F \subset \mathbb{N}$ with
+    $X=\bigcup_{n \in F} U_{n}=U_{N}$ where $N=\max F$. So $f$ is bounded by $N$.
+
+    Next, we let $m=\inf _{X} f$ and $M=\sup _{X} f$. Assume that there is no $y \in X$ with $f(y)=m$. Then for every $y \in X$ we have $f(y)>m$. Let $y \in X$. Choose $\alpha_{y} \in \mathbb{R}$ with $m<\alpha_{y}<f(y)$ and set $U_{y}=f^{-1}\left(\alpha_{y}, \infty\right)$. Then $U_{y}$ is open, it contains $y$ and $f$ is bounded below by $\alpha_{y}$ on $U_{y}$. In particular, $\left\{U_{y}: y \in X\right\}$ is an open cover for $X$. Hence there is a finite $F \subset X$ such that $X=\bigcup_{y \in F} U_{y}$. Let $\alpha=\min \left\{\alpha_{y}: y \in F\right\}$. Then $\alpha>m$ and $f$ is bounded below by $\alpha$ on $X$. This contradiction shows that $m=f(y)$ for some $y \in X$. A similar argument shows that $M$ is also attained.
+\end{proof}
+
+\begin{remark}
+    Compactness is the next best thing after finiteness.
+\end{remark}
+
+\subsection{Compactness of subspaces}
+Let $X$ be a topological space. We are interested in whether a subspace of $X$ is compact or not.
+\begin{lemma}\label{lma:compactness of subspaces}
+    Let $Y$ be a subspace of a topological space $X$. Then $Y$ is compact $\Longleftrightarrow$ for any family $\mathcal{U}$ of open subsets of $X$ satisfying $Y \subset \bigcup_{U \in \mathcal{U}} U$, there is a finite subfamily $\mathcal{V} \subset \mathcal{U}$ such that $Y \subset \bigcup_{U \in \mathcal{V}} U$.
+\end{lemma}
+\begin{proof}
+    ($\Longrightarrow $) Let $\mathcal{U}$ be a family of open subsets of $X$ satisfying $Y \subset \bigcup_{U \in \mathcal{U}} U$. Then $\{U \cap Y: U \in \mathcal{U}\}$ is an open cover for $Y$. Since $Y$ is compact, there is a finite subcover: there is a finite $\mathcal{V} \subset \mathcal{U}$ such that $Y=\bigcup_{\mathcal{U} \in \mathcal{V}} U \cap Y$. It follows that $Y \subset \bigcup_{U \in \mathcal{V}} U$
+
+    ($\Longleftarrow$) Let $\mathcal{W}$ be an open cover for $Y$. For each $W \in \mathcal{W}$ fix an open set $\widetilde{W}$ in $X$ such that $W=\widetilde{W} \cap Y$. Then $\mathcal{U}=\{\widetilde{W}: W \in \mathcal{W}\}$ is a family of open subsets of $X$ satisfying $Y \subset \bigcup_{U \in \mathcal{U}} U$. By assumption, there is a finite subfamily of $\mathcal{U}$ whose union still contains $Y$. So there is a finite $\mathcal{V} \subset \mathcal{W}$ such that $\bigcup_{W \in \mathcal{V}} \widetilde{W} \supset Y$. It follows that $\bigcup_{W \in \mathcal{V}} W=Y$, i.e., $\mathcal{V}$ is a finite subcover of $\mathcal{W}$.
+\end{proof}
+
+\begin{theorem}\label{lma:[0,1] is compact}
+    The unit interval $[0,1]$ is compact.
+\end{theorem}
+\begin{proof}
+    Let $\mathcal{U}$ be a family of open subsets of $\mathbb{R}$ such that $[0,1] \subset \bigcup_{U \in \mathcal{U}} U$.
+    For $I \subset[0,1]$, we will say that $\mathcal{U}$ \textbf{finitely covers} $I$ if there is a finite subfamily
+    $\mathcal{V} \subset \mathcal{U}$ saitsfying $I \subset \bigcup_{U \in \mathcal{V}} U$.
+
+    We now make an observation. Suppose $I=J \cup K$ for subsets $I, J, K$ of $[0,1]$.
+    If $\mathcal{U}$ finitely covers $J$ and $K$, then $\mathcal{U}$ finitely covers $I$.
+
+    Now assume that $\mathcal{U}$ does not finitely cover $[0,1]$. Then at least one of the intervals $\left[0, \frac{1}{2}\right]$ and $\left[\frac{1}{2}, 1\right]$ cannot be finitely covered by $\mathcal{U}$. Call that interval  $[a_{1}, b_{1}]$. It follows that, putting $c=\frac{1}{2}\left(a_{1}+b_{1}\right)$, at least one of the intervals $\left[a_{1}, c\right]$ and $\left[c, b_{1}\right]$ cannot be finitely covered by $\mathcal{U}$. Call that interval $\left[a_{2}, b_{2}\right]$. Continue inductively and obtain a nested sequence
+    $$
+    [0,1] \supset\left[a_{1}, b_{1}\right] \supset\left[a_{2}, b_{2}\right] \supset \ldots
+    $$
+    such that for each $n \in \mathbb{N}$ the interval $\left[a_{n}, b_{n}\right]$ cannot be finitely covered by $\mathcal{U}$ and $b_{n}-a_{n}=2^{-n}$.
+
+    Since $\left(a_{n}\right)$ is an increasing, bounded above sequence, it converges to some $x \in[0,1]$. Then $b_{n}=a_{n}+2^{-n} \rightarrow x$ as well.
+
+    Since $[0,1] \subset \bigcup_{U \in \mathcal{U}} U$, there exists $U \in \mathcal{U}$ such that $x \in U$. Since $U$ is open, there exists $\varepsilon>0$ such that $(x-\varepsilon, x+\varepsilon) \subset U$. Since $a_{n}, b_{n} \rightarrow x$ there exists an $n \in \mathbb{N}$ with $a_{n}, b_{n} \in(x-\varepsilon, x+\varepsilon)$. It follows that $\left[a_{n}, b_{n}\right] \subset(x-\varepsilon, x+\varepsilon) \subset U$ contradicting that $\left[a_{n}, b_{n}\right]$ cannot be finitely covered by $\mathcal{U}$. So $[0,1]$ can be finitely covered by $\mathcal{U}$, and thus $[0,1]$ is compact by Lemma \ref{lma:compactness of subspaces}.
+\end{proof}
+Here are more examples:
+\begin{example}
+    \begin{enumerate}
+        \item Finite spaces are compact.
+      
+        \item Any set $X$ with the cofinite topology is compact. 
+        
+        Indeed, given an open cover $\mathcal{U}$ for $X$, fix a non-empty $U \in \mathcal{U}$. Then $F=X \setminus U$ is finite. For each $x \in F$, fix $U_{x} \in \mathcal{U}$ such that $x \in U_{x}$. Then $\{U\} \cup\left\{U_{x}: x \in F\right\}$ is a finite subcover of $\mathcal{U}$.
+        \item If $x_{n} \rightarrow x$ in a topological space $X$, then the subspace $Y=\{x\} \cup\left\{x_{n}: n \in \mathbb{N}\right\}$ is compact. 
+        
+        To see this, assume $\mathcal{U}$ is a family of open subsets of $X$ covering $Y$. Then $x \in U$ for some $U \in \mathcal{U}$. Since $x_{n} \rightarrow x$, there exists $N \in \mathbb{N}$ with $x_{n} \in U$ for $n>N$. Now we simply choose $U_{k} \in \mathcal{U}$ with $x_{k} \in U_{k}$ for each $k=1,2, \ldots, N$. Then $\{U\} \cup\left\{U_{k}: 1 \leqslant k \leqslant N\right\}$ is a finite subcover.
+
+        \item An infinite set $X$ with the discrete topology is not compact. Indeed, the open cover $\{\{x\}: x \in X\}$ has no finite subcover.
+
+  \item $\mathbb{R}$ is not compact. Indeed, $\{(-n, n): n \in \mathbb{N}\}$ is an open cover for $\mathbb{R}$ without a finite subcover.
+      \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop:compact close -> compact; Hausdorff compact -> closed}
+    Let $Y$ be a subspace of a topological space $X$.
+    \begin{enumerate}[(a)]
+        \item If $X$ is compact and $Y$ is closed in $X$, then $Y$ is compact.
+        \item If $X$ is Hausdorff and $Y$ is compact, then $Y$ is closed in $X$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (a) Let $\mathcal{U}$ be a family of open subsets of $X$ covering $Y$ (i.e., $Y \subset \bigcup_{U \in \mathcal{U}} U$ ). Then $\mathcal{U} \cup\{X \setminus Y\}$ is an open cover for $X$. Since $X$ is compact, this has a finite subcover. So there is a finite subfamily $\mathcal{V}$ of $\mathcal{U}$ such that $\mathcal{V} \cup\{X \setminus Y\}$ is still an open cover for $X$. It follows that $\mathcal{V}$ covers $Y$. By Lemma \ref{lma:compactness of subspaces}, it follows that $Y$ is compact.
+
+(b) Fix $x \in X \setminus Y$. For each $y \in Y$, since $x \neq y$, there exist some disjoint open sets $U_{y}, V_{y}$ in $X$ such that $x \in U_{y}$ and $y \in V_{y}$. Then $\left\{V_{y}: y \in Y\right\}$ is a family of open sets in $X$ covering $Y$. Since $Y$ is compact, there is a finite $F \subset Y$ such that $Y \subset \bigcup_{y \in F} V_{y}$. It follows that $U=\bigcap_{y \in F} U_{y}$ is an open set containing $x$ and disjoint from $Y$. This shows that $X \setminus Y$ is a neighbourhood of $x$, and thus $X \setminus Y$ is open and $Y$ is closed.
+\end{proof}
+
+\subsection{Compactness as a topological property}
+Like connectedness, compactness is a topological property.
+\begin{proposition}\label{prop:compact image is compact}
+    Let $f: X \rightarrow Y$ be a continuous function between topological spaces. If $X$ is compact, then $f(X)$ is compact.
+\end{proposition}
+\begin{proof}
+    Let $\mathcal{U}$ be a family of open subsets of $Y$ covering $f(X)$. Since $f$ is continuous, $f^{-1}(U)$ is open in $X$ for every $U \in \mathcal{U}$, and moreover
+$X=f^{-1}\left(\bigcup_{U \in \mathcal{U}} U\right)=\bigcup_{U \in \mathcal{U}} f^{-1}(U)$. Thus, $\left\{f^{-1}(U): U \in \mathcal{U}\right\}$ is an open cover for $X$. Since $X$ is compact, this has a finite subcover. So there is a finite subfamily $\mathcal{V} \subset \mathcal{U}$ such that $X=\bigcup_{U \in \mathcal{V}} f^{-1}(U)$. It follows that $f(X) \subset \bigcup_{U \in \mathcal{V}} U$. Now from Lemma \ref{lma:compactness of subspaces} again, we deduce that $f(X)$ is compact.
+\end{proof}
+\begin{remark}
+    \begin{enumerate}
+        \item Compactness is a topological property.
+      
+        \item If $f: X \rightarrow Y$ is continuous and $A$ is a compact subset of $X$, then $f(A)$ is compact: simply apply Proposition \ref{prop:compact image is compact} to the restriction $f\restriction_{A}: A \rightarrow Y$.
+      \end{enumerate}
+\end{remark}
+
+\begin{example}
+    For $a<b$ in $\mathbb{R}$, the unit interval $[0,1]$ is homeomorphic to the interval $[a, b]$ via the map $t \mapsto(1-t) a+t b$. Hence $[a, b]$ is compact.
+\end{example}
+
+\begin{corollary}\label{col:compact quotient is compact}
+    Let $R$ be an equivalence relation on a compact topological space $X$. Then $X / R$ is compact in the quotient topology.
+\end{corollary}
+\begin{proof}
+    Apply Proposition \ref{prop:compact image is compact} to the quotient map $ \pi: X \to R,\ x \mapsto [x]_R $.
+\end{proof}
+
+\begin{theorem}[The topological inverse function theorem (TIFT)]\label{thm:TIFT}
+    Let $f: X \rightarrow Y$ be a continuous bijection between topological spaces. If $X$ is compact and $Y$ is Hausdorff, then $f$ is an open map, and hence a homeomorphism.
+\end{theorem}
+\begin{proof}
+    Let $U$ be an open subset of $X$. Set $K=X \setminus U$. Since $f$ is a bijection, it follows that $f(U)=Y \setminus f(K)$. So it is enough to show that $f(K)$ is closed in $Y$.
+
+Since $K$ is a closed subset of the compact space $X$, it is compact (Proposition \ref{prop:compact close -> compact; Hausdorff compact -> closed}(a)).
+
+Since $f$ is continuous, $f(K)$ is the continuous image of the compact set $K$, and hence compact (Proposition \ref{prop:compact image is compact}).
+
+Since $f(K)$ is a compact subspace of the Hausdorff space $Y$, it is closed (Proposition \ref{prop:compact close -> compact; Hausdorff compact -> closed}(b)).
+\end{proof}
+
+\paragraph*{An application.} The quotient space $\mathbb{R} / \mathbb{Z}$ is homeomorphic to the unit circle $S^{1}=\left\{x \in \mathbb{R}^{2}:\|x\|=1\right\}$.
+
+Recall that the map $f: \mathbb{R} \rightarrow S^{1}, f(t)=(\cos (2 \pi t), \sin (2 \pi t))$, fully respects the coset relation $(s \sim t$, i.e., $s-t \in \mathbb{Z}$, iff $f(s)=f(t))$, is continuous and surjective. It follows that there is a unique map $\tilde{f}: \mathbb{R} / \mathbb{Z} \rightarrow S^{1}$ such that $f=\tilde{f} \circ q$ (where $q: \mathbb{R} \rightarrow \mathbb{R} / \mathbb{Z}$ is the quotient map), and moreover $\tilde{f}$ is a continuous bijection. (See Proposition \ref{prop:4.10}.)
+
+Note that for any $x \in \mathbb{R}$, we have $q(x)=q(x-\lfloor x\rfloor)$. Thus $\mathbb{R} / \mathbb{Z}=q(\mathbb{R})=q([0,1])$. Since $[0,1]$ is compact (Theorem \ref{lma:[0,1] is compact}) and since $q$ is continuous, it follows that $\mathbb{R} / \mathbb{Z}$ is compact (Proposition \ref{col:compact quotient is compact}). On the other hand, $S^{1}$ is a metric space, and hence Hausdorff. Hence $\tilde{f}$ is a homeomorphism by Theorem \ref{thm:TIFT}.
+
+\subsection{Tychonov's theorem}
+The product of compact spaces is compact. 
+\begin{theorem}\label{thm:Tychonov}
+    The product of compact topological spaces is compact in the product topology.
+\end{theorem}
+\begin{proof}
+    Let $X$ and $Y$ be compact topological spaces. We will show that $X \times Y$ is compact in the product topology. It then follows by induction that the product of any finite number of compact spaces is compact. It remains true for arbitrary products, however this is not covered in this course.
+
+Let $\mathcal{W}$ be an open cover for $X \times Y$. We need to show that $\mathcal{W}$ has a finite subcover. Define
+$$
+\mathcal{U}=\{U \times V: U \text { open in } X, V \text { open in } Y \text { and } \exists W \in \mathcal{W},\ U \times V \subset W\}
+$$
+Note that $\mathcal{U}$ is an open cover for $X \times Y$. Indeed, given $z \in X \times Y$, there exists $W \in \mathcal{W}$ with $z \in W$, and by the definition of the product topology, there exist open sets $U, V$ in $X, Y$, respectively, such that $z \in U \times V \subset W$.
+
+We next claim that it is enough to show $\mathcal{U}$ has a finite subcover. Indeed, assume that for some $n \in \mathbb{N}$ there exist open sets $U_{1}, \ldots, U_{n}$ in $X$ and open sets $V_{1}, \ldots, V_{n}$ in $Y$ such that $U_{i} \times V_{i} \in \mathcal{U}$ for $1 \leqslant i \leqslant n$ and $X \times Y=\bigcup_{i=1}^{n} U_{i} \times V_{i}$. For each $i=1, \ldots, n$ we can choose $W_{i} \in \mathcal{W}$ with $U_{i} \times V_{i} \subset W_{i}$. Then $X \times Y=\bigcup_{i=1}^{n} W_{i}$, and thus $\left\{W_{1}, \ldots, W_{n}\right\}$ is a finite subcover of $\mathcal{W}$.
+
+Fix $x \in X$. From the proof of Theorem \ref{thm:product connected} we know that $\{x\} \times Y$ is a continuous image of $Y$, and thus compact by Proposition \ref{prop:compact image is compact}. Since $\mathcal{U}$ covers $\{x\} \times Y$, there is a finite subfamily of $\mathcal{U}$ that covers $\{x\} \times Y$ (Lemma \ref{lma:compactness of subspaces}). So there exist $n_{x} \in \mathbb{N}$ and open sets $U_{x, 1}, U_{x, 2}, \ldots, U_{x, n_{x}}$ in $X$ and open sets $V_{x, 1}, V_{x, 2}, \ldots, V_{x, n_{x}}$ in $Y$ such that $U_{x, i} \times V_{x, i} \in \mathcal{U}$ for $1 \leqslant i \leqslant n_{x}$ and $\{x\} \times Y \subset \bigcup_{i=1}^{n_{x}} U_{x, i} \times V_{x, i}$. 
+
+Wlog we may assume that $x \in U_{x, i}$ for all $i=1,2, \ldots, n_{x}$. (If $x \notin U_{x, i}$, then $U_{x, i} \times V_{x, i} \cap\{x\} \times Y=\emptyset$, and so $U_{x, i} \times V_{x, i}$ can be removed from the finite subcover.) It follows that $U_{x}=\bigcap_{i=1}^{n_{x}} U_{x, i}$ is an open set in $X$ containing $x$. Moreover, $\bigcup_{i=1}^{n_{x}} U_{x, i} \times V_{x, i} \supset U_{x} \times Y$. (Indeed, given $z \in U_{x}$ and $y \in Y$, we have $(x, y) \in U_{x, i} \times V_{x, i}$ for some $1 \leqslant i \leqslant n_{x}$, and hence $\left.(z, y) \in U_{x, i} \times V_{x, i}\right)$
+
+We carry out the above process for each $x \in X$, and obtain the open cover $\left\{U_{x}: x \in X\right\}$ for $X$. Since $X$ is compact, there is a finite subset $F \subset X$ such that $X=\bigcup_{x \in F} U_{x}$. It follows that
+$$
+X \times Y=\bigcup_{x \in F} U_{x} \times Y \subset \bigcup_{x \in F} \bigcup_{i=1}^{n_{x}} U_{x, i} \times V_{x, i}
+$$
+and hence
+$$
+\left\{U_{x, i} \times V_{x, i}: x \in F, 1 \leqslant i \leqslant n_{x}\right\}
+$$
+is a finite subcover of $\mathcal{U}$.
+\end{proof}
+
+\begin{remark}
+    The converse of Tychonov's theorem is true and is easy to prove. If $X \times Y$ is compact and $X, Y$ are non-empty, then $X$ and $Y$ are compact. This is because $X, Y$ are continuous images of $X \times Y$ under the coordinate projections $q_{X}, q_{Y}$, respectively.
+\end{remark}
+
+\subsection{Heine-Borel theorem}
+We now look at compactness in Eucliean spaces. It turns out to be very nice.
+\begin{theorem}[Heine-Borel]\label{thm:Heine-Borel}
+    A subset $K$ of $\mathbb{R}^{n}$ is compact $\Longleftrightarrow$ it is closed and bounded.
+\end{theorem}
+\begin{proof}
+    ($ \Longrightarrow $) The function $\mathbb{R}^{n} \rightarrow \mathbb{R}, \bfx \mapsto\|\bfx\|$, is continuous. (Indeed, $|\|\bfx\|-\|\bfy\|| \leqslant\|\bfx-\bfy\|=d(\bfx, \bfy)$ for all $\bfx, \bfy \in \mathbb{R}^{n}$.) Hence the image of the compact set $K$ is bounded: there exists $M \geqslant 0$ such that $\|x\| \leqslant M$ for all $x \in K$. Thus, $K \subset B_{M}(0)$ and $K$ is bounded.
+
+    As a compact subset of the Hausdorff space $\mathbb{R}^{n}$, the set $K$ is closed in $\mathbb{R}^{n}$ (Proposition \ref{prop:compact close -> compact; Hausdorff compact -> closed}(b)).
+
+    ($ \Longleftarrow$) Fix $M \geqslant 0$ such that $\|x\| \leqslant M$ for all $x \in K$. Then $K \subset[-M, M]^{n}$. By Tychonov's theorem, $[-M, M]^{n}$ is compact in the product topology (which recall is the euclidean topology of $\mathbb{R}^{n}$ restricted to $[-M, M]^{n}$ ). So $K$ is a closed subset of the compact space $[-M, M]^{n}$, and hence compact by Proposition \ref{prop:compact close -> compact; Hausdorff compact -> closed}(a).
+\end{proof}
+
+\paragraph*{Another application of the TIFT} Let $Q=[0,1]^{2}$ (the unit square), and let $R$ be the equivalence relation defined as before: 
+$$
+(x, y) R\left(x^{\prime}, y^{\prime}\right) \Longleftrightarrow \begin{cases}(x, y)=\left(x^{\prime}, y^{\prime}\right) & \text { or } \\ x=x^{\prime},\left\{y, y^{\prime}\right\}=\{0,1\} & \text { or } \\ \left\{x, x^{\prime}\right\}=\{0,1\}, y=y^{\prime} & \end{cases}
+$$
+Then the quotient space $Q / R$ is homeomorphic to the torus
+$$
+T^{2}=\{((2+\cos \theta) \cos \varphi,(2+\cos \theta) \sin \varphi, \sin \theta): \theta, \varphi \in[0,2 \pi]\} \subset \mathbb{R}^{3}.
+$$
+
+Before proving this, note that $\{(2+\cos \theta, 0, \sin \theta): \theta \in[0,2 \pi]\}$ is the circle with centre $(2,0,0)$ and radius 1 in the $x z$-plane. Applying the matrix
+
+$$
+\left(\begin{array}{ccc}
+\cos \varphi & -\sin \varphi & 0 \\
+\sin \varphi & \cos \varphi & 0 \\
+0 & 0 & 1
+\end{array}\right) \quad(\varphi \in[0,2 \pi])
+$$
+
+rotates the circle about the $z$-axis, which sweeps out the surface of a torus. 
+
+We now turn to the proof. Define
+$$
+\begin{aligned}
+f: Q & \rightarrow T^{2} \\
+f(s, t) &=((2+\cos (2 \pi t)) \cos (2 \pi s),(2+\cos (2 \pi t)) \sin (2 \pi s), \sin (2 \pi t))
+\end{aligned}
+$$
+It is easy to check that $f$ fully respects the relation $R$. Moreover, $f$ is continuous and surjective. It follows that there is a unique map $\tilde{f}: Q / R \rightarrow T^{2}$ such that $f=\tilde{f} \circ q$ (where $q: Q \rightarrow Q / R$ is the quotient map) and $\tilde{f}$ is a continuous bijection.
+
+Finally, $Q=[0,1]^{2}$ is compact by the Heine-Borel theorem (or by Tychonov's theorem and by Theorem \ref{lma:[0,1] is compact}). Hence $Q / R$, the continuous image of $Q$ under the quotient map $q: Q \rightarrow Q / R$, is also compact. On the other hand, $T^{2}$ is Hausdorff being a subset of the metric space $\mathbb{R}^{3}$. By TIFT it follows that $\tilde{f}$ is a homeomorphism.
+
+\begin{definition}
+    Let $f_{n}$, for each $n \in \mathbb{N}$, and $f$ be scalar functions on a topological space $X$. We say $\left(f_{n}\right)$ converges to $f$ \textbf{locally uniformly} on $X$ if for every $x \in X$ there is a neighbourhood $U$ of $x$ such that $f_{n} \rightarrow f$ uniformly on $U$.
+\end{definition}
+
+\begin{remark}
+    Let $f_{n}$, for each $n \in \mathbb{N}$, and $f$ be scalar functions on an open subset $U$ of $\mathbb{R}^{d}$. Then $f_{n} \rightarrow f$ locally uniformly on $U$ if and only if $f_{n} \rightarrow f$ uniformly on every compact set $K \subset U$.
+\end{remark}
+\begin{proof}
+($\Longrightarrow $) Assume $K \subset U$ and $K$ is compact. For each $x\in K$, fix an open neighbourhood $U_{x}$ of $x$ such that $U_{x} \subset U$ and $f_{n} \rightarrow f$ uniformly on $U_{x}$. Then $\left\{U_{x}: x \in K\right\}$ is a family of open subsets of $U$ that covers $K$. Since $K$ is compact, there is a finite subset $F \subset K$ such that $K \subset \bigcup_{x \in F} U_{x}$. It follows that $f_{n} \rightarrow f$ uniformly on $K$. 
+
+($\Longleftarrow$) Since $U$ is open, for each $x \in U$ there exists $r>0$ such that $B_{r}(x) \subset U$. The set $B_{r}(x)$ is closed and bounded, and hence compact by the Heine-Borel theorem. By assumption, $f_{n} \rightarrow f$ uniformly on $B_{r}(x)$, which is a neighbourhood of $x$.
+\end{proof}
+
+\subsection{Sequential compactness}
+Like path-connectedness, we have an extra property for compactness. However this time it is not necessarily `better'.
+\begin{definition}
+    A topological space $X$ is \textbf{sequentially compact} if every sequence in $X$ has a convergent subsequence. i.e., for every sequence $\left(x_{n}\right)$ in $X$, there is a subsequence $\left(x_{k_{n}}\right)$ of $\left(x_{n}\right)$ and $x \in X$ such that $x_{k_{n}} \rightarrow x$.
+\end{definition}
+
+For a sequence $\left(x_{n}\right)_{n=1}^{\infty}$ (in some set $S$) and for an infinite $M \subset \mathbb{N}$, we write $\left(x_{m}\right)_{m \in M}$ for the subsequence $\left(x_{m_{n}}\right)_{n=1}^{\infty}$, where $m_{1}<m_{2}<m_{3}<\ldots$ is an enumeration of $M$ in strictly increasing order.
+
+Note that for infinite subsets $L, M$ of $\mathbb{N}$, if $L \subset M$, then $\left(x_{n}\right)_{n \in L}$ is a subsequence of $\left(x_{n}\right)_{n \in M}$.
+
+\begin{example}
+    \begin{enumerate}
+        \item Every closed and bounded subset of $\mathbb{R}$ is sequentially compact. This follows from the Bolzano-Weierstrass theorem.
+        \item More generally, every closed and bounded subset $X$ of $\mathbb{R}^{n}$ is sequentially compact. 
+        
+        Indeed, given a sequence $\left(\mathbf{x}_{m}\right)$ in $X$, write each $\mathbf{x}_{m}=\left(x_{m, 1}, \ldots, x_{m, n}\right)$ in terms of its coordinates. Since $X$ is bounded, $\left(x_{m, 1}\right)_{m \in \mathbb{N}}$ is a bounded sequence in $\mathbb{R}$, so by Bolzano-Weierstrass there is an infinite $M_{1} \subset \mathbb{N}$ such that $\left(x_{m, 1}\right)_{m \in M_{1}}$ is convergent. Now, $\left(x_{m, 2}\right)_{m \in M_{1}}$ is also bounded, so there is an infinite $M_{2} \subset M_{1}$ such that $\left(x_{m, 2}\right)_{m \in M_{2}}$ is convergent. Continuing this way, we find infinite subsets $M_{1} \supset M_{2} \supset \cdots \supset M_{n}$ of $\mathbb{N}$ such that $\left(x_{m, k}\right)_{m \in M_{k}}$ is convergent for each $k=1, \ldots, n$. It follows that $\left(x_{m, k}\right)_{m \in M_{n}}$ is convergent for each $k=1, \ldots, n$. Hence $\left(\mathbf{x}_{m}\right)_{m \in M_{n}}$ is convergent in $\mathbb{R}^{n}$. Moreover, the limit is in $X$, since $X$ is closed in $\mathbb{R}^{n}$.
+      \end{enumerate}      
+\end{example}
+\begin{remark}
+    It follows from the above example and from the Heine-Borel theorem that a subset $X$ of $\mathbb{R}^{n}$ is compact if and only if it is sequentially compact. This turns out to be true if $X$ is any metric space. Our aim is to prove this and various other things.
+\end{remark}
+
+\begin{definition}
+    We fix a metric space $(M, d)$ for the rest of this chapter.
+
+For $\varepsilon>0$, a subset $F \subset M$ is called an $\varepsilon$\textbf{-net} for $M$ if
+$$
+\forall x \in M \quad \exists y \in F \quad d(y, x) \leqslant \varepsilon \quad \text { (equivalently } M=\bigcup_{y \in F} B_{\varepsilon}(y))
+$$
+If in addition $F$ is a finite set, we call it a \textbf{finite} $\varepsilon$\textbf{-net} for $M$.
+
+We say $M$ is \textbf{totally bounded} if for all $\varepsilon>0$, there is a finite $\varepsilon$-net for $M$.
+\end{definition}
+
+\begin{example}
+    Given $\varepsilon>0$, choose $n \in \mathbb{N}$ with $\frac{1}{n}<\varepsilon$. Then $\left\{\frac{1}{n}, \frac{2}{n}, \ldots, \frac{n-1}{n}\right\}$ is a finite $\varepsilon$-net for $(0,1)$. Thus, $(0,1)$ is totally bounded.
+\end{example}
+
+\begin{definition}
+    For a non-empty subset $A \subset M$, define the \textbf{diameter} of $A$, denoted $\diam A$, by
+$$
+\operatorname{diam} A=\sup \{d(x, y): x, y \in A\}
+$$
+(The supremum of a subset of $\mathbb{R}$ that is not bounded above is $\infty$.)
+\end{definition}
+
+\begin{note}
+    $\operatorname{diam} A<\infty$ if and only if $A$ is bounded.
+\end{note}
+
+\begin{lemma}\label{lma:totally bounded subset has small finite cover}
+    Assume that $M$ is totally bounded and $A$ is a non-empty closed subset of $M$.
+Then for any $\varepsilon>0$, there exist $K \in \mathbb{N}$ and non-empty closed subsets
+$B_{1}, B_{2}, \ldots, B_{K}$ of $A$ such that $A=\bigcup_{k=1}^{K} B_{k}$ and $\operatorname{diam} B_{k} \leqslant \varepsilon$ for $1 \leqslant k \leqslant K$.
+\end{lemma}
+
+\begin{proof}
+    Let $F \subset M$ be a finite $\frac{\varepsilon}{2}$-net for $M$. Then $M=\bigcup_{x \in F} B_{\frac{\varepsilon}{2}}(x)$, and hence
+$A=\bigcup_{x \in F} A \cap B_{\frac{\varepsilon}{2}}(x)$. For $x \in F$ set $B_{x}=A \cap B_{\frac{\varepsilon}{2}}(x)$ and let
+$G=\left\{x \in F: B_{x} \neq \emptyset\right\}$. Then $A=\bigcup_{x \in G} B_{x}$, and for each $x \in G$, the set $B_{x}$ is
+non-empty, closed and has $\operatorname{dim} B_{x} \leqslant \operatorname{diam} B_{\frac{\varepsilon}{2}}(x) \leqslant \varepsilon$.
+\end{proof}
+
+\begin{theorem}\label{thm:metric space seqcompact tfae}
+    For a metric space $(M, d)$ TFAE.
+    \begin{enumerate}[(a)]
+        \item $M$ is compact.
+
+        \item $M$ is sequentially compact.
+        
+        \item $M$ is complete and totally bounded.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (a) $\Longrightarrow$ (b) Let $\left(x_{n}\right)$ be a sequence in $M$.
+
+For each $n \in \mathbb{N}$ set $T_{n}=\left\{x_{k}: k>n\right\}$. (Note that if a subsequence of $\left(x_{n}\right)$ converges to some $x \in M$, then $x \in \bigcap_{n \in \mathbb{N}} \mathrm{cl}\left(T_{n}\right)$.)
+
+We first show that $\bigcap_{n \in \mathbb{N}} \mathrm{cl}\left(T_{n}\right)$ is not empty. 
+
+Assume otherwise. Then $\bigcup_{n \in \mathbb{N}} M \setminus \mathrm{cl}\left(T_{n}\right)=M$, and so $\left\{M \setminus \mathrm{cl}\left(T_{n}\right): n \in \mathbb{N}\right\}$ is an open cover for $M$. Since $M$ is compact, there is a finite subcover. Since $\mathrm{cl}\left(T_{m}\right) \supset \mathrm{cl}\left(T_{n}\right)$ for all $m \leqslant n$, it follows that $M=M \setminus \mathrm{cl}\left(T_{n}\right)$ for some $n \in \mathbb{N}$, which is absurd.
+
+Fix $x \in \bigcap_{n \in \mathbb{N}} \mathrm{cl}\left(T_{n}\right)$. We show that some subsequence of $\left(x_{n}\right)$ converges to $x$. 
+\begin{itemize}
+    \item Since $x \in \closure\left(T_{1}\right)$, have $D_{1}(x) \cap T_{1} \neq \emptyset$, so $\exists k_{1}>1$ s.t. $x_{k_{1}} \in D_{1}(x)$. 
+    
+    \item Since $x \in \mathrm{cl}\left(T_{k_{1}}\right)$, we have $D_{\frac{1}{2}}(x) \cap T_{k_{1}} \neq \emptyset$, so $\exists k_{2}>k_{1}$ s.t. $x_{k_{2}} \in D_{\frac{1}{2}}(x)$. 
+    
+    \item In general, assume we have found $k_{1}<k_{2}<\cdots<k_{n}$ such that $x_{k_{j}} \in D_{\frac{1}{j}}(x)$ for $j=1,2, \ldots, n$. Since $x \in \operatorname{cl}\left(T_{k_{n}}\right)$, have $D_{\frac{1}{n+1}}(x) \cap T_{k_{n}} \neq \emptyset$, so $\exists k_{n+1}>k_{n}$ s.t. $x_{k_{n+1}} \in D_{\frac{1}{n+1}}(x)$. 
+\end{itemize}
+
+By induction, we have constructed a subsequence $\left(x_{k_{n}}\right)$ of $\left(x_{n}\right)$ such that $d\left(x_{k_{n}}, x\right)<\frac{1}{n}$ for all $n$. It follows that $x_{k_{n}} \rightarrow x$.
+
+(b) $\Longrightarrow$ (c) We first show that $M$ is complete. 
+Let $\left(x_{n}\right)$ be a Cauchy sequence in $M$. Since $M$ is sequentially compact, there is a subsequence $\left(x_{k_{n}}\right)$ of $\left(x_{n}\right)$ that converges to some $x \in M$. We show that $x_{n} \rightarrow x$. 
+
+Given $\varepsilon>0$, choose $N \in \mathbb{N}$ such that $d\left(x_{m}, x_{n}\right)<\varepsilon$ for all $m, n \geqslant N$. Since $x_{k_{n}} \rightarrow x$, we have $d\left(x_{k_{n}}, x\right)<\varepsilon$ for all sufficiently large $n$. In particular, we can fix $n_{0} \in \mathbb{N}$ such that $n_{0} \geqslant N$ and $d\left(x_{k_{0}}, x\right)<\varepsilon$. Then $k_{n_{0}} \geqslant n_{0} \geqslant N$, and hence for all $n \geqslant N$, we have
+$$
+d\left(x_{n}, x\right) \leqslant d\left(x_{n}, x_{k_{n_{0}}}\right)+d\left(x_{k_{n}}, x\right)<2 \varepsilon.
+$$
+We next show that $M$ is totally bounded. 
+
+If not, then for some $\varepsilon>0$, there is no finite $\varepsilon$-net for $M$. Then we can construct a sequence $\left(x_{n}\right)$ inductively as follows. 
+\begin{itemize}
+    \item We pick $x_{1} \in M$ arbitrarily, and 
+    \item for $n \geqslant 2$, we choose $x_{n} \in M \setminus \bigcup_{k=1}^{n-1} B_{\varepsilon}\left(x_{k}\right)$ (this set is non-empty, otherwise $\left\{x_{1}, \ldots, x_{n-1}\right\}$ is an $\varepsilon$-net for $M)$.
+\end{itemize}
+The sequence $\left(x_{n}\right)$ satisfies $d\left(x_{m}, x_{n}\right)>\varepsilon$ for all $m \neq n$, and thus it has no Cauchy subsequence, contradicting sequential compactness.
+
+(c) $\Longrightarrow$ (a) We follow the proof of the compactness of $[0,1]$. 
+Let $\mathcal{U}$ be an open cover for $M$ and assume $M$ is not finitely covered by $\mathcal{U}$. We now inductively construct a nested sequence $A_{0} \supset A_{1} \supset A_{2} \supset \ldots$ of non-empty closed subsets of $M$ such that $\operatorname{diam} A_{n} \rightarrow 0$ and $A_{n}$ cannot be finitely covered by $\mathcal{U}$ for any $n$. 
+
+We let $A_{0}=M$. Assume $n \geqslant 1$ and $A_{n-1}$ has already been constructed. By Lemma \ref{lma:totally bounded subset has small finite cover} , there exist $K \in \mathbb{N}$ and non-empty closed subsets $B_{1}, B_{2}, \ldots, B_{K}$ of $A_{n-1}$ such that $A_{n-1}=\bigcup_{k=1}^{K} B_{k}$ and $\operatorname{diam} B_{k} \leqslant \frac{1}{n}$ for $1 \leqslant k \leqslant K$. Since $A_{n-1}$ cannot be finitely covered by $\mathcal{U}$, there must exist $k, 1 \leqslant k \leqslant K$, such that $B_{k}$ cannot be finitely covered by $\mathcal{U}$. We then set $A_{n}=B_{k}$. This completes the inductive construction.
+
+For each $n \in \mathbb{N}$, choose $x_{n} \in A_{n}$. For all $N \in \mathbb{N}$ and for all $m, n \geqslant N$, we have $x_{m}, x_{n} \in A_{N}$, and thus $d\left(x_{m}, x_{n}\right) \leqslant \operatorname{diam}\left(A_{N}\right)\le\frac{1}{n}$. It follows that $\left(x_{n}\right)$ is a Cauchy sequence, and thus converges to some $x \in M$, since $M$ is complete. Since $x_{m} \in A_{n}$ for $m \geqslant n$, and since $A_{n}$ is closed, it follows that $x \in A_{n}$ for all $n \in \mathbb{N}$. Since $\mathcal{U}$ is an open cover for $M$, there exists $U \in \mathcal{U}$ with $x \in U$. As $U$ is open, there is an $r>0$ such that $D_{r}(x) \subset U$. Choose $n \in \mathbb{N}$ with $\operatorname{diam} A_{n}<r$. Then for all $y \in A_{n}$, we have $d(y, x)<r$, and thus $A_{n} \subset D_{r}(x) \subset U$. This contradicts that $A_{n}$ cannot be finitely covered by $\mathcal{U}$.
+\end{proof}
+
+\begin{remark}
+    \begin{enumerate}
+        \item In $\mathbb{R}^{n}$, the Heine-Borel and Bolzano-Weierstrass theorems can be deduced from each other.
+      
+        \item We now have another proof that the product of compact metric spaces is compact in the product topology. Just replace compactness by sequential compactness, for which the proof is straightforward.
+      
+        \item There are topological spaces that are compact but not sequentially compact and topological spaces that are sequentially compact but not compact.
+      
+      \end{enumerate}
+\end{remark}
+
+\clearpage
+\part{Generalizing Differentiation}
+
+\section{Differentiation and the Inverse Function Theorem}
+
 \end{document}
