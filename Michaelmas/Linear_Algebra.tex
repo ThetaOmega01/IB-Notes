@@ -838,7 +838,7 @@ If we have a linear map $ [\alpha]_{B,C} $, we are interested in finding the com
 			0   & 0
 		\end{pmatrix}_{m\times n}
     \]
-    Take the transpose
+    Take the top
     \[
 		P^\top A^\top \qty(Q^{-1})^\top = (Q^{-1}AP)^\top = \begin{pmatrix}
 			I_r & 0 \\
@@ -1137,7 +1137,7 @@ Equivalently,
 \begin{lemma}
 	Let $ V, W $ be $ \bbF $-vector spaces.
 	Let $ \alpha \in \mcL(V,W) $.
-	Then there exists a unique $ \alpha^* \in L(W^*, V^*) $ such that
+	Then there exists a unique $ \alpha^* \in \mcL(W^*, V^*) $ such that
 	\[
 		\varepsilon \mapsto \varepsilon \circ \alpha
 	\]
@@ -1947,7 +1947,7 @@ Using the fact that $ \det A = \det A^\top $ we can similarly see that swapping 
 
 \begin{proof}
 	We will prove case (i), the column expansion with respect to the $ j $th column.
-	Then (ii) will follow from the transpose of the matrix.
+	Then (ii) will follow from the top of the matrix.
 
 	Pick $ j \in \qty{1, \dots, n} $.
 	Write $ A^{(j)} = \sum_{i=1}^n a_{ij} \bfe_i $ wrt the standard basis. Expand $A^{(j)}$ in the determinant gives
@@ -3089,5 +3089,1070 @@ Thus if $A$ is in Jordan normal form, we get the following:
 	\]
   \end{example}
 
+\section{Properties of bilinear forms}
+\subsection{Changing basis}
+Let \( \phi \colon V \times V \to \mathbb \bbF \) be a bilinear form.
+Let \( V \) be a finite-dimensional \( \bbF \)-vector space.
+Let \( B \) be a basis of \( V \) and let \( [\phi]_B = [\phi]_{BB} \) be the matrix with entries \( \phi(\bfe_i, \bfe_j) \).
+\begin{lemma}
+	Let \( \phi \) be a bilinear form \( V \times V \to \bbF \).
+	Then if \( B, B' \) are bases for \( V \), and \( P = [I]_{B', B} \) we have
+	\[
+		[\phi]_{B'} = P^\top [\phi]_B P
+	\]
+\end{lemma}
+\begin{proof}
+	This is a special case of the general change of basis formula.
+\end{proof}
+\begin{definition}
+	Let \( A, B \in M_n(\bbF) \) be square matrices.
+	We say that \( A, B \) are \textbf{congruent} if there exists \( P \in M_n(\bbF) \) such that \( A = P^\top B P \).
+\end{definition}
+\begin{remark}
+	Congruence is an equivalence relation.
+\end{remark}
+\begin{definition}
+	A bilinear form \( \phi \) on \( V \) is \textbf{symmetric} if, for all \( \bfu, \bfv \in V \), we have
+	\[
+		\phi(\bfu,\bfv) = \phi(\bfv,\bfu)
+	\]
+\end{definition}
+\begin{remark}
+	If \( A \) is a square matrix, we say \( A \) is symmetric if \( A = A^\top \).
+	Equivalently, \( A_{ij} = A_{ji} \) for all \( i, j \).
+	So \( \phi \) is symmetric if and only if \( [\phi]_B \) is symmetric for any basis \( B \).
+	Note further that to represent \( \phi \) by a diagonal matrix in some basis \( B \), it must necessarily be symmetric, since
+	\[
+		P^\top A P = D \implies D = D^\top = \qty(P^\top A P)^\top = P^\top A^\top P \implies A = A^\top
+	\]
+\end{remark}
+
+\subsection{Quadratic forms}
+We have a special name for $ \phi(\mathbf{u},\mathbf{u}) $. 
+\begin{definition}
+	A map \( Q \colon V \to \bbF \) is a \textbf{quadratic form} if there exists a bilinear form \( \phi \colon V \times V \to \bbF \) such that, for all \( \bfu \in V \),
+	\[
+		Q(\bfu) = \phi(\bfu,\bfu)
+	\]
+	So a quadratic form is the restriction of a bilinear form to the diagonal.
+\end{definition}
+\begin{remark}
+	Let \( B = (\bfe_i) \) be a basis of \( V \).
+	Let \( A = [\phi]_B = (\phi(\bfe_i, \bfe_j)) = (a_{ij}) \).
+	Then, for \( \bfu = \sum_i x_i \bfe_i \in V \),
+	\begin{align*}
+		Q(\bfu) &= \phi(\bfu,\bfu) = \phi\qty(\sum_i x_i \bfe_i, \sum_j x_j \bfe_j) \\ 
+		&= \sum_i \sum_j x_i x_j \phi(\bfe_i, \bfe_j) = \sum_i \sum_j x_i x_j a_{ij}
+	\end{align*}
+	We can check that this is equal to
+	\[
+		Q(\bfu) = \bfx^\top A \bfx
+	\]
+	where \( [\bfu]_B = \bfx \).
+	Note further that
+	\begin{align*}
+		\bfx^\top A \bfx &= \sum_i \sum_j a_{ij} x_i x_j = \sum_i \sum_j a_{ji} x_i x_j \\ 
+		&= \sum_i \sum_j \frac{a_{ij} + a_{ji}}{2} x_i x_j = \bfx^\top \qty(\underbrace{\frac{A + A^\top}{2}}_{\mathclap{\text{symmetric}}})\bfx
+	\end{align*}
+	So we can always express the quadratic form as a symmetric matrix in any basis.
+\end{remark}
+\begin{proposition}
+	If \( Q \colon V \to \bbF \) is a quadratic form, then there exists a unique symmetric bilinear form \( \phi \colon V \times V \to \bbF \) such that \( Q(\bfu) = \phi(\bfu,\bfu) \).
+\end{proposition}
+\begin{proof}
+	Let \( \psi \) be a bilinear form on \( V \) such that for all \( \bfu \in V \), we have \( Q(\bfu) = \psi(\bfu,\bfu) \).
+	Then, let
+	\[
+		\phi(\bfu,\bfv) = \frac{1}{2}\qty[\psi(\bfu,\bfv) + \psi(\bfv,\bfu)]
+	\]
+	Certainly \( \phi \) is a bilinear form and symmetric.
+	Further, \( \phi(\bfu,\bfu) = \psi(\bfu,\bfu) = Q(\bfu) \).
+	So there exists a symmetric bilinear form \( \phi \) such that \( Q(\bfu) = \phi(\bfu,\bfu) \), so it suffices to prove uniqueness.
+	Let \( \phi \) be a symmetric bilinear form such that for all \( \bfu \in V \) we have \( Q(\bfu) = \phi(\bfu,\bfu) \).
+	Then, we can find
+	\[
+		Q(\bfu + \bfv) = \phi(\bfu + \bfv, \bfu + \bfv) = \phi(\bfu,\bfu) + \phi(\bfv,\bfv) + 2\phi(\bfu,\bfv)
+	\]
+	Thus \( \phi(\bfu,\bfv) \) is defined uniquely by \( Q \), since
+	\[
+		2 \phi(\bfu,\bfv) = Q(\bfu+\bfv) - Q(\bfu) - Q(\bfv)
+	\]
+	So \( \phi \) is unique (when \( 2 \) is invertible in \( \bbF \)).
+	This identity for \( \phi(\bfu,\bfv) \) is known as the polarisation identity.
+\end{proof}
+
+\subsection{Diagonalisation of symmetric bilinear forms}
+\ \vspace*{-1.5em}
+\begin{theorem}
+	Let \( \phi \colon V \times V \to \bbF \) be a symmetric bilinear form, where \( V \) is finite-dimensional.
+	Then there exists a basis \( B \) of \( V \) such that \( [\phi]_B \) is diagonal.
+\end{theorem}
+\begin{proof}
+	By induction on the dimension, suppose the theorem holds for all dimensions less than \( n \) for \( n \geq 2 \).
+	If \( \phi(\bfu,\bfu) = 0 \) for all \( \bfu \in V \), then \( \phi = 0 \) by the polarisation identity, which is diagonal.
+	Otherwise \( \phi(\bfe_1, \bfe_1) \neq 0 \) for some \( \bfe_1 \in V \).
+	Let
+	\[
+		U = \qty(\genset{e_1})^\perp = \qty{\bfv \in V \colon \phi(\bfe_1, \bfv) = 0}
+	\]
+	This is a vector subspace of \( V \), which is in particular
+	\[
+		\ker \qty{ \phi(e_1, \cdot) \colon V \to \bbF }
+	\]
+	By the rank-nullity theorem, \( \dim U = n - 1 \).
+	We now claim that \( U + \genset{\bfe_1} \) is a direct sum.
+	Indeed, for \( \bfv = \genset{\bfe_1} \cap U \), we have \( \bfv = \lambda \bfe_1 \) and \( \phi(\bfe_1, \bfv) = 0 \).
+	Hence \( \lambda = 0 \), since by assumption \( \phi(\bfe_1, \bfe_1) \neq 0 \).
+	So we find a basis \( B' = (\bfe_2, \dots, \bfe_n) \) of \( U \), which we extend by \( \bfe_1 \) to \( B = (\bfe_1, \bfe_2, \dots, \bfe_n) \).
+	Since \( U \oplus \genset{\bfe_1} \) has dimension \( n \), this is a basis of \( V \).
+	Under this basis, we find
+	\[
+		[\phi]_B = \begin{pmatrix}
+			\phi(\bfe_1, \bfe_1) & 0                          \\
+			0              & \qty[{\phi}\restriction_{U}]_{B'}
+		\end{pmatrix}
+	\]
+	because
+	\[
+		\phi(\bfe_1, \bfe_j) = \phi(\bfe_j, \bfe_1) = 0
+	\]
+	for all \( j \geq 2 \).
+	By the inductive hypothesis we can take a basis \( B' \) such that the restricted \( \phi \) to be diagonal, so \( [\phi]_B \) is diagonal in this basis.
+\end{proof}
+\begin{example}
+	Let \( V = \mathbb R^3 \) and choose the canonical basis \( (\bfe_i) \).
+	Let
+	\[
+		Q(x_1, x_2, x_3) = x_1^2 + x_2^2 + 2x_3^2 + 2x_1 x_2 + 2x_1 x_3 - 2x_2 x_3
+	\]
+	Then, if \( Q(x_1, x_2, x_3) = \bfx^\top A \bfx \), we have
+	\[
+		A = \begin{pmatrix}
+			1 & 1  & 1  \\
+			1 & 1  & -1 \\
+			1 & -1 & 2
+		\end{pmatrix}
+	\]
+	Note that the off-diagonal terms are halved from their coefficients since in the expansion of \( \bfx^\top A \bfx \) they are included twice.
+	Then, we can find a basis in which \( A \) is diagonal.
+	We could use the above algorithm to find a basis, or complete the square in each component.
+	We can write
+	\[
+		Q(x_1, x_2, x_3) = (x_1 + x_2 + x_3)^2 + x_3^2 - 4 x_2 x_3 = (x_1 + x_2 + x_3)^2 + (x_3 - 2x_2)^2 - (2x_2)^2
+	\]
+	This yields a new coordinate basis \( x_1', x_2', x_3' \).
+	Then \( P^{-1} A P \) is diagonal.
+	\( P \) is given by
+	\[
+		\begin{pmatrix} x_1' \\ x_2' \\ x_3' \end{pmatrix} = \underbrace{\begin{pmatrix} 1 & 1 & 1 \\ 0 & -2 & 1 \\ 0 & -2 & 0 \end{pmatrix}}_{P^{-1}} \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}
+	\]
+	With this basis, 
+	\[
+		P ^\top A P = \begin{pmatrix}
+			1 & 0 &  0 \\
+			0 & 1 &  0 \\
+			0 & 0 &  -1 \\
+		\end{pmatrix}
+	\]
+\end{example}
+
+\subsection{Sylvester's law}
+\ \vspace*{-1.5em}
+\begin{corollary}
+	If \( \bbF = \mathbb C \), for any symmetric bilinear form \( \phi \) there exists a basis of \( V \) such that \( [\phi]_B \) is
+	\[
+		\begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}
+	\]
+	where $ r = \rank \phi $. 
+\end{corollary}
+\begin{proof}
+	Since any symmetric bilinear form \( \phi \) in a finite-dimensional \( \bbF \)-vector space \( V \) can be diagonalised, let \( E = (\bfe_1, \dots, \bfe_n) \) such that \( [\phi]_E \) is diagonal with diagonal entries \( a_i \).
+
+	Reorder the \( a_i \) such that \( a_i \) is nonzero for \( 1 \leq i \leq r \), and the remaining values (if any) are zero.
+	For \( i \leq r \), let \( \sqrt{a_i} \) be a choice of a complex root for \( a_i \).
+	Then \( \bfv_i = \frac{\bfe_i}{\sqrt{a_i}} \) for \( i \leq r \) and \( \bfv_i = \bfe_i \) for \( i > r \) gives the basis \( B \) as required.
+\end{proof}
+\begin{corollary}
+	Every symmetric matrix of \( M_n(\mathbb C) \) is congruent to a unique matrix of the form
+	\[
+		\begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}
+	\]
+	where \( r \) is the rank of the matrix.
+\end{corollary}
+\begin{corollary}
+	Let \( \bbF = \mathbb R \), and let \( V \) be a finite-dimensional \( \mathbb R \)-vector space.
+	Let \( \phi \) be a symmetric bilinear form on \( V \).
+	Then there exists a basis \( B = (\bfv_1, \dots, \bfv_n) \) of \( V \) such that
+	\[
+		[\phi]_B = \begin{pmatrix}
+			I_p & 0    & 0 \\
+			0   & -I_q & 0 \\
+			0   & 0    & 0
+		\end{pmatrix}
+	\]
+	for some integers \( p, q ,\ p-q\ge 0,\ p+q = \rank \phi\).
+\end{corollary}
+\begin{proof}
+	Since square roots do not necessarily exist in \( \mathbb R \), we cannot use the form above.
+	We first diagonalise the bilinear form in some basis \( E \).
+	Then, reorder and group the \( a_i \) into a positive group of size \( p \), a negative group of size \( q \), and a zero group.
+	Then,
+	\[
+		\bfv_i = \begin{cases}
+			\frac{\bfe_i}{\sqrt{a_i}}  & i \in \qty{1, \dots, p}     \\
+			\frac{\bfe_i}{\sqrt{-a_i}} & i \in \qty{p+1, \dots, p+q} \\
+			\bfe_i                     & i \in \qty{p+q+1, \dots, n}
+		\end{cases}
+	\]
+	This gives a new basis as required.
+\end{proof}
+\begin{definition}
+	Let \( \bbF = \mathbb R \).
+	The \textbf{signature} of a bilinear form \( \phi \) is
+	\[
+		s(\phi) = p - q
+	\]
+	where \( p \) and \( q \) are defined as in the corollary above.
+\end{definition}
+It is well defined, i.e. it is independent of basis:
+\begin{theorem}[Sylvester's law]
+	Let \( \bbF = \mathbb R \).
+	Let \( V \) be a finite-dimensional \( \mathbb R \)-vector space.
+	If a real symmetric bilinear form is represented by some matrix
+	\[
+		\begin{pmatrix}
+			I_p & 0    & 0 \\
+			0   & -I_q & 0 \\
+			0   & 0    & 0
+		\end{pmatrix}
+	\]
+	in some basis \( B \), and some other matrix
+	\[
+		\begin{pmatrix}
+			I_{p'} & 0       & 0 \\
+			0      & -I_{q'} & 0 \\
+			0      & 0       & 0
+		\end{pmatrix}
+	\]
+	in another basis \( B' \), then \( p = p' \) and \( q = q' \).
+	Thus, the signature of the matrix is well defined.
+\end{theorem}
+\begin{definition}
+	Let \( \phi \) be a symmetric bilinear form on a real vector space \( V \).
+	We say that
+	\begin{enumerate}
+		\item \( \phi \) is \textbf{positive definite} if \( \phi(\bfu,\bfu) > 0 \) for all nonzero \( \bfu \in V \);
+		\item \( \phi \) is \textbf{positive semidefinite} if \( \phi(\bfu,\bfu) \geq 0 \) for all \( \bfu \in V \);
+		\item \( \phi \) is \textbf{negative definite} or \textbf{negative semidefinite} if \( \phi(\bfu,\bfu) < 0 \) or \( \phi(\bfu,\bfu) \leq 0 \) respectively for all nonzero \( \bfu \in V \).
+	\end{enumerate}
+\end{definition}
+\begin{example}
+	The matrix
+	\[
+		\begin{pmatrix}
+			I_r & 0 \\
+			0   & 0
+		\end{pmatrix}
+	\]
+	is positive definite for \( r = n \), and positive semidefinite for \( r < n \).
+\end{example}
+\noindent We now prove Sylvester's law.
+\begin{proof}
+	In order to prove uniqueness of \( p \), we will characterise the matrix in a way that does not depend on the basis.
+	In particular, we will show that \( p \) is the largest dimension of a vector subspace of \( V \) such that the restriction of \( \phi \) on this subspace is positive definite.
+	Suppose we have \( B = (\bfv_1, \dots, \bfv_n) \) and
+	\[
+		[\phi]_B = \begin{pmatrix}
+			I_p & 0    & 0 \\
+			0   & -I_q & 0 \\
+			0   & 0    & 0
+		\end{pmatrix}
+	\]
+	We consider
+	\[
+		X = \genset{\bfv_1, \dots, \bfv_p}
+	\]
+	Then we can easily compute that \({\phi}\restriction_X \) is positive definite.
+	Let
+	\[
+		Y = \genset{\bfv_{p+1}, \dots, \bfv_n}
+	\]
+	Then, as above, \( {\phi}\restriction_Y \) is negative semidefinite.
+	Suppose that \( \phi \) is positive definite on another subspace \( X' \).
+	In this case, \( Y \cap X' = \qty{0} \), since if \( \bfy \in Y \cap X' \) we must have \( Q(\bfy) \leq 0 \), but since \( \bfy \in X' \) we have \( \bfy = 0 \).
+
+	Thus, \( Y + X' = Y \oplus X' \), so \( n = \dim V \geq \dim Y + \dim X' \).
+	But \( \dim Y = n - p \), so \( \dim X' \leq p \).
+	The same argument can be executed for \( q \), hence both \( p \) and \( q \) are independent of basis.
+\end{proof}
+
+\subsection{Kernels of bilinear forms}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( K = \qty{ \bfv \in V \colon \forall \bfu \in V, \phi(\bfu,\bfv) = 0 } \).
+	This is the \textbf{kernel} of the bilinear form.
+\end{definition}
+\begin{remark}
+	By the rank-nullity theorem,
+	\[
+		\dim K + \rank \phi = n
+	\]
+	Using the above notation, we can show that there exists a subspace \( T \) of dimension \( n - (p+q) + \min\qty{p,q} \) such that \( {\phi}\restriction_T = 0 \).
+	Indeed, let \( B = (\bfv_1, \dots, \bfv_n) \) such that
+	\[
+		[\phi]_B = \begin{pmatrix}
+			I_p & 0    & 0 \\
+			0   & -I_q & 0 \\
+			0   & 0    & 0
+		\end{pmatrix}
+	\]
+	The quadratic form has a zero subspace of dimension \( n - (p+q) \) in the bottom right.
+	But by setting
+	\[
+		T = \qty{\bfv_1 + \bfv_{p+1}, \dots, \bfv_q + \bfv_{p+q}, \bfv_{p+q+1}, \dots, \bfv_n}
+	\]
+	we can combine the positive and negative blocks (assuming here that \( p \geq q \)) to produce more linearly independent elements of the kernel.
+	In particular, \( \dim T \) is the largest possible dimension of a subspace \( T' \) of \( V \) such that \( {\phi}\restriction_{T'} = 0 \).
+\end{remark}
+
+\subsection{Sesquilinear forms}
+Let \( \bbF = \mathbb C \).
+The standard inner product on \( \mathbb C^n \) is defined to be
+\[
+	\inner{\begin{pmatrix} x_1 \\ \vdots \\ v_n \end{pmatrix}, \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}} = \sum_{i=1}^n x_i \overline y_i
+\]
+This is not a bilinear form on \( \mathbb C \) due to the complex conjugate, it is linear in the first entry.
+\begin{definition}
+	Let \( V, W \) be \( \mathbb C \)-vector spaces.
+	A form \( \phi \colon V \times W \to \mathbb C \) is called \textbf{sesquilinear} if it is linear in the first entry, and
+	\[
+		\phi(\bfv, \lambda_1 \bfw_1 + \lambda_2 \bfw_2) = \overline \lambda_1 \phi(\bfv,\bfw_1) + \overline \lambda_2 \phi(\bfv,\bfw_2)
+	\]
+	so it is antilinear with respect to the second entry.
+\end{definition}
+\begin{lemma}
+	Let \( B = (\bfv_1, \dots, \bfv_m) \) be a basis of \( V \) and \( C = (\bfw_1, \dots, \bfw_n) \) be a basis of \( W \).
+	Let \( [\phi]_{B,C} = \qty(\phi(\bfv_i, \bfw_j)) \).
+	Then,
+	\[
+		\phi(\bfv,\bfw) = [\bfv]_B^\top [\phi]_{B,C} \overline{[\bfw]_C}
+	\]
+\end{lemma}
+\begin{proof}
+	Let \( B, B' \) be bases of \( V \) and \( C, C' \) be bases of \( W \).
+	Let \( P = [I]_{B', B} \) and \( Q = [I]_{C', C} \).
+	Then
+	\[
+		[\phi]_{B', C'} = P^\top [\phi]_{B,C} \overline Q. \qedhere
+	\]
+\end{proof}
+
+\subsection{Hermitian forms}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \) be a finite-dimensional \( \mathbb C \)-vector space.
+	Let \( \phi \) be a sesquilinear form on \( V \).
+	Then \( \phi \) is \textbf{Hermitian} if, for all \( \bfu, \bfv \in V \),
+	\[
+		\phi(\bfu, \bfv) = \overline{\phi(\bfv,\bfu)}
+	\]
+\end{definition}
+\begin{remark}
+	If \( \phi \) is Hermitian, then \( \phi(\bfu,\bfu) = \overline{\phi(\bfu,\bfu)} \in \mathbb R \).
+	Further, \( \phi(\lambda \bfu, \lambda \bfu) = \abs{\lambda}^2 \phi(\bfu,\bfu) \).
+	This allows us to define positive and negative definite Hermitian forms.
+\end{remark}
+\begin{lemma}
+	A sesquilinear form \( \phi \colon V \times V \to \mathbb C \) is Hermitian if and only if, for any basis \( B \) of \( V \),
+	\[
+		[\phi]_B = [\phi]_B^\dagger
+	\]
+\end{lemma}
+\begin{proof}
+	Let \( A = [\phi]_B = (a_{ij}) \).
+	Then \( a_{ij} = \phi(\bfe_i, \bfe_j) \), and \( a_{ji} = \phi(\bfe_j, \bfe_i) = \overline{\phi(\bfe_i, \bfe_j)} = \overline{a_{ij}} \).
+	So \( \overline A^\top = A \).
+	Conversely suppose that \( [\phi]_B = A = \overline A^\top \).
+	Now let
+	\[
+		\bfu = \sum_{i=1}^n \lambda_i \bfe_i;\quad v = \sum_{i=1}^n \mu_i \bfe_i
+	\]
+	Then,
+	\[
+		\phi(\bfu,\bfv) = \phi\qty(\sum_{i=1}^n \lambda_i \bfe_i, \sum_{i=1}^n \mu_i \bfe_i) = \sum_{i=1}^n \sum_{j=1}^n \lambda_i \overline{\mu_j} a_{ij}
+	\]
+	Further,
+	\[
+		\overline{\phi(\bfv,\bfu)} = \overline{\phi\qty(\sum_{i=1}^n \mu_i \bfe_i, \sum_{i=1}^n \lambda_i \bfe_i)} = \sum_{i=1}^n \sum_{j=1}^n \overline{\mu_j \overline{\lambda_i}} \overline{a_{ij}}
+	\]
+	which is equivalent.
+	Hence \( \phi \) is Hermitian.
+\end{proof}
+
+\subsection{Polarisation identity}
+A Hermitian form \( \phi \) on a complex vector space \( V \) is entirely determined by a quadratic form \( Q \colon V \to \mathbb R \) such that \( \bfv \mapsto \phi(\bfv,\bfv) \) by the formula
+\[
+	\phi(\bfu,\bfv) = \frac{1}{4} \qty[ Q(\bfu+\bfv) - Q(\bfu-\bfv) + iQ(\bfu+i\bfv) - iQ(\bfu-i\bfv) ]
+\]
+
+\subsection{Hermitian formulation of Sylvester's law}
+\ \vspace*{-1.5em}
+\begin{theorem}[Hermitian formulation of Sylvester's law]
+	Let \( V \) be a finite-dimensional \( \mathbb C \)-vector space.
+	Let \( \phi \colon V \times V \to \mathbb C \) be a Hermitian form on \( V \).
+	Then there exists a basis \( B = (\bfv_1, \dots, \bfv_n) \) of \( V \) such that
+	\[
+		[\phi]_B = \begin{pmatrix}
+			I_p & 0    & 0 \\
+			0   & -I_q & 0 \\
+			0   & 0    & 0
+		\end{pmatrix}
+	\]
+	where \( p, q \) depend only on \( \phi \) and not \( B \).
+\end{theorem}
+\begin{proof}
+	The following is a sketch proof; it is nearly identical to the case of real symmetric bilinear forms.
+
+	If \( \phi = 0 \), existence is trivial.
+	Otherwise, using the polarisation identity there exists \( \bfe_1 \neq 0 \) such that \( \phi(\bfe_1, \bfe_1) \neq 0 \).
+	Let
+	\[
+		\bfv_1 = \frac{\bfe_1}{\sqrt{\abs{\phi(\bfe_1, \bfe_1)}}} \implies \phi(\bfv_1, \bfv_1) = \pm 1
+	\]
+	Consider the orthogonal space \( W = \qty{w \in V \colon \phi(\bfv_1, \bfw) = 0} \).
+	We can check, arguing analogously to the real case, that \( V = \genset{\bfv_1} \oplus W \).
+	Hence, we can inductively diagonalise \( \phi \).
+
+	\( p, q \) are unique.
+	Indeed, we can prove that \( p \) is the maximal dimension of a subspace on which \( \phi \) is positive definite (which is well-defined since \( \phi(\bfu,\bfu) \in \mathbb R \)).
+	The geometric interpretation of \( q \) is similar.
+\end{proof}
+
+\subsection{Skew-symmetric forms}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \) be a finite-dimensional \( \mathbb R \)-vector space.
+	Let \( \phi \) be a bilinear form on \( V \).
+	Then \( \phi \) is \textbf{skew-symmetric} if, for all \( \bfu,\bfv \in V \),
+	\[
+		\phi(\bfu,\bfv) = -\phi(\bfv,\bfu)
+	\]
+\end{definition}
+\begin{remark}
+	\( \phi(\bfu,\bfu) = -\phi(\bfu,\bfu) = 0 \).
+	Also, in any basis \( B \) of \( V \), we have \( [\phi]_B = -[\phi]_B^\top \).
+	Any real matrix can be decomposed as the sum
+	\[
+		A = \frac{1}{2}\qty(A + A^\top) + \frac{1}{2}\qty(A - A^\top)
+	\]
+	where the first term is symmetric and the second is skew-symmetric.
+\end{remark}
+
+\subsection{Skew-symmetric formulation of Sylvester's law}
+\ \vspace*{-1.5em}
+\begin{theorem}[Skew-symmetric formulation of Sylvester's law]
+	Let \( V \) be a finite-dimensional \( \mathbb R \)-vector space.
+	Let \( \phi \colon V \times V \to \mathbb R \) be a skew-symmetric form on \( V \).
+	Then there exists a basis
+	\[
+		B = (\bfv_1, \bfw_1, \bfv_2, \bfw_2, \dots, \bfv_m, \bfw_m, \bfv_{2m+1}, \bfv_{2m+2}, \dots, \bfv_n)
+	\]
+	of \( V \) such that
+	\[
+		[\phi]_B = \begin{pmatrix}
+			0  & 1                       \\
+			-1 & 0                       \\
+			   &   & 0  & 1              \\
+			   &   & -1 & 0              \\
+			   &   &    &   & \ddots     \\
+			   &   &    &   &        & 0
+		\end{pmatrix}
+	\]
+\end{theorem}
+\begin{corollary}
+	Skew-symmetric matrices have an even rank.
+\end{corollary}
+\begin{proof}
+	This is again very similar to the previous case.
+	We will perform an inductive step on the dimension of \( V \).
+	If \( \phi \neq 0 \), there exist \( \bfv_1, \bfw_1 \) such that \( \phi_1(\bfv_1, \bfw_1) \neq 0 \).
+	After scaling one of the vectors, we can assume \( \phi(\bfv_1, \bfw_1) = 1 \).
+	Since \( \phi \) is skew-symmetric, \( \phi(\bfw_1, \bfv_1) = -1 \).
+	Then \( \bfv_1, \bfw_1 \) are linearly independent; if they were linearly dependent we would have \( \phi(\bfv_1, \bfw_1) = \phi(\bfv_1, \lambda \bfv_1) = 0 \).
+	Let \( U = \genset{\bfv_1, \bfw_1} \) and let \( W = \qty{v \in V \colon \phi(\bfv_1, \bfv) = \phi(\bfw_1, \bfv) = 0} \) and we can show \( V = U \oplus W \).
+	Then induction gives the required result.
+\end{proof}
+
+\section{Inner product spaces}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \) be a vector space over \( \mathbb R \) or \( \mathbb C \).
+	A \textbf{scalar product} or \textbf{inner product} is a positive-definite symmetric (respectively Hermitian) bilinear form \( \phi \) on \( V \).
+	We write
+	\[
+		\phi(\bfu,\bfv) = \inner{\bfu,\bfv}
+	\]
+	\( V \), when equipped with this inner product, is called a real (respectively complex) \textbf{inner product space}.
+\end{definition}
+\begin{example}
+	In \( \mathbb C^n \), we define
+	\[
+		\inner{\bfx,\bfy} = \sum_{i=1}^n x_i \overline y_i
+	\]
+\end{example}
+\begin{example}
+	Let \( V = C^0([0,1], \mathbb C) \).
+	Then we can define
+	\[
+		\inner{f,g} = \int_0^1 f(t) \overline g(t) \dd{t}
+	\]
+	This is the \( L^2 \) scalar product.
+\end{example}
+\begin{example}
+	Let \( \omega \colon [0,1] \colon \mathbb R^*_+ \) where \( \mathbb R^*_+ = \mathbb R_+ \setminus \qty{0} \) and define
+	\[
+		\inner{f,g} = \int_0^1 f(t) \overline g(t) w(t) \dd{t}
+	\]
+\end{example}
+\begin{remark}
+	Typically it suffices to check \( \inner{\bfu,\bfu} = 0 \implies \bfu = 0 \) since linearity and positivity are usually trivial.
+\end{remark}
+\begin{definition}
+	Let \( V \) be an inner product space.
+	Then for \( \bfv \in V \), the \textbf{norm} of \( \bfv \) induced by the inner product is defined by
+	\[
+		\norm{\bfv} = \qty(\inner{\bfv,\bfv})^{1/2}
+	\]
+	This is real, and positive if \( \bfv \neq 0 \).
+\end{definition}
+It allows us to define a notion of length. 
+
+\subsection{Cauchy-Schwarz inequality}
+\ \vspace*{-1.5em}
+\begin{lemma}
+	For an inner product space,
+	\[
+		\abs{\inner{\bfu,\bfv}} \leq \norm{\mathbf{u}} \cdot \norm{\mathbf{v}}
+	\]
+\end{lemma}
+\begin{proof}
+	Let \( t \in \bbF \).
+	Then,
+	\[
+		0 \leq \norm{t \bfu - \bfv} = \inner{t\bfu - \bfv, t\bfu - \bfv} = t \overline t \inner{\bfu,\bfu} - t \inner{\bfu,\bfv} - \overline t \inner{\bfv,\bfu} + \norm{\bfv}^2
+	\]
+	Since the inner product is Hermitian,
+	\[
+		0 \leq \abs{t}^2 \norm{\bfu}^2 + \norm{\bfv}^2 - 2 \Re(t \inner{\bfu,\bfv})
+	\]
+	By choosing
+	\[
+		t = \frac{\overline{\inner{\bfu,\bfv}}}{\norm{\bfu}^2}
+	\]
+	we have
+	\[
+		0 \leq \frac{\abs{\inner{\bfu,\bfv}}^2}{\norm{\bfu}^2} + \norm{\bfv}^2 - 2 \Re\qty(\frac{\abs{\inner{\bfu,\bfv}}^2}{\norm{\bfu}^2})
+	\]
+	Since the term under the real part operator is real, we have 
+	\[
+		0\le \left\| \mathbf{v} \right\|^2 - \frac{\abs{\inner{\mathbf{u},\mathbf{v}}}^2}{\left\| \mathbf{u} \right\|^2}
+	\]and the result follows.
+\end{proof}
+\noindent Note that equality implies collinearity in the Cauchy-Schwarz inequality.
+\begin{corollary}[triangle inequality]
+	In an inner product space,
+	\[
+		\norm{\bfu+\bfv} \leq \norm{\bfu} + \norm{\bfv}
+	\]
+\end{corollary}
+\begin{proof}
+	We have
+	\begin{align*}
+		\norm{\bfu+\bfv}^2 &= \inner{\bfu+\bfv, \bfu+\bfv} = \norm{\bfu^2} + 2 \Re(\inner{\bfu,\bfv}) + \norm{\bfv}^2 \\ 
+		&\leq \norm{\bfu}^2 + \norm{\bfv}^2 + 2 \norm{\bfu} \cdot \norm{\bfv} = (\norm{\bfu} + \norm{\bfv})^2. \qedhere
+	\end{align*}
+\end{proof}
+\begin{remark}
+	Any inner product induces a norm, but not all norms derive from scalar products.
+\end{remark}
+
+\subsection{Orthogonal and orthonormal sets}
+\ \vspace*{-1.5em}
+\begin{definition}
+	A set \( (\bfe_1, \dots, \bfe_k) \) of vectors of \( V \) is said to be \textbf{orthogonal} if \( \inner{\bfe_i, \bfe_j} = 0 \) for all \( i \neq j \).
+	The set is said to be \textbf{orthonormal} if it is orthogonal and \( \norm{\bfe_i} = 1 \) for all \( i \).
+	In this case, \( \inner{\bfe_i, \bfe_j} = \delta_{ij} \).
+\end{definition}
+\begin{lemma}
+	If \( (\bfe_1, \dots, \bfe_k) \) are orthogonal and nonzero, then they are linearly independent.
+	Further, let \( \bfv \in \genset{\qty{\bfe_i}} \).
+	Then,
+	\[
+		\bfv = \sum_{j=1}^k \lambda_j \bfe_j \implies \lambda_j = \frac{\inner{\bfv, \bfe_j}}{\norm{\bfe_j}^2}
+	\]
+\end{lemma}
+\begin{proof}
+	Suppose
+	\[
+		\sum_{i=1}^k \lambda_i \bfe_i = 0
+	\]
+	Then,
+	\[
+		0 = \inner{\sum_{i=1}^k \lambda_i, \bfe_j} \implies 0 = \sum_{i=1}^k \lambda_i \inner{\bfe_i, \bfe_j}
+	\]
+	Thus \( \lambda_j = 0 \) for all \( j \).
+	Further, for \( \bfv \) in the span of these vectors,
+	\[
+		\inner{\bfv, \bfe_j} = \sum_{i=1}^k \lambda_i \inner{\bfe_i, \bfe_j} = \lambda_j \norm{\bfe_j}^2 \qedhere
+	\]
+\end{proof}
+\begin{corollary}[Parseval's identity]
+	Let \( V \) be a finite-dimensional inner product space.
+	Let \( (\bfe_1, \dots, \bfe_n) \) be an orthonormal basis.
+	Then, for any vectors \( \bfu, \bfv \in V \), we have
+	\[
+		\inner{\bfu, \bfv} = \sum_{i=1}^n \inner{\bfu, \bfe_i} \overline{\inner{\bfv, \bfe_i}}
+	\]
+	Hence,
+	\[
+		\norm{\bfu}^2 = \sum_{i=1}^n \abs{\inner{\bfu,\bfe_i}}^2
+	\]
+\end{corollary}
+\begin{proof}
+	By orthonormality,
+	\[
+		\bfu = \sum_{i=1}^n \inner{\bfu, \bfe_i} \bfe_i;\quad \bfv = \sum_{i=1}^n \inner{\bfv, \bfe_i} \bfe_i
+	\]
+	Hence, by sesquilinearity,
+	\[
+		\inner{\bfu,\bfv} = \sum_{i=1}^n \inner{\bfu, \bfe_i} \overline{\inner{\bfv, \bfe_i}}
+	\]
+	By taking \( \bfu = \bfv \) we find
+	\[
+		\norm{\bfu}^2 = \inner{\bfu,\bfu} = \sum_{i=1}^n \abs{\inner{\bfu,\bfe_i}}^2\qedhere
+	\]
+\end{proof}
+
+\subsection{Gram-Schmidt orthogonalisation process}
+We can orthonormalise a set of vectors by:
+\begin{theorem}[Gram-Schmidt orthogonalisation process]
+	Let \( V \) be an inner product space.
+	Let \( (\bfv_i)_{i \in I} \) be a linearly independent family of vectors such that \( I \) is countable.
+	Then there exists a family \( (\bfe_i)_{i \in I} \) of orthonormal vectors such that for all \( k \geq 1 \),
+	\[
+		\genset{\bfv_1, \dots, \bfv_k} = \genset{\bfe_1, \dots, \bfe_k}
+	\]
+\end{theorem}
+\begin{proof}
+	This proof is an explicit algorithm to compute the family \( (\bfe_i) \), which will be computed by induction on \( k \).
+	
+	For \( k = 1 \), take \( \bfe_1 = \frac{\bfv_1}{\norm{\bfv_1}} \).
+
+	Inductively, suppose \( (\bfe_1, \dots, \bfe_k) \) satisfy the conditions as above.
+	Then we will find a valid \( \bfe_{k+1} \).
+	We define
+	\[
+		\bfe_{k+1}' = \bfv_{k+1} - \sum_{i=1}^k \inner{\bfv_{k+1}, \bfe_i} \bfe_i
+	\]
+	This ensures that the inner product between \( \bfe_{k+1}' \) and any basis vector \( \bfe_j \) is zero, while maintaining the same span.
+	Suppose \( \bfe_{k+1}' = 0 \).
+	Then, \( \bfv_{k+1} \in \genset{\bfe_1, \dots, \bfe_k} = \genset{\bfv_1, \dots, \bfv_k} \) which contradicts the fact that the family is free.
+	Thus,
+	\[
+		\bfe_{k+1} = \frac{\bfe_{k+1}'}{\norm{\bfe_{k+1}'}}
+	\]
+	satisfies the requirements.
+\end{proof}
+\begin{corollary}
+	In finite-dimensional inner product spaces, there always exists an orthonormal basis.
+	In particular, any orthonormal set of vectors can be extended into an orthonormal basis.
+\end{corollary}
+\begin{remark}
+	Let \( A \in \mcM_n(\mathbb R) \) be a real-valued (or complex-valued) matrix.
+	Then, the column vectors of \( A \) are orthogonal if \( A^\top A = I \) (or \( A^\top \overline A = I \) in the complex-valued case).
+\end{remark}
+
+\begin{definition}
+	A matrix \( A \in \mcM_n(\mathbb R) \) is \textbf{orthogonal} if \( A^\top A = I \), hence \( A^\top = A^{-1} \).
+	A matrix \( A \in \mcM_n(\mathbb C) \) is \textbf{unitary} if \( A^\top \overline A = I \), hence \( A^\dagger = A^{-1} \).
+\end{definition}
+\begin{proposition}
+	Let \( A \) be a square, non-singular, real-valued (or complex-valued) matrix.
+	Then \( A \) can be written as \( A = RT \) where \( T \) is upper triangular and \( R \) is orthogonal (or respectively unitary).
+\end{proposition}
+\begin{proof}
+	We apply the Gram-Schmidt process to the column vectors of the matrix.
+	This gives us an orthonormal set of vectors, which gives an upper triangular matrix in this new basis.
+\end{proof}
+
+\subsection{Orthogonal complement and projection}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \) be an inner product space.
+	Let \( V_1, V_2 \leq V \).
+	Then we say that \( V \) is the \textbf{orthogonal direct sum} of \( V_1 \) and \( V_2 \) if \( V = V_1 \oplus V_2 \) and for all vectors \( \bfv_1\in V_1, \bfv_2\in V_2 \) we have \( \inner{\bfv_1, \bfv_2} = 0 \).
+	When this holds, we write \( V = V_1 \overset{\perp}{\oplus} V_2 \).
+\end{definition}
+\begin{remark}
+	If for all vectors \( \bfv_1, \bfv_2 \) we have \( \inner{\bfv_1, \bfv_2} = 0 \), then \( \bfv \in V_1 \cap V_2 \implies \norm{\bfv}^2 = 0 \implies \bfv = 0 \).
+	Hence the sum is always direct if the subspaces are orthogonal.
+\end{remark}
+\begin{definition}
+	Let \( V \) be an inner product space and let \( W \leq V \).
+	We define the \textbf{orthogonal} of \( W \) to be
+	\[
+		W^\perp = \qty{\bfv \in V \colon \forall \bfw \in W, \inner{\bfv,\bfw} = 0}
+	\]
+\end{definition}
+\begin{lemma}
+	For any inner product space \( V \) and any subspace \( W \leq V \), we have \( V = W \overset{\perp}{\oplus} W^\perp \).
+\end{lemma}
+\begin{proof}
+	First note that \( W^\perp \leq V \).
+	Then, if \( \bfw \in W \cap W^\perp \), we have
+	\[
+		\norm{\bfw}^2 = \inner{\bfw, \bfw} = 0
+	\]
+	since they are orthogonal, so the vector subspaces intersect only in the zero vector.
+	Now, we need to show \( V = W + W^\perp \).
+	Let \( (\bfe_1, \dots, \bfe_k) \) be an orthonormal basis of \( W \) and extend it into \( (\bfe_1, \dots, \bfe_k, \bfe_{k+1}, \dots, \bfe_n) \) which can be made orthonormal.
+	Then, \( (\bfe_{k+1}, \dots, \bfe_n) \) are elements of \( W^\perp \) and form a basis.
+\end{proof}
+
+\begin{definition}
+	Suppose \( V = U \oplus W \), so \( U \) is a complement of \( W \) in \( V \).
+	Then, we define \( \pi \colon V \to W \) which maps \( \bfv = \bfu + \bfw \) to \( \bfw \).
+	This is well defined, since the sum is direct.
+	\( \pi \) is linear, and \( \pi^2 = \pi \).
+
+	We say that \( \pi \) is the \textbf{projection} operator onto \( W \).
+\end{definition}
+\begin{remark}
+	The map \( \iota - \pi \) is the projection onto \( U \), where \( \iota \) is the identity map.
+\end{remark}
+\begin{lemma}
+	Let \( V \) be an inner product space.
+	Let \( W \leq V \) be a finite-dimensional subspace.
+	Let \( (\bfe_1, \dots, \bfe_k) \) be an orthonormal basis for \( W \).
+	Then,
+	\begin{enumerate}[(a)]
+		\item \( \pi(\bfv) = \sum_{i=1}^k \inner{\bfv, \bfe_i} \bfe_i \); and
+		\item for all \( \bfv \in V, \bfw \in W \), \( \norm{\bfv - \pi(\bfv)} \leq \norm{\bfv - \bfw} \) with equality if and only if \( \bfw = \pi(\bfv) \), hence \( \pi(\bfv) \) is the point in \( W \) closest to \( \bfv \).
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	We define \( \pi(\bfv) = \sum_{i=1}^k \inner{\bfv, \bfe_i} \bfe_i \).
+	Since \( W = \genset{\qty{\bfe_k}} \), \( \pi(\bfv) \in W \) for all \( \bfv \in V \).
+	Then, \( \bfv = (\bfv - \pi(\bfv)) + \pi(\bfv) \) has a term in \( W \).
+	We claim that the remaining term is in the orthogonal; \( \bfv - \pi(\bfv) \in W^\perp \).
+
+	Indeed, we must show \( \inner{\bfv - \pi(\bfv), \bfw} = 0 \) for all \( \bfw \in W \).
+	Equivalently, 
+	\[
+		\inner{\bfv - \pi(\bfv), \bfe_i} = 0
+	\]
+	for all basis vectors \( \bfe_i \) of \( W \).
+	We can explicitly compute
+	\begin{align*}
+		\inner{\bfv - \pi(\bfv), \bfe_j} &= \inner{\bfv, \bfe_j} - \inner{\sum_{i=1}^k \inner{\bfv, \bfe_i} \bfe_i, \bfe_j} \\ 
+		&= \inner{\bfv, \bfe_j} - \sum_{i=1}^k \inner{\bfv, \bfe_i} \inner{\bfe_i, \bfe_j} = \inner{\bfv, \bfe_j} - \inner{\bfv, \bfe_j} = 0
+	\end{align*}
+	Hence, \( \bfv = (\bfv - \pi(\bfv)) + \pi(\bfv) \) is a decomposition into \( W \) and \( W^\perp \).
+	Since \( W \cap W^\perp = \qty{0} \), we have \( V = W \overset{\perp}{\oplus} W^\perp \).
+	For the second part, let \( \bfv \in V \), \( \bfw \in W \), and we compute
+	\begin{align*}
+		\norm{\bfv - \bfw}^2 &= \|\underbrace{\bfv - \pi(\bfv)}_{\in W^\perp} + \underbrace{\pi(\bfv) - \bfw}_{\in W}\|^2 \\ 
+		&= \norm{\bfv - \pi(\bfv)}^2 + \norm{\pi(\bfv) - \bfw}^2 \geq \norm{\bfv - \pi(\bfv)}^2
+	\end{align*}
+	with equality if and only if \( \bfw = \pi(\bfv) \).
+\end{proof}
+
+\subsection{Adjoint maps}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V, W \) be finite-dimensional inner product spaces.
+	Let \( \alpha \in \mcL(V, W) \).
+	Then there exists a unique linear map \( \alpha^* \colon W \to V \) such that for all \( \bfv, \bfw \in V, W \),
+	\[
+		\inner{\alpha(\bfv), \bfw} = \inner{\bfv, \alpha^*(\bfw)}
+	\]
+	Moreover, if \( B \) is an orthonormal basis of \( V \), and \( C \) is an orthonormal basis of \( W \), then
+	\[
+		[\alpha^*]_{C, B} = \qty(\overline{[\alpha]_{B, C}})^\top = [\alpha]_{B, C}^\dagger
+	\]
+\end{definition}
+\begin{proof}
+	Let \( B = (\bfv_1, \dots, \bfv_n) \) and \( C = (\bfw_1, \dots, \bfw_m) \) and \( A = [\alpha]_{B, C} = (a_{ij}) \).
+	To check existence, we define \( [\alpha^*]_{C, B} = \overline{A}^\top = (c_{ij}) \) and explicitly check the definition.
+	By orthogonality,
+	\[
+		\inner{\alpha\qty(\sum \lambda_i \bfv_i), \sum \mu_j \bfw_j} = \inner{\sum_{i,k} \lambda_i a_{ki} \bfw_k, \sum_j \mu_j \bfw_j} = \sum_{i,j} \lambda_i a_{ji} \overline{\mu_j}
+	\]
+	Then,
+	\[
+		\inner{\sum \lambda_i \bfv_i, \alpha^*\qty(\sum \mu_j \bfw_j)} = \inner{\sum_i \lambda_i \bfv_i, \sum_{j,k} \mu_j c_{kj} \bfv_k} = \sum_{i,j} \lambda_i \overline{c_{ij}} \overline{\mu_j}
+	\]
+	So equality requires \( \overline{c_{ij}} = a_{ji} \).
+	Uniqueness follows from the above; the expansions are equivalent for any vector if and only if \( \overline{c_{ij}} = a_{ji} \).
+\end{proof}
+
+\begin{remark}
+	The same notation, \( \alpha^* \), is used for the adjoint as just defined, and the dual map as defined before.
+
+	Let $ V,W $ be real inner product spaces. Let $ \alpha\in \mathcal{L}(V,W) $ and define 
+	\[
+		\psi_{R,V}: \begin{matrix}
+			 V \xrightarrow{\cong} V^*\\
+			 \mathbf{v} \mapsto \inner{\cdot, \mathbf{v}} \\
+		\end{matrix},\quad \psi_{R,W}: \begin{matrix}
+			 W \to W^*  \\
+			 \mathbf{w} \mapsto \inner{\cdot,\mathbf{w}} \\
+		\end{matrix}
+	\]
+	Then the adjoint of $\alpha$ is given by $ \alpha^* = \psi_{R,V}^{-1} \alpha^* \psi_{R,W}  $, here $\alpha^* $ on RHS is the dual. 
+	\[
+		W \xrightarrow[\psi_{R,W}]{} W^* \xrightarrow[\alpha^*]{} V^* \xrightarrow[\psi_{R,V}^{-1}]{} V.
+	\]
+\end{remark}
+
+\subsection{Self-adjointness and isometries}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \) be a finite-dimensional inner product space, and \( \alpha \) be an endomorphism of \( V \).
+	Let \( \alpha^* \in \mcL(V) \) be the adjoint map.
+	Then,
+	\begin{enumerate}[(i)]
+		\item the condition \( \inner{\alpha \bfv, \bfw} = \inner{\bfv, \alpha \bfw} \) is equivalent to the condition \( \alpha = \alpha^* \), and such an \( \alpha \) is called \textit{self-adjoint} (for \( \mathbb R \) we call such endomorphisms \textbf{symmetric}, and for \( \mathbb C \) we call such endomorphisms Hermitian);
+		\item the condition \( \inner{\alpha \bfv, \alpha \bfw} = \inner{\bfv, \bfw} \) is equivalent to the condition \( \alpha^* = \alpha^{-1} \), and such an \( \alpha \) is called an \textbf{isometry} (for \( \mathbb R \) it is called \textbf{orthogonal}, and for \( \mathbb C \) it is called \textbf{unitary}).
+	\end{enumerate}
+\end{definition}
+\begin{proposition}
+	The conditions for isometries defined as above are equivalent.
+\end{proposition}
+\begin{proof}
+	Suppose \( \inner{\alpha \bfv, \alpha \bfw} = \inner{\bfv,\bfw} \).
+	Then for \( \bfv = \bfw \), we find \( \norm{\alpha \bfv}^2 = \norm{\bfv}^2 \), so \( \alpha \) preserves the norm.
+	In particular, this implies \( \ker \alpha = \qty{0} \).
+	Since \( \alpha \) is an endomorphism and \( V \) is finite-dimensional, \( \alpha \) is bijective.
+	Then for all \( \bfv, \bfw \in V \),
+	\[
+		\inner{\bfv, \alpha^*(\bfw)} = \inner{\alpha \bfv, \bfw} = \inner{\alpha \bfv, \alpha\qty(\alpha^{-1}(\bfw))} = \inner{\bfv, \alpha^{-1}(\bfw)}
+	\]
+	Hence \( \alpha^* = \alpha^{-1} \).
+	Conversely, if \( \alpha^* = \alpha^{-1} \) we have
+	\[
+		\inner{\alpha \bfv, \alpha \bfw} = \inner{\bfv, \alpha^*(\alpha \bfw)} = \inner{\bfv, \bfw}
+	\]
+	as required.
+\end{proof}
+\begin{remark}
+	Using the polarisation identity, we can show that \( \alpha \) is isometric if and only if for all \( \bfv \in V \), \( \norm{\alpha(\bfv)} = \norm{\bfv} \).
+\end{remark}
+\begin{lemma}
+	Let \( V \) be a finite-dimensional real (or complex) inner product space.
+	Then for \( \alpha \in \mcL(V) \),
+	\begin{enumerate}[(i)]
+		\item \( \alpha \) is self-adjoint if and only if for all orthonormal bases \( B \) of \( V \), we have \( [\alpha]_B \) is symmetric (or Hermitian);
+		\item \( \alpha \) is an isometry if and only if for all orthonormal bases \( B \) of \( V \), we have \( [\alpha]_B \) is orthogonal (or unitary).
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	Let \( B \) be an orthonormal basis for \( V \).
+	Then we know \( [\alpha^*]_B = [\alpha]_B^\dagger \).
+	We can then check that \( [\alpha]_B^\dagger = [\alpha]_B \) and \( [\alpha]_B^\dagger = [\alpha]_B^{-1} \) respectively.
+\end{proof}
+\begin{definition}
+	For \( F = \mathbb R \), we define the \textbf{orthogonal group} of \( V \) by
+	\[
+		O(V) = \qty{ \alpha \in L(V) \colon \alpha \text{ is an isometry} }
+	\]
+	Note that \( O(V) \) is bijective with the set of orthogonal bases of \( V \).
+	For \( F = \mathbb C \), we define the \textbf{unitary group} of \( V \) by
+	\[
+		U(V) = \qty{ \alpha \in L(V) \colon \alpha \text{ is an isometry} }
+	\]
+	Again, note that \( U(V) \) is bijective with the set of orthogonal bases of \( V \).
+\end{definition}
+
+Let $V$ be a finite-dimensional real inner product space and $(\mathbf{e}_1, \cdots, \mathbf{e}_n)$ is an orthonormal basis of $V$. Then there is a bijection
+\begin{align*}
+O(V) &\to \{\text{orthonormal basis for }V\}\\
+\alpha &\mapsto (\alpha(\mathbf{e}_1, \cdots, \mathbf{e}_n)).
+\end{align*}
+
+Let $V$ be a finite-dimensional complex inner product space. Then there is a bijection
+\begin{align*}
+U(V) &\to \{\text{orthonormal basis of } V\}\\
+\alpha &\mapsto \{\alpha(\mathbf{e}_1), \cdots, \alpha (\mathbf{e}_n)\}.
+\end{align*}
+
+\subsection{Spectral theory}
+
+Spectral theory is the study of the spectrum of operators.
+Recall that in finite-dimensional inner product spaces \( V, W \), \( \alpha \in \mcL(V, W) \) yields the adjoint \( \alpha^* \in \mcL(W, V) \) such that for all \( \bfv \in V, \bfw \in W \), we have \( \inner{\alpha(\bfv), \bfw} = \inner{\bfv, \alpha^*(\bfw)} \).
+\begin{lemma}
+	Let \( V \) be a finite-dimensional inner product space.
+	Let \( \alpha \in \mcL(V) \) be a self-adjoint endomorphism.
+	Then \( \alpha \) has real eigenvalues, and eigenvectors of \( \alpha \) with respect to different eigenvalues are orthogonal.
+\end{lemma}
+\begin{proof}
+	Suppose \( \lambda \in \mathbb C \), \( \bfv \in V \) nonzero such that \( \alpha(\bfv) = \lambda \bfv \).
+	Then, \( \inner{\lambda \bfv, \bfv} = \lambda \norm{\bfv}^2 \) and also
+	\[
+		\inner{\alpha \bfv, \bfv} = \inner{\bfv, \alpha \bfv} = \inner{\bfv, \lambda \bfv} = \overline{\lambda} \norm{\bfv}^2
+	\]
+	Hence \( \lambda = \overline{\lambda} \) since \( \bfv \neq 0 \).
+	Now, suppose \( \mu \neq \lambda \) and \( \bfw \in V \) nonzero such that \( \alpha(\bfw) = \mu \bfw \).
+	Then,
+	\[
+		\lambda \inner{\bfv, \bfw} = \inner{\alpha \bfv, \bfw} = \inner{\bfv, \alpha \bfw} = \overline{\mu} \inner{\bfv, \bfw} = \mu \inner{\bfv,\bfw}
+	\]
+	So if \( \lambda \neq \mu \) we must have \( \inner{\bfv,\bfw} = 0 \).
+\end{proof}
+\begin{theorem}[Spectral theorem for self-adjoint maps]
+	Let \( V \) be a finite-dimensional inner product space.
+	Let \( \alpha \in \mcL(V) \) be self-adjoint.
+	Then \( V \) has an orthonormal basis of eigenvectors of \( \alpha \).
+	Hence \( \alpha \) is diagonalisable in an orthonormal basis.
+\end{theorem}
+\begin{proof}
+	We argue by induction on the dimension of $V$. 
+	\begin{itemize}
+		\item $n=1$, this is obvious. 
+		\item $ n-1\to n $. Suppose \( A = [\alpha]_B \) with respect to the fundamental basis \( B \). By the fundamental theorem of algebra, we know that \( \chi_A(\lambda) \) has a (complex) root.
+		But since \( \lambda \) is an eigenvalue of \( \alpha \) and \( \alpha \) is self-adjoint, \( \lambda \in \mathbb R \).
+
+		Now, we choose an eigenvector \( \bfv_1 = V \setminus \qty{0} \) such that \( \alpha(\bfv_1) = \lambda \bfv_1 \).
+		We can set \( \norm{\bfv_1} = 1 \) by linearity.
+		Let \( U = \genset{\bfv_1}^\perp \leq V \).
+		We then observe that \( U \) is stable by \( \alpha \); \( \alpha(U) \leq U \).
+		Indeed, let \( \bfu \in U \).
+		Then \( \inner{\alpha(\bfu), \bfv_1} = \inner{\bfu, \alpha(\bfv_1)} = \lambda \inner{\bfu, \bfv_1} = 0 \) by orthogonality.
+		Hence \( \alpha(\bfu) \in U \).
+
+		We can then restrict \( \alpha \) to the domain \( U \). Note that by construction, $ \dim U = \dim V - 1 $, and by induction we can then choose an orthonormal basis of eigenvectors for \( U \).
+		Since \( V = \genset{\bfv_1} \overset{\perp}{\oplus} U \) we have an orthonormal basis of eigenvectors for \( V \) when including \( \bfv_1 \).\qedhere
+	\end{itemize}
+\end{proof}
+\begin{corollary}
+	Let \( V \) be a finite-dimensional inner product space.
+	Let \( \alpha \in \mcL(V) \) be self-adjoint.
+	Then \( V \) is the orthogonal direct sum of the eigenspaces of \( \alpha \).
+\end{corollary}
+
+\subsection{Spectral theory for unitary maps}
+\ \vspace*{-1.5em}
+\begin{lemma}
+	Let \( V \) be a complex inner product space.
+	Let \( \alpha \) be unitary, so \( \alpha^* = \alpha^{-1} \).
+	Then all eigenvalues of \( \alpha \) have unit norm.
+	Eigenvectors corresponding to different eigenvalues are orthogonal.
+\end{lemma}
+\begin{proof}
+	Let \( \lambda \in \mathbb C \), \( \bfv \in V \setminus \qty{0} \) such that \( \alpha(\bfv) = \lambda \bfv \).
+	First, \( \lambda \neq 0 \) since \( \alpha \) is invertible, and in particular \( \ker \alpha = \qty{0} \).
+	Since \( \bfv = \lambda \alpha^{-1}(\bfv) \), we can compute
+	\[
+		\lambda \inner{\bfv,\bfv} = \inner{\lambda \bfv, \bfv} = \inner{\alpha \bfv, \bfv} = \inner{\bfv, \alpha^{-1} \bfv} = \inner{\bfv, \frac{1}{\lambda} \bfv} = \frac{1}{\overline \lambda} \inner{\bfv, \bfv}
+	\]
+	Hence \( (\lambda \overline \lambda - 1) \norm{\bfv}^2 = 0 \) giving \( \abs{\lambda} = 1 \).
+
+	Further, suppose \( \mu \in \mathbb C \) and \( \bfw \in V \setminus \qty{0} \) such that \( \alpha(\bfw) = \mu \bfw, \lambda \neq \mu \).
+	Then
+	\[
+		\lambda \inner{\bfv,\bfw} = \inner{\lambda \bfv, \bfw} = \inner{\alpha \bfv, \bfw} = \inner{\bfv, \alpha^{-1} \bfw} = \inner{\bfv, \frac{1}{\mu} \bfw} = \frac{1}{\overline \mu} \inner{\bfv,\bfw} = \mu \inner{\bfv,\bfw}
+	\]
+	since \( \mu \overline \mu = 1 \). So $ \langle \mathbf{v},\mathbf{w} \rangle = 0 $.
+\end{proof}
+\begin{theorem}[spectral theorem for unitary maps]
+	Let \( V \) be a finite-dimensional complex inner product space.
+	Let \( \alpha \in \mcL(V) \) be unitary.
+	Then \( V \) has an orthonormal basis of eigenvectors of \( \alpha \).
+	Hence \( \alpha \) is diagonalisable in an orthonormal basis.
+\end{theorem}
+\begin{proof}
+	Let \( A = [\alpha]_B \) where \( B \) is an orthonormal basis.
+	Then \( \chi_A(\lambda) \) has a complex root \( \lambda \).
+	As before, let \( \bfv_1 \neq 0 \) such that \( \alpha(\bfv_1) = \lambda \bfv_1 \) and \(\norm{\bfv_1} = 1 \).
+	Let \( U = \genset{\bfv_1}^\perp \), and we claim that \( \alpha(U) = U \).
+	Indeed, let \( \bfu \in U \), and we find
+	\[
+		\inner{\alpha(\bfu), \bfv_1} = \inner{\bfu, \alpha^{-1}(\bfv_1)} = \inner{\bfu, \frac{1}{\lambda} \bfv_1} = \frac{1}{\overline \lambda} \inner{\bfu,\bfv_1}
+	\]
+	Since \( \inner{\bfu, \bfv_1} = 0 \), we have \( \alpha(\bfu) \in U \).
+	Hence, \( \alpha \) restricted to \( U \) is a unitary endomorphism of \( U \).
+	By induction we have an orthonormal basis of eigenvectors of \( \alpha \) for \( U \) and hence for \( V \).
+\end{proof}
+\begin{remark}
+	We used the fact that the field is complex to find an eigenvalue.
+	In general, a real-valued orthonormal matrix \( A \) giving \( A A^\top = I \) cannot be diagonalised over \( \mathbb R \).
+	For example, consider
+	\[
+		A = \begin{pmatrix}
+			\cos\theta & -\sin\theta \\
+			\sin\theta & \cos\theta
+		\end{pmatrix}
+	\]
+	This is orthogonal and normalised.
+	However, \( \chi_A(\lambda) = 1 + 2\lambda \cos\theta + \lambda^2 \) hence \( \lambda = e^{\pm i \theta} \) which are complex in the general case.
+\end{remark}
+
+\subsection{Application to bilinear forms}
+We wish to extend the previous statements about spectral theory into statements about bilinear forms.
+\begin{corollary}
+	Let \( A \in \mcM_n(\mathbb R) \) (or \( \mcM_n(\mathbb C) \)) be a symmetric (or respectively Hermitian) matrix.
+	Then there exists an orthonormal (respectively unitary) matrix \( P \) such that \( P^\top A P \) (or \( P^\dagger A P \)) is diagonal with real-valued entries.
+\end{corollary}
+\begin{proof}
+	Using the standard inner product, \( A \in \mcL(\bbF^n) \) is self-adjoint and hence there exists an orthonormal basis \( B \) of \( F^n \) such that \( A \) is diagonal in this basis.
+	Let \( P = (\bfv_1, \dots, \bfv_n) \) be the matrix of this basis.
+	Since \( B \) is orthonormal, \( P \) is orthogonal (or unitary).
+	The result follows from the fact that \( P^{-1} A P \) is diagonal.
+	The eigenvalues are real, hence the diagonal matrix is real.
+\end{proof}
+\begin{corollary}
+	Let \( V \) be a finite-dimensional real (or complex) inner product space.
+	Let \( \phi \colon V \times V \to \bbF \) be a symmetric (or Hermitian) bilinear form.
+	Then, there exists an orthonormal basis \( B \) of \( V \) such that \( [\phi]_B \) is diagonal.
+\end{corollary}
+\begin{proof}
+	\( A^\top = A \) (or respectively \( A^\dagger = A \)), hence there exists an orthogonal (respectively unitary) matrix \( P \) such that \( P^{-1} A P \) is diagonal.
+	Let \( (v_i) \) be the \( i \)th row of \( P^{-1} = P^\top \) (or \( P^\dagger \)).
+	Then \( (\bfv_1, \dots, \bfv_n) \) is an orthonormal basis \( B \) of \( V \) such that \( [\phi]_V \) is this diagonal matrix.
+\end{proof}
+\begin{remark}
+	The diagonal entries of \( P^{-1} A P \) are the eigenvalues of \( A \).
+	Moreover, we can define the signature \( s(\phi) \) to be the difference between the number of positive eigenvalues of \( A \) and the number of negative eigenvalues of \( A \).
+\end{remark}
+
+\subsection{Simultaneous diagonalisation}
+\ \vspace*{-1.5em}
+\begin{corollary}
+	Let \( V \) be a finite-dimensional real (or complex) vector space.
+	Let \( \phi, \psi \) be symmetric (or Hermitian) bilinear forms on \( V \).
+	Let \( \phi \) be positive definite.
+	Then there exists a basis \( (\bfv_1, \dots, \bfv_n) \) of \( V \) with respect to which \( \phi \) and \( \psi \) are represented with a diagonal matrix.
+\end{corollary}
+\begin{proof}
+	Since \( \phi \) is positive definite, \( V \) equipped with \( \phi \) is a finite-dimensional inner product space where \( \inner{\bfu,\bfv} = \phi(\bfu,\bfv) \).
+	Hence, there exists a basis of \( V \) in which \( \psi \) is represented by a diagonal matrix, which is orthonormal with respect to the inner product defined by \( \phi \).
+	Then, \( \phi \) in this basis is represented by the identity matrix given by \( \phi(\bfv_i, \bfv_j) = \inner{\bfv_i, \bfv_j} = \delta_{ij} \), which is diagonal.
+\end{proof}
+\begin{corollary}
+	Let \( A, B \in \mcM_n(\mathbb R) \) (or \( \mathbb C \)) which are symmetric (or Hermitian).
+	Suppose for all \( \bfx \neq 0 \) we have \( \bfx^\dagger A \bfx > 0 \), so \( A \) is positive definite.
+	Then there exists an invertible matrix \( Q \in M_n(\mathbb R) \) (or \( \mathbb C \)) such that \( Q^\top A Q \) (or \( Q^\top A \overline{Q} \)) and \( Q^\top B Q \) (or \( Q^\top B \overline{Q} \)) are diagonal.
+\end{corollary}
+\begin{proof}
+	\( A \) induces a quadratic form \( Q(\bfx) = x^\dagger A x \) which is positive definite by assumption.
+	Similarly, \( \widetilde Q(\bfx) = \bfx^\dagger B \bfx \) is induced by \( B \).
+	Then we can apply the previous corollary and change basis.
+\end{proof}
 
 \end{document}

@@ -2109,4 +2109,64 @@ or more simply
 \[
 a_n=\frac{(2 \nu n-\beta)}{n(n+1)} a_{n-1}
 \]
+The above recurrence relation determines all the coefficients $a_n$ in the series in terms of the first coefficent $a_0$. As in our analysis of the harmonic oscillator, there are two possibilities,
+\begin{itemize}
+	\item The series terminates. In other words $\exists N>0$ such that $a_n=0 \forall n \geq N$.
+	\item The series does not terminate. In other words $\nexists N>0$ such that $a_n=0 \forall$ $n \geq N$
+\end{itemize}
+\begin{proposition}
+	If the series does not terminate, then the function $ \chi(r) = f(r) e^{-\nu r} $ is not normalisable.
+\end{proposition}
+See Prof Ubiali's notes. 
+
+Hence \( g \) must be a polynomial with first zero coefficient \( a_{n_{\max}} \).
+Here,
+\[
+	2\nu(n_{\max} + \ell) - \beta = 0
+\]
+We define \( N = n_{\max} + \ell \), so \( 2 \nu N - \beta = 0 \) giving \( \nu = \frac{\beta}{2N} \).
+Note that \( N > \ell \) since \( n_{\max} > 0 \).
+We can then find the energy level to be
+\[
+	E_N = -\frac{e^4 m_e}{32 \pi^2 \varepsilon_0^2 \hbar^2} \frac{1}{n^2}
+\]
+which is an identical energy spectrum as we found before when not considering angular momentum (using the Bohr model).
+For each \( E_N \), we have \( N = n_{\max} + \ell \) so there can be \( \ell = 0, \dots, N-1 \) and \( m = -\ell, \dots, \ell \).
+Hence, the degeneracy of the solution for each \( N \) is
+\[
+	D(N) = \sum_{\ell=0}^{N-1} \sum_{m=-\ell}^\ell 1 = N^2
+\]
+So the degeneracy increases quadratically with the energy level.
+For example, for \( N = 2 \) there are four possible eigenfunctions with the same energy.
+The eigenfunctions are now dictated by three quantum numbers.
+\[
+	\chi_{N,\ell,m}(r,\theta,\phi) = R_{N,\ell}(r)Y_{\ell,m}(\theta,\phi) = r^\ell g_{N,\ell}(r) e^{-\frac{\beta r}{2N}} Y_{\ell,m}(\theta,\phi)
+\]
+where \( g_{N,\ell} \) is a polynomial of degree \( N - \ell - 1 \) defined by the recurrence relation
+\[
+	a_k = \frac{2\nu}{k} \frac{k + \ell - N}{k + 2\ell + 1} a_{n-1}
+\]
+These are the generalised Laguerre polynomials, often written
+\[
+	g_{N,\ell}(r) = L_{N - \ell - 1}^{2\ell + 1}(2r)
+\]
+The quantum number \( N \in \qty{0, 1, \dots} \) is known as the \textit{principal} quantum number.
+
+\subsection{Comparison to Bohr model}
+In the Bohr model, the energy levels were predicted accurately.
+Further, the maximum of the radial probability corresponds to the orbits found in the Bohr model:
+\[
+	\dv{r} \qty( \abs{\chi_{N,0,0}(r)}^2 r^2) = 0
+\]
+The classical trajectory, and the assumption about the angular momentum \( L^2 = N^2 \hbar^2 \), were incorrect.
+The angular momentum found in quantum mechanics is \( L^2 = \ell(\ell+1) \hbar^2 \), which corresponds closely with the Bohr model for large \( \ell \).
+
+\subsection{Other elements of the periodic table}
+The above solution does not hold for other elements of the periodic table.
+Generalising to a nucleus with clarge \( +ze \) and \( z \) orbiting electrons, we could model this as
+\[
+	\chi(x_1, \dots, x_z) = \chi(x_1) \dots \chi(x_N);\quad E = \sum_{j=1}^N e_j
+\]
+This approximation can be acceptable for small \( z \), but diverges very quickly from the true solution as \( z \) increases, due to the electron-electron interactions and the Pauli exclusion principle.
+
 \end{document}

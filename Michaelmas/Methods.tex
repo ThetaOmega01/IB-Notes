@@ -3001,9 +3001,10 @@ Note,
 \[
 	\alpha \phi_x + \beta \phi_y = \bfu \cdot \grad{\phi} = \eval{\dv{\phi}{s}}_C
 \]
-This is exactly the directional derivative along the integral curve \( C \), defined by \( u = (\alpha, \beta) \).
+This is exactly the directional derivative along the integral curve \( C \), defined by \( \bfu = (\alpha, \beta) \), the characteristic curve of the PDE. 
+
 Since \( \dv{\phi}{s} = \alpha \phi_x + \beta \phi_y = 0 \) from the original PDE, the function \( \phi(x,y) \) is constant along this curve \( C \).
-In other words, the Cauchy data \( f(t) \) defined on \( B \) at \( s = 0 \) is propagated constantly along the integral curves.
+In other words, the Cauchy data \( f(t) \) defined on \( B \) at \( s = 0 \) is propagated constantly along the integral curves $ C $.
 This gives the solution
 \[
 	\phi(s,t) = \phi(x(s,t), y(s,t)) = f(t)
@@ -3018,7 +3019,7 @@ To solve such a PDE, we will typically use the following steps.
 \begin{enumerate}
 	\item Find the characteristic equations \( \dv{x}{s} = \alpha, \dv{y}{s} = \beta \).
 	\item Parametrise the initial conditions on \( B \) by \( (x(t), y(t)) \).
-	\item Solve the characteristic equations to find \( x = x(s,t) \) and \( y = y(s,t) \) subject to the initial conditions at \( s = 0 \).
+	\item Solve the characteristic equations to find \( x = x(s,t) \) and \( y = y(s,t) \) subject to the initial conditions at \( s = 0 \): $ x(0,t)=x(t), y(0,t)=y(t) $.
 	\item Solve the equation for \( \phi \) given by \( \dv{\phi}{s} = \alpha \phi_x + \beta \phi_y = 0 \), so \( \phi \) is constant along the integral curves, giving \( \phi(s,t) = f(t) \).
 	\item Invert the relations \( s = s(x,y) \) and \( t = t(x,y) \), then find \( \phi \) in terms of \( x,y \).
 \end{enumerate}
@@ -3051,7 +3052,7 @@ To solve such a PDE, we will typically use the following steps.
 	\]
 	Thus,
 	\[
-		\dv{\phi}{x} = 0 \implies \phi(s,t) = h(t) \implies \phi(x,y) = h(y)
+		\dv{\phi}{s} = 0 \implies \phi(s,t) = h(t) \implies \phi(x,y) = h(y)
 	\]
 \end{example}
 \begin{example}
@@ -3086,5 +3087,528 @@ To solve such a PDE, we will typically use the following steps.
 		\phi(x,y) = \cosh\qty[-\log(y + e^{-x})]
 	\]
 \end{example}
+
+\subsection{Inhomogeneous first order PDEs}
+Suppose we now wish to solve
+\[
+	\alpha(x,y) \phi_x + \beta(x,y) \phi_y = \gamma(x,y)
+\]
+with Cauchy data \( \phi(x(t), y(t)) = f(t) \) along a curve \( B \).
+The characteristic curves are the same as the homogeneous case.
+However, the directional derivative no longer vanishes:
+\[
+	\eval{\dv{\phi}{s}}_C = \bfu \cdot \grad{\phi} = \gamma(x,y)
+\]
+where \( \phi = f(t) \) at \( s = 0 \) on \( B \).
+So \( f(t) \) is no longer propagated constantly across characteristic polynomials, but is instead propagated according to the ODE in \( s \) above.
+We must therefore solve this ODE along \( C \) before reverting to \( x,y \) coordinates.
+\begin{example}
+	Consider
+	\[
+		\phi_x + 2 \phi_y = ye^x;\quad \phi(x,x) = \sin x
+	\]
+	The characteristic equation is given by
+	\[
+		\dv{x}{s} = 1;\quad \dv{y}{s} = 2
+	\]
+	The initial conditions are
+	\[
+		x(t) = y(t) = t
+	\]
+	From the characteristic equations,
+	\[
+		x = s + c(t);\quad y = 2s + d(t)
+	\]
+	Thus,
+	\[
+		x = t = c(t);\quad y = t = d(t)
+	\]
+	So the solutions to the characteristics are
+	\[
+		x = s + t;\quad y = 2s + t
+	\]
+	Now we solve
+	\[
+		\dv{\phi}{s} = \gamma = y e^x = (2s+t)e^{s+t}
+	\]
+	Note that \( \dv{s} \qty(2se^s) = 2e^s + 2se^s \), so the solution is
+	\[
+		\phi(s,t) = (2s - 2 + t)e^{s+t} + c(s)
+	\]
+	for some constant term \( c(s) \).
+	But \( \phi(0,t) = \sin t \), hence
+	\[
+		\sin t = (t-2)e^t + c(s) \implies \phi(s,t) = (2s-2+t)e^{s+t} + \sin t - (2-t)e^t
+	\]
+	Inverting into \( x,y \) space,
+	\[
+		\phi(x,y) = (y-2)e^x + (y-2x+2)e^{2x-y} + \sin(2x-y)
+	\]
+\end{example}
+
+\subsection{Classication of second order PDEs}
+In two dimensions, the general second order PDE is
+\begin{align*}
+	\mathcal L \phi & \equiv a(x,y) \pdv[2]{\phi}{x} + 2 b(x,y) \pdv{\phi}{x}{y} + c(x,y) \pdv[2]{\phi}{y} \\
+	                & + d(x,y) \pdv{\phi}{x} + e(x,y) \pdv{\phi}{y} + f(x,y) \phi(x,y)=0
+\end{align*}
+The \textbf{principal part} is given by
+\[
+	\sigma_P (x,y,k_x,k_y) \equiv \bfk^\top A \bfk = \begin{pmatrix}
+		k_x & k_y
+	\end{pmatrix} \begin{pmatrix}
+		a(x,y) & b(x,y) \\
+		b(x,y) & c(x,y)
+	\end{pmatrix} \begin{pmatrix}
+		k_x \\ k_y
+	\end{pmatrix}
+\]
+The PDE is classified by the properties of the eigenvalues of \( A \).
+\begin{enumerate}
+	\item If \( b^2 - ac < 0 \), the equation is \textbf{elliptic}.
+	      The eigenvalues have the same sign.
+	      An example is the Laplace equation.
+	\item If \( b^2 - ac > 0 \), the equation is \textbf{hyperbolic}.
+	      The eigenvalues have opposite signs.
+	      An example is the wave equation.
+	\item If \( b^2 - ac = 0 \), the equation is \textbf{parabolic}, where at least one eigenvalue is zero.
+	      An example is the heat equation.
+\end{enumerate}
+We can determine hte eigenvalues by considering the trace and determinant. 
+
+Note that a differential equation may have different classifications at different points \( (x,y) \) in space.
+
+\subsection{Characteristic curves of second order PDEs}
+A curve defined by \( f(x,y) \) constant is a characteristic if
+\[
+	\begin{pmatrix}
+		f_x & f_y
+	\end{pmatrix} \begin{pmatrix}
+		a & b \\
+		b & c
+	\end{pmatrix} \begin{pmatrix}
+		f_x \\ f_y
+	\end{pmatrix} = 0
+\]
+This is a generalisation of the first order case \( \bfu \cdot \grad{f} = 0 \) where \( \bfu = (\alpha, \beta) \).
+The curve can be written as \( y = y(x) \) by the chain rule.
+\[
+	\pdv{f}{x} + \pdv{f}{y} \dv{y}{x} = 0 \implies \frac{f_x}{f_y} = -\dv{y}{x}
+\]
+Substituting into the quadratic form,
+\[
+	a \qty(\dv{y}{x})^2 - 2b \dv{y}{x} + c = 0
+\]
+for which we have a quadratic solution given by
+\[
+	\dv{y}{x} = \frac{b \pm \sqrt{b^2 - ac}}{a}
+\]
+\begin{enumerate}
+	\item Hyperbolic equations have two such solutions, since \( b^2 - ac > 0 \).
+	\item Parabolic equations have one solution.
+	\item Elliptic equations have no real characteristics.
+\end{enumerate}
+
+\subsection{Characteristic coordinates}
+Transforming to characteristic coordinates \( u,v \) will set \( a = 0 \) and \( c = 0 \).
+Hence, the PDE will take the canonical form
+\[
+	\pdv{\phi}{u}{v} + \dots + = 0
+\]
+where the omitted terms are lower order.
+\begin{example}
+	Consider
+	\[
+		-y \phi_{xx} + \phi_{yy} = 0
+	\]
+	Here, \( a = -y, b = 0, c = 1 \) hence \( b^2 - ac = y \).
+	For \( y > 0 \), the equation is hyperbolic, for \( y < 0 \) it is elliptic, and for \( y = 0 \) it is parabolic.
+	Consider the characteristics for \( y > 0 \).
+	\[
+		\dv{y}{x} = \frac{b \pm \sqrt{b^2 - ac}}{a} = \pm \frac{1}{\sqrt{y}}
+	\]
+	Hence,
+	\[
+		\int \sqrt{y} \dd{y} = \pm \int \dd{x} \implies \frac{2}{3} y^{\frac{3}{2}} \pm x = C_\pm
+	\]
+	Therefore, the characteristic curves are
+	\[
+		u = \frac{2}{3} y^{\frac{3}{2}} + x;\quad v = \frac{2}{3} y^{\frac{3}{2}} - x
+	\]
+	Taking derivatives,
+	\[
+		u_x = 1;\quad u_y = \sqrt{y};\quad v_x = -1;\quad v_y = \sqrt{y}
+	\]
+	Hence,
+	\begin{align*}
+		\phi_x    & = \phi_u u_x + \phi_v v_x = \phi_u - \phi_v                                      \\
+		\phi_y    & = \sqrt{y} (\phi_u + \phi_v)                                                     \\
+		\phi_{xx} & = \phi_{uu} - 2 \phi_{uv} + \phi_{vv}                                            \\
+		\phi_{yy} & = y (\phi_{uu} + 2 \phi_{uv} + \phi_{vv}) + \frac{1}{2\sqrt{y}}(\phi_u + \phi_v)
+	\end{align*}
+	Substituting into the original PDE,
+	\[
+		-y \phi_{xx} + \phi_{yy} = y\qty(4 \phi_{uv} + \frac{1}{2y^{\frac{3}{2}}} (\phi_u + \phi_v) )
+	\]
+	Note, \( u + v = \frac{4}{3} y^{\frac{3}{2}} \), hence we have the canonical form
+	\[
+		4 \phi_{uv} + \frac{1}{6(u+v)} (\phi_u + \phi_v) = 0
+	\]
+\end{example}
+
+\subsection{General solution to wave equation}
+The wave equation is
+\[
+	\frac{1}{c^2} \pdv[2]{\phi}{t} - \pdv[2]{\phi}{x} = 0
+\]
+We wish to solve this with initial conditions \( \phi(x,0) = f(x) \), and \( \phi_t(x,0) = g(x) \).
+Here, \( a = \frac{1}{c^2}, b = 0, c = -1 \) hence \( b^2 - ac > 0 \).
+The characteristic equation is
+\[
+	\dv{x}{t} = \frac{0 \pm \sqrt{0 + \frac{1}{c^2}}}{\frac{1}{c^2}} = \pm c
+\]
+Hence the characteristic coordinates are
+\[
+	u = x - ct;\quad v = x + ct
+\]
+This yields the canonical form
+\[
+	\pdv{\phi}{u}{v} = 0
+\]
+This may be integrated directly to find
+\[
+	\pdv{\phi}{v} = F(v) \implies \phi = G(u) + \int^v F(y) \dd{y} = G(u) + H(v)
+\]
+Imposing the initial conditions at \( t = 0 \), we find
+\[
+	G(x) + H(x) = f(x);\quad -cG'(x) + cH'(x) = g(x)
+\]
+Differentiating the first equation, we find
+\[
+	G'(x) + H'(x) = f'(x)
+\]
+We can combine this with the second equation to give
+\[
+	H'(x) = \frac{1}{2} \qty(f'(x) + \frac{1}{c}g(x)) \implies H(x) = \frac{1}{2} \qty(f(x) - f(0)) + \frac{1}{2c}\int_0^x g(y) \dd{y}
+\]
+Similarly,
+\[
+	G'(x) = \frac{1}{2} \qty(f'(x) - \frac{1}{c}g(x)) \implies G(x) = \frac{1}{2} \qty(f(x) - f(0)) - \frac{1}{2c}\int_0^x g(y) \dd{y}
+\]
+The final solution is therefore
+\[
+	\phi(x,t) = G(x-ct) + H(x+ct) = \frac{1}{2}\qty(f(x-ct) + f(x+ct)) + \frac{1}{2c} \int_{x-ct}^{x+ct} g(y) \dd{y}
+\]
+Waves propagate at a velocity \( c \), hence \( \phi(x,t) \) is fully determined by values of \( f, g \) in the interval \( [x-ct, x+ct] \).
+
+\section{Solving partial differential equations with Green's functions}
+
+\subsection{Diffusion equation and Fourier transform}
+Recall the heat equation for a conducting wire given by
+\[
+	\pdv{\Theta}{t}\qty(x,t) - D\pdv[2]{\Theta}{x}\qty(x,t) = 0
+\]
+with initial conditions \( \Theta(x,0) = h(x) \) and boundary conditions \( \Theta \to 0 \) as \( x \to \pm \infty \).
+Taking the Fourier transform with respect to \( x \),
+\[
+	\pdv{t} \widetilde \Theta(k,t) = -D k^2 \widetilde \Theta(k,t)
+\]
+Integrating, we find
+\[
+	\widetilde \Theta(k,t) = C e^{-D k^2 t}
+\]
+The initial conditions give \( \widetilde \Theta(k,0) = \widetilde h(k) \) and therefore
+\[
+	\widetilde \Theta(k,t) = \widetilde h(k) e^{-Dk^2 t}
+\]
+We take the inverse Fourier transform to find
+\[
+	\Theta(x,t) = \frac{1}{2\pi} \int_{-\infty}^\infty \widetilde h(k) \underbrace{e^{-Dk^2 t}}_{\mathclap{\text{FT of Gaussian}}} e^{ikx} \dd{k}
+\]
+Hence, by the convolution theorem,
+\begin{align*}
+	\Theta(x,t) & = \frac{1}{\sqrt{4 \pi D t}} \int_{-\infty}^\infty h(u) \exp(-\frac{(x-u)^2}{4Dt}) \dd{u} \\
+	            & \equiv \int_{-\infty}^\infty h(u) S_d(x-u,t) \dd{u}
+\end{align*}
+where the \textit{fundamental solution} is
+\[
+	S_d(x,t) = \frac{1}{\sqrt{4 \pi D t}} \exp(-\frac{x^2}{4Dt})
+\]
+which is the Fourier transform of \( \exp(-D k^2 t) \).
+Note, with localised initial conditions \( \Theta(x,0) = \Theta_0 \delta(x) \), the solution is exactly the fundamental solution:
+\[
+	\Theta(x,t) = \Theta_0 S_d(x,t) = \frac{\Theta_0}{\sqrt{4 \pi D t}} \exp(-\eta^2);\quad \eta = \frac{x}{2\sqrt{Dt}}
+\]
+where \( \eta \) is the similarity parameter.
+
+\subsection{Gaussian pulse for heat equation}
+Suppose that the initial conditions for the head equation are given by
+\[
+	f(x) = \sqrt{\frac{a}{\pi}} \Theta_0 e^{-ax^2}
+\]
+Then, our previous solution gives
+\begin{align*}
+	\Theta(x,t) & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-au^2 - \frac{(x-u)^2}{4 D t}] \dd{u}                                                      \\
+	            & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-\frac{(1 + 4 a D t)u^2 - 2xu + x^2}{4 D t}] \dd{u}                                        \\
+	            & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-\frac{1 + 4 a D t}{4 D t} \qty(u - \frac{x}{1+4aDt}) ] \exp[ \frac{-ax^2}{1+4aDt}] \dd{u}
+\end{align*}
+Recall that
+\[
+	\int_{-\infty}^\infty \exp[\frac{-(u - \mu)^2}{\sigma^2}] \dd{u} = \sigma \sqrt{\pi}
+\]
+The integral above is a Gaussian, so its solution can be read off directly as
+\[
+	\Theta(x,t) = \frac{\Theta_0 \sqrt{a}}{\sqrt{\pi (1 + 4 \pi^2 D t)}} \exp[\frac{-ax^2}{1+4aDt}]
+\]
+So the width of the Gaussian pulse will get wider over time, according to \( \sigma^2 \sim t \), as it evolves according to the heat equation.
+The area is constant, so heat energy is conserved in the system.
+
+\subsection{Forced diffusion equation}
+Consider the equation
+\[
+	\pdv{t}\Theta(x,t) - D \pdv[2]{\Theta}{x}(x,t) = f(x,t)
+\]
+subject to homogeneous initial conditions \( \Theta(x,0) = 0 \).
+We construct a two-dimensional Green's function \( G(x,t; \xi, \tau) \) such that
+\[
+	\pdv{t}G(x,t) - D \pdv[2]{G}{x}(x,t) = \delta(x - \xi)\delta(t - \tau)
+\]
+subject to the same homogeneous boundary conditions \( G(x,0;\xi,\tau) = 0 \).
+Consider the Fourier transform with respect to \( x \).
+\[
+	\pdv{\widetilde G}{t} + D k^2 \widetilde G = e^{-ik\xi} \delta(t - \tau)
+\]
+We can solve this using an integrating factor \( e^{Dk^2 t} \) and integrating with respect to time.
+Since \( G = 0 \) at \( t = 0 \),
+\begin{align*}
+	\pdv{t} \qty[ e^{D k^2 t} \widetilde G ]                    & = e^{-ik\xi + D k^2 t} \delta(t - \tau)                      \\
+	\int_0^t \pdv{t'} \qty[ e^{D k^2 t'} \widetilde G ] \dd{t'} & = \int_0^t e^{-ik\xi + D k^2 t'} \delta(t' - \tau) \dd{t'}   \\
+	e^{D k^2 t} \widetilde G                                    & = e^{-ik\xi} \int_0^t e^{D k^2 t'} \delta(t' - \tau) \dd{t'} \\
+	e^{D k^2 t} \widetilde G                                    & = e^{-ik\xi} e^{D k^2 \tau} H(t - \tau)
+\end{align*}
+where \( H \) is the Heaviside step function.
+Thus,
+\[
+	\widetilde G(k,t;\xi,\tau) = e^{-ik\xi} e^{-D k^2 (t - \tau)} H(t - \tau)
+\]
+The inverse Fourier transform gives the Green's function.
+\[
+	G(x,t;\xi,\tau) = \frac{H(t - \tau)}{2\pi} \int_{-\infty}^\infty e^{-ik\xi} e^{-D k^2 (t - \tau)} e^{ikx} \dd{k}
+\]
+This is a Gaussian; by changing variables into \( x' = x - \xi \) and \( t' = t - \tau \) we find
+\[
+	G(x,t;\xi,\tau) = \frac{H(t')}{2\pi} \int_{-\infty}^\infty e^{ikx'} e^{-D k^2 t'} \dd{k} = \frac{H(t')}{\sqrt{4 \pi D t'}} \exp[-\frac{(x')^2}{4Dt'}]
+\]
+Converting back,
+\[
+	G(x,t;\xi,\tau) = \frac{H(t - \tau)}{\sqrt{4 \pi D (t - \tau)}} \exp[-\frac{(x - \xi)^2}{4D(t - \tau)}] = H(t-\tau) S_d(x-\xi, t-\tau)
+\]
+where \( S_d \) is the fundamental solution as above.
+Thus, the general solution is
+\[
+	\Theta(x,t) = \int_0^\infty \dd{\tau} \int_{-\infty}^\infty \dd{\xi} G(x,t;\xi,\tau) f(\xi, \tau)
+\]
+Let \( \xi = u \), then
+\[
+	\Theta(x,t) = \int_0^t \dd{\tau} \int_{-\infty}^\infty \dd{u} f(u, \tau) S_d(x-u, t-\tau)
+\]
+
+\subsection{Duhamel's principle}
+In the above equation, omitting the integral over time, this is exactly the solution as found earlier with initial conditions at \( t = \tau \), which was
+\[
+	\Theta(x,t) = \int_{-\infty}^\infty \dd{u} f(u) S_d(x-u, t-\tau)
+\]
+The forced PDE with homogeneous boundary conditions can be related to solutions of the homogeneous PDE with inhomogeneous boundary conditions.
+The forcing term \( f(x,t) \) at \( t = \tau \) acts as an initial condition for subsequent evolution.
+Thus, the solution is a superposition of the effects of the initial conditions integrated over \( 0 < \tau < t \).
+This relation between the homogeneous and inhomogeneous problems is known as \textit{Duhamel's principle}.
+
+\subsection{Forced wave equation}
+Consider the forced wave equation, given by
+\[
+	\pdv[2]{\phi}{t} - c^2 \pdv[2]{\phi}{x} = f(x,t)
+\]
+with \( \phi(x,0) = \phi_t(x,0) = 0 \).
+We construct the Green's function using
+\[
+	\pdv[2]{G}{t} - c^2 \pdv[2]{G}{x} = \delta(x-\xi)\delta(t-\tau)
+\]
+with \( G(x,0) = \phi_t(x,0) = 0 \).
+We take the Fourier transform with respect to \( x \), and find
+\[
+	\pdv[2]{\widetilde G}{t} + c^2 k^2 \widetilde G = e^{-ik\xi} \delta(t - \tau)
+\]
+We can solve this by inspection by comparing with the corresponding initial value problem Green's function, and find
+\[
+	\widetilde G = \begin{cases}
+		0                                       & t < \tau \\
+		e^{-ik\xi} \frac{\sin kc(t - \tau)}{kc} & t > \tau
+	\end{cases}
+\]
+Using the Heaviside function.
+\[
+	\widetilde G = e^{-ik\xi} \frac{\sin kc(t - \tau)}{kc} H(t - \tau)
+\]
+We invert the Fourier transform.
+\[
+	G(x,t;\xi,\tau) = \frac{H(t-\tau)}{2\pi c} \int_{-\infty}^\infty e^{ik(x - \xi)} \frac{\sin kc(t - \tau)}{k} \dd{k}
+\]
+Let \( A = x - \xi \), and \( B = ct - \tau \).
+By oddness of sine, only the cosine term of the complex exponential remains.
+Noting the similarity to the Dirichlet discontinuous function,
+\begin{align*}
+	G(x,t;\xi,\tau) & = \frac{H(t-\tau)}{\pi c} \int_0^\infty \frac{\cos(kA) \sin(kB)}{k} \dd{k}          \\
+	                & = \frac{H(t-\tau)}{2\pi c} \int_0^\infty \frac{\sin k(A+B) - \sin k(A-B)}{k} \dd{k} \\
+	                & = \frac{H(t-\tau)}{4c} \qty[ \sgn(A+B) - \sgn(A-B) ]
+\end{align*}
+Since the \( H(t - \tau) \) term is nonzero only for \( t > \tau \), we must have \( B = c(t-\tau) > 0 \).
+The only way that the bracketed term can be nonzero is when \( \abs{A} < B \); so \( \abs{x - \xi} < c(t-\tau) \).
+This is the domain of dependence as found before, demonstrating the causality of the relation.
+Hence,
+\[
+	G(x,t;\xi,\tau) = \frac{1}{2c} H(c(t-\tau) - \abs{x - \xi})
+\]
+Thus, the solution is
+\begin{align*}
+	\phi(x,t) & = \int_0^\infty \dd{\tau} \int_{-\infty}^\infty \dd{\xi} f(\xi, t) G(x,t;\xi,\tau)             \\
+	          & = \frac{1}{2c} \int_0^t \dd{\tau} \int_{x - c(t-\tau)}^{x + c(t - \tau)} \dd{\xi} f(\xi, \tau)
+\end{align*}
+
+\subsection{Poisson's equation}
+Consider
+\[
+	\laplacian{\phi} = - \rho(r)
+\]
+defined on a three-dimensional domain \( D \), with Dirichlet boundary conditions \( \phi = 0 \) on a boundary \( \partial D \).
+The Dirac \( \delta \) function, when defined in \( \mathbb R^3 \), has the following properties.
+\begin{enumerate}
+	\item \( \delta(r - r') = 0 \) for all \( r \neq r' \);
+	\item \( \int_D \delta(r - r') \dd[3]{r} = 1 \) if \( r' \in D \), and zero otherwise;
+	\item \( \int_D f(r) \delta(r - r') \dd[3]{r} = f(r') \).
+\end{enumerate}
+First, we consider \( D = \mathbb R^3 \) with the homogeneous boundary conditions that \( G \to 0 \) as \( \norm{r} \to \infty \).
+This is known as the \textit{free-space} Green's function, denoted \( G_{\mathrm{FS}} \).
+The potential here is spherically symmetric, so the Green's function is a function only of the distance between the point and the source.
+WIthout loss of generality, let \( r' = 0 \), so \( G \) is a function only of the radius, now denoted \( r \).
+Integrating the left hand side of Poisson's equation over a ball \( B \) with radius \( r \) around zero, we find
+\[
+	\int_B \laplacian{G_{\mathrm{FS}}} \dd[3]{r} = \int_{\partial B} \grad{G_{\mathrm{FS}}} \cdot \hat \bfn \dd{S} = \int_{\partial B} \pdv{G}{r} r^2 \dd{\Omega}
+\]
+where \( \dd{\Omega} \) is the angle element.
+This gives
+\[
+	\int_B \laplacian{G_{\mathrm{FS}}} \dd[3]{r} = 4 \pi r^2 \pdv{G_{\mathrm{FS}}}{r}
+\]
+The right hand side of Poisson's equation gives unity, since zero is contained in the ball.
+Therefore,
+\[
+	\pdv{G_{\mathrm{FS}}}{r} = \frac{1}{4 \pi r^2} \implies G_{\mathrm{FS}} = \frac{-1}{4 \pi r} + c
+\]
+Since \( G \to 0 \) as \( r \to \infty \), we must have \( c = 0 \).
+The fundamental solution is therefore the free-space Green's function given by
+\[
+	G(r; r') = \frac{-1}{4 \pi \norm{r - r'}}
+\]
+Thus, Poisson's equation is solved by
+\[
+	\Phi(r) = \frac{1}{4 \pi} \int_{\mathbb R^3} \frac{\rho(r')}{\norm{r - r'}} \dd[3]{r'}
+\]
+
+\subsection{Green's identities}
+Consider scalar functions \( \phi, \psi \) which are twice differentiable on a domain \( D \).
+By the divergence theorem, \textit{Green's first identity} is
+\[
+	\int_D \div(\phi \grad{\psi}) \dd[3]{r} = \int_D \qty(\phi \laplacian{\psi} + \grad{\phi} \cdot \grad{\psi}) \dd[3]{r} = \int_{\partial D} \phi \grad{\psi} \cdot \hat \bfn \dd{S}
+\]
+Switching \( \psi \) and \( \phi \) and subtracting from the above, we arrive at \textit{Green's second identity}:
+\[
+	\int_{\partial D} \qty(\phi \pdv{\psi}{\hat n} - \psi \pdv{\phi}{\hat n}) \dd{S} = \int_D \qty(\phi \laplacian{\psi} - \psi \laplacian{\phi}) \dd[3]{r}
+\]
+Suppose we remove a ball \( \mathcal B_\varepsilon(r') \) from the domain.
+Without loss of generality let \( r' = 0 \).
+Let \( \phi \) be a solution to Poisson's equation, so \( \laplacian{\phi} = -\rho \) and let \( \psi \) be the free-space Green's function.
+Thus, the right hand side of the second identity becomes
+\[
+	\int_{D \setminus \mathcal B_\varepsilon} \qty(\phi \laplacian{G_{\mathrm{FS}}} - G_{\mathrm{FS}} \laplacian{\phi}) \dd[3]{r} = \int_{D \setminus \mathcal B_\varepsilon} G_{\mathrm{FS}} \rho \dd[3]{r}
+\]
+The left hand side is
+\[
+	\int_{\partial D} \qty(\phi \pdv{G_{\mathrm{FS}}}{\hat n} - G_{\mathrm{FS}} \pdv{\phi}{\hat n}) \dd{S} + \int_{\partial \mathcal B_\varepsilon} \qty(\phi \pdv{G_{\mathrm{FS}}}{\hat n} - G_{\mathrm{FS}} \pdv{\phi}{\hat n}) \dd{S}
+\]
+For the second integral, we take the limit as \( \varepsilon \to 0 \).
+Let \( \phi \) be regular, and let \( \overline\phi \) be the average value and \( \overline{\pdv{\phi}{\hat n}} \) be the average derivative.
+This integral then becomes
+\[
+	\qty(\overline\phi \frac{-1}{4 \pi \varepsilon^2} - \frac{1}{4 \pi \varepsilon} \overline{\pdv{\phi}{\hat n}}) 4 \pi \varepsilon^2 \to -\phi(0)
+\]
+Combining the above, we find \textit{Green's third identity}, which is
+\[
+	\phi(r') = \int_D G_{\mathrm{FS}}(r;r')  \qty(-\rho(r)) \dd[3]{r} + \int_{\partial D} \qty(\phi(r) \pdv{G_{\mathrm{FS}}}{\hat n} \qty(r;r') - G_{\mathrm{FS}}(r;r') \pdv{\phi}{\hat n}\qty(r)) \dd{S}
+\]
+The second integral provides the ability to use inhomogeneous boundary conditions
+
+\subsection{Dirichlet Green's function}
+We will solve Poisson's equation \( \laplacian{\phi} = -\rho \) on \( D \) with inhomogeneous boundary conditions \( \phi(r) = h(r) \) on \( \partial D \).
+The Dirichlet Green's function satisfies
+\begin{enumerate}
+	\item \( \laplacian{G(r;r')} = 0 \) for all \( r \neq r' \);
+	\item \( G(r;r') = 0 \) on \( \partial D \);
+	\item \( G(r;r') = G_{\mathrm{FS}}(r;r') + H(r;r') \) where \( H \) satisfies Laplace's equation, the homogeneous version of Poisson's equation, for all \( r \in D \).
+\end{enumerate}
+Green's second identity with \( \laplacian{\phi} = -\rho, \laplacian{H} = 0 \) gives
+\[
+	\int_{\partial D} \qty(\phi \pdv{H}{\hat n} - H \pdv{\phi}{\hat n}) \dd{S} = \int_D H \rho \dd[3]{r}
+\]
+Now, we set \( G_{\mathrm{FS}} = G - H \) into Green's third identity to find
+\[
+	\phi(r') = \int_D (G - H)(-\rho) \dd[3]{r} + \int_{\partial D} \qty(\phi \pdv{(G - H)}{\hat n} - (G-H) \pdv{\phi}{n}) \dd{S}
+\]
+All of the \( H \) terms can be cancelled by substituting the form of the second identity the derived above.
+Now, given \( G = 0, \phi = h \) on \( \partial D \), we have
+\[
+	\phi(r') = \int_D G(r;r')(-\rho(r)) \dd[3]{r} + \int_{\partial D} h(r) \pdv{G(r;r')}{\hat n} \dd{S}
+\]
+This is the general solution.
+The first integral is the Green's function solution, and the second integral yields the inhomogeneous boundary conditions.
+
+\subsection{Method of images for Laplace's equation}
+For symmetric domains \( D \), we can construct Green's functions with \( G = 0 \) on \( \partial D \) by cancelling the boundary potential out by using an opposite `mirror image' Green's function placed outside the domain.
+Consider Laplace's equation \( \laplacian{\phi} = 0 \) on half of \( \mathbb R^3 \), in particular, the subset of \( \mathbb R^3 \) such that \( z > 0 \).
+Let \( \phi(x,y,0) = h(x,y) \) and \( \phi \to 0 \) as \( r \to \infty \).
+The free space Green's function satisfies \( G_{\mathrm{FS}} \to 0 \) as \( r \to \infty \), but does not satisfy the boundary condition that \( G_{\mathrm{FS}} = 0 \) at \( z = 0 \).
+For \( G_{\mathrm{FS}} \) at \( r' = (x',y',z') \), we will subtract a copy of \( G_{\mathrm{FS}} \) located at \( r'' = (x',y',-z') \).
+This gives
+\begin{align*}
+	G(r,r') & = \frac{-1}{4\pi \abs{r - r'}} - \frac{-1}{4\pi \abs{r - r''}}                                                 \\
+	        & = \frac{-1}{4\pi \sqrt{(x-x')^2 + (y-y')^2 + (z-z')^2}} \\ 
+			&\ \ \ \ + \frac{1}{4\pi \sqrt{(x-x')^2 + (y-y')^2 + (z+z')^2}}
+\end{align*}
+Hence \( G((x,y,0), r') = 0 \), so this function satisfies the Dirichlet boundary conditions on all of the boundary \( \partial D \).
+We have
+\begin{align*}
+	\eval{\pdv{G}{\hat n}}_{z = 0} &= \eval{\pdv{G}{z}}_{z = 0} = \frac{-1}{4\pi} \qty(\frac{z - z'}{\abs{r - r'}^3} - \frac{z + z'}{\abs{r-r'}^3}) \\&= \frac{z'}{2\pi} \qty((x-x')^2 + (y-y')^2 + (z')^2)^{-3/2}
+\end{align*}
+The solution is then given by
+\[
+	\Phi(x',y',z') = \frac{z'}{2\pi} \int_{-\infty}^\infty \int_{-\infty}^\infty \qty[ (x - x')^2 + (y-y')^2 + (z')^2 ]^{-3/2} h(x,y) \dd{x}\dd{y}
+\]
+
+\subsection{Method of images for wave equation}
+Consider the one-dimensional wave equation
+\[
+	\ddot \phi - c^2 \phi'' = f(x,t)
+\]
+with Dirichlet boundary conditions \( \phi(0,t) = 0 \).
+We create matching Green's functions with an opposite sign centred at \( -\xi \).
+\[
+	G(x,t;\xi,\tau) = \frac{1}{2c} H(c(t-\tau) - \abs{x-\xi}) - \frac{1}{2c} H(c,(t-\tau) - \abs{x+\xi})
+\]
+We can replace the addition of the two terms with a subtraction to instead use Neumann boundary conditions.
+Suppose we wish to solve the homogeneous problem with \( f = 0 \) for initial conditions of a Gaussian pulse.
+Here, for \( x > 0 \) we have
+\[
+	\phi(x,t) = \exp[-(x-\xi + ct)^2] - \exp[-(-x - \xi + ct)^2]
+\]
+The solution travels to the left, cancelling with the image at \( t = \frac{\xi}{c} \), which emerges and travels right as the reflected wave.
 
 \end{document}
