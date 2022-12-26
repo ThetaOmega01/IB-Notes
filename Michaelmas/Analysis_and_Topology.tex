@@ -3226,7 +3226,406 @@ For each $n \in \mathbb{N}$, choose $x_{n} \in A_{n}$. For all $N \in \mathbb{N}
 
 \clearpage
 \part{Generalizing Differentiation}
+\section{Differentiation}
+\subsection{Preliminaries}
 
-\section{Differentiation and the Inverse Function Theorem}
+Let $m, n \in \mathbb{N}$. Then $\mcL(\mathbb{R}^{m}, \mathbb{R}^{n})=\{T: \mathbb{R}^{m} \rightarrow \mathbb{R}^{n}: T \text{ is linear} \} \cong \mathcal{M}_{n, m} \cong \mathbb{R}^{m n}$ (where $\mathcal{M}_{n, m}$ is the space of $n \times m$ real matrices).
+
+Let $\bfe_{1}, \bfe_{2}, \ldots, \bfe_{m}$ be the standard basis vectors in $\mathbb{R}^{m}$.
+
+Let $\bfe_{1}^{\prime}, \bfe_{2}^{\prime}, \ldots, \bfe_{n}^{\prime}$ be the standard basis vectors in $\mathbb{R}^{n}$.
+
+Recall that for $\bfx=\sum_{j=1}^{n} x_{j} \bfe_{j}^{\prime}$ and $\bfy=\sum_{j=1}^{n} y_{j} \bfe_{j}^{\prime}$ in $\mathbb{R}^{n}$, their inner product is
+$$
+\langle x, y\rangle=\sum_{j=1}^{n} x_{j} y_{j}
+$$
+The Cauchy-Schwarz inequality states that
+$$
+|\langle \bfx, \bfy\rangle| \leqslant\left(\sum_{j=1}^{n} x_{j}^{2}\right)^{\frac{1}{2}}\left(\sum_{j=1}^{n} y_{j}^{2}\right)^{\frac{1}{2}}=\|\bfx\|\|\bfy\|
+$$
+A linear map $T \in \mcL(\mathbb{R}^{m}, \mathbb{R}^{n})$ is identified with the $n \times m$ matrix
+$$
+\left(T_{j, i}\right)_{\substack{1 \leqslant j \leqslant n,\\ 1 \leqslant i \leqslant m}} \in \mathcal{M}_{n, m}
+$$
+where $T_{j, i}=\left\langle T \bfe_{i}, \bfe_{j}^{\prime}\right\rangle$ (the $j^{\text {th }}$ coordinate of the $i^{\text {th }}$ column). We can arrange the entries $\left(T_{j, i}\right)_{1 \leqslant j \leqslant n, 1 \leqslant i \leqslant m}$ into a column vector of size $m n$, i.e., into an element of $\mathbb{R}^{m n}$. So we can view $\mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ as a real $mn$-dimensional Euclidean space with Euclidean norm
+$$
+\|T\|=\left(\sum_{\substack{1 \leqslant j \leqslant n,\\ 1 \leqslant i \leqslant m}} T_{j, i}^{2}\right)^{\frac{1}{2}}=\left(\sum_{i=1}^{m}\left\|T \bfe_{i}\right\|^{2}\right)^{\frac{1}{2}}
+$$
+Thus, $\mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ becomes a metric space with the euclidean distance:
+
+$d(S, T)=\|S-T\|$ for $S, T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$.
+
+\begin{lemma}\label{lma:11.1}
+    \begin{enumerate}[(a)]
+        \item For $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ and $x \in \mathbb{R}^{m}$, we have $\|T \bfx\| \leqslant\|T\|\|\bfx\|$.
+
+        It follows that $T$ is Lipschitz, and hence continuous.
+        
+        \item For $S \in \mcL\left(\mathbb{R}^{n}, \mathbb{R}^{p}\right)$ and $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$, we have $\|S T\| \leqslant\|S\|\|T\|$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    (a) Writing $\bfx=\sum_{i=1}^{m} x_{i} \bfe_{i}$, we have
+\begin{align*}
+\|T \bfx\| &=\left\|\sum_{i=1}^{m} x_{i} T \bfe_{i}\right\| \\
+& \leqslant \sum_{i=1}^{m}\left|x_{i}\right|\left\|T \bfe_{i}\right\| \tag{by triangle-inequality}\\
+& \leqslant\left(\sum_{i=1}^{m}\left|x_{i}\right|^{2}\right)^{\frac{1}{2}}\left(\sum_{i=1}^{m}\left\|T \bfe_{i}\right\|^{2}\right)^{\frac{1}{2}} \tag{by Cauchy-Schwarz}\\
+&=\|T\|\|\bfx\|
+\end{align*}
+It follows that for any $\bfx, \bfy \in \mathbb{R}^{m}$, we have
+$$
+d(T \bfx, T \bfy)=\|T \bfx-T \bfy\|=\|T(\bfx-\bfy)\| \leqslant\|T\|\|\bfx-\bfy\|=\|T\| d(\bfx, \bfy)
+$$
+
+(b) Using part (a) we obtain
+$$
+\|S T\|=\left(\sum_{i=1}^{m}\left\|S T \bfe_{i}\right\|^{2}\right)^{\frac{1}{2}} \leqslant\left(\sum_{i=1}^{m}\|S\|^{2}\left\|T \bfe_{i}\right\|^{2}\right)^{\frac{1}{2}} \leqslant\|S\|\|T\|.\qedhere
+$$
+\end{proof}
+
+\subsection{Differentiation}
+Recall the followings from IA Analysis I:
+
+Given a function $f: \mathbb{R} \rightarrow \mathbb{R}$ and $a \in \mathbb{R}$, we say $f$ is differentiable at a if the limit
+$$
+\lim _{x \rightarrow a} \frac{f(x)-f(a)}{x-a}=\lim _{h \rightarrow 0} \frac{f(a+h)-f(a)}{h}
+$$
+exists. We then denote this limit by $f^{\prime}(a)$ and call it the derivative of $f$ at $a$. 
+
+Assuming this, define
+$$
+\varepsilon: \mathbb{R} \rightarrow \mathbb{R} \quad \varepsilon(h)= \begin{cases}\frac{f(a+h)-f(a)}{h}-f^{\prime}(a) & \text { if } h \neq 0 \\ 0 & \text { if } h=0\end{cases}
+$$
+Then $\varepsilon(h) \rightarrow 0$ as $h \rightarrow 0$ (equivalently, $\varepsilon$ is continuous at 0), and moreover
+$$
+f(a+h)=f(a)+f^{\prime}(a) h+\varepsilon(h) h
+$$
+for all $h \in \mathbb{R}$. We proved one half of the following equivalence.
+
+\begin{itemize}
+  \item $f$ is differentiable at $a$.
+
+  \item $\exists \lambda \in \mathbb{R} \exists \varepsilon: \mathbb{R} \rightarrow \mathbb{R}$ with $\varepsilon(0)=0$ and $\varepsilon$ continuous at 0 such that
+  $$
+  f(a+h)=f(a)+\lambda h+\varepsilon(h) h
+  $$
+  for all $h \in \mathbb{R}$.
+\end{itemize}
+
+
+So $f$ is approximated by a linear function and the error of approximation is $o(h)$.
+
+Compare this to continuity. $f$ is continuous at $a$ if and only if there is a function $\eta: \mathbb{R} \rightarrow \mathbb{R}$ with $\eta(0)=0$ and $\eta$ continuous at 0 such that
+
+$$
+f(a+h)=f(a)+\eta(h)
+$$
+
+for all $h \in \mathbb{R}$. Here $f$ is approximated by a constant function and the error of approximation is $o(1)$.
+
+More generally, if $f$ is $n$-times differentiable at a, then $f$ is approximated by a polynomial of degree $n$ and the error of approximation is $o(h^{n})$.
+
+\begin{definition}
+    We are given a function $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{n}$ and a point $\bfa \in \mathbb{R}^{m}$.
+
+    We say $f$ is \textbf{differentiable} at $\bfa$ if there exists $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ and a function $\varepsilon: \mathbb{R}^{m} \rightarrow \mathbb{R}^{n}$ with $\varepsilon(0)=0$ and $\varepsilon$ continuous at 0 such that
+    \[
+    f(\bfa+\bfh)=f(\bfa)+T(\bfh)+\|\bfh\| \varepsilon(\bfh)\tag{$\dagger$}
+    \]
+    for all $\bfh \in \mathbb{R}^{m}$.
+\end{definition}
+So $\varepsilon$ is given by
+$$
+\varepsilon(\bfh)= \begin{cases}\frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} & \text { if } \bfh \neq 0 \\ 0 & \text { if } \bfh=0\end{cases}
+$$
+
+Note that if there exists $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ such that $\frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} \rightarrow 0$ as $\bfh \rightarrow 0$, then the function $\varepsilon$ above is continuous at 0 and $(\dagger)$ holds for all $\bfh \in \mathbb{R}^{m}$. It follows that $f$ is differentiable at $\bfa$.
+
+Note that $(\dagger)$ can also be written as
+$$
+f(\bfa+\bfh)=f(\bfa)+T(\bfh)+o(\|\bfh\|)
+$$
+
+\begin{note}
+    Suppose $S, T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ satisfy
+$$
+\frac{f(\bfa+\bfh)-f(\bfa)-S(\bfh)}{\|\bfh\|} \rightarrow 0 \text { and } \frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} \rightarrow 0 \quad \text { as } \bfh \rightarrow 0
+$$
+Then $\frac{S(\bfh)-T(\bfh)}{\|\bfh\|} \rightarrow 0$ as $\bfh \rightarrow 0$. It follows that for any non-zero $\bfx \in \mathbb{R}^{m}$, we have
+$$
+\frac{S(\bfx)-T(\bfx)}{\|\bfx\|}=\frac{S(\bfx / k)-T(\bfx / k)}{\|\bfx / k\|} \rightarrow 0 \quad \text { as } k \rightarrow \infty
+$$
+and hence $S(\bfx)=T(\bfx)$. Thus, $S=T$.
+\end{note}
+
+\begin{definition}
+    If $f$ is differentiable at a then the unique linear map $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ satisfying $\frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} \rightarrow 0$, is called the \textbf{derivative} of $f$ at $\bfa$ and is denoted by $f^{\prime}(\bfa)$ (or $D f(a)$ or $\left.\left.D f\right|_{a}\right)$.
+\end{definition}
+
+Note that if $f$ is differentiable at $\bfa$, then
+$$
+f(\bfa+\bfh)=f(\bfa)+\left(f^{\prime}(\bfa)\right)(\bfh)+\|\bfh\| \varepsilon(\bfh)
+$$
+where $\varepsilon: \mathbb{R}^{m} \rightarrow \mathbb{R}^{n}$ is continuous at 0 and $\varepsilon(0)=0$.
+
+\begin{remark}
+    on the case $m=1$.
+
+First, consider $T \in \mcL\left(\mathbb{R}, \mathbb{R}^{n}\right)$. Set $\bfv=T(1)$. Then $T(\bfh)=T(\bfh \cdot 1)=\bfh \cdot \bfv$ for all $\bfh \in \mathbb{R}$. So $\mcL\left(\mathbb{R}, \mathbb{R}^{n}\right) \cong \mathbb{R}^{n}$ the isomorphism being given by $T \mapsto T(1)$.
+
+Now we are given a function $f: \mathbb{R} \rightarrow \mathbb{R}^{n}$ and a point $a \in \mathbb{R}$. Then $f$ is differentiable at $a$ if and only if there exists $\bfv \in \mathbb{R}^{n}$ and a function $\varepsilon: \mathbb{R} \rightarrow \mathbb{R}^{n}$ with $\varepsilon(0)=0$ and $\varepsilon$ continuous at 0 such that
+$$
+f(a+h)=f(a)+h \bfv+h \varepsilon(h)
+$$
+for all $h \in \mathbb{R}$. This $\bfv \in \mathbb{R}^{n}$ is then unique and is called the derivative of $f$ at $a$ denoted $f^{\prime}(a)$. Note that
+$$
+f^{\prime}(a)=\lim _{h \rightarrow 0} \frac{f(a+h)-f(a)}{h}
+$$
+and so
+$$
+f(a+h)=f(a)+h f^{\prime}(a)+o(h)
+$$
+Conversely, if the above limit exists, then letting $\bfv \in \mathbb{R}^{n}$ be the limit, we have $\frac{f(a+h)-f(a)-h \bfv}{h} \rightarrow 0$ as $h \rightarrow 0$. It follows that $f$ is differentiable at $a$.
+\end{remark}
+
+\begin{definition}
+    A function $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{n}$ is differentiable on $\mathbb{R}^{m}$ if $f$ is differentiable at a for every $\bfa \in \mathbb{R}^{m}$. In this case, the derivative of $f$ on $\mathbb{R}^{m}$ is the function
+$$
+\begin{aligned}
+f^{\prime}: \mathbb{R}^{m} & \rightarrow \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right) \\
+\bfa & \mapsto f^{\prime}(\bfa)
+\end{aligned}
+$$
+\end{definition}
+
+\begin{example}
+    Constant functions. Let $\bfb \in \mathbb{R}^{n}$ and $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{n}$ be given by $f(\bfx)=\bfb$ for all $\bfx \in \mathbb{R}^{m}$. Then for any $\bfa \in \mathbb{R}^{m}$, we have
+$$
+f(\bfa+\bfh)=\bfb=f(\bfa)+0+0
+$$
+for all $\bfh \in \mathbb{R}^{m}$. So $f$ is differentiable at $\mathbf{a}$ with $f^{\prime}(\bfa)=0$. So $f$ is differentiable on $\mathbb{R}^{m}$ and its derivative in the constant zero function $\mathbb{R}^{m} \rightarrow \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$.
+\end{example}
+
+\begin{example}
+    Linear functions. Let $f \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$. Then for any $\bfa \in \mathbb{R}^{m}$, we have
+    $$
+f(\bfa+\bfh)=f(\bfa)+f(\bfh)+0
+$$
+for all $\bfh \in \mathbb{R}^{m}$. Thus, $f$ is differentiable at a with $f^{\prime}(\bfa)=f$. Thus, $f$ is differentiable on $\mathbb{R}^{m}$ and its derivative is the constant function $\mathbb{R}^{m} \rightarrow \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ with value $f$.
+\end{example}
+\begin{example}
+    Consider $f: \mathbb{R}^{m} \rightarrow \mathbb{R}, f(\bfx)=\|\bfx\|^{2}$. Fix $\bfa \in \mathbb{R}^{m}$. Then
+    $$
+f(\bfa+\bfh)=\|\bfa+\bfh\|^{2}=\|\bfa\|^{2}+2\langle \bfh, \bfa\rangle+\|\bfh\|^{2}=f(\bfa)+2\langle \bfh, \bfa\rangle+\|\bfh\|^{2}
+$$
+Since $\|\bfh\|^{2}=\mathrm{o}(\|\bfh\|)$, it follows that $f$ is differentiable at a with $f^{\prime}(\bfa)(\bfh)=2\langle \bfh, \bfa\rangle$.
+\end{example}
+
+\begin{example}
+    Let $\mathcal{M}_{n}$ denote the space of $n \times n$ real matrices (which we can think of as $\mathbb{R}^{n^{2}}$). Consider $f: \mathcal{M}_{n} \rightarrow \mathcal{M}_{n}, f(A)=A^{2}$. For fixed $A \in \mathcal{M}_{n}$, we have
+$$
+f(A+H)=(A+H)^{2}=f(A)+(A H+H A)+H^{2}
+$$
+for all $H \in \mathcal{M}_{n}$. Since $\left\|H^{2}\right\| \leqslant\|H\|^{2}$, it follows that $f$ is differentiable at $A$ with $f^{\prime}(A)(H)=A H+H A$.
+\end{example}
+
+\begin{example}
+    Let $f: \mathbb{R}^{m} \times \mathbb{R}^{n} \rightarrow \mathbb{R}^{p}$ be a bilinear map. This means that $f(\bfx, \bfy)$ is linear in each variable with the other variable fixed. Fix $(\bfa, \bfb) \in \mathbb{R}^{m} \times \mathbb{R}^{n}$. Then
+    $$
+f((\bfa, \bfb)+(\bfh, \bfk))=f(\bfa+\bfh, \bfb+\bfk)=f(\bfa, \bfb)+f(\bfa, \bfk)+f(\bfh, \bfb)+f(\bfh, \bfk)
+$$
+Note that the map $T: \mathbb{R}^{m} \times \mathbb{R}^{n} \rightarrow \mathbb{R}^{p}, T(\bfh, \bfk)=f(\bfa, \bfk)+f(\bfh, \bfb)$, is linear. We show that $f(\bfh, \bfk)=\mathrm{o}(\|(\bfh, \bfk)\|)$. Write $\bfh=\sum_{i=1}^{m} h_{i} \bfe_{i}$ and $\bfk=\sum_{j=1}^{n} k_{j} \bfe_{j}^{\prime}$. We then have
+$$
+\|f(\bfh, \bfk)\|=\left\|\sum_{i=1}^{m} \sum_{j=1}^{n} h_{i} k_{j} f\left(\bfe_{i}, \bfe_{j}^{\prime}\right)\right\| \leqslant \sum_{i=1}^{m} \sum_{j=1}^{n} | h_{i}| |k_{j}| \|f\left(\bfe_{i}, \bfe_{j}^{\prime}\right)\|\leqslant C\|(\bfh, \bfk) \|^{2}
+$$
+where $C=\sum_{i=1}^{m} \sum_{j=1}^{n}\left\|f\left(\bfe_{i}, \bfe_{j}^{\prime}\right)\right\|$ and we used $\left|h_{i}\right| \leqslant\|(\bfh, \bfk)\|,\left|k_{j}\right| \leqslant\|(\bfh, \bfk)\|$ for all $i, j$. It follows that $f$ is differentiable at $(\bfa, \bfb)$ with derivative 
+\[
+    f^{\prime}(\bfa, \bfb)(\bfh, \bfk)=f(\bfa, \bfk)+f(\bfh, \bfb).
+\]
+
+(Note that $f^{\prime}: \mathbb{R}^{m} \times \mathbb{R}^{n} \rightarrow \mcL\left(\mathbb{R}^{m} \times \mathbb{R}^{n}, \mathbb{R}^{p}\right)$ is linear.)
+\end{example}
+
+\subsection{Derivative on open subsets}
+So far we considered functions with domain the whole of $\mathbb{R}^{m}$. We now repeat the definitions in a general setting.
+
+\begin{definition}
+    We are given an open set $U \subset \mathbb{R}^{m}$, a function $f: U \rightarrow \mathbb{R}^{n}$ and a point $\bfa \in U$. We say $f$ is \textbf{differentiable} at $\bfa$ if there exists $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ and a function $\varepsilon:\left\{\bfh \in \mathbb{R}^{m}: \bfa+\bfh \in U\right\} \rightarrow \mathbb{R}^{n}$ with $\varepsilon(0)=0$ and $\varepsilon$ continuous at 0 such that
+\[
+f(\bfa+\bfh)=f(\bfa)+T(\bfh)+\|\bfh\| \varepsilon(\bfh) \tag{$\dagger$}
+\]
+for all $\bfh \in \mathbb{R}^{m}$ such that $\bfa+\bfh \in U$.
+\end{definition}
+It follows that
+$$
+\varepsilon(\bfh)= \begin{cases}\frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} & \text { if } \bfh \neq 0 \text { and } \bfa+\bfh \in U \\ 0 & \text { if } \bfh=0\end{cases}
+$$
+Since $U$ is open, $D_{r}(\bfa) \subset U$ for some $r>0$, and hence $\varepsilon$ is defined on $D_{r}(0)$.
+\begin{note}
+    $f$ is differentiable at $a$ if and only if
+$$
+\exists T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right) \text { such that } \frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} \rightarrow 0 \text { as } \bfh \rightarrow 0
+$$
+To see the ``if'' part, define $\varepsilon$ as above and observe that $\varepsilon(0)=0, \varepsilon$ is continuous at 0 and $(\dagger)$ is satisfied.
+\end{note}
+
+\begin{definition}
+    We are given an open set $U \subset \mathbb{R}^{m}$, a function $f: U \rightarrow \mathbb{R}^{n}$ and a point $a \in U$. If $f$ is differentiable at $a$ then (as we saw earlier) there is a unique $T \in \mcL\left(\mathbb{R}^{m}, \mathbb{R}^{n}\right)$ satisfying
+$$
+\frac{f(\bfa+\bfh)-f(\bfa)-T(\bfh)}{\|\bfh\|} \rightarrow 0 \quad \text { as } \quad \bfh \rightarrow 0
+$$
+The unique linear map $T$ is called the \textbf{derivative} of $f$ at $\bfa$ and is denoted by $f^{\prime}(\bfa)$ (or $D f(\bfa)$ or $\left.D f\right|_{\bfa}$ ).
+\end{definition}
+\begin{note}
+    If $f$ is differentiable at $\bfa$, then
+$$
+f(\bfa+\bfh)=f(\bfa)+f^{\prime}(\bfa)(\bfh)+o(\|\bfh\|)
+$$
+If $m=1$, then we identify $\mathbb{R}^{n}$ with $\mcL\left(\mathbb{R}, \mathbb{R}^{n}\right)$ and we have
+$$
+f^{\prime}(\bfa)=\lim _{h \rightarrow 0} \frac{f(\bfa+\bfh)-f(\bfa)}{\bfh}
+$$
+Conversely, if the above limit exists, then $f$ is differentiable at $\bfa$.
+\end{note}
+
+\subsection{Properties of derivative}
+\ \vspace*{-1.5em}
+\begin{proposition}
+    We are given an open subset $U$ of $\mathbb{R}^{m}$, a function $f: U \rightarrow \mathbb{R}^{n}$ and a point $\bfa \in U$. If $f$ is differentiable at $\bfa$, then $f$ is continuous at $\bfa$.
+\end{proposition}
+\begin{proof}
+    By assumption, we have
+$$
+f(\bfa+\bfh)=f(\bfa)+f^{\prime}(\bfa)(\bfh)+\|\bfh\| \varepsilon(\bfh)
+$$
+where $\varepsilon(0)=0$ and $\varepsilon$ is continuous at 0 . Given $\bfx \in U$, putting $\bfh=\bfx-\bfa$, we get
+$$
+f(\bfx)=f(\bfa)+f^{\prime}(\bfa)(\bfx-\bfa)+\|\bfx-\bfa\| \varepsilon(\bfx-\bfa)
+$$
+By Lemma \ref{lma:11.1} the linear map $f^{\prime}(\bfa)$ is continuous; $\|\cdot\|$ is continuous by the triangle-inequality; and $\varepsilon$ is continuous at 0 by assumption. Using results about the continuity of sums, products and composites of functions, we deduce that $f$ is continuous at $\bfa$.
+\end{proof}
+
+\begin{proposition}
+    Let $U$ be an open subset of $\mathbb{R}^{m}$ and $V$ be an open subset of $\mathbb{R}^{n}$. We are given functions $f: U \rightarrow \mathbb{R}^{n}$ with $f(U) \subset V$ and $g: V \rightarrow \mathbb{R}^{p}$. Let $\bfa \in U$ and $\bfb=f(\bfa)$. If $f$ is differentiable at $\bfa$, and if $g$ is differentiable at $\bfb=f(\bfa)$, then $g \circ f$ is differentiable at $\bfa$, and moreover $(g \circ f)^{\prime}(\bfa)=g^{\prime}(f(\bfa)) \circ f^{\prime}(\bfa)$.
+\end{proposition}
+\begin{proof}
+    Set $S=f^{\prime}(\bfa)$ and $T=g^{\prime}(\bfb)$. Then
+$$
+f(\bfa+\bfh)=f(\bfa)+S(\bfh)+\|\bfh\| \varepsilon(\bfh) \quad \text { and } \quad g(\bfb+\bfk)=g(\bfb)+T(\bfk)+\|\bfk\| \zeta(\bfk)
+$$
+for suitable error functions $\varepsilon$ and $\zeta$.
+\begin{align*}
+    (g \circ f)(\bfa+\bfh) &=g(f(\bfa+\bfh))=g(f(\bfa)+\underbrace{S(\bfh)+\|\bfh\| \varepsilon(\bfh)}_{\bfk=\bfk(\bfh)}) \\
+    &=g(f(\bfa))+T(S(\bfh)+\|\bfh\| \varepsilon(h))+\|\bfk\| \zeta(\bfk) \\
+    &=(g \circ f)(\bfa)+(T \circ S)(\bfh)+\|\bfh\| T(\varepsilon(\bfh))+\|\bfk\| \zeta(\bfk) \\
+    &=(g \circ f)(\bfa)+g^{\prime}(f(\bfa)) \circ f^{\prime}(\bfa)(\bfh)+\|\bfh\| \eta(\bfh)
+    \end{align*}
+    where
+    \[
+        \eta(\bfh)= \begin{cases}T(\varepsilon(\bfh))+\frac{\|\bfk\|}{\|\bfh\|} \zeta(\bfk) & \text { if } \bfh \neq 0 \\ 0 & \text { if } \bfh=0\end{cases}
+    \]
+    It remains to show that that $\eta$ is continuous at 0 . Recall $\bfk=S(\bfh)+\|\bfh\| \varepsilon(\bfh)$. Using Lemma \ref{lma:11.1}, note that
+$$
+\|\bfk\|=\|S(\bfh)+\| \bfh\|\varepsilon(h)\| \leqslant\|S(\bfh)\|+\|\bfh\|\|\varepsilon(\bfh)\| \leqslant\|\bfh\|(\|S\|+\|\varepsilon(\bfh)\|)
+$$
+Choose $\delta>0$ such that if $\|\bfh\|<\delta$, then $\|\varepsilon(\bfh)\|<1$, and hence $\frac{\|\bfk\|}{\|\bfh\|}<\|S\|+1$.
+
+Note that $\bfk(0)=0$ and $\bfk$ is continuous at 0 since $S$ and $\|\cdot\|$ are continuous everywhere and $\varepsilon$ is continuous at 0 . It follows that $\zeta(\bfk(0))=0$ and $\zeta(\bfk)$ is also continuous at 0 . Since $T$ is also continuous everywhere, $T(\varepsilon)$ is also continuous at 0 . It follows that $\eta$ is continuous at 0 . We spell this out.
+
+Given $\theta>0$, choose $\delta^{\prime}>0$ such that if $\|h\|<\delta^{\prime}$, then $\|T(\varepsilon(\bfh))\|<\theta$ and $\|\zeta(\bfk)\|<\theta$. Hence, if $\|\bfh\|<\min \left\{\delta, \delta^{\prime}\right\}$, then
+\[
+\|\eta(\bfh)\| \leqslant\|T(\varepsilon(\bfh))\|+\frac{\|\bfk\|}{\|\bfh\|}\|\zeta(\bfk)\| \leqslant(\|S\|+2) \theta.\qedhere
+\]
+\end{proof}
+
+\begin{proposition}\label{prop:deriv of projection}
+    We are given an open subset $U$ of $\mathbb{R}^{m}$, a function $f: U \rightarrow \mathbb{R}^{n}$ and a point $\bfa \in U$. For each $j=1,2, \ldots$, n, let $f_{j}: U \rightarrow \mathbb{R}$ be the $j^{\text {th }}$ component of $f$. Then
+    \begin{center}
+        $f$ is differentiable at $\bfa$ $\Longleftrightarrow$ each $f_{j}$ is differentiable at $\bfa$
+    \end{center}
+    in which case we have $f^{\prime}(\bfa)(\bfh)=\sum_{j=1}^{n} f_{j}^{\prime}(\bfa)(\bfh) \bfe_{j}^{\prime}$ for all $\bfh \in \mathbb{R}^{m}$.
+\end{proposition}
+
+\begin{proof}
+    Let $q_{j}: \mathbb{R}^{n} \rightarrow \mathbb{R}$ be the $j^{\text {th }}$ coordinate projection: $q_{j}(\bfy)=\left\langle \bfy, \bfe_{j}^{\prime}\right\rangle$ for $\bfy \in \mathbb{R}^{n}$.
+Then $f_{j}=q_{j} \circ f$ for each $j$, and so $f(\bfx)=\left(f_{1}(\bfx), \ldots, f_{n}(\bfx)\right)$ for $\bfx \in \mathbb{R}^{m}$.
+
+Now, if $f$ is differentiable at $\bfa$, then so is each $f_{j}$ by the Chain Rule:
+$f_{j}^{\prime}(\bfa)=q_{j}^{\prime}(f(\bfa)) \circ f^{\prime}(\bfa)=q_{j} \circ f^{\prime}(\bfa)$ by linearity of $q_{j}$.
+
+Conversely, assume each $f_{j}$ is differentiable at $\bfa$. Then for suitable functions $\varepsilon_{j}$,
+$$
+\begin{aligned}
+f(\bfa+\bfh) &=\sum_{j=1}^{n} f_{j}(\bfa+\bfh) \bfe_{j}^{\prime}=\sum_{j=1}^{n}\left[f_{j}(\bfa)+f_{j}^{\prime}(\bfa)(\bfh)+\|\bfh\| \varepsilon_{j}(\bfh)\right] \bfe_{j}^{\prime} \\
+&=f(\bfa)+\sum_{j=1}^{n} f_{j}^{\prime}(\bfa)(\bfh) \bfe_{j}^{\prime}+\|\bfh\| \sum_{j=1}^{n} \varepsilon_{j}(\bfh) \bfe_{j}^{\prime}
+\end{aligned}
+$$
+Since $\bfh \mapsto \sum_{j=1}^{n} f_{j}^{\prime}(\bfa)(\bfh) \bfe_{j}^{\prime}$ is linear, and since $\varepsilon(\bfh)=\sum_{j=1}^{n} \varepsilon_{j}(\bfh) \bfe_{j}^{\prime}$ is continuous at 0 with $\varepsilon(0)=0$, the result follows.
+\end{proof}
+
+\begin{corollary}
+    We are given an open subset $U$ of $\mathbb{R}^{m}$, functions $f, g: U \rightarrow \mathbb{R}^{n}$ and $\lambda: U \rightarrow \mathbb{R}$ and a point $a \in U$. If $f$ and $g$ are differentiable at $\bfa$, then so is $f+g$ with $(f+g)^{\prime}(\bfa)=f^{\prime}(\bfa)+g^{\prime}(\bfa)$. If $f$ and $\lambda$ are differentiable at $\bfa$, then so is $\lambda f$ with
+$$
+(\lambda f)^{\prime}(\bfa)(\bfh)=\lambda^{\prime}(\bfa)(\bfh) f(\bfa)+\lambda(\bfa) f^{\prime}(\bfa)(\bfh) \quad \text { for all } \bfh \in \mathbb{R}^{m}
+$$
+\end{corollary}
+\begin{proof}
+    We define functions
+$$
+\begin{array}{ll}
+H: U \rightarrow \mathbb{R}^{n} \times \mathbb{R}^{n}, H(\bfx)=(f(\bfx), g(\bfx)) & A: \mathbb{R}^{n} \times \mathbb{R}^{n} \rightarrow \mathbb{R}^{n}, A(\bfy, \bfz)=\bfy+\bfz \\
+K: U \rightarrow \mathbb{R} \times \mathbb{R}^{n}, K(\bfx)=(\lambda(\bfx), f(\bfx)) & S: \mathbb{R} \times \mathbb{R}^{n} \rightarrow \mathbb{R}^{n}, S(t, \bfy)=t \bfy
+\end{array}
+$$
+Observe that $f+g=A \circ H$ and $\lambda f=S \circ K$.
+
+It follows from Proposition \ref{prop:deriv of projection} that $H$ and $K$ are differentiable at $\bfa$ with
+$$
+H^{\prime}(\bfa)(\bfh)=\left(f^{\prime}(\bfa)(\bfh), g^{\prime}(\bfa)(\bfh)\right) \quad \text { and } \quad K^{\prime}(\bfa)(\bfh)=\left(\lambda^{\prime}(\bfa)(\bfh), f^{\prime}(\bfa)(\bfh)\right)
+$$
+As $A$ is linear and $S$ is bilinear, they are differentiable with
+$$
+A^{\prime}(\bfy, \bfz)=A \text { and } S^{\prime}(t, \bfy)(u, \bfh)=S(t, \bfh)+S(u, \bfy)=t \bfh+u \bfy
+$$
+for all $\bfy, \bfz, \bfh \in \mathbb{R}^{n}$ and $t, u \in \mathbb{R}$.
+
+Finally, it follows by the Chain Rule that $f+g=A \circ H$ and $\lambda f=S \circ K$ are differentiable at $\bfa$ with
+$$
+\begin{aligned}
+(f+g)^{\prime}(\bfa)(\bfh) &=\left[A^{\prime}(H(\bfa)) \circ H^{\prime}(\bfa)\right](\bfh)=A^{\prime}(H(\bfa))\left[H^{\prime}(\bfa)(\bfh)\right] \\
+&=A\left[\left(f^{\prime}(\bfa)(\bfh), g^{\prime}(\bfa)(\bfh)\right)\right]=f^{\prime}(\bfa)(\bfh)+g^{\prime}(\bfa)(\bfh)
+\end{aligned}
+$$
+and similarly,
+\begin{align*}
+(\lambda f)^{\prime}(\bfa)(\bfh) &=\left[S^{\prime}(K(\bfa)) \circ K^{\prime}(\bfa)\right](\bfh)=S^{\prime}(K(\bfa))\left[K^{\prime}(\bfa)(\bfh)\right] \\
+&=S^{\prime}(\lambda(\bfa), f(\bfa))\left[\left(\lambda^{\prime}(\bfa)(\bfh), f^{\prime}(\bfa)(\bfh)\right)\right] \\
+&=\lambda(\bfa) f^{\prime}(\bfa)(\bfh)+\lambda^{\prime}(\bfa)(\bfh) f(\bfa)\qedhere
+\end{align*}
+\end{proof}
+
+There is an alternative direct proof, which we will give next.
+
+\begin{proof}[Alternatively,]
+    we begin with $\lambda f$. By definition of differentiability, we have
+$$
+\begin{aligned}
+(\lambda f)(\bfa+\bfh) &=\lambda(\bfa+\bfh) f(\bfa+\bfh) \\
+&=\left[\lambda(\bfa)+\lambda^{\prime}(\bfa)(\bfh)+\|\bfh\| \varepsilon(\bfh)\right]\left[f(\bfa)+f^{\prime}(\bfa)(\bfh)+\|\bfh\| \zeta(\bfh)\right] \\
+&=(\lambda f)(\bfa)+\lambda(\bfa) f^{\prime}(\bfa)(\bfh)+\lambda^{\prime}(\bfa)(\bfh) f(\bfa)+\|\bfh\| \eta(\bfh)
+\end{aligned}
+$$
+where
+$$
+\eta(\bfh)= \begin{cases}
+    \begin{aligned}
+        &\lambda(\bfa) \zeta(\bfh)+\tfrac{\lambda^{\prime}(\bfa)(\bfh)}{\|\bfh\|} f^{\prime}(\bfa)(\bfh)+\lambda^{\prime}(\bfa)(\bfh) \zeta(\bfh)\\ &\hspace{4em}+\varepsilon(\bfh)\left[f(\bfa)+f^{\prime}(\bfa)(\bfh)+\|\bfh\| \zeta(\bfh)\right]
+    \end{aligned}
+    & \text { if } \bfh \neq 0 \\[1em] 0 & \text { if } \bfh=0\end{cases}
+$$
+By Lemma \ref{lma:11.1}, we have $\left\|\lambda^{\prime}(\bfa)(\bfh)\right\| \leqslant\left\|\lambda^{\prime}(\bfa)\right\|\|\bfh\|$, and hence $\frac{\lambda^{\prime}(\bfa)(\bfh)}{\|\bfh\|}$ is bounded. It now follows easily (by considering continuity of sums, products and composites of functions) that $\eta$ is continuous at 0 .
+
+A similar, and simpler, argument shows that $(f+g)^{\prime}(\bfa)=f^{\prime}(\bfa)+g^{\prime}(\bfa)$.
+\end{proof}
 
 \end{document}
