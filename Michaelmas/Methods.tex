@@ -3350,7 +3350,7 @@ Then, our previous solution gives
 \begin{align*}
 	\Theta(x,t) & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-au^2 - \frac{(x-u)^2}{4 D t}] \dd{u}                                                      \\
 	            & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-\frac{(1 + 4 a D t)u^2 - 2xu + x^2}{4 D t}] \dd{u}                                        \\
-	            & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-\frac{1 + 4 a D t}{4 D t} \qty(u - \frac{x}{1+4aDt}) ] \exp[ \frac{-ax^2}{1+4aDt}] \dd{u}
+	            & = \frac{\Theta_0 \sqrt{a}}{\sqrt{4 \pi^2 D t}} \int_{-\infty}^\infty \exp[-\frac{1 + 4 a D t}{4 D t} \qty(u - \frac{x}{1+4aDt})^2 ] \exp[ \frac{-ax^2}{1+4aDt}] \dd{u}
 \end{align*}
 Recall that
 \[
@@ -3358,7 +3358,7 @@ Recall that
 \]
 The integral above is a Gaussian, so its solution can be read off directly as
 \[
-	\Theta(x,t) = \frac{\Theta_0 \sqrt{a}}{\sqrt{\pi (1 + 4 \pi^2 D t)}} \exp[\frac{-ax^2}{1+4aDt}]
+	\Theta(x,t) = \frac{\Theta_0 \sqrt{a}}{\sqrt{\pi (1 + 4 a D t)}} \exp[\frac{-ax^2}{1+4aDt}]
 \]
 So the width of the Gaussian pulse will get wider over time, according to \( \sigma^2 \sim t \), as it evolves according to the heat equation.
 The area is constant, so heat energy is conserved in the system.
