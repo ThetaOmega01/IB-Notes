@@ -11,6 +11,7 @@
 \clearpage
 
 \section{Surfaces}
+\subsection{Topological surfaces}
 Let's start with a definition.
 \begin{definition}
     A \textbf{topological surface} is a topological space $ \Sigma $ such that 
@@ -105,7 +106,7 @@ Let's start with a definition.
 		\( \mathbb R \mathbb P^2 \) is a topological surface with the quotient topology.
 	\end{lemma}
 	\begin{proof}
-		We must check that \( \mathbb R \mathbb P^2 \) is Hausdorff since it is constructed by a quotient, not a subspace.
+		First check that \( \mathbb R \mathbb P^2 \) is Hausdorff since it is constructed by a quotient, not a subspace.
 		If \( X \) is a space and \( q \colon X \to Y \) is a quotient map, then by definition \( V \subset Y \) is open if and only if \( q^{-1}(V) \subset X \) is open.
 		If \( [p] \neq [q] \in \mathbb R \mathbb P^2 \), then \( \pm p, \pm q \in S^2 \) are distinct antipodal pairs.
 		We can therefore construct distinct open discs around \( p, q \) in \( S^2 \), and their antipodal images.
@@ -122,11 +123,119 @@ Let's start with a definition.
 		Let \( \overline D \) be a small (contained in an open hemisphere) closed disc, which is a neighbourhood of \( p \in S^2 \).
 		The quotient map restricted to \( \overline D \), written \( \eval{q}_{\overline D} \colon \overline D \to q(\overline D) \subset \mathbb R \mathbb P^2 \), is a continuous function from a compact space to a Hausdorff space.
 		Further, \( q \) is injective on \( \overline D \) since the disc was contained entirely in a single hemisphere.
-		The topological inverse function theorem states that a continuous bijection from a compact space to a Hausdorff space is a homeomorphism.
+		The topological inverse function theorem (TIFT) states that a continuous bijection from a compact space to a Hausdorff space is a homeomorphism.
 		So \( \eval{q}_{\overline D} \) is a homeomorphism from \( \overline D \) to \( q(\overline D) \).
 		This then induces the homeomorphism \( \eval{q}_{D} \) from the open disc \( D = {\overline D}^\circ \) to \( q(D) \).
 		So by construction, \( [p] \in q(D) \); it has an open neighbourhood in \( \mathbb R \mathbb P^2 \) which is homeomorphic to an open disc, concluding the proof.
 	\end{proof}
+\end{example}
+
+\begin{example}
+	Let \( S^1 \) be the unit circle in \( \mathbb C \), and define the torus to be the product space \( S^1 \times S^1 \), with the subspace topology from \( \mathbb C^2 \) (identical to the product topology).
+	\begin{lemma}
+		The torus $ S^1 \times S^1 $ is a topological surface.
+	\end{lemma}
+	\begin{proof}
+		Consider the map \( e \colon \mathbb R^2 \to S^1 \times S^1 \subset \mathbb{C} \times \mathbb{C} \) defined by
+		\[
+			(s,t) \mapsto \qty(e^{2\pi i s}, e^{2 \pi i t})
+		\]
+		That this induces a map \( \hat e \) from \( {\mathbb R^2}/{\mathbb Z^2} \), since \( e \) is constant under translations by \( \mathbb Z^2 \).
+		\begin{center}
+			\begin{tikzcd}
+				\mathbb R^2 \arrow[d, "q"'] \arrow[r, "e"]             & S^1 \times S^1 \\
+				{\mathbb R^2}/{\mathbb Z^2} \arrow[ru,dashed, "\hat e"] &
+			\end{tikzcd}
+		\end{center}
+		Under the quotient topology given by the quotient map \( q \), \( {\mathbb R^2}/{\mathbb Z^2} \) is a topological space.
+		The map \( [0,1]^2 \to \mathbb R^2 \to {\mathbb R^2}/{\mathbb Z^2} \) is surjective, so \( {\mathbb R^2}/{\mathbb Z^2} \) is compact.
+		So \( \hat e \) is a continuous map from a compact space to a Hausdorff space, and \( \hat e \) is bijective, so by TIFT \( \hat e \) is a homeomorphism.
+
+		Note that we already have that \( S^1 \times S^1 \) is compact, Hausdorff and second countable (as a closed and bounded set in \( \mathbb C^2 \)), so it suffices to show it is locally homeomorphic to \( \mathbb R^2 \).
+
+		As for the case of $S^2\to \mathbb{R}\mathbb{P}^2$, take $p\in \mathbb{R}^2, [p]= q(p)\in S^1\times S^1 $ and a small closed disc $ \bar{D}(p)\in \mathbb{R}\mathbb{P}^2 $ such that 
+		\[
+			\forall	 (m,n)\neq (0,0)\in \mathbb{Z}^2, \overline{D}(p) \cap (\overline{D}(p)+(m,n)) = \varnothing. 
+		\]
+		Hence \( \eval{e}_{\overline D(p)} \) is injective and \( \eval{q}_{\overline D(p)} \) is injective.
+		Now, restricting to the open disc as before, we can find an open disc neighbourhood of \( [p] \).
+		Since \( [p] \) was chosen arbitrarily, \( S^1 \times S^1 \) is a topological surface.
+	\end{proof}
+	Another view point is that $ \mathbb{R}^{2}/\mathbb{Z}^2 $ is also given by imposing on $[0,1]^2$ the equivalence relation that 
+\[
+	(x,0) \sim (x,1),\ \forall 0\le x\le 1,\quad (0,y) \sim (1,y),\ \forall 0\le y\le 1.
+\]
+\begin{center}
+	\begin{tikzpicture}
+	\draw [red, ->>-=0.63] (0, 0) -- +(2, 0);
+	\draw [red, ->>-=0.63] (0, 2) -- +(2, 0);
+
+	\draw [blue, ->-=0.58] (0, 0) -- +(0, 2);
+	\draw [blue, ->-=0.58] (2, 0) -- +(0, 2);
+	\node[anchor=east] at (0, 0.5) {$ (0,y) $};
+	\node[dot=3pt] at (0,0.5) {};
+	\node[anchor=west] at (2, 0.5) {$ (1,y) $};
+	\node[dot=3pt] at (2,0.5) {};
+	\node[anchor=north] at (1.5, 0) {$ (x,0) $};
+	\node[dot=3pt] at (1.5,0) {};
+	\node[anchor=south] at (1.5, 2) {$ (x,1) $};
+	\node[dot=3pt] at (1.5, 2) {};
+	\node at (3.4,1) {$\cong$};
+	\begin{scope}[shift={(6,1)}]
+	\draw (0,0) ellipse (2 and 1.12);
+	\path[rounded corners=24pt] (-.9,0)--(0,.6)--(.9,0) (-.9,0)--(0,-.56)--(.9,0);
+	\draw[rounded corners=28pt] (-1.1,.1)--(0,-.6)--(1.1,.1);
+	\draw[rounded corners=24pt] (-.9,0)--(0,.6)--(.9,0);
+	\end{scope}
+	\end{tikzpicture}
+  \end{center}
+\end{example}
+
+\begin{example}
+	Let \( P \) be a planar Euclidean polygon, with oriented edges.
+	We will pair the edges, and without loss of generality we will assume that paired edges have the same Euclidean length.
+	\begin{center}
+		\begin{tikzpicture}
+			\draw [red, ->>-=0.63] (0, 0) -- +(2, 0);
+			\draw [red, ->>-=0.63] (0, 2) -- +(2, 0);
+		
+			\draw [blue, ->-=0.58] (0, 0) -- +(0, 2);
+			\draw [blue, ->-=0.58] (2, 0) -- +(0, 2);
+			\node[anchor=east] at (0, 1) {$ a $};
+			\node[anchor=east] at (2, 1) {$ a^{-1} $};
+			\node[anchor=north] at (1, 0) {$ b^{-1} $};
+			\node[anchor=north] at (1, 2) {$ b $};
+
+			\begin{scope}[shift={(3.3,0)}]
+			\draw [red, ->>-=0.63] (2, 0) -- (0, 0);
+			\draw [red, ->>-=0.63] (0, 2) -- +(2, 0);
+		
+			\draw [blue, ->-=0.58] (0, 0) -- +(0, 2);
+			\draw [blue, ->-=0.58] (2, 0) -- +(0, 2);
+			\node[anchor=east] at (0, 1) {$ a $};
+			\node[anchor=east] at (2, 1) {$ a^{-1} $};
+			\node[anchor=north] at (1, 0) {$ b $};
+			\node[anchor=north] at (1, 2) {$ b $};
+			\end{scope}
+			\begin{scope}[shift={(7,0)}]
+			\draw [red, ->-=0.58] (0,0) -- (1,0);
+			\draw [red, ->-=0.58] (0,2) -- (1,2);
+			\draw [blue, ->>-=0.71] (-0.5,1) -- (0,0);
+			\draw [blue, ->>-=0.71] (1,2) -- (1.5,1);
+			\draw [Green,-trig- = 0.63] (-0.5,1) -- (0,2);
+			\draw [Green,-trig- = 0.63] (1.5,1) -- (1,0);
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	Assign letter names to each edge pair, and denote a polygon by the sequence of edges found when traversing in a clockwise orientation.
+	The edge pair name is inverted if the edge is traversed in the reverse direction.
+	Note the difference between the annotations on the first two shapes above, due to the reversed direction of the edge.
+
+	If two edges \( e, \hat e \) are paired, this defines a unique Euclidean isometry from \( e \) to \( \hat e \) respecting the orientation, \( f_{e\hat e} \colon e \to \hat e \).
+	The set of all such functions generate an equivalence relation on the polygon, identifying paired edges with each other.
+	\begin{lemma}
+		$P/\sim $ with quotient topology is a topological surface. 
+	\end{lemma}
 \end{example}
 
 \end{document}

@@ -25,6 +25,8 @@
 \usepackage{siunitx}
 \usepackage{centernot}
 \usepackage{faktor}
+\usepackage{mathdots}
+\usepackage{alltt}
 \newcommand{\sectionbreak}{\clearpage}
 
 \tdplotsetmaincoords{60}{120}
@@ -38,6 +40,7 @@
 \usetikzlibrary{cd}
 \usetikzlibrary{patterns}
 \usetikzlibrary{shapes.arrows}
+\usetikzlibrary{matrix}
 \usepgfplotslibrary{colormaps, external}
 \pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
 \tikzset{->/.style = {decoration={markings,
@@ -72,6 +75,9 @@
 \tikzset{-<<-/.style = {decoration={markings,
                                    mark=at position #1 with {\arrowreversed[scale=1.6]{twolatex'}}},
                        postaction={decorate}}}
+\tikzset{-trig-/.style = {decoration={markings,
+            mark=at position #1 with {\arrow[scale=1.6]{Triangle[open]}}},
+postaction={decorate}}}
 
 \tikzset{
 set arrow inside/.code={\pgfqkeys{/tikz/arrow inside}{#1}},
@@ -107,6 +113,18 @@ decoration={snake,
 
 \def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options](center)(initial angle:final angle:radius)
     { \draw[#1] ($(#2)+({#5*cos(#3)},{#5*sin(#3)})$) arc (#3:#4:#5); }
+
+    \tikzset{toprule/.style={%
+    execute at end cell={%
+        \draw [line cap=rect,#1] (\tikzmatrixname-\the\pgfmatrixcurrentrow-\the\pgfmatrixcurrentcolumn.north west) -- (\tikzmatrixname-\the\pgfmatrixcurrentrow-\the\pgfmatrixcurrentcolumn.north east);%
+    }
+},
+bottomrule/.style={%
+    execute at end cell={%
+        \draw [line cap=rect,#1] (\tikzmatrixname-\the\pgfmatrixcurrentrow-\the\pgfmatrixcurrentcolumn.south west) -- (\tikzmatrixname-\the\pgfmatrixcurrentrow-\the\pgfmatrixcurrentcolumn.south east);%
+    }
+},
+}
 
 \hypersetup{
     colorlinks=true,
@@ -432,14 +450,14 @@ decoration={snake,
 % \input{../plain.tex}
 
 %layout full
-\geometry{%
-  a4paper,
-  lmargin=2cm,
-  rmargin=2cm,
-  tmargin=3.5cm,
-  bmargin=2.5cm,
-  footskip=12pt,
-  headheight=24pt}
+% \geometry{%
+%   a4paper,
+%   lmargin=2cm,
+%   rmargin=2cm,
+%   tmargin=3.5cm,
+%   bmargin=2.5cm,
+%   footskip=12pt,
+%   headheight=24pt}
 % layout trim
 % \geometry{
 % papersize={379pt, 542pt},
@@ -450,14 +468,14 @@ decoration={snake,
 % right=17pt
 % }
 % layout a5
-% \geometry{%
-%   a5paper,
-%   lmargin=1cm,
-%   rmargin=1cm,
-%   tmargin=2.5cm,
-%   bmargin=1.5cm,
-%   footskip=15pt,
-%   headheight=24pt}
+\geometry{%
+  a5paper,
+  lmargin=1cm,
+  rmargin=1cm,
+  tmargin=2.5cm,
+  bmargin=1.5cm,
+  footskip=15pt,
+  headheight=24pt}
 \pagestyle{fancy}
 \rhead{{\triposcourse{}}}
 \author{Various Artists}

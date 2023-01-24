@@ -1,0 +1,83 @@
+\setcounter{section}{-1}
+\section{Course description}
+\subsection{Polynomial approximation}
+
+
+\begin{enumerate}
+  \item Polynomial interpolation. Lagrange and Newton polynomials. Divided differences.
+  \item Error bounds for polynomial interpolation. Chebyshev polynomials. Optimal interpolation knots.
+
+  \item Orthogonal polynomials. Three-term recurrence relation. Least squares polynomial fitting.
+
+  \item Approximation of linear functionals. Numerical integration. Numerical differentiation.
+
+  \item Error of approximation of linear functionals. The Peano kernel theorem. Sharp error bounds.
+
+\end{enumerate}
+
+\subsection{Ordinary differential equations}
+
+\begin{enumerate}
+  \setcounter{enumi}{5}
+  \item Basics. Euler method. Backward Euler. Trapezoidal rule.
+  \item Multistep methods. Order, convergence. Root condition. Dalquist equivalence theorem.
+
+  \item Construction of multistep methods. Adams methods. Backward differentiation formulas (BDF). Relation to numerical quadrature and numerical differentiation formulas.
+
+  \item Runge-Kutta methods. Explicit and implict RK methods. Order of the RK methods.
+
+  \item Stiff ODEs. Linear and A-stability. Stability of multistep methods. Stability of Runge-Kutta methods.
+
+  \item Numerical implementaion. The Milne device. Predictor-corrector scheme. Embedded Runge-Kutta methos.
+
+\end{enumerate}
+\subsection{Numerical linear algebra}
+\begin{enumerate}
+    \setcounter{enumi}{11}
+  \item LU factorization. Pivoting.
+
+  \item Existence and uniqueness of the LU factorization. Symmetric positive definite matrices. Diagonally dominant matrices. Sparse and band matrices.
+
+  \item QR factorization. Orthogonal matrices. The Gram-Schmidt orthogonalization.
+
+  \item Givens rotations. Householder reflections.
+
+  \item Linear least squares. Normal equations. QR and least squares.
+
+\end{enumerate}
+
+\subsection{Lecture notes in the class and on the web}
+At the beginning of each lecture new handouts will be distributed. Spare handouts of the previous lectures will be available either from myself (after the lecture) or somewhere in the lecture class.
+
+In reasonable circumstances (illness, no spare copies left, etc.), I will send handouts via email.
+
+The lecture notes may appear on the web after the term.
+
+\subsection{Appropriate books}
+
+\begin{enumerate}
+    \item (Polynomial approximation)
+    
+    S. D. Conte, C. de Boor, Elementary numerical analysis: an algorithmic approach, McGrew-Hill 1980
+  \item (ODEs)
+  
+  A. Iserles, A first course in the numerical analysis of differential equations, Cambridge University Press, 2009
+  \item (Numerical linear algebra)
+  
+  No single book known to me.
+\end{enumerate}
+For all three parts, the lectures and the lecture notes are the best source.
+
+\subsection{What is Numerical Analysis}
+
+Numerical analysis is studying practical algorithms based on solid theoretical background, so in a sense builds a bridge between pure and applied mathematics.
+
+Its main goal is to construct a finite mathematical model that approximates some infinite process with a given accuracy. It is also dealing with the questions of effectiveness, complexity and stability of algorithms that lie in the heart of numerical simulation of reality. Examples include:
+
+\begin{enumerate}
+  \item Approximation: reconstruct $f$ from $n$ bits of information;
+  \item ODEs, PDEs: $y^{\prime}=f(t, y)$;
+  \item Algebraic equations: solve $f(x)=0, f: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}$, say, linear systems $A \boldsymbol{x}=\boldsymbol{b}$;
+  \item Optimization: find $\min _{x \in \Omega} f(x)$;
+  \item etc.
+\end{enumerate}

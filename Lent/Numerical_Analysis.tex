@@ -1,0 +1,261 @@
+\documentclass[a4paper]{article}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\triposcourse}{Numerical Analysis}
+\input{../header.tex}
+\counterwithin{equation}{section}
+\graphicspath{ {./images/} }
+\pgfplotsset{compat=1.17}
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\include{NA_Intro.tex}
+
+\section{Polynomial interpolation}
+\subsection{Lagrange and Newton polynomials}
+Let $f:[a, b] \rightarrow \mathbb{R}$ be a real-valued continuous function defined on some interval $[a, b]$ and let $(x_{i})_{i=0}^{n}$ be $n+1$ distinct points in $[a, b]$. We wish to construct a polynomial $p$ of degree $n$ which interpolates $f$ at these points, i.e., satisfies
+$$
+p(x_{i})=f(x_{i}), \quad i=\overline{0, n}, \quad p \in \mathcal{P}_{n} .
+$$
+\begin{theorem}[Existence and uniqueness]
+    Given $f \in C[a, b]$ and $n+1$ distinct points $(x_{i})_{i=0}^{n} \in[a, b]$, there is exactly one polynomial $p \in \mathcal{P}_{n}$ such that $p(x_{i})=f(x_{i})$ for all $i$.
+\end{theorem}
+\begin{proof}
+    (Existence) There is at least one polynomial interpolant $p \in \mathcal{P}_{n}$, the one in the \textbf{Lagrange form},
+    \begin{equation}\label{eqn:Lagrange 1}
+        p(x)=\sum_{i=0}^{n} f(x_{i}) \ell_{i}(x) \quad \text { with } \quad \ell_{i}(x):=\prod_{\substack{j=0 \\ j \neq i}}^{n} \frac{x-x_{j}}{x_{i}-x_{j}}, \quad i=\overline{0, n},
+    \end{equation}
+    the $\ell_{i}$ s are called the fundamental Lagrange polynomials. Each $\ell_{i}$ is the product of $n$ linear factors, hence $\ell_{i} \in \mathcal{P}_{n}$. It also equals 1 at $x_{i}$ and vanishes at $x_{j} \neq x_{i}$, i.e., $\ell_{i}(x_{j})=\delta_{i j}$. Therefore $p \in \mathcal{P}_{n}$ and
+    $$
+    p(x_{j})=\sum_{i=0}^{n} f(x_{i}) \ell_{i}(x_{j})=f(x_{j}) .
+    $$
+    (Uniqueness) There is at most one polynomial interpolant $p \in \mathcal{P}_{n}$ to $f$ on $(x_{i})_{i=0}^{n}$. For if there are two, $p, q \in \mathcal{P}_{n}$, then the polynomial $r:=p-q$ is of degree $n$ and vanishes at $n+1$ points, whence $r \equiv 0$.
+\end{proof}
+\begin{remark}
+    Let us introduce the so-called \textbf{nodal polynomial}
+    $$
+    \omega(x):=\prod_{i=0}^{n}(x-x_{i}) .
+    $$
+    Then, in the expression for $\ell_{i}$, the numerator is simply $\omega(x) /(x-x_{i})$ while the denominator is equal to $\omega^{\prime}(x_{i})$. With that we arrive to a \textbf{compact Lagrange form}
+    \begin{equation}\label{eqn:Lagrange 2}
+        \boxed{p(x)=\sum_{i=0}^{n} f(x_{i}) \ell_{i}(x)=\sum_{i=0}^{n} \frac{f(x_{i})}{\omega^{\prime}(x_{i})} \frac{\omega(x)}{x-x_{i}}}
+    \end{equation}
+    The Lagrange forms for the interpolating polynomials are easy to manipulate, but they are unsuitable for numerical evaluation. An alternative is the \textbf{Newton form} which has an \textit{adaptive} nature.
+\end{remark}
+
+\begin{method}[The Newton form]
+    For $k=\overline{0,n}$, let $p_{k} \in \mathcal{P}_{k}$ be the polynomial interpolant to $f$ on $x_{0}, \ldots, x_{k}$. Then two subsequent $p_{k-1}$ and $p_{k}$ interpolate the same values $f(x_{i})$ for $i \leq k-1$, hence their difference is a polynomial of degree $k$ that vanishes at $k$ points $x_{0}, \ldots, x_{k-1}$. Thus
+    \begin{equation}\label{eqn:Newton 1}
+        p_{k}(x)-p_{k-1}(x)=A_{k} \prod_{i=0}^{k-1}(x-x_{i}),
+    \end{equation}
+    with some constant $A_{k}$ which is seen to be equal to the leading coefficient of $p_{k}$. It follows that $p:=p_{n}$ can be built step by step as one constructs the sequence $(p_{0}, p_{1}, \ldots)$, with $p_{k}$ obtained from $p_{k-1}$ by addition the term from the right-hand side of above, so that finally
+    $$
+    p(x):=p_{n}(x)=p_{0}(x)+\sum_{k=1}^{n}[p_{k}(x)-p_{k-1}(x)]=\sum_{k=0}^{n} A_{k} \prod_{i=0}^{k-1}(x-x_{i})
+    $$
+\end{method}
+\begin{definition}[Divided difference]
+    Given $f \in C[a, b]$ and $k+1$ distinct points $(x_{i})_{i=0}^{k} \in[a, b]$, the \textbf{divided difference} $f[x_{0}, \ldots, x_{k}]$ \textbf{of order} $k$ is the leading coefficient of the polynomial $p_{k} \in \mathcal{P}_{k}$ which interpolates $f$ at these points. By definition, it is a symmetric function of the variables $[x_{0}, \ldots, x_{k}]$, and if $f(x)=x^{m}, m \leq k$, then $f[x_{0}, \ldots, x_{k}]=\delta_{k m}$
+\end{definition}
+With this definition we arrive at the Newton formula for the interpolating polynomial.
+\begin{theorem}[Newton formula]
+    Given $n+1$ distinct points $(x_{i})_{i=0}^{n}$, let $p_{n} \in \mathcal{P}_{n}$ be the polynomial that interpolates $f$ at these points. Then it may be written in the \textbf{Newton form}
+   \begin{align*}
+    p_{n}(x)&=f[x_{0}]+f[x_{0}, x_{1}](x-x_{0})+f[x_{0}, x_{1}, x_{2}](x-x_{0})(x-x_{1})+\cdots \\
+    &\cdots+f[x_{0}, x_{1}, \ldots, x_{n}](x-x_{0})(x-x_{1}) \cdots(x-x_{n-1}),
+   \end{align*}
+   or, more compactly,
+   \begin{equation}\label{eqn:Divided difference}
+    \boxed{p_{n}(x)=\sum_{k=0}^{n} f[x_{0}, \ldots, x_{k}] \prod_{i=0}^{k-1}(x-x_{i})}
+   \end{equation}
+\end{theorem}
+To make this formula of any use, we need an expression for $f[x_{0}, \ldots, x_{k}]$. One such can be derived from the Lagrange formula (\ref{eqn:Lagrange 2}) by identifying the leading coefficient of $p$. This turns to be
+\[
+    f[x_{0}, \ldots, x_{n}]=\sum_{i=0}^{n} \frac{f(x_{i})}{\omega^{\prime}(x_{i})}, \quad \omega(x):=\prod_{i=0}^{n}(x-x_{i}) .
+\]
+However, this expression has computational disadvantages as the Lagrange form itself. A useful way to calculate divided difference is again an adaptive (or recurrence) approach.
+\begin{theorem}[Recurrence relation]
+    For distinct $x_{0}, x_{1}, \ldots, x_{k}$ (with $k \geq 1$), we have
+    \begin{equation}\label{eqn:Recurrence relation}
+        \boxed{f[x_{0}, \ldots, x_{k}]=\frac{f[x_{1}, \ldots, x_{k}]-f[x_{0}, \ldots, x_{k-1}]}{x_{k}-x_{0}}}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Let $q_{0}, q_{1} \in \mathcal{P}_{k-1}$ be the polynomials such that 
+    \begin{align*}
+        & q_0 \text{ interpolates } f \text{ on } (x_0,x_1,\dots,x_{k-1})\\ 
+        & q_1 \text{ interpolates } f \text{ on } ~ ~ ~ ~ ~ (x_1,\dots,x_{k-1},x_k)
+    \end{align*}
+    and consider the polynomial
+    \[
+        p(x):=\frac{x-x_{0}}{x_{k}-x_{0}} q_{1}(x)+\frac{x_{k}-x}{x_{k}-x_{0}} q_{0}(x), \quad p \in \mathcal{P}_{k}.
+    \]
+    One readily sees that $p(x_{i})=f(x_{i})$ for all $i$, hence, $p$ is the $k$-th degree interpolating polynomial for $f$. Moreover, the leading coefficient of $p$ is equal to the difference of those of $q_{1}$ and $q_{0}$ divided by $x_{k}-x_{0}$, and that is exactly what the recurrence (\ref{eqn:Recurrence relation}) says.
+\end{proof}
+\begin{method}
+    The recursive formula (\ref{eqn:Recurrence relation}) allows for fast evaluation of the divided difference table
+    \begin{center}
+        \begin{tikzpicture}
+            \matrix(ddtable)[matrix of nodes,
+                nodes={anchor=center}
+            ]{
+                \hline
+                $x_i$ & $f[*] = f(*)$ & $f[*,*]$ &[1em] $f[*,*,*]$ &[1em] $f[*,*,*,*]$ \\ \hline
+                $x_0$ & $f[x_0]$ &  & &\\ 
+                & & $f[x_0,x_1]$ & & \\ 
+                $x_1$ & $f[x_1]$ & & $f[x_0,x_1,x_2]$ & \\ 
+                & & $f[x_1, x_2]$ & & $f[x_0,x_1,x_2,x_3]$ \\ 
+                $x_2$ & $f[x_2]$ & & $f[x_1, x_2, x_3]$ & \\
+                & & $f[x_2, x_3]$ & &\\
+                $x_3$ & $f[x_3]$ & & & \\ \hline
+                & & & & \\
+            };
+            \draw[-to] (ddtable-2-1) -- (ddtable-2-2);
+            \draw[-to] (ddtable-4-1) -- (ddtable-4-2);
+            \draw[-to] (ddtable-6-1) -- (ddtable-6-2);
+            \draw[-to] (ddtable-8-1) -- (ddtable-8-2);
+            \draw[-to] (ddtable-2-2) -- (ddtable-3-3);
+            \draw[-to] (ddtable-4-2) -- (ddtable-3-3);
+            \draw[-to] (ddtable-4-2) -- (ddtable-5-3);
+            \draw[-to] (ddtable-6-2) -- (ddtable-5-3);
+            \draw[-to] (ddtable-6-2) -- (ddtable-7-3);
+            \draw[-to] (ddtable-8-2) -- (ddtable-7-3);
+            \draw[-to] (ddtable-3-3) -- (ddtable-4-4);
+            \draw[-to] (ddtable-5-3) -- (ddtable-4-4);
+            \draw[-to] (ddtable-5-3) -- (ddtable-6-4);
+            \draw[-to] (ddtable-7-3) -- (ddtable-6-4);
+            \draw[-to] (ddtable-4-4) -- (ddtable-5-5);
+            \draw[-to] (ddtable-6-4) -- (ddtable-5-5);
+        \end{tikzpicture}
+      \end{center}
+    \end{method}
+This can be done in $\mathcal{O}(n^{2})$ operations, the outcome is the numbers $\{f[x_{0}, \ldots, x_{k}]\}_{k=0}^{n}$ at the head of the columns which can be used in the Newton form (\ref{eqn:Newton 1}).
+\begin{method}[Horner scheme]
+    Finally, evaluation of $p$ at a given point $x$ using Newton formula (provided that divided differences $A_{k}:=f[x_{0}, \ldots x_{k}]$ are known) requires just $n$ multiplications, as long as we do it by the \textbf{Horner scheme}
+    \begin{align*}
+        p_{n}(x)=\{\cdots\{\{A_{n} &\times(x-x_{n-1})+A_{n-1}\} \\ 
+        &\times(x-x_{n-2})+A_{n-2}\} \\ 
+        &\times(x-x_{n-3})+\cdots+A_{1}\} \times(x-x_{0})+A_{0}.
+    \end{align*}
+\end{method}
+In practice, it may be written as 
+\begin{alltt}
+S <- f[\(\mathtt{x\sb{0}}\),..., \(\mathtt{x\sb{n}}\)]
+for k = n - 1,..., 0
+    S <- (\(\mathtt{\hat{x}}\) - \(\mathtt{x\sb{k}}\))S + f[\(\mathtt{x\sb{0}}\),..., \(\mathtt{x\sb{k}}\)]
+end\end{alltt}
+\subsection{Examples}
+The next example derives interpolation polynomials of a function using different methods. 
+\begin{example}
+    Given the data
+
+\begin{center}
+\begin{tabular}{crrrr}
+    \toprule
+$x_{i}$ & 0 & 1 & 2 & 3 \\
+\midrule
+$f\left(x_{i}\right)$ & $-3$ & $-3$ & $-1$ & 9 \\\bottomrule
+\end{tabular}
+\end{center}
+
+find the interpolating polynomial $p \in \mathcal{P}_{3}$ in both Lagrange and Newton forms.
+\end{example}
+1a) Fundamental Lagrange polynomials
+\begin{IEEEeqnarray*}{cCcCrl}
+    \ell_{0}(x)&=&\tfrac{(x-1)(x-2)(x-3)}{-6}&=& -&\tfrac{1}{6}\left(x^{3}-6 x^{2}+11 x-6\right), \\
+    \ell_{1}(x)&=&\tfrac{x(x-2)(x-3)}{2}&=&&\tfrac{1}{2}\left(x^{3}-5 x^{2}+6 x\right), \\
+    \ell_{2}(x)&=&\tfrac{x(x-1)(x-3)}{-2}&=&-&\tfrac{1}{2}\left(x^{3}-4 x^{2}+3 x\right), \\
+    \ell_{3}(x)&=&\tfrac{x(x-1)(x-2)}{6}&=&&\tfrac{1}{6}\left(x^{3}-3 x^{2}+2 x\right) .
+\end{IEEEeqnarray*}
+1b) Lagrange form:
+$$
+\begin{aligned}
+p(x) & =\textstyle(-3) \cdot \ell_{0}(x)+(-3) \cdot \ell_{1}(x)+(-1) \cdot \ell_{2}(x)+9 \cdot \ell_{3}(x) \\
+& =\textstyle\left(\frac{1}{2}-\frac{3}{2}+\frac{1}{2}+\frac{3}{2}\right) x^{3}+\left(-3+\frac{15}{2}-2-\frac{9}{2}\right) x^{2}+\left(\frac{11}{2}-9+\frac{3}{2}+3\right) x-3 \\
+& =\textstyle x^{3}-2 x^{2}+x-3 .
+\end{aligned}
+$$
+2a) Divided differences:
+\begin{center}
+\begin{tikzpicture}
+    \matrix(dd)[matrix of nodes,
+        nodes={anchor=center}
+    ]{
+        $\widehat{0}$ & $-\overset{*}{3}$ &[.5em]  &[1em] &[1em]\\ 
+        & & $\frac{(-3)-(-3)}{1-0} = \overset{*}{0}$ & & \\ 
+        $\widehat{1}$ & $-3$ & & $\frac{2-0}{2-0}= \overset{*}{1}$ & \\ 
+        & & $\frac{(-1)-(-3)}{2-1}=2$ & & $\frac{4-1}{3-0}=\overset{*}{1}$ \\ 
+        $\widehat{2}$ & $-1$ & & $\frac{10-2}{3-1}=4$ & \\
+        & & $\frac{9-(-1)}{3-2}=10$ & &\\
+        $\widehat{3}$ & $9$ & & & \\
+    };
+    \draw (dd-1-1.north east) -- (dd-7-1.south east);
+    \draw[-to] (dd-1-2) -- (dd-2-3);
+    \draw[-to] (dd-3-2) -- (dd-2-3);
+    \draw[-to] (dd-3-2) -- (dd-4-3);
+    \draw[-to] (dd-5-2) -- (dd-4-3);
+    \draw[-to] (dd-5-2) -- (dd-6-3);
+    \draw[-to] (dd-7-2) -- (dd-6-3);
+    \draw[-to] (dd-2-3) -- (dd-3-4);
+    \draw[-to] (dd-4-3) -- (dd-3-4);
+    \draw[-to] (dd-4-3) -- (dd-5-4);
+    \draw[-to] (dd-6-3) -- (dd-5-4);
+    \draw[-to] (dd-3-4) -- (dd-4-5);
+    \draw[-to] (dd-5-4) -- (dd-4-5);
+\end{tikzpicture}
+\end{center}
+2b) Newton form:
+$$
+p(x)=-\overset{*}{3}+\overset{*}{0} \cdot(x-\widehat{0})+\overset{*}{1} \cdot(x-\widehat{0})(x-\widehat{1})+\overset{*}{1} \cdot(x-\widehat{0})(x-\widehat{1})(x-\widehat{2}) .
+$$
+2c) Horner scheme:
+$$
+p(x)=\left\{[\overset{*}{1} \cdot(x-\widehat{2})+\overset{*}{1}] \cdot(x-\widehat{1})+\overset{*}{0}\right\} \cdot(x-\widehat{0})-\overset{*}{3}.
+$$
+\subsection{Some further formulas}
+We estimate error terms and give an expression of $ f[x_0, \dots x_k] $. 
+\begin{theorem}
+    Let $p_{n} \in \mathcal{P}_{n}$ interpolate $f \in C[a, b]$ at $n+1$ distinct points $x_{0}, \ldots, x_{n}$. Then for any $x \notin\left(x_{i}\right)$
+    \begin{equation}\label{eqn:error f-p}
+        \boxed{f(x)-p_{n}(x)=f[x_{0}, \ldots, x_{n}, x] \omega(x)}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Given $x_{0}, . ., x_{n}$, let $\bar{x}:=x_{n+1}$ be any other point. Then, by (\ref{eqn:Newton 1}), the corresponding polynomials $p_{n}$ and $p_{n+1}$ are related by
+    $$
+    p_{n+1}(x)=p_{n}(x)+f\left[x_{0}, \ldots, x_{n}, \bar{x}\right] \omega(x), \quad \omega(x):=\prod_{i=0}^{n}\left(x-x_{i}\right)
+    $$
+    In particular, putting $x=\bar{x}$, and noticing that $p_{n+1}(\bar{x})=f(\bar{x})$, we obtain
+    $$
+    f(\bar{x})=p_{n}(\bar{x})+f\left[x_{0}, \ldots, x_{n}, \bar{x}\right] \omega(\bar{x}),
+    $$
+    the latter equality being the same as (\ref{eqn:error f-p}).
+\end{proof}
+
+This theorem shows the error to be ``like the next term'' in the Newton form. However, we cannot evaluate the right-hand side of (\ref{eqn:error f-p}) without knowing the number $f(x)$. But as we now show we can relate it to the $(n+1)$-st derivative of $f$. For this we need a version of the Rolle's theorem:
+
+\begin{lemma}
+    If $g \in C^{k}[a, b]$ is zero at $k+\ell$ distinct points, then $g^{(k)}$ has at least $\ell$ distinct zeros in $[a, b]$.
+\end{lemma}
+\begin{proof}
+    By Rolle's theorem, if $\phi \in C^{1}$ is zero at two points, then $\phi^{\prime}$ is zero at an intermediate point. So, we deduce that $g^{\prime}$ vanishes at least at $(k-1)+\ell$ distinct points. Next, applying Rolle to $g^{\prime}$, we conclude that $g^{\prime \prime}$ vanishes at $(k-2)+\ell$ points, and so on.
+\end{proof}
+\begin{theorem}
+    Let $[\bar{a}, \bar{b}]$ be the smallest interval that contains $x_{0}, \ldots, x_{k}$ and let $f \in C^{k}[\bar{a}, \bar{b}]$. Then there exists $\xi \in[\bar{a}, \bar{b}]$ such that
+    \begin{equation}\label{eqn:divided difference taylor}
+        \boxed{f[x_{0}, \ldots, x_{k}]=\frac{1}{k !} f^{(k)}(\xi)}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Let $p \in \mathcal{P}_{k}$ be the interpolating polynomial to $f$ on $\left(x_{i}\right)$. The error function $f-p$ has at least $k+1$ zeros in $[\bar{a}, \bar{b}]$ so, by Rolle's theorem, $f^{(k)}-p^{(k)}$ must vanish at some $\xi \in[\bar{a}, \bar{b}]$, i.e.,
+    $$
+    p^{(k)}(\xi)=f^{(k)}(\xi)
+    $$
+    On the other hand, if $p(x)=a_{k} x^{k}+$ (lower order terms), then (for any $\xi$)
+    $$
+    p^{(k)}(\xi)=k ! a_{n}=: k ! f[x_{0}, \ldots, x_{n}] .
+    $$
+\end{proof}
+
+
+\end{document}

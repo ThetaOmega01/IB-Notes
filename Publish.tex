@@ -87,6 +87,22 @@
     % postheadspace={3pt}
 ]{thmtheorembox}
 
+% Method
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries\color{Black!40!TealBlue},
+    mdframed={
+      backgroundcolor=White!90!TealBlue,
+      linecolor=TealBlue,
+      linewidth=1pt,
+      topline=false,
+      rightline=false,
+      bottomline=false,
+      leftline=true
+    },
+    % headpunct={\\[3pt]},
+    % postheadspace={3pt}
+]{thmmethodbox}
+
 % Lemma
 \declaretheoremstyle[
     headfont=\sffamily\bfseries\color{Black!50!Red},
@@ -176,6 +192,7 @@
 ]{thmexamplebox}
 
 \declaretheorem[style=thmtheorembox,name=Theorem,numberwithin=section]{theorem}
+\declaretheorem[style=thmmethodbox,name=Method,sibling=theorem]{method}
 \declaretheorem[style=thmdefinitionbox,name=Definition,sibling=theorem]{definition}
 \declaretheorem[style=thmnotationbox,name=Notation,sibling=theorem]{notation}
 \declaretheorem[style=thmpropositionbox,name=Proposition,sibling=theorem]{proposition}
@@ -183,7 +200,7 @@
 \declaretheorem[style=thmlemmabox,name=Lemma,sibling=theorem]{lemma}
 \declaretheorem[style=thmlemmabox,name=Lemma,sibling=theorem,numbered=no]{slemma}
 \declaretheorem[style=thmcorollarybox,name=Corollary,sibling=theorem]{corollary}
-\declaretheorem[style=thmremarkbox,name=Remark,sibling=theorem,numbered=no]{remark}
+\declaretheorem[style=thmremarkbox,name=Remark,sibling=theorem]{remark}
 \declaretheorem[style=thmnotebox,name=Note,sibling=theorem,numbered=no]{note}
 \declaretheorem[style=thmexamplebox,name=Example,sibling=theorem]{example}
 
