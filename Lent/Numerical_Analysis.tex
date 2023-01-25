@@ -10,7 +10,7 @@
 \tableofcontents
 \clearpage
 
-\include{NA_Intro.tex}
+% \include{NA_Intro.tex}
 
 \section{Polynomial interpolation}
 \subsection{Lagrange and Newton polynomials}
@@ -39,7 +39,7 @@ $$
     $$
     Then, in the expression for $\ell_{i}$, the numerator is simply $\omega(x) /(x-x_{i})$ while the denominator is equal to $\omega^{\prime}(x_{i})$. With that we arrive to a \textbf{compact Lagrange form}
     \begin{equation}\label{eqn:Lagrange 2}
-        \boxed{p(x)=\sum_{i=0}^{n} f(x_{i}) \ell_{i}(x)=\sum_{i=0}^{n} \frac{f(x_{i})}{\omega^{\prime}(x_{i})} \frac{\omega(x)}{x-x_{i}}}
+        p(x)=\sum_{i=0}^{n} f(x_{i}) \ell_{i}(x)=\sum_{i=0}^{n} \frac{f(x_{i})}{\omega^{\prime}(x_{i})} \frac{\omega(x)}{x-x_{i}}
     \end{equation}
     The Lagrange forms for the interpolating polynomials are easy to manipulate, but they are unsuitable for numerical evaluation. An alternative is the \textbf{Newton form} which has an \textit{adaptive} nature.
 \end{remark}
@@ -66,7 +66,7 @@ With this definition we arrive at the Newton formula for the interpolating polyn
    \end{align*}
    or, more compactly,
    \begin{equation}\label{eqn:Divided difference}
-    \boxed{p_{n}(x)=\sum_{k=0}^{n} f[x_{0}, \ldots, x_{k}] \prod_{i=0}^{k-1}(x-x_{i})}
+    p_{n}(x)=\sum_{k=0}^{n} f[x_{0}, \ldots, x_{k}] \prod_{i=0}^{k-1}(x-x_{i})
    \end{equation}
 \end{theorem}
 To make this formula of any use, we need an expression for $f[x_{0}, \ldots, x_{k}]$. One such can be derived from the Lagrange formula (\ref{eqn:Lagrange 2}) by identifying the leading coefficient of $p$. This turns to be
@@ -77,7 +77,7 @@ However, this expression has computational disadvantages as the Lagrange form it
 \begin{theorem}[Recurrence relation]
     For distinct $x_{0}, x_{1}, \ldots, x_{k}$ (with $k \geq 1$), we have
     \begin{equation}\label{eqn:Recurrence relation}
-        \boxed{f[x_{0}, \ldots, x_{k}]=\frac{f[x_{1}, \ldots, x_{k}]-f[x_{0}, \ldots, x_{k-1}]}{x_{k}-x_{0}}}
+        f[x_{0}, \ldots, x_{k}]=\frac{f[x_{1}, \ldots, x_{k}]-f[x_{0}, \ldots, x_{k-1}]}{x_{k}-x_{0}}
     \end{equation}
 \end{theorem}
 \begin{proof}
@@ -217,7 +217,7 @@ We estimate error terms and give an expression of $ f[x_0, \dots x_k] $.
 \begin{theorem}
     Let $p_{n} \in \mathcal{P}_{n}$ interpolate $f \in C[a, b]$ at $n+1$ distinct points $x_{0}, \ldots, x_{n}$. Then for any $x \notin\left(x_{i}\right)$
     \begin{equation}\label{eqn:error f-p}
-        \boxed{f(x)-p_{n}(x)=f[x_{0}, \ldots, x_{n}, x] \omega(x)}
+        f(x)-p_{n}(x)=f[x_{0}, \ldots, x_{n}, x] \omega(x)
     \end{equation}
 \end{theorem}
 \begin{proof}
@@ -243,7 +243,7 @@ This theorem shows the error to be ``like the next term'' in the Newton form. Ho
 \begin{theorem}
     Let $[\bar{a}, \bar{b}]$ be the smallest interval that contains $x_{0}, \ldots, x_{k}$ and let $f \in C^{k}[\bar{a}, \bar{b}]$. Then there exists $\xi \in[\bar{a}, \bar{b}]$ such that
     \begin{equation}\label{eqn:divided difference taylor}
-        \boxed{f[x_{0}, \ldots, x_{k}]=\frac{1}{k !} f^{(k)}(\xi)}
+        f[x_{0}, \ldots, x_{k}]=\frac{1}{k !} f^{(k)}(\xi)
     \end{equation}
 \end{theorem}
 \begin{proof}
@@ -257,5 +257,123 @@ This theorem shows the error to be ``like the next term'' in the Newton form. Ho
     $$
 \end{proof}
 
+\section{Error bounds for polynomial interpolation}
+Here we stuydy the \textbf{interpolation error}
+\[
+    e_n(x) = f(x) - p_n(x),\quad p_n\in \mathcal{P}_n,
+\]
+for the class of differentiable functions $f$ that possess $n+1$ continuous derivatives on the interval $[a,b]$; we denote this class by $C^{n+1}[a,b]$. 
+\begin{theorem}
+    Let $f \in C^{n+1}[a, b]$, and let $p_n \in \mathcal{P}_n$ interpolate $f$ at $n+1$ points $\left(x_i\right)_{i=0}^n \in[a, b]$, and let $\omega(x):=\prod_{i=0}^n\left(x-x_i\right)$. Then for every $x \in[a, b]$ there exists $\xi \in[a, b]$ such that
+    \begin{equation}\label{eqn:error bound}
+        f(x)-p_n(x)=\frac{1}{(n+1) !} \omega(x) f^{(n+1)}(\xi)
+    \end{equation}
+\end{theorem} 
+\begin{proof}
+    Proof. If $x$ coincides with any $x_i$ from the interpolating set, then both sides vanish, hence the formula trivially holds. So, we let $x$ be any other fixed point, and consider the function
+    \[
+    \phi(t):=[f(t)-p(t)]-c_x \omega(t),
+    \]
+    with \textit{some} constant $c_x$. For \textit{any} $c_x, \phi(t)=0$ at $n+1$ points $t=x_2$, and we choose \textit{particular} $c_x$ so that $\phi(t)=0$ at $t=x$ as well, i.e.,
+    \[
+    c_x:=\frac{f(x)-p(x)}{\omega(x)} .
+    \]
+    Then $\phi$ has $n+2$ distinct zeros hence, by Rolle's theorem, $\phi^{(n+1)}(\xi)=0$ for some $\xi \in[a, b]$. So,
+    \[
+    0=\phi^{(n+1)}(\xi)=\left[f^{(n+1)}(\xi)-p^{(n+1)}(\xi)\right]-c_x \omega^{(n+1)}(\xi)=f^{(n+1)}(\xi)-c_x(n+1) !
+    \]
+    whence
+    \[
+    c_x:=\frac{f(x)-p(x)}{\omega(x)}=\frac{1}{(n+1) !} f^{(n+1)}(\xi),
+    \]
+    and that is the same as RHS.
+\end{proof}
+
+The equality (\ref{eqn:error bound}) with the value $f^{(n+1)}(\xi)$ for some $\xi$ is of hardly any use. Usually one has a bound for $f^{(n+1)}$ in terms of some norm, e.g., the $L_{\infty}$-norm (the max-norm)
+\[
+\|g\|_{\infty}:=\|g\|_{L_{\infty}[a, b]}:=\max _{t \in[a, b]}|g(t)| .
+\]
+Then estimate (\ref{eqn:error bound}) takes the form
+\begin{equation}\label{eqn:2.2}
+    \left|f(x)-p_n(x)\right| \leq \frac{1}{(n+1) !}|\omega(x)|\left\|f^{(n+1)}\right\|_{\infty}
+\end{equation}
+If we want to find the maximal error over the interval, then maximizing first the right- and then the left-hand side over $x \in[a, b]$ we get yet one more error bound for polynomial interpolation
+\begin{equation}\label{eqn:2.3}
+    \left\|f-p_{\Delta}\right\|_{\infty} \leq \frac{1}{(n+1) !}\left\|\omega_{\Delta}\right\|_{\infty}\left\|f^{(n+1)}\right\|_{\infty}
+\end{equation}
+Here we put the lower index in $\omega_{\Delta}$ in order to emphasize dependence of $\omega(x):=\prod_{i=0}^n\left(x-x_i\right)$ on the sequence of interpolating points $\Delta:=\left(x_i\right)_{i=0}^n$. The choice of $\Delta$ makes a big difference!
+
+\begin{example}
+    Consider interpolation of the function $\displaystyle f(x) = \frac{1}{1+x^2},\ x\in [-5,5]$. 
+    \begin{center}
+        \includegraphics[scale=.85]{NA1}
+    \end{center}
+\end{example}
+
+\begin{definition}
+    The Chebyshev polynomial of degree $n$ on $[-1,1]$ is defined by
+    \[
+    T_n(x)=\cos n \theta, \quad x=\cos \theta, \quad \theta \in[0, \pi] .
+    \]
+    (Or just $T_n(x)=\cos (n \arccos x)$, with $x \in[-1,1]$.)
+\end{definition}
+
+One sees at once that, on $[-1,1]$,
+\begin{enumerate}
+    \item  $T_n$ takes its maximal absolute value 1 with alternating signs $n+1$ times:
+    \[
+    \left\|T_n\right\|_{\infty}=1, \quad T_n\left(t_k\right)=(-1)^k, \quad t_k=\cos \tfrac{\pi k}{n}, \quad k=\overline{0, n}
+    \]
+    \item $T_n$ has $n$ distinct zeros: $\quad T_n\left(x_k^*\right)=0, \quad x_k^*=\cos \frac{2 k-1}{2 n} \pi, \quad k=\overline{1, n}$.
+\end{enumerate}
+
+\begin{lemma}
+    The Chebyshev polynomials $T_n$ satisfy the recurrence relation
+    \begin{align}
+        & T_0(x) \equiv 1, \quad T_1(x)=x, \label{eqn:2.4}\\
+        & T_{n+1}(x)=2 x T_n(x)-T_{n-1}(x), \quad n \geq 1 .\label{eqn:2.5}
+    \end{align}
+    In particular, $T_n$ is an algebraic polynomial of degree $n$ with the leading coefficient $2^{n-1}$.
+\end{lemma}
+\begin{proof}
+    Expressions (\ref{eqn:2.4}) are straightforward, the recurrence follows via the substitution $x=\cos \theta$ into identity $\cos (n+1) \theta+\cos (n-1) \theta=2 \cos \theta \cos n \theta$.
+\end{proof}
+
+\begin{theorem}
+    On the interoal $[-1,1]$, among all polynomials of degree $n$ with the leading coefficient equal to one, the Chebyshev polynomial $\gamma T_n$ has the smallest max-norm, i.e.,
+    \[
+    \inf _{\left(a_i\right)}\left\|x^n+a_{n-1} x^{n-1}+\cdots+a_0\right\|_{\infty}=\left\|\gamma T_n\right\|_{\infty}=\gamma, \quad \gamma:=1 / 2^{n-1} .
+    \]
+\end{theorem}
+\begin{proof}
+    Suppose there is a polynomial $q_n(x)=x^n+a_{n-1} x^{n-1}+\cdots+a_0$ such that $\|q\|_{\infty}<\gamma$, and set
+    \[
+    r:=\gamma T_n-q_n .
+    \]
+    The leading coefficients of both $q_n$ and $\gamma T_n$ are equal 1 , thus $r$ is of degree at most $n-1$.
+
+    Further, at $n+1$ points $t_k:=\cos \frac{\pi k}{n}$, the Chebyshev polynomial $\gamma T_n$ takes the values $\pm \gamma$ alternatively, while by assumption $\left|q_n\left(t_k\right)\right|<\gamma$, hence $r=\gamma T_n-q_n$ alternates in sign at these $n+1$ points, therefore it has a zero in each of $n$ intervals $\left(t_k, t_{k+1}\right)$, i.e. at least $n$ zeros in the interval $[-1,1]$, a contradiction to $r \in \mathcal{P}_{n-1}$.
+\end{proof}
+
+\begin{corollary}
+    For $\Delta=\left(x_i\right)_{i=0}^n \subset[-1,1]$, let $\omega_{\Delta}(x)=\prod_{i=0}^n\left(x-x_i\right)$. Then, for all $n$, we have
+    \[
+    \inf _{\Delta}\left\|\omega_{\Delta}\right\|_{\infty}=\left\|\omega_{{\Delta}_{*}}\right\|_{\infty}=1 / 2^n .
+    \]
+\end{corollary}
+
+\begin{theorem}
+    For $f \in C^{n+1}[-1,1]$, the best choice of interpolating points is $\Delta_*=\left(x_i^*\right)=\left(\cos \frac{2 i+1}{2 n+2} \pi\right)_{i=0}^n$ and
+    \[
+    \left\|f-p_{\Delta_*}\right\|_{\infty} \leq \frac{1}{2^n} \frac{1}{(n+1) !}\left\|f^{(n+1)}\right\|_{\infty}
+    \]
+\end{theorem}
+
+\begin{example}
+    For $f(x)=e^x$, and $x \in[-1,1]$, the error of approximation provided by interpolating polynomial of degree 9 with 10 Chebyshev knots is bounded by
+    \[
+    \left|e^x-p_9(x)\right| \leq \frac{1}{2^9} \frac{1}{10 !} e \leq 1.5 \cdot 10^{-9}
+    \]
+\end{example}
 
 \end{document}
