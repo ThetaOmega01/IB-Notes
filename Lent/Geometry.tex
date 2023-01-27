@@ -88,18 +88,18 @@ Let's start with a definition.
 
 \begin{example}
 	The real projective plane is a topological surface.
-	The group \( \mathbb Z / 2 \) acts on \( S^2 \) by homeomorphisms via the \textbf{antipodal map} \( a \colon S^2 \to S^2 \), mapping \( x \mapsto -x \).
+	The group \( \mathbb Z / 2 \) acts on \( S^2 \) by homeomorphisms via the \textbf{antipodal map} \( a \colon S^2 \to S^2 \), mapping \( \mathbf{x} \mapsto -\mathbf x \).
 	There exists a homeomorphism \( \mathbb Z / 2 \) to the group \( \mathrm{Homeo}(S^2) \) of homeomorphisms of \( S^2 \), by mapping \( 1 + \mathbb Z \mapsto a \).
 
-	We now define the real projective plane to be the quotient of \( S^2 \) given by identifying every point \( x \) with its image \( -x \) under \( a \).
+	We now define the real projective plane to be the quotient of \( S^2 \) given by identifying every point \( \mathbf x \) with its image \( -\mathbf x \) under \( a \).
 	\[
-		\mathbb R \mathbb P^2 = \faktor{S^2}{\mathbb Z/2} = \faktor{S^2}{\sim};\quad x \sim a(x)
+		\mathbb R \mathbb P^2 = \faktor{S^2}{\mathbb Z/2} = \faktor{S^2}{\sim};\quad \mathbf{x} \sim a(\mathbf{x})
 	\]
 	\begin{lemma}
 		\( \mathbb R \mathbb P^2 \) bijects with the set of straight lines in \( \mathbb R^3 \) through the origin.
 	\end{lemma}
 	\begin{proof}
-		Any line through the origin intersects \( S^2 \) exactly in a pair of antipodal points \( x, -x \).
+		Any line through the origin intersects \( S^2 \) exactly in a pair of antipodal points \( \mathbf{x}, -\mathbf{x} \).
 		Similarly, pairs of antipodal points uniquely define a line through the origin.
 	\end{proof}
 	\begin{lemma}
@@ -108,9 +108,9 @@ Let's start with a definition.
 	\begin{proof}
 		First check that \( \mathbb R \mathbb P^2 \) is Hausdorff since it is constructed by a quotient, not a subspace.
 		If \( X \) is a space and \( q \colon X \to Y \) is a quotient map, then by definition \( V \subset Y \) is open if and only if \( q^{-1}(V) \subset X \) is open.
-		If \( [p] \neq [q] \in \mathbb R \mathbb P^2 \), then \( \pm p, \pm q \in S^2 \) are distinct antipodal pairs.
-		We can therefore construct distinct open discs around \( p, q \) in \( S^2 \), and their antipodal images.
-		These uniquely define open neighbourhoods of \( [p], [q] \), which are disjoint.
+		If \( [\mathbf p] \neq [\mathbf q] \in \mathbb R \mathbb P^2 \), then \( \pm \mathbf p, \pm \mathbf q \in S^2 \) are distinct antipodal pairs.
+		We can therefore construct distinct open discs around \( \mathbf p, \mathbf q \) in \( S^2 \), and their antipodal images.
+		These uniquely define open neighbourhoods of \( [\mathbf p], [\mathbf q] \), which are disjoint.
 
 		Similarly, we can check that \( \mathbb R \mathbb P^2 \) is second countable.
 		We know that \( S^2 \) is second countable, so let \( \mathcal U \) be a countable base for the topology on \( S^2 \).
@@ -119,19 +119,19 @@ Let's start with a definition.
 		Now, if \( V \subseteq \mathbb R \mathbb P^2 \) is open, then by definition \( q^{-1}(V) \) is open in \( S^2 \) hence \( q^{-1}(V) \) contains some \( U \in \mathcal U \) and hence contains \( U \cup (-U) \).
 		Hence \( \overline{\mathcal U} \) is a countable base for the quotient topology on \( \mathbb R \mathbb P^2 \).
 
-		Finally, let \( p \in S^2 \) and \( [p] \in \mathbb R \mathbb P^2 \) its image.
-		Let \( \overline D \) be a small (contained in an open hemisphere) closed disc, which is a neighbourhood of \( p \in S^2 \).
-		The quotient map restricted to \( \overline D \), written \( \eval{q}_{\overline D} \colon \overline D \to q(\overline D) \subset \mathbb R \mathbb P^2 \), is a continuous function from a compact space to a Hausdorff space.
+		Finally, let \( \mathbf p \in S^2 \) and \( [\mathbf p] \in \mathbb R \mathbb P^2 \) its image.
+		Let \( \overline D \) be a small (contained in an open hemisphere) closed disc, which is a neighbourhood of \( \mathbf p \in S^2 \).
+		The quotient map restricted to \( \overline D \), written \( q\restriction_{\overline D} \colon \overline D \to q(\overline D) \subset \mathbb R \mathbb P^2 \), is a continuous function from a compact space to a Hausdorff space.
 		Further, \( q \) is injective on \( \overline D \) since the disc was contained entirely in a single hemisphere.
 		The topological inverse function theorem (TIFT) states that a continuous bijection from a compact space to a Hausdorff space is a homeomorphism.
-		So \( \eval{q}_{\overline D} \) is a homeomorphism from \( \overline D \) to \( q(\overline D) \).
-		This then induces the homeomorphism \( \eval{q}_{D} \) from the open disc \( D = {\overline D}^\circ \) to \( q(D) \).
+		So \( q\restriction_{\overline D} \) is a homeomorphism from \( \overline D \) to \( q(\overline D) \).
+		This then induces the homeomorphism \( q\restriction_{D} \) from the open disc \( D = {\overline D}^\circ \) to \( q(D) \).
 		So by construction, \( [p] \in q(D) \); it has an open neighbourhood in \( \mathbb R \mathbb P^2 \) which is homeomorphic to an open disc, concluding the proof.
 	\end{proof}
 \end{example}
 
 \begin{example}
-	Let \( S^1 \) be the unit circle in \( \mathbb C \), and define the torus to be the product space \( S^1 \times S^1 \), with the subspace topology from \( \mathbb C^2 \) (identical to the product topology).
+	Let \( S^1 \) be the unit circle in \( \mathbb C \), and define the \textbf{torus} to be the product space \( S^1 \times S^1 \), with the subspace topology from \( \mathbb C^2 \) (identical to the product topology).
 	\begin{lemma}
 		The torus $ S^1 \times S^1 $ is a topological surface.
 	\end{lemma}
@@ -153,13 +153,13 @@ Let's start with a definition.
 
 		Note that we already have that \( S^1 \times S^1 \) is compact, Hausdorff and second countable (as a closed and bounded set in \( \mathbb C^2 \)), so it suffices to show it is locally homeomorphic to \( \mathbb R^2 \).
 
-		As for the case of $S^2\to \mathbb{R}\mathbb{P}^2$, take $p\in \mathbb{R}^2, [p]= q(p)\in S^1\times S^1 $ and a small closed disc $ \bar{D}(p)\in \mathbb{R}\mathbb{P}^2 $ such that 
+		As for the case of $S^2\to \mathbb{R}\mathbb{P}^2$, take $\mathbf p\in \mathbb{R}^2, [\mathbf p]= q(\mathbf p)\in S^1\times S^1 $ and a small closed disc $ \bar{D}(\mathbf p)\in \mathbb{R}\mathbb{P}^2 $ such that 
 		\[
-			\forall	 (m,n)\neq (0,0)\in \mathbb{Z}^2, \overline{D}(p) \cap (\overline{D}(p)+(m,n)) = \varnothing. 
+			\forall	 (m,n)\neq (0,0)\in \mathbb{Z}^2, \overline{D}(\mathbf p) \cap (\overline{D}(\mathbf p)+(m,n)) = \varnothing. 
 		\]
-		Hence \( \eval{e}_{\overline D(p)} \) is injective and \( \eval{q}_{\overline D(p)} \) is injective.
-		Now, restricting to the open disc as before, we can find an open disc neighbourhood of \( [p] \).
-		Since \( [p] \) was chosen arbitrarily, \( S^1 \times S^1 \) is a topological surface.
+		Hence \( e\restriction_{\overline D(\mathbf p)} \) is injective and \( q\restriction_{\overline D(\mathbf p)} \) is injective.
+		Now, restricting to the open disc as before, we can find an open disc neighbourhood of \( [\mathbf p] \).
+		Since \( [\mathbf p] \) was chosen arbitrarily, \( S^1 \times S^1 \) is a topological surface.
 	\end{proof}
 	Another view point is that $ \mathbb{R}^{2}/\mathbb{Z}^2 $ is also given by imposing on $[0,1]^2$ the equivalence relation that 
 \[
@@ -250,7 +250,7 @@ Let's start with a definition.
 	Let \( \delta \) be sufficiently small that the closed half-discs \( U, V \) centred on \( p \) with radius \( \delta \) do not intersect any vertices.
 	Then we define a map from the union of the two half-discs to the disc \( B(0,\delta) \subseteq \mathbb R^2 \) via \( (x,y) \mapsto (x,y-y_0) \) or \( (x,y) \mapsto (x-1,y-y_0) \), which will be a bijective map.
 
-	Recall the gluing lemma from Analysis and Topology: that if \( X = A \cup B \) is a union of closed subspaces, and \( f \colon A \to Y \), \( g \colon B \to Y \) are continuous, and \( \eval{f}_{A \cap B} = \eval{g}_{A \cap B} \), they define a continuous map on \( X \).
+	Recall the gluing lemma from Analysis and Topology: that if \( X = A \cup B \) is a union of closed subspaces, and \( f \colon A \to Y \), \( g \colon B \to Y \) are continuous, and \( f\restriction_{A \cap B} = g\restriction_{A \cap B} \), they define a continuous map on \( X \).
 
 	Let \( f_U, f_V \) be the maps on the half-discs \( U, V \).
 	By the definition of the quotient topology, \( q \circ f_U \) and \( q \circ f_V \) are also continuous.
@@ -300,9 +300,401 @@ For second countability, consider
 	where $\theta$ parametrises $S^i=\partial D_i$, boundary of $D_i$ removed.
 	This process is known as forming the \textbf{connect sum} of the surfaces, written \( \Sigma_1 \# \Sigma_2 \). In principle this depends on many choices and it takes some effort ot prove that it is well defined. 
 	\begin{lemma}
-		The connect sum of two topological surfaces is a topological surface.
+		The connected sum of two topological surfaces is a topological surface.
 	\end{lemma}
 	For details, see Introduction to topological manifolds by Jack Lee and Introduction to smooth manifolds by Jack Lee. 
 \end{example}
+
+\begin{example}
+	Consider the following octagon.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7]
+			\node (0) at (-1, 2) {};
+			\node (1) at (-2, 1) {};
+			\node (2) at (-2, -1) {};
+			\node (3) at (-1, -2) {};
+			\node (4) at (1, -2) {};
+			\node (5) at (2, -1) {};
+			\node (6) at (2, 1) {};
+			\node (7) at (1, 2) {};
+			\node (8) at (-1.5, -1.5) {};
+			\node (9) at (-1.75, -1.25) {};
+			\node (10) at (-1.5, 1.5) {};
+			\node (11) at (-1.75, 1.25) {};
+			\node (12) at (-2, 0) {};
+			\node (13) at (0, 2) {};
+			\node (14) at (1.5, 1.5) {};
+			\node (15) at (1.75, 1.25) {};
+			\node (16) at (2, 0) {};
+			\node (17) at (1.5, -1.5) {};
+			\node (18) at (1.75, -1.25) {};
+			\node (19) at (0, -2) {};
+			\node (20) at (-2.5, 0) {};
+			\node (21) at (2.5, 0) {};
+			\node (22) at (0, 2.5) {};
+			\node (23) at (0, -2.5) {};
+			\draw [->] (0.center) to (13.center);
+			\draw [->] (7.center) to (14.center);
+			\draw [->] (14.center) to (15.center);
+			\draw [->] (5.center) to (16.center);
+			\draw [->] (4.center) to (17.center);
+			\draw [->] (17.center) to (18.center);
+			\draw [-trig-=1] (4.center) to (19.center);
+			\draw [-trig-=1] (3.center) to (8.center);
+			\draw [-trig-=1] (8.center) to (9.center);
+			\draw [-trig-=1] (0.center) to (10.center);
+			\draw [-trig-=1] (10.center) to (11.center);
+			\draw [-trig-=1] (1.center) to (12.center);
+			\draw (11.center) to (1.center);
+			\draw (13.center) to (7.center);
+			\draw (15.center) to (6.center);
+			\draw (6.center) to (16.center);
+			\draw (5.center) to (18.center);
+			\draw (19.center) to (3.center);
+			\draw (9.center) to (2.center);
+			\draw (2.center) to (12.center);
+		\end{tikzpicture}
+	\end{center}
+	The associated quotient space \( P/\sim  \) can be seen to be homeomorphic to a surface with two holes, known as a double torus.
+	All vertices are identified as the same vertex in the quotient space.
+	We can cut the octagon along a diagonal, leaving two topological surfaces which are homeomorphic to a torus.
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7]
+			\node (0) at (-1, 2) {};
+			\node (4) at (1, -2) {};
+			\node (5) at (2, -1) {};
+			\node (6) at (2, 1) {};
+			\node (7) at (1, 2) {};
+			\node (13) at (0, 2) {};
+			\node (14) at (1.5, 1.5) {};
+			\node (15) at (1.75, 1.25) {};
+			\node (16) at (2, 0) {};
+			\node (17) at (1.5, -1.5) {};
+			\node (18) at (1.75, -1.25) {};
+			\draw [->] (0.center) to (13.center);
+			\draw [->] (7.center) to (14.center);
+			\draw [->] (14.center) to (15.center);
+			\draw [->] (5.center) to (16.center);
+			\draw [->] (4.center) to (17.center);
+			\draw [->] (17.center) to (18.center);
+			\draw (13.center) to (7.center);
+			\draw (15.center) to (6.center);
+			\draw (6.center) to (16.center);
+			\draw (5.center) to (18.center);
+			\draw [dashed] (0.center) to (4.center);
+			\node at (3,0) {$ \mapsto  $};
+			\begin{scope}[shift={(6,0)}]
+				\node (0) at (-2, -2) {};
+				\node (1) at (2, -2) {};
+				\node (2) at (0, -2) {};
+				\node (3) at (-2, 0) {};
+				\node (4) at (-2, 2) {};
+				\node (5) at (0, 2) {};
+				\node (6) at (2, 2) {};
+				\node (7) at (2, 0) {};
+				\node (8) at (0.25, -2) {};
+				\node (9) at (0.25, 2) {};
+				\node (10) at (-2, -2) {};
+				\node (11) at (-0.5, -0.5) {};
+				\draw [->] (0.center) to (3.center);
+				\draw [->] (1.center) to (7.center);
+				\draw [->] (0.center) to (2.center);
+				\draw [->] (2.center) to (8.center);
+				\draw [->] (4.center) to (5.center);
+				\draw [->] (5.center) to (9.center);
+				\draw (8.center) to (1.center);
+				\draw (7.center) to (6.center);
+				\draw (6.center) to (9.center);
+				\draw (4.center) to (3.center);
+				\draw [style=dashed, in=135, out=90, looseness=1.25] (10.center) to (11.center);
+				\draw [style=dashed, in=0, out=-45, looseness=1.25] (11.center) to (10.center);
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	Thus, the connect sum of the two half-octagons are the connect sum of two toruses.
+\end{example}
+
+\begin{example}
+	Consider the following square.
+	\begin{center}
+		\begin{tikzpicture}[scale=.7]
+			\node (0) at (-2, -2) {};
+			\node (1) at (2, -2) {};
+			\node (2) at (0, -2) {};
+			\node (3) at (-2, 0) {};
+			\node (4) at (-2, 2) {};
+			\node (5) at (0, 2) {};
+			\node (6) at (2, 2) {};
+			\node (7) at (2, 0) {};
+			\node (8) at (-0.25, -2) {};
+			\node (9) at (0.25, 2) {};
+			\draw [->] (0.center) to (3.center);
+			\draw [->] (2.center) to (8.center);
+			\draw [->] (4.center) to (5.center);
+			\draw [->] (5.center) to (9.center);
+			\draw [->] (6.center) to (7.center);
+			\draw [->] (1.center) to (2.center);
+			\draw (9.center) to (6.center);
+			\draw (8.center) to (0.center);
+			\draw (3.center) to (4.center);
+			\draw (7.center) to (1.center);
+		\end{tikzpicture}		
+	\end{center}
+	This is homeomorphic to the real projective plane \( \mathbb R \mathbb P^2 \).
+	This is because we identify points on the boundary with their antipodes, when interpreting the square as the closed disc \( B(0,1) \).
+	The real projective plane was constructed by identifying points on the unit sphere with their antipodes.
+	Thus, we can construct a homeomorphism by considering only points in the upper hemisphere (taking antipodes as required), and then orthographically projecting onto the \( xy \) plane.
+	Under this transformation, points on the boundary are identified with their antipodes as required.
+\end{example}
+
+\subsection{Triangulation}\
+ \vspace*{-1.5em}
+\begin{definition}
+	A \textbf{subdivision} of a compact topological surface \( \Sigma \) comprises
+	\begin{enumerate}[(i)]
+		\item a finite subset \( V \subseteq \Sigma \) of vertices;
+		\item a finite collection of edges \( E = \qty{e_i \colon [0,1] \to \Sigma} \) which are continuous injections on its interior and pairwise disjoint except perhaps at the endpoints in $ V $;
+		\item we require that each connected component of the complement of \( V \cup E \) in \( \Sigma \) is homeomorphic to an open disc, and each such component will be called a \textbf{face}.
+		      In particular, the boundary of each face has boundary inside the union of the edges and the vertices.
+	\end{enumerate}
+	We say that a subdivision is a \textbf{triangulation} if each closed face (closure of a face) contains exactly three edges, and two closed faces meet either at exactly one edge or not at any edges.
+\end{definition}
+
+\begin{example}
+	A cube displays a subdivision of \( S^2 \).
+	A tetrahedron displays a triangulation of \( S^2 \).
+\end{example}
+
+\begin{example}
+	We can display subdivisions of surfaces constructed from polygons.
+	\begin{center}
+		\begin{tikzpicture}[scale=.7]
+			\node (0) at (-2, -2) {};
+			\node (1) at (2, -2) {};
+			\node [label={below:$b^{-1}$}] (2) at (0, -2) {};
+			\node [label={left:$a$}] (3) at (-2, 0) {};
+			\node (4) at (-2, 2) {};
+			\node [label={below:$b$}] (5) at (0, 2) {};
+			\node (6) at (2, 2) {};
+			\node [label={left:$a^{-1}$}] (7) at (2, 0) {};
+			\node (8) at (0.25, -2) {};
+			\node (9) at (0.25, 2) {};
+			\draw [->] (0.center) to (3.center);
+			\draw [->] (1.center) to (7.center);
+			\draw [->] (0.center) to (2.center);
+			\draw [->] (2.center) to (8.center);
+			\draw [->] (4.center) to (5.center);
+			\draw [->] (5.center) to (9.center);
+			\draw (8.center) to (1.center);
+			\draw (7.center) to (6.center);
+			\draw (6.center) to (9.center);
+			\draw (4.center) to (3.center);
+		\end{tikzpicture}
+	\end{center}
+	This is a subdivision of a torus with one edge, two edges, and one face.
+	We can construct additional subdivisions of a torus, for example:
+	\begin{center}
+	\begin{tikzpicture}[scale=.7]
+		\node (0) at (0, 2.25) {};
+		\node (1) at (2.25, 2.25) {};
+		\node (2) at (2.25, 0) {};
+		\node (3) at (2.25, -2.25) {};
+		\node (4) at (0, -2.25) {};
+		\node (5) at (-2.25, -2.25) {};
+		\node (6) at (-2.25, 0) {};
+		\node (7) at (-2.25, 2.25) {};
+		\node (8) at (0.25, 2.25) {};
+		\node (9) at (0.25, -2.25) {};
+		\node (10) at (2.25, 0) {};
+		\draw [->] (7.center) to (0.center);
+		\draw [->] (0.center) to (8.center);
+		\draw [->] (5.center) to (4.center);
+		\draw [->] (4.center) to (9.center);
+		\draw [->] (5.center) to (6.center);
+		\draw [->] (3.center) to (10.center);
+		\draw (9.center) to (3.center);
+		\draw (10.center) to (1.center);
+		\draw (8.center) to (1.center);
+		\draw (7.center) to (6.center);
+		\draw (5.center) to (1.center);
+		\begin{scope}[shift={(6,0)}]
+			\node (1) at (2.25, 2.25) {};
+			\node (3) at (2.25, -2.25) {};
+			\node (5) at (-2.25, -2.25) {};
+			\node (7) at (-2.25, 2.25) {};
+			\node (8) at (-2.25, 0.75) {};
+			\node (9) at (-2.25, -0.75) {};
+			\node (10) at (-0.75, -2.25) {};
+			\node (11) at (0.75, -2.25) {};
+			\node (12) at (0.75, 2.25) {};
+			\node (13) at (-0.75, 2.25) {};
+			\node (14) at (2.25, 0.75) {};
+			\node (15) at (2.25, -0.75) {};
+			\node (16) at (0, 2.25) {};
+			\node (17) at (0.25, 2.25) {};
+			\node (18) at (0, -2.25) {};
+			\node (19) at (0.25, -2.25) {};
+			\node (20) at (-2.25, 0) {};
+			\node (21) at (2.25, 0) {};
+			\draw [->] (9.center) to (20.center);
+			\draw [->] (13.center) to (16.center);
+			\draw [->] (16.center) to (17.center);
+			\draw [->] (10.center) to (18.center);
+			\draw [->] (18.center) to (19.center);
+			\draw [->] (15.center) to (21.center);
+			\draw (7.center) to (13.center);
+			\draw (17.center) to (12.center);
+			\draw (12.center) to (1.center);
+			\draw (1.center) to (14.center);
+			\draw (14.center) to (21.center);
+			\draw (15.center) to (3.center);
+			\draw (3.center) to (11.center);
+			\draw (11.center) to (19.center);
+			\draw (10.center) to (5.center);
+			\draw (5.center) to (9.center);
+			\draw (20.center) to (7.center);
+			\draw (8.center) to (13.center);
+			\draw (9.center) to (12.center);
+			\draw (5.center) to (1.center);
+			\draw (10.center) to (14.center);
+			\draw (11.center) to (15.center);
+			\draw (10.center) to (13.center);
+			\draw (12.center) to (11.center);
+			\draw (9.center) to (15.center);
+			\draw (14.center) to (8.center);
+		\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	The first of these examples is not a triangulation, since the two faces meet in more than one edge.
+	The second is a triangulation.
+\end{example}
+
+\begin{note}
+	The following is a very degenerate subdivision of \( S_2 \).
+	\begin{center}
+		\begin{tikzpicture}
+		  \draw circle [radius=2];
+		  \draw [name path=eqf] (-2, 0) arc(180:360:2 and 0.5);
+		  \draw [dashed, name path=eqb] (-2, 0) arc(180:0:2 and 0.5);
+		  \node [circ] at (0, 2) {};
+		\end{tikzpicture}
+	  \end{center}
+	This has one vertex, no edges, and one face.
+\end{note}
+
+\subsection{Euler classification}\
+\vspace*{-1.5em}
+\begin{definition}
+	The \textbf{Euler characteristic} of a subdivision is
+	\[
+		\# V - \# E + \# F
+	\]
+\end{definition}
+\begin{theorem}
+	\begin{enumerate}[(i)]
+		\item Every compact topological surface admits a subdivision (and indeed triangulations).
+		\item The Euler characteristic is invariant under choice of subdivision, and is topologically invariant (depends only on the homeomorphism type of $\Sigma$). 
+	\end{enumerate}
+	Hence, we might say that a surface has a particular Euler characteristic, without referring to subdivisions.
+	We write this \( \chi(\Sigma) \).
+\end{theorem}
+\begin{remark}
+	It is not trivial to prove part (i).
+	For part (ii), note that subdivisions can be converted into triangulations by constructing triangle fans.
+	\begin{center}
+	\begin{tikzpicture}
+		\node (0) at (-0.75, -1) {};
+		\node (1) at (0.75, -1) {};
+		\node (2) at (1.25, 0.5) {};
+		\node (3) at (0, 1.5) {};
+		\node (4) at (-1.25, 0.5) {};
+		\draw (0.center) to (1.center);
+		\draw (1.center) to (2.center);
+		\draw (2.center) to (3.center);
+		\draw (3.center) to (4.center);
+		\draw (4.center) to (0.center);
+		\draw [style=dashed] (0.center) to (3.center);
+		\draw [style=dashed] (0.center) to (2.center);
+	\end{tikzpicture}
+	\end{center}
+	Triangulations can be related by local moves, such as
+	\begin{center}
+	\begin{tikzpicture}[scale=.7]
+		\node (0) at (-2.75, 1) {};
+		\node (1) at (-0.75, 1) {};
+		\node (2) at (-1.5, -1) {};
+		\node (3) at (-3.5, -1) {};
+		\node (4) at (1.5, 1) {};
+		\node (5) at (3.5, 1) {};
+		\node (6) at (2.75, -1) {};
+		\node (7) at (0.75, -1) {};
+		\node (9) at (-0.5, 0) {};
+		\node (10) at (0.5, 0) {};
+		\node (11) at (-0.75, 1) {};
+		\draw (0.center) to (3.center);
+		\draw (2.center) to (3.center);
+		\draw (0.center) to (1.center);
+		\draw (1.center) to (2.center);
+		\draw (4.center) to (7.center);
+		\draw (6.center) to (7.center);
+		\draw (4.center) to (5.center);
+		\draw (5.center) to (6.center);
+		\draw [<->] (9.center) to (10.center);
+		\draw [style=dashed] (11.center) to (3.center);
+		\draw [style=dashed] (4.center) to (6.center);
+	\end{tikzpicture}
+	\end{center}
+	It is easy to check that both of these moves do not change the Euler characteristic.
+	However, it is hard to make this argument rigorous, and it does not give much explanation for why the result is true.
+	In Part II Algebraic Topology, a more advanced definition of the Euler characteristic is given, which admits a more elegant proof.
+\end{remark}
+\begin{example}
+	The Euler characteristic of \( S^2 \) is \( \chi(S^2) = 2 \).
+
+	For the torus, \( \chi(T^2) = 0 \).
+
+	If \( \Sigma_1, \Sigma_2 \) are compact surfaces, then the connect sum \( \Sigma_1 \# \Sigma_2 \) can be constructed by removing a face of a triangulation, then gluing together the boundary circles (three edges) in a way that matches the edges.
+	Then the connect sum inherits a subdivision, and we can find that it has Euler characteristic \( \chi(\Sigma_1 \# \Sigma_2) = \chi(\Sigma_1) + \chi(\Sigma_2) - 2 \), where the remaining term corresponds to the two faces that were removed; the changes of three vertices and three edges cancel each other.
+	In particular, a surface \( \Sigma_g \) with \( g \) holes can be written \( \#_{i=1}^g T^2 \), so \( \chi(\Sigma_g) = 2 - 2g \).
+	We call \( g \) the \textbf{genus} of \( \Sigma \).
+\end{example}
+
+\section{Abstract smooth surfaces}
+\subsection{Charts and atlases}
+Recall that if \( \Sigma \) is a topological surface, any point lies in an open neighbourhood homeomorphic to a disc.
+\begin{definition}
+	A pair \( (U, \varphi) \), where $ U \subset \Sigma $ is open and $ \varphi:U\to V \subset \mathbb{R}^{2} $ is a homeomorphism is called a \textbf{chart}. The inverse \( \sigma = \varphi^{-1} \colon V \to U \) is called a \textbf{local parametrisation} for the surface.
+\end{definition}
+
+\begin{definition}
+	A collection of charts $ \{(U_i,\varphi_i)_{i\in I}\} $ such that $ \bigcup_{i\in I} U_i = \Sigma $ is called an \textbf{atlas} of $\Sigma$. 
+\end{definition}
+\begin{example}
+	If \( Z \subseteq \mathbb R^2 \) is closed, \( \mathbb R^2 \setminus Z \) is a topological surface with an atlas containing one chart, \( (\mathbb R^2 \setminus Z, \phi = \iota) \).
+
+	For \( S^2 \), there is an atlas with two charts, which are the two stereographic projections from the poles.
+	We could consider alternative charts, for instance the projection to the \( yz \) plane, but this would be insufficient for describing the poles.
+\end{example}
+\begin{definition}
+	Let \( (U_i, \varphi_i) \) be charts containing the point \( p \in \Sigma \), for \( i = 1, 2 \).
+	Then the map
+	\[
+		\varphi_2 \circ\varphi_1^{-1}\restriction_{\varphi_1(U_1 \cap U_2)} \colon \varphi_1(U_1 \cap U_2) \to \varphi_2(U_1 \cap U_2)
+	\]
+	converts betwen the corresponding charts, and is called a \textbf{transition map}.
+	This is a homeomorphism of open sets in \( \mathbb R^2 \).
+\end{definition}
+
+\begin{center}
+\includegraphics[scale=.7]{Geo1}
+\end{center}
+
+Recall from Analysis and Topology that if \( V \subseteq \mathbb R^n \) and \( V' \subseteq \mathbb R^m \) are open, then a continuous map \( f \colon V \to V' \) is called \textbf{smooth} if it is infinitely differentiable.
+Equivalently, it is smooth if partial derivatives of all orders in all variables exist at all points.
+If \( n = m \), then in particular the homeomorphism \( f \colon V \to V' \) is called a \textbf{diffeomorphism} if it is smooth and has smooth inverse.
+
+\begin{definition}
+	An \textbf{abstract smooth surface} is a topological space \( \Sigma \) together with an atlas of charts \( (U_i, \varphi_i) \) such that all transition maps \( \varphi_i \circ \varphi_j^{-1} \colon \varphi_j(U_i \cap U_j) \to \varphi_i(U_i \cap U_j) \) are diffeomorphisms.
+\end{definition}
 
 \end{document}
