@@ -376,4 +376,173 @@ One sees at once that, on $[-1,1]$,
     \]
 \end{example}
 
+\section{Orthogonal polynomials}
+\subsection{The three-term recurrence relation}
+Consider $\mathbb{X}=C[a, b]$, the space of all continuous real-valued functions $f:[a, b] \rightarrow \mathbb{R}$, and define a \textbf{scalar} (or \textbf{inner}) \textbf{product} on $C[a, b]$ by
+\begin{equation}\label{eqn:3.1}
+    (f, g):=(f, g)_w:=\int_a^b f(x) g(x) w(x) d x .
+\end{equation}
+Here $w$, the so-called \textbf{weight function}, is a fixed positive function, such that the integral $\int h(x) w(x) d x$ exists for all $h \in C[a, b]$.
+
+We denote by $\mathcal{P}_n$ the space of all algebraic polynomials of degree (at most) $n$, i.e., $p \in \mathcal{P}_n$ if $p(x)=\sum_{k=0}^n a_k x^k$. If the leading coefficent $a_n$ equals 1 , then $p$ is called a \textbf{monic} polynomial. Given a scalar product (\ref{eqn:3.1}), we say that $Q_n \in \mathcal{P}_n$ is the $n$\textbf{-th} \textbf{orthogonal polynomial} if
+\[
+\left(Q_n, p\right)=0 \quad \forall p \in \mathcal{P}_{n-1} .
+\]
+Different weights lead to different orthogonal polynomials.
+
+\begin{lemma}
+    For every $n \in \mathbb{N}$, there exists a unique monic orthogonal polynomial $Q_n \in \mathcal{P}_n$. Any $p \in \mathcal{P}_n$ is uniquely expressible as a linear combination
+    \begin{equation}\label{eqn:3.2}
+        p=\sum_{k=0}^n c_k Q_k, \quad c_k=\left(p, Q_k\right) /\left\|Q_k\right\|^2
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    We apply the Gram-Schmidt orthogonalization algorithm for the linearly independent sequence of monomials $\left(1, x, \ldots, x^n, \ldots\right)$. Starting with $Q_0 \equiv 1$ we set
+\[
+Q_n(x):=x^n-\sum_{k=0}^{n-1} \frac{\left(x^n, Q_k\right)}{\left(Q_k, Q_k\right)} Q_k(x), \quad n=1,2, \ldots
+\]
+Then, from construction, $\left(Q_n, Q_k\right)=0$, i.e., $Q_n$ is orthogonal to each previous $Q_k$. Also, we have $x^n \in \operatorname{span}\left(Q_k\right)_{k=0}^n$, hence $\mathcal{P}_n=\operatorname{span}\left(Q_k\right)_{k=0}^n$. Therefore $Q_n \perp \mathcal{P}_{n-1}$, and any $p \in \mathcal{P}_n$ has an expansion (\ref{eqn:3.2}). Each coefficient $c_k$ in (\ref{eqn:3.2}) is uniquely determined by multiplying both sides (in the scalar product sense) with $Q_k$.
+
+If $\widetilde{Q}_n$ is another $n$-th monic orthogonal polynomial, then $p:=Q_n-\widetilde{Q}_n$ belongs to $\mathcal{P}_{n-1}$, therefore $(p, p)=\left(Q_n-\widetilde{Q}_n, p\right)=0$. Hence $p \equiv 0$ (by the scalar product property), i.e., $\widetilde{Q}_n \equiv Q_n$.
+\end{proof}
+\begin{remark}
+    For practical construction of orthogonal polynomials the Gram-Schmidt is not of much help, for it leads to loss of accuracy due to imprecisions in calculation of scalar products. A considerably better procedure is being provided by the next theorem.
+\end{remark}
+
+\begin{theorem}[The three-term recurrence relation]
+    Monic orthogonal polynomials satisfy the relation
+    \begin{equation}\label{eqn:3.3}
+        Q_{n+1}(x)=\left(x-a_n\right) Q_n(x)-b_n Q_{n-1}(x), \quad n=0,1, \ldots
+    \end{equation}
+    where $Q_{-1}(x) \equiv 0, Q_0(x) \equiv 1$, and
+    \begin{equation}\label{eqn:3.4}
+        a_n=\frac{\left(x Q_n, Q_n\right)}{\left(Q_n, Q_n\right)}, \quad b_n=\frac{\left(Q_n, Q_n\right)}{\left(Q_{n-1}, Q_{n-1}\right)}>0
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Based on (\ref{eqn:3.2}), let us look at the coefficients of the expansion
+    \[
+    x Q_n(x)=\sum_{k=0}^{n+1} c_k Q_k(x), \quad c_k=\frac{\left(x Q_n, Q_k\right)}{\left(Q_k, Q_k\right)}=\frac{\left(Q_n, x Q_k\right)}{\left(Q_k, Q_k\right)},
+    \]
+    using the last (equivalent) formula for $c_k$.
+
+    $k=n+1 \to  c_{n+1}=1$, since both $x Q_n(x)$ and $Q_{n+1}(x)$ are monic polynomials of degree $n+1$.
+
+    $k=n \to  c_n=a_n$ in (\ref{eqn:3.4}).
+
+    $k=n-1 \to $ Because of monicity, we have the equality $x Q_{n-1}=Q_n+p_{n-1}$ where $p_{n-1} \in \mathcal{P}_{n-1}$, so that $\left(Q_n, x Q_{n-1}\right)=\left(Q_n, Q_n+p_{n-1}\right)=\left(Q_n, Q_n\right)$, hence $c_{n-1}=b_n$ in (\ref{eqn:3.4}).
+
+    $k<n-1 \to $ Then $x Q_k \in \mathcal{P}_{n-1}$, and we obtain $\left(Q_n, x Q_k\right)=0$, thus $c_k=0$.
+
+    It follows that $x Q_n(x)=Q_{n+1}+a_n Q_n+b_n Q_{n-1}$, and that is equivalent to (\ref{eqn:3.3})-(\ref{eqn:3.4})
+\end{proof}
+\begin{remark}
+    If $\left(Q_k\right)$ have leading coefficients $\left(\alpha_k\right)$, then the recurrence takes the form
+    \[
+    Q_{n+1}(x)=\frac{\alpha_{n+1}}{\alpha_n}\left(x-a_n\right) Q_n(x)-\frac{\alpha_{n+1} \alpha_{n-1}}{\alpha_n^2} b_n Q_{n-1}(x), \quad n=0,1, \ldots
+    \]
+    and, with an appropriate choice of $\left(\alpha_k\right)$, may become very simple.
+\end{remark}
+
+\subsection{Examples}
+\ \vspace*{-1.5em}
+
+\begin{example}
+    Classical examples of orthogonal (non-monic) polynomials include
+    \begin{center}
+        \begin{tabular}{lcccc}
+            \toprule 
+            \bfseries Name &\bfseries {Notation} &\bfseries {Interval} & \bfseries{Weight} &\bfseries {Recurrence} \\
+            \midrule {Legendre} & $P_n$ & ${[-1,1]}$ &  $1$ & $(n+1) P_{n+1}(x)=(2 n+1) x P_n(x)-n P_{n-1}(x)$ \\[.6em]
+            {Chebyshev} & $T_n$ & ${[-1,1]}$ & $\left(1-x^2\right)^{-1 / 2}$ & $T_{n+1}(x)=2 x T_n(x)-T_{n-1}(x)$ \\[.6em]
+            {Laguerre} & $L_n$ & ${[0, \infty)}$ & ${e}^{-x}$ & $(n+1) L_{n+1}(x)=(2 n+1-x) L_n(x)-n L_{n-1}(x)$ \\[.6em]
+            {Hermite} & $H_n$ & $(-\infty, \infty)$ & ${e}^{-x^2}$ & $H_{n+1}(x)=2 x H_n(x)-2 n H_{n-1}(x)$ \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{example}
+
+\begin{example}[The Chebyshev polynomials]
+    The Chebyshev polynomials $T_n$, on line 2 in the table above, were introduced in Lecture 2 as
+    \[
+    T_n(x)=\cos n \arccos x, \quad x \in[-1,1],
+    \]
+    where we also proved the three-term recurrence relation. Let us show that they are indeed orthogonal with the weight $w(x)=\left(1-x^2\right)^{-1 / 2}$. With the substistuion $x=\cos \theta, \theta \in[0, \pi]$ we have $T_n(x)=\cos n \theta$ and
+    \[
+    \begin{aligned}
+    \left(T_n, T_m\right)_w & :=\int_{-1}^1 T_n(x) T_m(x) \frac{\dd x}{\sqrt{1-x^2}}\\ 
+    &=\int_0^\pi \cos n \theta \cos m \theta \dd \theta=\frac{1}{2} \int_{-\pi}^\pi \cos n \theta \cos m \theta \dd \theta \\
+    & =\frac{1}{4} \int_{-\pi}^\pi[\cos (n+m) \theta+\cos (n-m) \theta] \dd \theta=0, \quad n \neq m .
+    \end{aligned}
+    \]
+\end{example}
+
+\subsection{Least squares polynomial fitting}
+Let $f$ be a continuous function defined on some interval $[a, b]$, and suppose we wish to approximate $f$ by a polynomial of degree $n$. If we equip $C[a, b]$ with the distance $\|f-g\|:=(f-g, f-g)^{1 / 2}$ induced by a scalar product $(f, g)=f_a^b f(x) g(x) w(x) d x$, then it is natural to seek a polynomial
+\[
+p^*:=\arg \min _{p \in \mathcal{P}_n}\|f-p\|,
+\]
+for which the distance $\left\|f-p^*\right\|$ is as small as possible. Such a polynomial is called a (weighted) \textbf{least squares approximant}.
+
+\begin{theorem}
+    Let $\left(Q_k\right)_{k=0}^n$ be polynomials orthogonal with respect to a given inner product. Then the least squares approximant to any $f \in C[a, b]$ from $\mathcal{P}_n$ is given by the formula
+    \begin{equation}\label{eqn:3.5}
+        p^*=p^*(f)=\sum_{k=0}^n c_k^* Q_k, \quad c_k^*=\frac{\left(f, Q_k\right)}{\left\|Q_k\right\|^2},
+    \end{equation}
+    and the value of the least squares approximation is
+    \begin{equation}\label{eqn:3.6}
+        \left\|f-p^*\right\|^2=\|f\|^2-\sum_{k=1}^n \frac{\left(f, Q_k\right)^2}{\left\|Q_k\right\|^2} .
+    \end{equation}
+\end{theorem}
+\begin{remark}
+    By orthogonality of $Q_k$, the norm of the extremal $p^*$ is equal to
+    \[
+    \left\|p^*\right\|^2=\left\|\sum_{k=0}^n c_k^* Q_k\right\|^2=\sum_{k=0}^n\left|c_k^*\right|^2\left\|Q_k\right\|^2=\sum_{k=1}^n \frac{\left(f, Q_k\right)^2}{\left\|Q_k\right\|^2},
+    \]
+    hence formula (3.6) takes the form
+    \[
+    \left\|f-p^*\right\|^2=\|f\|^2-\left\|p^*\right\|^2,
+    \]
+    which is a reminiscent of the Pythagoras theorem.
+\end{remark}
+\begin{proof}
+    Let $p=\sum_{k=0}^n c_k Q_k$. Then
+    \begin{align}\label{eqn:3.7}
+        F(c)&=(f-p, f-p)=\left(f-\sum_{k=0}^n c_k Q_k, f-\sum_{k=0}^n c_k Q_k\right)\nonumber \\ 
+        &=\|f\|^2-2 \sum_{k=0}^n c_k\left(f, Q_k\right)+\sum_{k=0}^n c_k^2\left\|Q_k\right\|^2
+    \end{align}
+    The right-hand side is a quadratic polynomial in each $c_k$, therefore it attains its minimum when
+    \[
+    \eval{\frac{\partial F}{\partial c_k}}_{c_k=c_k^*}=-2\left(f, Q_k\right)+2 c_k^*\left\|Q_k\right\|^2=0, \quad k=\overline{0, n},
+    \]
+    hence conclusion (\ref{eqn:3.5}). Putting optimal $c_k^*$ into (\ref{eqn:3.7}) we obtain (\ref{eqn:3.6}).
+\end{proof}
+
+\begin{method}
+    Suppose we want to approximate $f \in C[a, b]$ with a prescribed accuracy $\epsilon$, i.e., to find $n=n(\epsilon)$ such that
+    \[
+    \left\|f-p^*\right\| \leq \epsilon, \quad p^* \in \mathcal{P}_n .
+    \]
+    From (\ref{eqn:3.6}), it follows that the required value $n$ can be calculated by summing the terms of $\frac{\left(f, Q_k\right)^2}{\left\|Q_k\right\|^2}$ until we reach the bound
+    \[
+    \sum_{k=1}^n \frac{\left(f, Q_k\right)^2}{\left\|Q_k\right\|^2} \geq\|f\|^2-\epsilon^2 .
+    \]
+\end{method}
+
+The next theorem assures that this bound can be reached.
+
+\begin{theorem}[The Parseval identity]
+    If $[a, b]$ is finite, then $ \displaystyle \sum_{k=0}^{\infty} \frac{\left(f, Q_k\right)^2}{\left\|Q_k\right\|^2}=\|f\|^2$.
+\end{theorem}
+\begin{proof}[Proof (incomplete)]
+    Let
+    \[
+    \sigma_n^2:=\left\|p^*\right\|^2=\sum_{k=0}^n \frac{\left(f, Q_k\right)^2}{\left\|Q_k\right\|^2},
+    \]
+    hence
+    \[
+    \inf_{p \in \mathcal{P}_n}\|f-p\|^2=\left\|f-p^*\right\|^2=\|f\|^2-\sigma_n^2 .
+    \]
+    According to the Weierstrass theorem, any function in $C[a, b]$ can be approximated arbitrarily close by a polynomial, hence $\lim _{n \rightarrow \infty} \inf _{p \in \mathcal{P}_n}\|f-p\|^2=0$ and we deduce that $\sigma_n^2 \rightarrow\|f\|^2$ as $n \rightarrow \infty$.
+\end{proof}
 \end{document}
