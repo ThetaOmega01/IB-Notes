@@ -491,7 +491,7 @@ For second countability, consider
 			\draw (4.center) to (3.center);
 		\end{tikzpicture}
 	\end{center}
-	This is a subdivision of a torus with one edge, two edges, and one face.
+	This is a subdivision of a torus with one vertex, two edges, and one face.
 	We can construct additional subdivisions of a torus, for example:
 	\begin{center}
 	\begin{tikzpicture}[scale=.7]
@@ -697,4 +697,120 @@ If \( n = m \), then in particular the homeomorphism \( f \colon V \to V' \) is 
 	An \textbf{abstract smooth surface} is a topological space \( \Sigma \) together with an atlas of charts \( (U_i, \varphi_i) \) such that all transition maps \( \varphi_i \circ \varphi_j^{-1} \colon \varphi_j(U_i \cap U_j) \to \varphi_i(U_i \cap U_j) \) are diffeomorphisms.
 \end{definition}
 
+\begin{remark}
+	We could not simply consider a smoothness condition for \( \Sigma \) itself without appealing to atlases, since \( \Sigma \) is an arbitrary topological space and could have almost any topology.
+\end{remark}
+
+\begin{example}
+	The atlas of two charts with stereographic projections gives \( S^2 \) the structure of an abstract smooth surface.
+\end{example}
+
+\begin{example}
+	The torus \( T^2 = {\mathbb R^2}/{\mathbb Z^2} \). Recall that we obtained charts from (the inverse of) the projection restricted to small discs in $ \mathbb{R}^{2} $. We can find charts of all points by choosing sufficiently small discs in \( \mathbb R^2 \) such that they do not intersect any of their non-trivial integer translates.
+
+	\begin{center}
+	\includegraphics[scale=0.65]{TorusChart1}
+	\end{center}
+
+	The transition maps for this atlas are all translations of \( \mathbb R^2 \).
+	Hence \( T^2 \) inherits the structure of an abstract smooth surface.
+	Explicitly, let us define \( e \colon \mathbb R^2 \to T^2 \) by \( (t,s) \mapsto \qty(e^{2\pi i t}, e^{2 \pi i s}) \), then consider the atlas
+	\[
+		\qty{(e\qty(D_\varepsilon(x,y)), e^{-1} \text{ on this image})}
+	\]
+	for \( \varepsilon < \frac{1}{3} \).
+	These are charts on \( T^2 \), and the transition maps are (restricted to appropriate domains) translations in \( \mathbb R^2 \).
+	Hence \( T^2 \), via this atlas, has the structure of an abstract smooth surface.
+\end{example}
+
+\begin{definition}
+	Let \( \Sigma \) be an abstract smooth surface, and \( f \colon \Sigma \to \mathbb R^n \) be a continuous map.
+	We say that \( f \) is \textbf{smooth} at \( p \in \Sigma \) if, for all charts \( (U, \varphi) \) at \( p \) belonging to the smooth atlas for \( \Sigma \), the map
+	\[
+		f \circ \varphi^{-1} \colon \mathbb{R}^{2}\supset \varphi(U) \to \mathbb R^n
+	\]
+	is smooth at \( \varphi(p) \in \mathbb R^2 \).
+\end{definition}
+
+\begin{center}
+	\includegraphics[scale=0.8]{SmoothFunction}
+\end{center}
+
+\begin{note}
+	If it holds for one chart at $p$, it holds for all charts at $p$ by chain rule: $ f\circ \varphi_1^{-1} = f\circ \varphi_2^{-1} \circ (\varphi_2\circ \varphi_1^{-1}) $, where $ \varphi_2\circ \varphi_1^{-1} $ is a diffeomorphism. 
+\end{note}
+
+\begin{definition}
+	Let \( \Sigma_1, \Sigma_2 \) be abstract smooth surfaces.
+	A map \( f \colon \Sigma_1 \to \Sigma_2 \) is \textbf{smooth} if it is `smooth in the local charts'.
+	Given a chart \( (U, \varphi) \) at \( p \) and a chart \( (V, \psi) \) at \( f(p) \) with $ f(U) \subset V $, both mapping to open subsets of \( \mathbb R^2 \), the map \( \psi \circ f \circ \varphi^{-1} \) is smooth at \( \varphi(p) \).
+	Smoothness of \( f \) does not depend on the choice of chart, provided that the charts all belong to the same atlas.
+\end{definition}
+Again is $f$ is smooth at $p$, then smoothness of the local representation of $f$ at $p$ will hold for all charts at $p$ and $f(p)$ in the given atlases, again by chain rule.
+\begin{center}
+\includegraphics[scale=0.8]{SmoothFunction2}
+\end{center}
+\begin{definition}
+	Two surfaces \( \Sigma_1, \Sigma_2 \) are \textbf{diffeomorphic} if there exists a homeomorphism \( f \colon \Sigma_1 \to \Sigma_2 \) which is smooth and has smooth inverse.
+\end{definition}
+\begin{remark}
+	Often, we convert from a given smooth atlas for an abstract smooth surface \( \Sigma \) to the \textit{maximal compatible} smooth atlas.
+	That is, we consider the atlas with the maximal possible set of charts, all of which have transition maps that are diffeomorphisms.
+	This can be accomplished formally by use of Zorn's lemma.
+\end{remark}
+
+\subsection{Smooth surfaces in \( \mathbb R^3 \)}
+Recall that if \( V \subseteq \mathbb R^n \) and \( V' \subseteq \mathbb R^m \), then \( f \colon V \to V' \) is smooth if it is infinitely differentiable.
+\begin{definition}
+	If \( Z \) is an arbitrary subset of \( \mathbb R^n \), we say that a continuous function \( f \colon Z \to \mathbb R^m \) is smooth at \( p \in Z \) if there exists an open ball \( p \in B \subseteq \mathbb R^n \) and a smooth map \( F \colon B \to \mathbb R^m \) which extends \( f \) such that they agree on \( B \cap Z \).
+	In other words, \( f \) is locally the restriction of a smooth map defined on an open set.
+\end{definition}
+\begin{definition}
+	Let \( X \subseteq \mathbb R^n \) and \( Y \subseteq \mathbb R^m \).
+	We say that \( X \) and \( Y \) are \textbf{diffeomorphic} if there exists a continuous function \( f \colon X \to Y \) such that \( f \) is a smooth homeomorphism with smooth inverse.
+\end{definition}
+
+\begin{definition}
+	A \textbf{smooth surface in \( \mathbb R^3 \)} is a subset \(\Sigma \subset \mathbb R^3 \) such that for all points \( p \in \Sigma \), there exists an open subset \( p \in U \subseteq \Sigma \) that is diffeomorphic to an open set in \( \mathbb R^2 \).
+	In other words, for all \( p \in \Sigma \), there exists an open ball \( p \in B \subseteq \mathbb R^3 \) such that if \( U = B \cap \Sigma \) and there exists a map \( F \colon B \to V \subseteq \mathbb R^2 \) such that \( {F}\restriction_U \colon U \to V \) is a homeomorphism, and the inverse map \( V \to U \subseteq \Sigma \subseteq \mathbb R^3 \) is smooth.
+\end{definition}
+
+\begin{definition}
+	Let \( \sigma \colon V \to U \) where \( V \subseteq \mathbb R^2 \) is open and \( U \subseteq \Sigma \subseteq \mathbb R^3 \) is open in \( \Sigma \), such that \( \sigma \) is a smooth homeomorphism and \( D \eval{\sigma}_x \) has rank 2 for all \( x \in V \).
+	Then \( \sigma \) is called an \textbf{allowable parametrisation}.
+	If \( \sigma(0) = p \), we say that \( \sigma \) is an allowable parametrisation \textbf{near} \( p \).
+\end{definition}
+\begin{theorem}
+	For a subset \( \Sigma \subseteq \mathbb R^3 \), the following are equivalent.
+	\begin{enumerate}[(a)]
+		\item \( \Sigma \) is a smooth surface in \( \mathbb R^3 \);
+		\item \( \Sigma \) is locally the graph of a smooth function, over one of the three coordinate planes: for all \( p \in \Sigma \) there exists an open ball \( p \in B \subseteq \mathbb R^3 \) and an open set \( V \subseteq \mathbb R^2 \) such that
+		      \[
+			      \Sigma \cap B = \qty{(x, y, g(x,y)) \colon g \colon V \to \mathbb R \text{ smooth}}
+		      \]
+		      or one of the other coordinate planes;
+		\item \( \Sigma \) is locally cut out by a smooth function with non-zero derivative: for all \( p \in \Sigma \) there exists an open ball \( p \in B \subseteq \mathbb R^3 \) and a smooth function \( f \colon B \to \mathbb R \) such that
+		      \[
+			      \Sigma \cap B = f^{-1}(0);\quad D \eval{f}_x \neq 0
+		      \]
+		      for all \( x \in B \);
+		\item \( \Sigma \) is locally the image of an allowable parametrisation near all points.
+	\end{enumerate}
+\end{theorem}
+\begin{remark}
+	Part (b) implies that if \( \Sigma \) is a smooth surface in \( \mathbb R^3 \), each \( p \in \Sigma \) belongs to a chart \( (U, \varphi) \) where \( \varphi \) is (the restriction of) one of the three coordinate plane projections \( \pi_{xy}, \pi_{yz}, \pi_{xz} \) from \( \mathbb R^3 \) to \( \mathbb R^2 \).
+	Consider the transition map between two such charts.
+	If the two charts are based on the same projection such as \( \pi_{xy} \), then the transition map is the identity.
+	If they are based on different projections \( \pi_{xy} \) and \( \pi_{yz} \), then the transition map is
+	\[
+		(x,y) \mapsto (x,y,g(x,y)) \mapsto (y,g(x,y))
+	\]
+	which has inverse
+	\[
+		(y,z) \mapsto (h(y,z),y,z) \mapsto (h(y,z),y)
+	\]
+	Hence all of the transition maps between such charts involve projection maps and the smooth maps involved in defining \( \Sigma \) as a graph.
+	This gives \( \Sigma \) the structure of an abstract smooth surface.
+\end{remark}
+Some of the relations given in the above theorem are easy to prove, but others come as a result of the inverse function theorem.
 \end{document}
