@@ -270,7 +270,7 @@ for the class of differentiable functions $f$ that possess $n+1$ continuous deri
     \end{equation}
 \end{theorem} 
 \begin{proof}
-    Proof. If $x$ coincides with any $x_i$ from the interpolating set, then both sides vanish, hence the formula trivially holds. So, we let $x$ be any other fixed point, and consider the function
+    If $x$ coincides with any $x_i$ from the interpolating set, then both sides vanish, hence the formula trivially holds. So, we let $x$ be any other fixed point, and consider the function
     \[
     \phi(t):=[f(t)-p(t)]-c_x \omega(t),
     \]
@@ -545,4 +545,180 @@ The next theorem assures that this bound can be reached.
     \]
     According to the Weierstrass theorem, any function in $C[a, b]$ can be approximated arbitrarily close by a polynomial, hence $\lim _{n \rightarrow \infty} \inf _{p \in \mathcal{P}_n}\|f-p\|^2=0$ and we deduce that $\sigma_n^2 \rightarrow\|f\|^2$ as $n \rightarrow \infty$.
 \end{proof}
+
+\section{Approximation of linear functionals}
+Given a vector space $\mathbb{X}$ (e.g., $\mathbb{R}^n$, or $C^m[a, b]$), a \textbf{linear functional} is any linear mapping
+\[
+\lambda: \mathbb{X} \rightarrow \mathbb{R} \quad(\text {so } \lambda(\alpha f+\beta g)=\alpha \lambda(f)+\beta \lambda(g), \ \forall f, g \in \mathbb{X} \text { and } \forall \alpha, \beta \in \mathbb{R}) .
+\]
+We will treat the space $\mathbb{X}=C^{n+1}[a, b]$, and the functionals
+\begin{equation}\label{eqn:4.1}
+    (1).\ \ \lambda(f)=f^{(k)}(\bar{x}), \quad(\bar{x}, k \text{ being fixed}),\qquad
+(2).\ \ \lambda(f)=\int_a^b f(x) w(x) \dd{x}.
+\end{equation}
+Our goal is to find an approximation of the form
+\begin{equation}\label{eqn:4.2}
+    \lambda(f) \approx \sum_{i=0}^N a_i f(x_i), \quad f \in C^{n+1}[a, b] .
+\end{equation}
+For the functionals (1)-(2) in (\ref{eqn:4.1}), this is called \textbf{numerical differentiation} and \textbf{numerical integration}, respectively.
+
+\begin{method}[Interpolating formulae]
+    A suggestive approximation method is to interpolate $f$ by $p \in \mathcal{P}_n$ and take $\lambda(f) \approx$ $\lambda(p)$. This is called the \textbf{interpolating formula} (of degree $n$), in this case $N=n$.
+\end{method}
+We have already seen an interpolating formula, namely that of Lagrange for the functional $\lambda(f)=f(\bar{x})$:
+\[
+f(\bar{x}) \approx p(\bar{x})=\sum_{i=0}^n \ell_i(\bar{x}) f(x_i) .
+\]
+By linearity of $\lambda$, we have $\lambda(p)=\sum_{i=0}^n \lambda(\ell_i) p(x_i)$, thus the interpolating formula has the form
+\begin{equation}\label{eqn:4.3}
+    \lambda(f) \approx \sum_{i=0}^n \lambda(\ell_i) f(x_i) .
+\end{equation}
+Here $(\ell_i)_{i=0}^n$ are the fundamental Lagrange polynomials of degree $n, \ell_i(x_j)=\delta_{i j}$.
+\begin{method}[`Exact' formulae]
+    Another method is to require the formula (\ref{eqn:4.2}) to be \textbf{exact on} $\mathcal{P}_n$, i.e. to require for any $p \in \mathcal{P}_n$ that
+    \[
+    \lambda(p)=\sum_{i=0}^N a_i p\left(x_i\right) .
+    \]
+    In this case the number $N$ of terms (almost) need not to be restricted:
+    \begin{itemize}
+        \item if $N>n$, then it is not a polynomial of degree $n$ that substitutes the function, since if we write RHS as a polynomial then there are $ \le n+1 $ free coefficients: $(a_i)_{i=0}^{N}$ is redundant;
+        \item if $N<n$, then the formula is said to be of \textbf{high accuracy};
+        \item if $N=n$, then the above methods are the same (see the following lemma).
+    \end{itemize}
+\end{method}
+\begin{lemma}\label{lma:4.3}
+    The formula $\lambda(f) \approx \sum_{i=0}^n a_i f(x_i)$ is interpolating $\Longleftrightarrow$ it is exact on $\mathcal{P}_n$.
+\end{lemma}
+\begin{proof}
+    The interpolating formula (\ref{eqn:4.3}) is exact on $\mathcal{P}_n$ by definition. Conversely, if the formula in the lemma is exact on $\mathcal{P}_n$, take $f(x)=\ell_j(x)$ to obtain $\lambda(\ell_j)=\sum_{i=0}^n a_i \ell_j(x_i)=a_j$, i.e., (\ref{eqn:4.3}).
+\end{proof}
+
+\subsection{Numerical integration}
+A formula of numerical integration (with some $w(x) \geq 0$ )
+\[
+\lambda(f):=I(f):=\int_a^b f(x) w(x) \dd{x} \approx \sum_{i=0}^n a_i f(x_i), \quad f \in C[a, b],
+\]
+is called a \textbf{quadrature formula} with \textbf{nodes} $(x_i)$ and \textbf{weights} $(a_i)$. By Lemma \ref{lma:4.3}, for any $n+1$ fixed $(x_i)$, the interpolating formula $a_i=I(\ell_i)$ is exact on $\mathcal{P}_n$. Can one find a \textbf{quadrature of higher accuracy} which is exact on $\mathcal{P}_m$ with some $m>n$ ? Since we are free in choosing $n+1$ nodes $(x_i)$, we may hope to increase the degree of accuracy from degree $n$ up to $2 n+1$. More is impossible.
+
+\begin{lemma}
+    No quadrature formula with $n+1$ nodes is exact for all $p \in \mathcal{P}_m$ if $m \geq 2 n+2$.
+\end{lemma}
+\begin{proof}
+    We prove by presenting a counterexample. Take $p(x)=\prod_{i=0}^n(x-x_i)^2 \geq 0$. Then $p \in \mathcal{P}_{2 n+2}$, and $I(p)>0$, but $\sum_{i=0}^n a_i p(x_i)=0$ for any $a_i$. Hence the integral and the quadrature do not match.
+\end{proof}
+Our next goal is to show that $m=2 n+1$ can be attained. For this we need
+
+\begin{lemma}
+    Let $Q_{n+1}$ be orthogonal to all $p_n \in \mathcal{P}_n$ on $[a, b]$. Then all the zeros of $Q_{n+1}$ are real, distinct and lie in the interval $(a, b)$.
+\end{lemma}
+\begin{proof}
+    Denote by $k$ the number of the sign changes of $Q_{n+1}$ in $(a, b)$ and assume that $k \leq n$. If $k=0$ set $p_k \equiv 1$, and if $1 \leq k \leq n$ set $p_k(x):=\prod_{i=1}^k(x-t_i)$ where $t_i \mathrm{~s}$ are the points where a sign change of $Q_{n+1}$ occurs. Then $p_k \in \mathcal{P}_k, k \leq n$, hence $(Q_{n+1}, p_k)=0$. On the other hand, by construction, $Q_{n+1}(x) p_k(x)$ does not change sign throughout $[a, b]$ and vanishes at a finite number of points, hence
+    \[
+        |(Q_{n+1}, p_k)|:=|\int_a^b Q_{n+1}(x) p_k(x) w(x) \dd{x}|=\int_a^b|Q_{n+1}(x) p_k(x)| w(x) \dd{x}>0,
+    \]
+    a contradiction. Thus, $k \geq n+1$ (hence $k=n+1$) and the statement follows.
+\end{proof}
+
+\begin{theorem}
+    Let a quadrature with $n+1$ nodes $(x_i)_{i=0}^n$ be exact on $\mathcal{P}_n$ (i.e. interpolating). Then it is exact on $\mathcal{P}_{2 n+1}$ if and only if its nodes $(x_i)_{i=0}^n$ are the zeros of the $(n+1)$-st orthogonal polynomial $Q_{n+1}$.
+\end{theorem}
+\begin{proof}
+    ($ \Longrightarrow $) If a quadrature with $n+1$ nodes $(x_i)$ is exact for all $p \in \mathcal{P}_{2 n+1}$, then letting $Q_{n+1}(x):=$ $\prod_{i=0}^n(x-x_i) \in \mathcal{P}_{n+1}$ and taking any $q_n \in \mathcal{P}_n$ we find
+    \[
+    \int_a^b Q_{n+1}(x) q_n(x) w(x) \dd{x}=\sum_{i=0}^n a_i[Q_{n+1}(x_i) q_n(x_i)]=0
+    \]
+    i.e., $Q_{n+1}$ is orthogonal to all $q_n \in \mathcal{P}_n$.
+
+    ($ \Longleftarrow $) onversely, let $(x_i)_{i=0}^n$ be the zeros of orthogonal $Q_{n+1}$. Given any $p_{2 n+1} \in \mathcal{P}_{2 n+1}$, we can represent it uniquely as
+    \[
+    p_{2 n+1}(x)=Q_{n+1}(x) r_n(x)+s_n(x), \quad \text { with some } r_n, s_n \in \mathcal{P}_n
+    \]
+    (in fact, $s_n$ interpolates $p_{2 n+1}$ at the points $(x_i)$). Since $Q_{n+1}$ is orthogonal to $r_n$, we have
+    \[
+    I(p_{2 n+1})=\int_a^b p_{2 n+1}(x) w(x) \dd{x}=\int_a^b s_n(x) w(x) \dd{x}=I(s_n) .
+    \]
+    On the other hand, because $Q_{n+1}(x_i)=0$,
+    \[
+    \sum_{i=0}^n a_i p_{2 n+1}(x_i)=\sum_{i=1}^n a_i s_n(x_i) .
+    \]
+    But $s_n \in \mathcal{P}_n$, while the quadrature is exact on $\mathcal{P}_n$, hence $I(s_n)=\sum a_i s_n(x_i)$, i.e., the righthand sides of two previous equalities coincide, therefore the left-hand sides coincide too, i.e., $I(p_{2 n+1})=\sum a_i p_{2 n+1}(x_i)$.
+\end{proof}
+
+\begin{definition}
+    A quadrature with $n+1$ nodes that is exact on $\mathcal{P}_{2 n+1}$ is called Gaussian quadrature.
+\end{definition}
+\begin{example}
+    For $[a, b]=[-1,1]$ and $w(x) \equiv 1$, the underlying orthogonal polynomials are the Legendre polynomials. The corresponding weights and nodes of the Gaussian quadratures are as follows.
+\[
+\begin{array}{*3{>{\displaystyle}l}}
+P_1(x)=x & x_0=0 & a_0=2 ; \\[1em]
+P_2(x)=\frac{3}{2}\left(x^2-\frac{1}{3}\right) & x_0=-\frac{1}{\sqrt{3}}, x_1=\frac{1}{\sqrt{3}} & a_0=1, a_1=1 \\[1em]
+P_3(x)=\frac{5}{2}\left(x^3-\frac{3}{5} x\right) & x_0=-\sqrt{\frac{3}{5}}, x_1=0, x_2=\sqrt{\frac{3}{5}} & a_0=\frac{5}{9}, a_1=\frac{8}{9}, a_2=\frac{5}{9}
+\end{array}
+\]
+\end{example}
+\begin{example}
+    Example $4.9$ For $[a, b]=[-1,1]$ and $w(x)=\left(1-x^2\right)^{-1 / 2}$, the orthogonal polynomials are the Chebyshev polynomials and the qudrature rule is particularly attractive:
+\[
+T_{n+1}(x)=\cos (n+1) \arccos x, \quad x_i=\cos \frac{2 i+1}{2 n+2} \pi, \quad a_i=\frac{\pi}{n+1}, \quad i=0, \ldots, n .
+\]
+\end{example}
+
+\begin{example}
+    Simplest quadrature formulae ($w\equiv 1$)
+    \begin{center}
+        \begin{tabular}{rcl}
+            the rectangle rule: & $\displaystyle  I(f) \approx (b-a) f(a) $ & \parbox{3.5cm}{1-point, non-Gaussian,\\ exact on constants}\\[2em] 
+            the midpoint rule: & $\displaystyle I(f)\approx (b-a)f\qty(\frac{a+b}{2}) $ & \parbox{3.5cm}{1-point, Gaussian,\\ exact on linear fns}\\[2em] 
+            the trapezodial rule: & $\displaystyle I(f) \approx (b-a)\qty[\frac{1}{2}f(a)+\frac{1}{2}f(b)] $ & \parbox{3.5cm}{2-point, non-Gaussian,\\ exact on linear fns}\\[2em] 
+            the Simpson rule: & $\displaystyle I(f) \approx(b-a)\left[\frac{1}{6} f(a)+\frac{2}{3} f\left(\frac{a+b}{2}\right)+\frac{1}{6} f(b)\right]$ & \parbox{3.5cm}{3-point, non-Gaussian,\\ but of higher accuracy \\ (exact on cubics)}
+        \end{tabular}
+    \end{center}
+\end{example}
+
+\subsection{Numerical differentiation}
+Consider the interpolating formulae for numerical differentiation
+\[
+\lambda(f)=f^{(k)}(\bar{x}) \approx \sum_{i=0}^n a_i f\left(x_i\right), \quad a_i=\lambda\left(\ell_i\right)=\ell_i^{(k)}(\bar{x}),
+\]
+which are exact on the polynomials of degree $n$. The simplest ones are with $n=k$, i.e., $f^{(k)}(\bar{x}) \approx$ $p^{(k)}(\bar{x})$ where $p$ is the interpolating polynomial of degree $k$. But $p^{(k)}(\bar{x})$ is $k$ ! times the leading coefficient of $p$, i.e., $k ! f\left[x_0, \ldots, x_k\right]$, and we obtain the simplest rules
+\[
+f^{(k)}(\bar{x}) \approx k ! f\left[x_0, \ldots, x_k\right]
+\]
+\begin{example}
+    Common differences 
+    \begin{center}
+        \begin{tabular}{rcl}
+            the foward difference: & $\displaystyle  f^{\prime}(x) \approx f[x, x+h]=\frac{f(x+h)-f(x)}{h} $ & \parbox{3cm}{2-points,\\ exact on linear fns}\\[2em] 
+            the central difference: & $\displaystyle f^{\prime}(x) \approx f[x-h, x+h]=\frac{f(x+h)-f(x-h)}{2 h} $ & \parbox{3cm}{2-point,\\ of higher accuracy\\ exact on quadratics}\\[2em] 
+            the 2nd central difference: & $\displaystyle f^{\prime \prime}(x) \approx 2 f[x-h, x, x+h]=\frac{f(x-h)-2 f(x)+f(x-h)}{h^2}$ & \parbox{3cm}{3-point,\\ of higher accuracy\\ exact on cubics}
+        \end{tabular}
+    \end{center}
+\end{example}
+
+\begin{example}
+    $n=2, k=1,[a, b]=[0,2]$. (Of course, one can transform any formula to any interval.)
+\begin{equation}\label{eqn:4.4}
+    f^{\prime}(0) \approx p_2^{\prime}(0)=-\frac{3}{2} f(0)+2 f(1)-\frac{1}{2} f(2) .
+\end{equation}
+Here (and in any other formula), given the nodes $\left(x_i\right)$, in our case $(0,1,2)$, we can find the corresponding coefficients $\left(a_i\right)$ in two ways.
+\begin{enumerate}
+    \item We determine fundamental lagrange polynomials $\ell_i$ (such that $\ell_i\left(x_j\right)=\delta_{i j}$),
+    \[
+    \ell_0(x)=\frac{1}{2}(x-1)(x-2), \quad \ell_1(x)=-x(x-2), \quad \ell_2(x)=\frac{1}{2} x(x-1),
+    \]
+    and set $a_i=\lambda\left(\ell_i\right)$ :
+    \[
+    a_0=\ell_0^{\prime}(0)=-\frac{3}{2}, \quad a_1=\ell_1^{\prime}(0)=2, \quad a_2=\ell_2^{\prime}(0)=-\frac{1}{2}
+    \]
+    \item Sometimes it is easier to solve the system of linear equations which arises if we require the formula to be exact on monomials $\left(x^m\right)$.
+    \[
+        \left\{ \begin{aligned}
+             a_0+a_1+a_2 &= 0\quad (f(x)=1),\\ 
+             a_1+2a_2&=1 \quad (f(x)=x),\\ 
+             a_1+4a_2 &= 0\quad (f(x) = x^2).
+        \end{aligned}  \right. \implies a_2=-\frac{1}{2},a_1=2,a_0=-\frac{3}{2}. 
+    \]
+\end{enumerate}
+\end{example}
 \end{document}
