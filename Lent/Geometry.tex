@@ -918,4 +918,116 @@ We now prove the theorem stated above, relating equivalent conditions for smooth
 	This is a locally defined map, which is smooth on an open set in \( \mathbb R^3 \), which is a smooth inverse to \( \sigma \).
 	Hence \( \Sigma \) is a smooth surface in \( \mathbb R^3 \), so (a) holds.
 \end{proof}
+
+\begin{example}
+	The ellipsoid \( f^{-1}(0) \) for \( f(x,y,z) = x^2/a^2 + y^2/b^2 + z^2/c^2 - 1 \).
+	For any point, \( Df \neq 0 \), so it is a smooth surface.
+\end{example}
+\begin{example}
+	Let \( \gamma \colon [a,b] \to \mathbb R^3 \) be a smooth map with image in the \( xz \) plane, so
+	\[
+		\gamma(t) = (f(t), 0, g(t))
+	\]
+	such that \( \gamma \) is injective, \( \gamma' \neq 0 \), and \( f > 0 \).
+	The \textbf{surface of revolution} of \( \gamma \) has allowable parametrisation
+	\[
+		\sigma(u,v) = (f(u)\cos v, f(u)\sin v, g(u))
+	\]
+	where \( (u,v) \in (a,b) \times (\theta, \theta + 2\pi) \) for a fixed \( \theta \).
+	\begin{center}
+	\includegraphics[scale=0.8]{SoR}
+	\end{center}
+	Note that \( \sigma_u = (f_u \cos v, f_u \sin v, g_u) \) and \( \sigma_v = (-f\sin v, f \cos v, 0) \), and we can check \( \norm{\sigma_u \times \sigma_v} = f^2 ((f')^2 + (g')^2) \) which is nonzero on \( \gamma \), so this really is an allowable parametrisation.
+\end{example}
+
+\subsection{Orientability}
+Let \( V, V' \) be open sets in \( \mathbb R^2 \).
+	Let \( f \colon V \to V' \) be a diffeomorphism.
+	Then at every point \( x \in V \), \( \eval{Df}_x \in \GL(2,\mathbb R) \); it is invertible since \( f \) is a diffeomorphism.
+	Let \( \GL^+(2,\mathbb R) \) be the subgroup of matrices with positive determinant.
+\begin{definition}
+	We say that \( f \) is \textbf{orientation-preserving} if $ Df|_x\in \GL^+(2,\mathbb R) $ for all points \( x \in V \).
+\end{definition}
+\begin{definition}
+	An abstract smooth surface \( \Sigma \) is \textbf{orientable} if it admits an atlas \( \qty{(U_i, \varphi_i)} \) where the transition maps are all orientation-preserving.
+	A choice of such an atlas is an \textbf{orientation} of \( \Sigma \); \( \Sigma \) can be called \textbf{oriented} when such an orientation is given.
+\end{definition}
+\begin{remark}
+	An orientable atlas belongs to a maximal compatible oriented smooth atlas.
+\end{remark}
+\begin{lemma}
+	If \( \Sigma_1 \) and \( \Sigma_2 \) are diffeomorphic abstract smooth surfaces, then \( \Sigma_1 \) is orientable if and only if \( \Sigma_2 \) is orientable.
+\end{lemma}
+\begin{proof}
+	Let \( f \colon \Sigma_1 \to \Sigma_2 \) be a diffeomorphism.
+	Suppose \( \Sigma_2 \) is orientable and equipped with an oriented smooth atlas.
+	Consider the atlas on \( \Sigma_1 \) of charts of the form \( (f^{-1}(U), \eval{\phi \circ f}_{f^{-1}(U)}) \), where \( (U, \psi) \) is a chart at \( f(p) \) in the oriented atlas for \( \Sigma_2 \).
+	Then, the transition map between two such charts is exactly a transition map between charts in the \( \Sigma_2 \) atlas.
+	\begin{center}
+		\begin{tikzcd}
+			f^{-1}(U)\in \Sigma_1 \arrow[r, "f"] \arrow[rd, "\varphi\circ f"'] & U\in \Sigma_2 \arrow[d, "\varphi"] \\
+			& \varphi(U)\in \mathbb{R}^2        
+		\end{tikzcd}
+	\end{center}
+	In other words, in the maximal smooth atlas that exists a priori for \( \Sigma_1 \), we will allow charts of the form \( (\widetilde U, \widetilde \psi) \) when for all charts \( (U, \psi) \) at \( f(p) \) in the \( \Sigma_2 \) atlas, the map \( \psi \circ f \circ (\widetilde \psi)^{-1} \) is orientation-preserving.
+	Informally, if the atlas on \( \Sigma_2 \) was maximal as an oriented atlas, we can recover the previous set of charts.
+\end{proof}
+
+\begin{remark}
+	(1) There is no sensible classification of the set of all smooth surfaces.
+	For instance, \( \mathbb R^2 \setminus Z \) for a closed set \( Z \) can be shown to yield uncountably many types of homeomorphisms.
+	However, \textit{compact} smooth surfaces may be classified by their Euler characteristic and their orientability, up to diffeomorphism.
+	This theorem will not be proven in this course.
+
+	(2) There is a definition of orientation-preserving \textit{homeomorphism} that does not rely on the determinant, but that instead relies on some algebraic topology which is not covered in this course.
+	The M\"obius band is the surface
+	\begin{center}
+		\begin{tikzpicture}
+				\node (0) at (-2, 1) {};
+				\node (1) at (-2, -1) {};
+				\node (2) at (2, -1) {};
+				\node (3) at (2, 1) {};
+				\node (4) at (-2, 0) {};
+				\node (5) at (2, 0) {};
+				\draw [->] (1.center) to (4.center);
+				\draw [->] (3.center) to (5.center);
+				\draw (5.center) to (2.center);
+				\draw (4.center) to (0.center);
+				\draw [dashed] (0.center) to (3.center);
+				\draw [dashed] (2.center) to (1.center);
+		\end{tikzpicture}
+	\end{center}
+	where the dashed lines represent the absence of edges.
+	It turns out that an abstract smooth surface is orientable if and only if it contains no subsurface homeomorphic to the M\"obius band.
+	We can therefore say that a topological surface is orientable if and only if it contains no subsurface (an open set) homeomorphic to a M\"obius band.
+
+	(3) We can define other structures on an abstract smooth surface by considering smooth atlases such that if \( \varphi_1 \varphi_2^{-1} \) is a transition map, then \( D (\varphi_1 \varphi_2^{-1}) \) at \( x \) belongs to a specific subgroup \( G \leq \GL(2, \mathbb R) \).
+	For example, defining \( G = \qty{e} \) leads to Euclidean surfaces.
+	The group \( \GL(1, \mathbb C) \) identified as a subgroup of \( \GL(2, \mathbb R) \) yields the Riemann surfaces.
+\end{remark}
+
+\begin{example}
+	For \( S^2 \) with the atlas of two stereographic projections, we can find the transition map to be
+	\[
+		(u,v) \mapsto \qty(\frac{u}{u^2 + v^2}, \frac{v}{u^2 + v^2})
+	\]
+	on \( \mathbb R^2 \setminus \qty{0} \).
+	This has positive determinant, so \( S^2 \) is orientable.
+
+	For the torus \( T^2 \), we previously found an atlas such that the transition maps are translations of \( \mathbb R^2 \).
+	Hence the torus is an oriented surface, and also a Euclidean surface.
+\end{example}
+
+\subsection{Tangent planes}
+An \textbf{affine} subspace of a vector space is a translate of a linear subspace.
+\begin{definition}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \), and \( p \in \Sigma \).
+	Let \( \sigma \colon V \to U \subseteq \Sigma \) be an allowable parametrisation of \( \Sigma \) near \( p \), so \( V \) is an open subset of \( \mathbb R^2 \) and \( U \) is open in \( \Sigma \), such that \( \sigma(0) = p \).
+	The \textbf{tangent plane} \( T_p \Sigma \) to \( p \) at \( \Sigma \) is the image of \( \qty(D \eval{\sigma}_0) \subseteq \mathbb R^3 \), which is a two-dimensional vector subspace of \( \mathbb R^3 \).
+	The \textbf{affine tangent plane} is \( p + T_p \Sigma \), which is an affine subspace of \( \mathbb R^3 \).
+\end{definition}
+\begin{lemma}
+	\( T_p \Sigma \) is independent of the choice of allowable parametrisation.
+\end{lemma}
+
 \end{document}
