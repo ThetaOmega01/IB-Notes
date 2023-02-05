@@ -721,4 +721,183 @@ Here (and in any other formula), given the nodes $\left(x_i\right)$, in our case
     \]
 \end{enumerate}
 \end{example}
+
+\section{Error of approximation}
+Given a linear functional $\lambda$ and an approximation formula $\lambda(f) \approx \sum_{i=0}^N a_i f\left(x_i\right)$, we are interested in the error (which is a linear functional as well)
+\[
+e_\lambda(f):=\lambda(f)-\sum_{i=0}^N a_i f\left(x_i\right) .
+\]
+If $\lambda$ acts on $f \in C^{n+1}[a, b]$, then it is natural to seek an estimate in terms of $\left\|f^{(n+1)}\right\|_{\infty}$, i.e.,
+\begin{equation}\label{eqn:5.1}
+    \left|e_\lambda(f)\right| \leq c_\lambda\left\|f^{(n+1)}\right\|_{\infty}, \quad \forall f \in C^{n+1}[a, b] .
+\end{equation}
+Since $f^{(n+1)} \equiv 0$ on $\mathcal{P}_n$, such an estimate can exist only if
+\[
+e_\lambda(f)=0 \text { on } \mathcal{P}_n,
+\]
+i.e., the approximation formula \textit{must be exact on} $\mathcal{P}_n$ (e.g., it can be interpolating of degree $n$). 
+
+If (\ref{eqn:5.1}) holds with some $c_\lambda$ and moreover, for any $\epsilon>0$, there is an $f_\epsilon \in C^{n+1}[a, b]$ such that
+\[
+\left|e_\lambda\left(f_\epsilon\right)\right|>\left(c_\lambda-\epsilon\right)\left\|f_\epsilon^{(n+1)}\right\|_{\infty},
+\]
+then the constant $c_\lambda$ in inequality (\ref{eqn:5.1}) is called \textbf{least} or \textbf{sharp}. The next section gives a general approach to obtaining sharp estimates for the error functionals $e_\lambda$ that vanish on $\mathcal{P}_n$.
+
+\subsection{The Peano kernel theorem}
+
+Our point of departure is the \textbf{Taylor formula with an integral remainder term},
+\begin{equation}\label{eqn:5.2}
+    f(x)=\sum_{i=0}^n \frac{1}{i !}(x-a)^i f^{(i)}(a)+\frac{1}{n !} \int_a^x(x-t)^n f^{(n+1)}(t)\dd{t},
+\end{equation}
+where the sum is the \textbf{Taylor polynomial} $q_n$ to $f$ (at the point $a$). One can can verify (5.2) by integration by parts. It is standard to write the remainder in the slightly different form, which makes the range of integration independent of $x$ :
+\[
+R(x)=\frac{1}{n !} \int_a^b(x-t)_{+}^n f^{(n+1)}(t)\dd{t}, \quad \text { with } \quad(x-t)_{+}^n:=(\max \{x-t, 0\})^n
+\]
+Let $\mu$ be a linear functional on $C^{n+1}$. Then
+\[
+\mu(f)=\mu\left(q_n\right)+\mu(R)=\mu\left(q_n\right)+\frac{1}{n !} \mu\left(\int_a^b(x-t)_{+}^n f^{(n+1)}(t)\dd{t}\right) .
+\]
+Let us put formally $\mu$ under the integration sign (that is exchange action of $\mu$ and of $\int_a^b$), so that, for any fixed value of $t$, it will act on the function
+\[
+g_t(\bullet):=(\bullet-t)_{+}^n,
+\]
+a function, say, of $x$ which (for a given $t$ ) is defined as $g_t(x):=(x-t)_{+}^n, x \in[a, b]$. To each value $t \in \mathbb{R}$ there corresponds a value $\mu\left(g_t\right) \in \mathbb{R}$, thus we have a function
+\[
+K_\mu(t):=\mu\left(g_t\right):=\mu\left((\bullet-t)_{+}^n\right), \quad t \in \mathbb{R} .
+\]
+It is called the \textbf{Peano kernel} of the functional $\mu$. So, formally, we may write
+\begin{equation}\label{eqn:5.3}
+    \mu(f)=\mu\left(q_n\right)+\frac{1}{n !} \int_a^b K_\mu(t) f^{(n+1)}(t) \dd{t} .
+\end{equation}
+
+\begin{definition}
+    Denote by $\Lambda_0$ the set of linear functionals which are linear combinations of the functionals of two types
+\[
+    (1)\ \mu(f)=f^{(k)}(\bar{x}) \quad(0 \leq k \leq n), \quad \bar{x} \in[a, b]\qquad
+    (2)\ \mu(f)=\int_a^{\bar{x}} f(x) w(x) \dd{x}, \quad \bar{x} \in[a, b]
+\]
+\end{definition}
+\begin{lemma}
+    If $\mu \in \Lambda_0$, then equality (\ref{eqn:5.3}) is valid (i.e., exchange of $\mu$ and $\int_a^b$ is justified).
+\end{lemma}
+\begin{theorem}[The Peano kernel theorem]
+    Let $\lambda \in \Lambda_0$ and let $\lambda(f) \approx \sum_{i=0}^N a_i f\left(x_i\right)$ be an approximation formula which is exact on $\mathcal{P}_n$. Then the error functional $e_\lambda$ (and any other functional from $\Lambda_0$ that vanishes on $\mathcal{P}_n$ ) has the integral representation
+\begin{equation}\label{eqn:5.4}
+    e_\lambda(f)=\frac{1}{n !} \int_a^b K_{e_\lambda}(t) f^{(n+1)}(t) \dd{t} .
+\end{equation}
+\end{theorem}
+\begin{proof}
+    The formula follows from (\ref{eqn:5.3}), where we put $e_\lambda$ instead of $\mu$, and use assumptions $e_\lambda \in \Lambda_0$ and $e_\lambda\left(q_n\right)=0$
+\end{proof}
+
+\subsection{Sharp error bounds}
+\ \vspace*{-1.5em}
+\begin{theorem}
+    Under assumptions of the previous theorem, for any $f \in C^{n+1}$, we have the sharp inequality
+\begin{equation}\label{eqn:5.5}
+    \left|e_\lambda(f)\right| \leq c_\lambda\left\|f^{(n+1)}\right\|_{\infty}, \quad c_\lambda=\frac{1}{n !}\left\|K_{e_\lambda}\right\|_1,
+\end{equation}
+where $\left\|K_{e_\lambda}\right\|_1:=\int_a^b\left|K_{e_\lambda}(t)\right| \dd{t}$, and $\left\|f^{(n+1)}\right\|_{\infty}:=\max _{t \in[a, b]}\left|f^{(n+1)}(t)\right|$.
+\end{theorem}
+\begin{proof}
+    Applying the inequality
+\begin{equation}\label{eqn:5.6}
+    \left|\int_a^b g(t) h(t) \dd{t}\right| \leq \int_a^b|g(t)| \dd{t} \cdot \max _{t \in[a, b]}|h(t)|=:\|g\|_1\|h\|_{\infty}
+\end{equation}
+to the right-hand side of (\ref{eqn:5.4}), we obtain (\ref{eqn:5.5}).
+Let us show that the constant $c_\lambda$ in (\ref{eqn:5.5}) is \textit{sharp} (the least possible). In (5.6), equality occurs if we take $h(t)=\operatorname{sgn} g(t)$. Therefore, we get equality in (\ref{eqn:5.5}) taking $f_0$ with $f_0^{(n+1)}(t)=\operatorname{sgn} K_{e_\lambda}(t)$.
+\end{proof}
+\begin{remark}
+    A minor problem in the above proof of sharpness of $c_\lambda$ is that the sign-function $f_0^{(n+1)}$ that provides equality in (\ref{eqn:5.5}) is not continuous, whereas we consider $f \in C^{n+1}$.
+
+Informally, we just \textit{allow} the functions with piecewise continuous $(n+1)$-st derivative, like $|x|^{n+1}$, to be considered together with $f \in C^{n+1}$.
+
+Formally, we can approximate a discontinuous sign-function $f_0^{(n+1)}$ by a continuous function $f_\epsilon^{(n+1)}$ changing its values on arbitrarily small intervals, say of of length $\epsilon^{\prime}$, around the jumps. This will change the integral value in (\ref{eqn:5.4}) by $\epsilon^{\prime \prime}$, hence for such $f_\epsilon$ we get the estimate $e_\lambda\left(f_\epsilon\right)>$ $\left(c_\lambda-\epsilon\right)\left\|f_\epsilon^{(n+1)}\right\|_{\infty}$. Thus, $c_\lambda$ in (\ref{eqn:5.5}) is the least possible constant on $C^{n+1}$ as well.
+\end{remark}
+
+Finally, here are two general results on the sharp constants in numerical integration and numerical differentiation.
+
+\begin{theorem}[Error of Gaussian quadrature]
+    Given $n \in \mathbb{N}$ and $w(x) \geq 0$, let $\left(a_i\right)_{i=0}^n$ and $\left(x_i\right)_{i=0}^n$ be the weights and nodes of the Gaussian quadrature, respectively, i.e., $\left(x_i\right)$ are zeros of orthogonal polynomial $Q_{n+1}$. Then we have the sharp inequality
+\[
+\left|\int_a^b f(x) w(x) \dd{x}-\sum_{i=0}^n a_i f\left(x_i\right)\right| \leq \frac{1}{(2 n+2) !}\left\|Q_{n+1}\right\|_2^2\left\|f^{(2 n+2)}\right\|_{\infty} .
+\]
+\end{theorem}
+\begin{theorem}[Shadrin]
+    For any $n \in \mathbb{N}$ and any $\Delta=\left(x_i\right)_{i=0}^n$, let $\ell_{\Delta} \in \mathcal{P}_n$ be the polynomial that interpolates $f$ on $\Delta$. Then, for any $1 \leq k \leq n$, we have the sharp inequality
+\[
+\left\|f^{(k)}-\ell_{\Delta}^{(k)}\right\|_{\infty} \leq \frac{1}{(n+1) !}\left\|\omega_{\Delta}^{(k)}\right\|_{\infty}\left\|f^{(n+1)}\right\|_{\infty} .
+\]
+\end{theorem}
+
+\subsection{Examples}
+\ \vspace*{-1.5em}
+\begin{example}
+    Take formula (\ref{eqn:4.4}):
+\[
+f^{\prime}(0) \approx p_2^{\prime}(0)=-\frac{3}{2} f(0)+2 f(1)-\frac{1}{2} f(2) .
+\]
+It is exact on $\mathcal{P}_2$, hence the error on $C^3[0,2]$ can be expressed as
+\[
+e(f):=f^{\prime}(0)-\left[-\frac{3}{2} f(0)+2 f(1)-\frac{1}{2} f(2)\right]=\frac{1}{2 !} \int_0^2 K(t) f^{\prime \prime \prime}(t) \dd{t} .
+\]
+Here, with $g_t(x):=(x-t)_{+}^2$, the Peano kernel $K$ has the form
+\[
+\begin{aligned}
+K(t)=e\left(g_t\right) & =2(0-t)_{+}^1+\frac{3}{2}(0-t)_{+}^2-2(1-t)_{+}^2+\frac{1}{2}(2-t)_{+}^2 \\
+& =\left\{\hspace*{-.3em}\begin{array}{rl}
+-2(1-t)^2+\frac{1}{2}(2-t)^2 \\[.5em]
+\frac{1}{2}(2-t)^2
+\end{array}=\left\{\hspace*{-.3em}\begin{array}{cc}
+2 t-\frac{3}{2} t^2, & t \in[0,1], \\[.5em]
+\frac{1}{2}(2-t)^2, & t \in[1,2] .
+\end{array}\right.\right.
+\end{aligned}
+\]
+So, $K(t) \geq 0$, and integration gives the value
+\[
+\|K\|_1:=\int_0^2|K(t)| \dd{t}=\left(\int_0^1+\int_1^2\right) K(t) \dd{t}=\frac{1}{2}+\frac{1}{6}=\frac{2}{3} .
+\]
+Therefore, we have the estimate
+\[
+|e(f)| \leq \frac{1}{2 !} \frac{2}{3}\left\|f^{\prime \prime \prime}\right\|_{\infty}=\frac{1}{3}\left\|f^{\prime \prime \prime}\right\|_{\infty} .
+\]
+The constant $c=\frac{1}{3}$ is sharp: since $K(t) \geq 0$, we will get equality for $f^{\prime \prime \prime} \equiv$ const, e.g. for $f(x)=x^3$.
+\end{example}
+
+\begin{example}
+    The Simpson's rule,
+\[
+\int_{-1}^1 f(t) \dd{t} \approx \int_{-1}^1 p_2(t) \dd{t}=\frac{1}{3} f(-1)+\frac{4}{3} f(0)+\frac{1}{3} f(1),
+\]
+is exact on $\mathcal{P}_2$, hence the error on $C^3[-1,1]$ is
+\[
+e(f)=\int_{-1}^1 f(t) \dd{t}-\frac{1}{3} f(-1)-\frac{4}{3} f(0)-\frac{1}{3} f(1)=\frac{1}{2 !} \int_{-1}^1 K(t) f^{\prime \prime \prime}(t) \dd{t},
+\]
+where with $g_t(x):=(x-t)_{+}^2$
+\[
+\begin{aligned}
+K(t)=e\left(g_t\right) & =\int_{-1}^1(x-t)_{+}^2 \dd{x}-\frac{1}{3}(-1-t)_{+}^2-\frac{4}{3}(0-t)_{+}^2-\frac{1}{3}(1-t)_{+}^2 \\
+& =\left\{\hspace*{-.3em}\begin{array}{ll}
+\frac{1}{3}(1-t)^3-\frac{4}{3} t^2&\hspace*{-.8em}-\frac{1}{3}(1-t)^2 \\[.5em]
+\frac{1}{3}(1-t)^3 &\hspace*{-.8em} -\frac{1}{3}(1-t)^2
+\end{array}=\left\{\hspace*{-.3em}\begin{array}{cc}
+-\frac{1}{3} t(1+t)^2, & t \in[-1,0] \\[.5em]
+-\frac{1}{3} t(1-t)^2, & t \in[0,1]
+\end{array}\right.\right.
+\end{aligned}
+\]
+Now, $K(t)$ changes its sign at $t=0$, so its $L_1$-norm has the value
+\[
+\|K\|_1:=\int_{-1}^1|K(t)| \dd{t}=\left(\int_{-1}^0-\int_0^1\right) K(t) \dd{t}=2 \cdot \frac{1}{3}\left(\frac{1}{2}-\frac{2}{3}+\frac{1}{4}\right)=\frac{1}{18},
+\]
+so that
+\[
+e(f) \leq \frac{1}{2 !} \frac{1}{18}\left\|f^{\prime \prime \prime}\right\|_{\infty}=\frac{1}{36}\left\|f^{\prime \prime \prime}\right\|_{\infty} .
+\]
+The constant $c=\frac{1}{36}$ is sharp again: since $K(t)$ changes its sign at one point $t=0$, we get equality for $f^{\prime \prime \prime}(t)=C \operatorname{sgn} t$, e.g. for $f(x)=|x|^3$. For this $f$ its third derivative has a jump, but for any $\epsilon>0$ it can be approximated by $f_\epsilon \in C^3$ for which the constant would be $c>\frac{1}{36}-\epsilon$, i.e.
+\[
+e\left(f_\epsilon\right)>\left(\frac{1}{36}-\epsilon\right)\left\|f_\epsilon^{\prime \prime \prime}\right\|_{\infty} .
+\]
+\end{example}
 \end{document}
