@@ -900,4 +900,135 @@ The constant $c=\frac{1}{36}$ is sharp again: since $K(t)$ changes its sign at o
 e\left(f_\epsilon\right)>\left(\frac{1}{36}-\epsilon\right)\left\|f_\epsilon^{\prime \prime \prime}\right\|_{\infty} .
 \]
 \end{example}
+
+\section{Ordinary differential equations - basics}
+
+\begin{problem}
+    We wish to approximate the exact solution of the ordinary differential equation (ODE)
+\begin{equation}\label{eqn:6.1}
+    \mathbf{y}^{\prime}=\mathbf{f}(t, \mathbf{y}), \quad 0 \leq t \leq T,
+\end{equation}
+where $y \in \mathbb{R}^d$ and the function $f: \mathbb{R} \times \mathbb{R}^d \rightarrow \mathbb{R}^d$ is sufficiently `smooth'.
+\end{problem}
+
+In principle, it is enough for $\mathbf{f}$ satisfy the Lipschitz condition with respect to the second argument to ensure that the solution exists and is unique, namely there exists $\lambda>0$ such that
+\begin{equation}\label{eqn:6.2}
+    \|\mathbf{f}(t, \mathbf{x})-\mathbf{f}(t, \mathbf{y})\| \leq \lambda\|\mathbf{x}-\mathbf{y}\|, \quad t \in[0, T], \quad \mathbf{x}, \mathbf{y} \in \mathbb{R}^d .
+\end{equation}
+Yet, for simplicity, we henceforth assume that $f$ is analytic: in other words, we are always able to expand locally into Taylor series.
+
+The equation (\ref{eqn:6.1}) is accompanied by the initial condition $\bfy(0)=\bfy_0$.
+
+For a small \textbf{time step} $h>0$, we let $t_n=n h$ and our purpose is to approximate $\mathbf{y}_{n+1} \approx \mathbf{y}\left(t_{n+1}\right)$, from $\bfy_0, \bfy_1, \ldots, \bfy_n$ and equation (\ref{eqn:6.1}).
+
+\begin{definition}[One-step method]
+    A one-step method for solving (\ref{eqn:6.1}) is a map $\mathbf{y}_{n+1}=\boldsymbol{\varphi}\left(t_n, \bfy_n\right)$, i.e. an algorithm which allows $\mathbf{y}_{n+1}$ to depend only on $t_n, \mathbf{y}_n, h$ and $\bff$.
+\end{definition}
+
+\begin{method}[Euler's method]
+    We approximate $\mathbf{y}^{\prime}$ by the first difference $\mathbf{y}^{\prime}(t) \approx \frac{1}{h}(\mathbf{y}(t+h)-\mathbf{y}(t))$, thus obtaining the \textbf{Euler method}
+\begin{equation}\label{eqn:6.3}
+    \mathbf{y}_{n+1}=\mathbf{y}_n+h \mathbf{f}\left(t_n, \mathbf{y}_n\right), \quad n=0,1, \ldots
+\end{equation}
+On $\left[t_n, t_{n+1}\right]$, it approximates $\mathbf{y}(t)$ with a straight line with slope $\mathbf{f}\left(t_n, \mathbf{y}_{n}\right)$.
+\end{method}
+
+\begin{definition}
+    Let $T>0$ be given, and suppose that, for every $h>0$, a method produces the sequence $\mathbf{y}_n=\mathbf{y}_{n, h}$, where $0 \leq n \leq\lfloor T / h\rfloor$. We say that the method \textbf{converges}, if $\max _{n}\left\|\mathbf{y}_n-\mathbf{y}\left(t_n\right)\right\| \rightarrow 0$ as $h \rightarrow 0$. 
+\end{definition}
+
+It follows that if $n h \rightarrow t$ as $h \rightarrow 0$ and $n \rightarrow \infty$, then we have convergence $\mathbf{y}_{n, h} \rightarrow \mathbf{y}(t)$ to the exact solution of (\ref{eqn:6.1}), uniformly for $t \in[0, T]$.
+
+\begin{theorem}
+    Suppose that $f$ satisfies the Lipschitz condition (\ref{eqn:6.2}). Then the Euler method (\ref{eqn:6.3}) converges, and the error $\mathbf{e}_n=\mathbf{y}\left(t_n\right)-\bfy_n$ admits the estimate
+\begin{equation}\label{eqn:6.4}
+    \left\|\bfe_n\right\| \leq c_0 h
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+    The Taylor series for the exact solution $\mathbf{y}$ provides $\mathbf{y}\left(t_{n+1}\right)=\mathbf{y}\left(t_n\right)+h \mathbf{y}^{\prime}\left(t_n\right)+\frac{1}{2} h^2 \mathbf{y}^{\prime \prime}\left(\tau_n\right)$, where $\tau_n$ is a point in the interval $\left[t_n, t_{n+1}\right]$. Therefore, using the identity $\mathbf{y}^{\prime}(t)=\mathbf{f}(t, \mathbf{y}(t))$, we may write
+\begin{equation}\label{eqn:6.5}
+    \mathbf{y}\left(t_{n+1}\right)=\mathbf{y}\left(t_n\right)+h\, \mathbf{f}(t_n, \mathbf{y}(t_n))+\frac{1}{2} h^2 \mathbf{y}^{\prime \prime}\left(\tau_n\right) .
+\end{equation}
+By subtracting formula (\ref{eqn:6.3}) from this equation, and assuming that $\frac{1}{2}\left\|\mathbf{y}^{\prime \prime}\right\|_{\infty}=c$, we find that the errors $\bfe_n=\mathbf{y}\left(t_n\right)-\mathbf{y}_n$ satisfy the following relations
+\begin{align*}
+    \left\|\bfe_{n+1}\right\| & \leq\left\|\bfe_n\right\|+h\left\|\mathbf{f}\left(t_n, \mathbf{y}\left(t_n\right)\right)-\mathbf{f}\left(t_n, \mathbf{y}_n\right)\right\|+c h^2 \\
+    & \stackrel{(*)}{\leq}\left\|\mathbf{e}_n\right\|+\lambda h\left\|\mathbf{y}\left(t_n\right)-\mathbf{y}_n\right\|+c h^2=(1+\lambda h)\left\|\mathbf{e}_n\right\|+c h^2
+\end{align*}
+where in $(*)$ we used the Lipschitz condition on $\bff$. Consequently, by induction,
+\[
+\left\|\bfe_{n+1}\right\| \leq(1+\lambda h)^m\left\|\bfe_{n+1-m}\right\|+c h^2 \sum_{i=0}^{m-1}(1+\lambda h)^i, \quad m=1,2, \ldots, n+1 .
+\]
+In particular, letting $m=n+1$ and bearing in mind that $\bfe_0= \mathbf{0} $, we have
+\[
+\left\|\bfe_{n+1}\right\| \leq c h^2 \sum_{i=0}^n(1+\lambda h)^i=c h^2 \frac{(1+\lambda h)^{n+1}-1}{(1+\lambda h)-1} \leq \frac{c h}{\lambda}(1+\lambda h)^{n+1} .
+\]
+Since $1+\lambda h \leq {e}^{\lambda h}$ and $(n+1) h \leq T$, we obtain that $(1+\lambda h)^{n+1} \leq {e}^{\lambda T}$, therefore
+\[
+\left\|\bfe_n\right\| \leq \frac{c e^{\lambda T}}{\lambda} h \rightarrow 0 \quad(h \rightarrow 0), \quad \text { uniformly for } 0 \leq n h \leq T,
+\]
+and the theorem is true.
+\end{proof}
+
+\begin{definition}
+    The \textbf{local truncation error} of a general numerical method $\mathbf{y}_{n+1}=\boldsymbol{\varphi}_h\left(t_n, \mathbf{y}_0, \ldots, \mathbf{y}_n\right)$ for solving (\ref{eqn:6.1}) is the error of the method on the true solution, i.e., the value $\boldsymbol{\eta}_{n+1}$ such that
+\[
+\mathbf{y}\left(t_{n+1}\right)=\boldsymbol{\varphi}_h\left(t_n, \mathbf{y}\left(t_0\right), \mathbf{y}\left(t_1\right), \ldots, \mathbf{y}\left(t_n\right)\right)+\mathbf{\boldsymbol{\eta}}_{n+1} .
+\]
+The \textbf{order} of the method is the largest integer $p \geq 0$ such that
+\[
+\boldsymbol{\eta}_{n+1}=\mathcal{O}\left(h^{p+1}\right)
+\]
+for all $h>0, n \geq 0$ and all sufficiently smooth functions $f$ in (\ref{eqn:6.1}). Note that, unless $p \geq 1$, the method is an unsuitable approximation to (\ref{eqn:6.1}): in particular, $p \geq 1$ is necessary for convergence.
+\end{definition}
+
+\begin{remark}[The order of Euler's method]
+    From (\ref{eqn:6.5}), it follows that
+\[
+\boldsymbol{\eta}_{n+1}=\frac{1}{2} h^2 y^{\prime \prime}\left(\tau_n\right)=\mathcal{O}\left(h^2\right)
+\]
+and we deduce that Euler's method is of order 1 (which is justified by (\ref{eqn:6.4}))
+\end{remark}
+
+\begin{definition}[Theta methods]
+    For $\theta \in[0,1]$, we consider methods of the form
+\begin{equation}\label{eqn:6.6}
+    \mathbf{y}_{n+1}=\mathbf{y}_n+h\left[\theta \mathbf{f}\left(t_n, \mathbf{y}_n\right)+(1-\theta) \mathbf{f}\left(t_{n+1}, \mathbf{y}_{n+1}\right)\right], \quad n=0,1, \ldots
+\end{equation}
+\begin{enumerate}[(1)]
+    \item If $\theta=1$, we recover Euler's method and the choices $\theta=0$ and $\theta=\frac{1}{2}$ are known as
+    \begin{center}
+    \begin{tabular}{rl}
+        Backward Euler: & $\quad \mathbf{y}_{n+1}=\mathbf{y}_n+h \mathbf{f}\left(t_{n+1}, \mathbf{y}_{n+1}\right)$,\\[.5em]
+        Trapezoidal rule: & $\quad \mathbf{y}_{n+1}=\mathbf{y}_n+\frac{1}{2} h\left[\mathbf{f}\left(t_n, \mathbf{y}_n\right)+\mathbf{f}\left(t_{n+1}, \mathbf{y}_{n+1}\right)\right]$.
+    \end{tabular}
+    \end{center}
+    \item If $\theta \in[0,1)$, then the theta method (\ref{eqn:6.6}) is \textbf{implicit}: each time step requires the solution of a system of $d$ (in general, nonlinear) algebraic equations for the unknown vector $\mathbf{y}_{n+1}$.
+\end{enumerate}
+\end{definition}
+
+Solution of nonlinear algebraic equations $\mathbf{F}(\mathbf{y})= \mathbf{0}$ can be done by iteration. For example,
+\begin{center}
+    \begin{tabular}{rl}
+        Direct iteration:& $\quad \mathbf{y}^{[k+1]}=\mathbf{y}^{[k]}-\mathbf{F}(\mathbf{y}^{[k]})$,\\[0.5em]
+Newton-Raphson (N-R):& $\quad \mathbf{y}^{[k+1]}=\mathbf{y}^{[k]}-[J_\bfF(\mathbf{y}^{[k]})]^{-1} \mathbf{F}(\mathbf{y}^{[k]})$,\\[0.5em]
+Modified N-R:& $\quad \mathbf{y}^{[k+1]}=\mathbf{y}^{[k]}-[J_{\mathbf{F}}(\mathbf{y}^{[0]})]^{-1} \mathbf{F}(\mathbf{y}^{[k]})$
+    \end{tabular}
+\end{center}
+where $J$ is the Jacobian, i.e. derivative of $\mathbf{F}$.
+
+\begin{remark}[The order of the theta method]
+    It follows from (\ref{eqn:6.6}) and Taylor's theorem that the local truncation error of the theta method is
+\[
+\begin{aligned}
+& \mathbf{y}\left(t_{n+1}\right)-\mathbf{y}\left(t_n\right)-h\left[\theta \mathbf{y}^{\prime}\left(t_n\right)+(1-\theta) \mathbf{y}^{\prime}\left(t_{n+1}\right)\right] \\
+&= {\left[h \mathbf{y}^{\prime}\left(t_n\right)+\frac{1}{2} h^2 \mathbf{y}^{\prime \prime}\left(t_n\right)+\frac{1}{6} h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right)\right] } \\
+& \quad-\theta h \mathbf{y}^{\prime}\left(t_n\right)-(1-\theta) h\left[\mathbf{y}^{\prime}\left(t_n\right)+h \mathbf{y}^{\prime \prime}\left(t_n\right)+\frac{1}{2} h^2 \mathbf{y}^{\prime \prime \prime}\left(t_n\right)\right]+\mathcal{O}\left(h^4\right) \\
+&=\left(\theta-\frac{1}{2}\right) h^2 \mathbf{y}^{\prime \prime}\left(t_n\right)+\left(\frac{1}{2} \theta-\frac{1}{3}\right) h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right)+\mathcal{O}\left(h^4\right) .
+\end{aligned}
+\]
+Therefore the theta method is of order 1, except that the trapezoidal rule is of order 2.
+\end{remark}
+
 \end{document}
