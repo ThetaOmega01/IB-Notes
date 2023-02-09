@@ -1137,6 +1137,7 @@ An \textbf{affine} subspace of a vector space is a translate of a linear subspac
 \end{example}
 
 \section{Geometry of surfaces in \( \mathbb R^3 \)}
+\subsection{First fundamental form}
 
 Let \( \gamma \colon (a,b) \to \mathbb R^3 \) be smooth.
 The \textbf{length} of \( \gamma \) is
@@ -1154,6 +1155,132 @@ By using inverse function theorem, one can show that
 	If \( \gamma \colon (a,b) \to \mathbb R^3 \) is continuously differentiable and \( \gamma'(t) \neq 0 \), then \( \gamma \) can be parametrised by arc length.
 \end{lemma} 
 
-\subsection{First fundamental form}
+
+Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \), and let \( \sigma \colon V \to U \subseteq \Sigma \) be an allowable parametrisation.
+If \( \gamma \colon (a,b) \to \mathbb R^3 \) is smooth and its image is contained within \( U \), then there exist functions \( (u(t), v(t)) \colon (a,b) \to V \) such that \( \gamma(t) = \sigma(u(t), v(t)) \).
+Hence \( \gamma'(t) = \sigma_u u'(t) + \sigma_v v'(t) \), giving
+\[
+	\norm{\gamma'(t)}^2 = E u'(t)^2 + 2F u'(t) v'(t) + G v'(t)^2
+\]
+for functions
+\[
+	E = \inner{\sigma_u, \sigma_u};\quad F = \inner{\sigma_u, \sigma_v} = \inner{\sigma_v, \sigma_u};\quad G = \inner{\sigma_v, \sigma_v}
+\]
+where \( \inner{\cdot,\cdot} \) represents the usual Euclidean inner product.
+Note that \( E, F, G \) depend only on \( \sigma \) and not on \( \gamma \).
+\begin{definition}
+	The \textbf{first fundamental form} of \( \Sigma \) in the parametrisation \( \sigma \) is the expression
+	\[
+		E \dd{u}^2 + 2F \dd{u} \dd{v} + G \dd{v}^2
+	\]
+	This notation is illustrative of the fact that if \( \gamma \) has image in the image of \( \sigma(v) \), we find
+	\[
+		L(\gamma) = \int_a^b \sqrt{E (u')^2 + 2F u'v' + G (v')^2} \dd{t}
+	\]
+	where \( \gamma(t) = \sigma(u(t),v(t)) \).
+\end{definition}
+\begin{remark}
+	The Euclidean inner product on \( \mathbb R^3 \) provides an inner product on the subspace \( T_p \Sigma \).
+	Choosing a parametrisation \( \sigma \), we can say \( T_p \Sigma = \Im D \eval{\sigma}_0 = \spn{\qty{\sigma_u, \sigma_v}} \) where \( \sigma(0) = p \).
+	The first fundamental form is a quadratic form on the tangent spaces \( T_p \Sigma \), varying smoothly in \( p \).
+	However, we choose to express this in a basis coming from the parametrisation \( \sigma \): Let $ I_p(w) = \norm{w}^2 = \inner{w,w}_{\mathbb{R}^3}, w\in T_p\Sigma $, after picking $ \sigma, \sigma(0) = p, w = \eval{D\sigma}_0(u',v' ), $ we have $ I_p(w) = E u'^2 + 2F u'v' + G v'^2 $. 
+
+	In particular, we can think about the matrix expression
+	\[
+		\begin{pmatrix}
+			E & F \\
+			F & G
+		\end{pmatrix}
+	\]
+	This is an example of a \textbf{Riemannian metric}. 
+\end{remark}
+
+\begin{example}
+	The plane \( \mathbb R^2_{xy} \subset \mathbb R^3 \) has the parametrisation \( (u,v) \mapsto (u,v,0) \).
+	Hence, \( \sigma_u = e_1 \) and \( \sigma_v = e_2 \), hence the first fundamental form is \( \dd{u}^2 + \dd{v}^2 \).
+	We could also use polar coordinates, using \( \sigma(r,\theta) = (r\cos\theta,r\sin\theta,0) \).
+	This parametrises the plane without the origin.
+	This gives \( \sigma_r = (\cos\theta,\sin\theta,0) \) and \( \sigma_\theta = (-r\sin\theta, r\cos\theta,0) \).
+	The first fundamental form is \( \dd{r}^2 + r^2 \dd{\theta}^2 \).
+\end{example}
+\begin{definition}
+	Let \( \Sigma, \Sigma' \) be smooth surfaces in \( \mathbb R^3 \).
+	We say that they are \textbf{isometric} if there exists a diffeomorphism \( f\colon \Sigma \to \Sigma' \) that preserves the lengths of all curves.
+	More formally, for every smooth curve \( \gamma \colon (a,b) \to \Sigma \), the length of \( \gamma \) is the same as the length of \( f \circ \gamma \).
+\end{definition}
+\begin{example}
+	Let \( \Sigma' = f(\Sigma) \) where \( f \colon \mathbb R^3 \to \mathbb R^3 \) is a global isometry, or rigid motion, of \( \mathbb R^3 \); that is, \( v \mapsto Av+b \) for an orthogonal matrix \( A \).
+	These isometries preserve the Euclidean inner product on \( \mathbb R^3 \), hence \( f \) preserves length.
+	However, in the definition, we need not map all of \( \mathbb R^3 \) to itself, just \( \Sigma \to \Sigma' \).
+\end{example}
+
+\begin{definition}
+	We say that \( \Sigma \) and \( \Sigma' \) are \textbf{locally isometric} near points \( p \in \Sigma \) and \( q \in \Sigma' \) if there exist open neighbourhoods \( U \) of \( p \) and \( V \) of \( q \) such that \( U \) and \( V \) are isometric.
+	We can also say that \( \Sigma \) and \( \Sigma' \) are locally isometric if they are locally isometric at all points; that is, each point of \( \Sigma \) is locally isometric to some point on \( \Sigma' \).
+\end{definition}
+\begin{lemma}
+	Smooth surfaces \( \Sigma, \Sigma' \) in \( \mathbb R^3 \) are locally isometric near \( p \in \Sigma \) and \( q \in \Sigma' \) if and only if there exist allowable parametrisations \( \sigma \colon V \to U \subseteq \Sigma \) and \( \sigma' \colon V \to U' \subseteq \Sigma' \) such that the first fundamental forms are equivalent.
+\end{lemma}
+\begin{proof}
+	($ \Longleftarrow $) The first fundamental form of \( \Sigma \) determines the lengths of all curves on \( \Sigma \) that lie in \( U \): If we have $ \sigma,\sigma' $ as in the lemma, then $ \sigma'\circ \sigma^{-1} $ is an isometry since 
+	\begin{align*}
+		\abs{\dv{}{t}\sigma'\circ \sigma^{-1}\circ \gamma(t)}^2 &= \abs{\dv{}{t}\sigma'(u(t),v(t))}\\ 
+		&= E'\dot{u}^2+2F' \dot{u}\dot{v}+G'\dot{v}^2\\ 
+		&= E\dot{u}^2+2F \dot{u}\dot{v}+G\dot{v}^2 = \abs{\dv{}{t}\gamma(t)}^2
+	\end{align*}
+	which implies $ L(\sigma'\circ \sigma^{-1}\circ \gamma) = L(\gamma) $. 
+
+	($\Longrightarrow$) We will now show that lengths of curves determine the first fundamental form of a parametrisation.
+	Given \( \sigma \colon V \to U \), without loss of generality let \( V = B(0,\delta) \) for some \( \delta > 0 \), where \( \sigma(0) = p \).
+	Consider, for all \( \varepsilon < \delta \), the curve
+	\[
+		\gamma_\varepsilon \colon [0,\varepsilon] \to U;\quad t \mapsto \sigma(t,0)
+	\]
+	Then,
+	\[
+		\dv{\varepsilon} L(\gamma_\varepsilon) = \dv{\varepsilon} \int_0^\varepsilon \sqrt{E(t,0)} \dd{t} = \sqrt{E(\varepsilon,0)}
+	\]
+	Hence,
+	\[
+		\eval{\dv{\varepsilon}}_{\varepsilon = 0} L(\gamma_\varepsilon) = \sqrt{E(0,0)}
+	\]
+	So we can determine \( E \) at \( p \) by looking at lengths of curves.
+	We can similarly consider
+	\[
+		\chi_\varepsilon \colon [0,\varepsilon] \to U;\quad t \mapsto \sigma(0,t)
+	\]
+	which determines \( G \).
+	Finally, consider
+	\[
+		\lambda_\varepsilon \colon [0,\varepsilon] \to U;\quad t \mapsto \sigma(t,t)
+	\]
+	which determines \( \sqrt{(E+2F+G)(0,0)} \) which gives \( F \) implicitly.
+\end{proof}
+
+\begin{example}
+	Consider the cone with angle \( \arctan a \) to the vertical.
+	For \( u > 0 \) and \( v \in (0,2\pi) \), we define
+	\[
+		\sigma(u,v) = (au\cos v, au\sin v, u)
+	\]
+	The first fundamental form is
+	\[
+		(1+a^2)\dd{u}^2 + a^2 u^2 \dd{v}^2
+	\]
+	Consider cutting the cone along the line \( v = 0 \) and flattening it into a plane sector.
+	The circumference of the sector is \( 2 \pi a \) and the radius is \( \sqrt{1+a^2} \), hence the angle traced out by the sector is \( \theta_0 = \frac{2 \pi a}{\sqrt{1+a^2}} \).
+	We can parametrise this subset of the plane by
+	\[
+		\sigma(r,\theta) = \qty(\sqrt{1+a^2} r\cos\qty(\frac{a\theta}{\sqrt{1+a^2}}), \sqrt{1+a^2} r\sin\qty(\frac{a\theta}{\sqrt{1+a^2}}), 0)
+	\]
+	for \( r > 0 \) and \( \theta \in (0,2\pi) \).
+	We can then check that the first fundamental form here is
+	\[
+		(1+a^2) \dd{r}^2 + r^2 a^2 \dd{\theta}^2
+	\]
+	which matches the first fundamental form for the cone itself.
+	Hence the cone and the plane are locally isometric.
+	However, the cone and plane are not globally isometric, since the two topological spaces are not homeomorphic, so no diffeomorphism that preserves lengths can be constructed.
+\end{example}
 
 \end{document}
