@@ -1258,6 +1258,45 @@ Note that \( E, F, G \) depend only on \( \sigma \) and not on \( \gamma \).
 \end{proof}
 
 \begin{example}
+	The sphere of radius \( a \), given by \( \qty{x^2 + y^2 + z^2 = a^2} \), has an open set with allowable parametrisation
+	\[
+		\sigma(u,v) = (a\cos u \cos v, a \cos u \sin v, a \sin u)
+	\]
+	where \( u \in \qty(-\frac{\pi}{2}, \frac{\pi}{2}) \) and \( v \in (0,2\pi) \).
+	This parametrises the complement of a half great circle.
+	Here,
+	\[
+		\sigma_u = (-a \sin u \cos v, -a \sin u \sin v, a \cos u);\quad \sigma_v = (-a \cos u \sin v, a \cos u \cos v, 0)
+	\]
+	Hence,
+	\[
+		E = a^2; \quad F = 0;\quad G = a^2 \cos^2 u
+	\]
+	which gives the first fundamental form as
+	\[
+		a^2 \dd{u}^2 + a^2 \cos^2 u \dd{v}^2
+	\]
+\end{example}
+\begin{example}
+	Consider the surface of revolution given by a curve
+	\[
+		\eta(t) = (f(t),0,g(t))
+	\]
+	rotated about the \( z \) axis.
+	The resulting surface has parametrisation
+	\[
+		\sigma(u,v) = (f(u) \cos v, f(u) \sin v, g(u))
+	\]
+	Hence,
+	\[
+		\sigma_u = (f_u \cos v, f_u \sin v, g_u);\quad \sigma_v = (-f \sin v, f \cos v, 0)
+	\]
+	which gives
+	\[
+		(f_u^2 + g_u^2) \dd{u}^2 + f^2 \dd{v}^2
+	\]
+\end{example}
+\begin{example}
 	Consider the cone with angle \( \arctan a \) to the vertical.
 	For \( u > 0 \) and \( v \in (0,2\pi) \), we define
 	\[
@@ -1281,6 +1320,129 @@ Note that \( E, F, G \) depend only on \( \sigma \) and not on \( \gamma \).
 	which matches the first fundamental form for the cone itself.
 	Hence the cone and the plane are locally isometric.
 	However, the cone and plane are not globally isometric, since the two topological spaces are not homeomorphic, so no diffeomorphism that preserves lengths can be constructed.
+\end{example}
+\begin{lemma}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \), and let \( p \in \Sigma \).
+	Suppose we have two allowable parametrisations \( \sigma \colon V \to U \) and \( \sigma' \colon V' \to U \) for the same open neighbourhood of \( p \).
+	The two parametrisations differ by a transition map \( F = {\sigma'}^{-1} \circ \sigma \) which is a diffeomorphism of open subsets of \( \mathbb R^2 \).
+	There exist first fundamental forms for both parametrisations.
+	Then,
+	\[
+		\begin{pmatrix}
+			E & F \\
+			F & G
+		\end{pmatrix} = (DF)^\top \begin{pmatrix}
+			E' & F' \\
+			F' & G'
+		\end{pmatrix} (DF)
+	\]
+\end{lemma}
+\begin{proof}
+	By definition,
+	\[
+		\begin{pmatrix}
+			E & F \\
+			F & G
+		\end{pmatrix} = \begin{pmatrix}
+			\sigma_u \cdot \sigma_u & \sigma_u \cdot \sigma_v \\
+			\sigma_v \cdot \sigma_u & \sigma_v \cdot \sigma_v
+		\end{pmatrix} = (D\sigma)^\top (D\sigma)
+	\]
+	Now, \( \sigma = \sigma' \circ F \) hence the result follows.
+\end{proof}
+
+\subsection{Conformality}
+If \( v,w \in \mathbb R^3 \), we have \( v \cdot w = \abs{v} \cdot \abs{w} \cdot \cos\theta \).
+This allows us to deduce the angle \( \theta \) between two vectors given their dot product and lengths.
+This can also be done when \( v,w \) are in the tangent plane \( T_p \Sigma \), and then we can express the angle in terms of the first fundamental form.
+Let \( \sigma \) be an allowable parametrisation for \( \Sigma \) near \( p \), such that \( D\eval{\sigma}_0 \) evaluates to \( v \) at \( v_0 \) and \( w \) at \( w_0 \).
+\[
+	\cos \theta = \frac{v \cdot w}{\abs{v} \cdot \abs{w}} = \frac{I(v_0, w_0)}{\sqrt{I(v_0,v_0)} \sqrt{I(w_0,w_0)}}
+\]
+where \( I \) denotes the first fundamental form of \( \sigma \) at zero.
+\begin{lemma}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \), and let \( \sigma \colon V \to U \) be an allowable parametrisation of \( \Sigma \) near \( p \).
+	Then \( \sigma \) is \textit{conformal} if and only if \( E = G \) and \( F = 0 \) in the first fundamental form.
+\end{lemma}
+\begin{proof}
+	Consider curves \( \gamma \colon t \mapsto (u(t), v(t)) \) and \( \widetilde \gamma \colon t \mapsto (\widetilde u(t), \widetilde v(t)) \) in \( V \), where \( \gamma(0) = \widetilde \gamma(0) = 0 \in V \).
+	Let \( \sigma \) be a parametrisation \( V \to U \subseteq \Sigma \) such that \( \sigma(0) = p \in \Sigma \).
+	Then the curves \( \sigma \circ \gamma \) and \( \sigma \circ \widetilde \gamma \) meet at angle \( \theta \) on \( \Sigma \), where
+	\[
+		\cos \theta = \frac{E \dot u \dot {\widetilde u} + F \qty(\dot u \dot{\widetilde v} + \dot v \dot{\widetilde u}) + G \dot v \dot{\widetilde v}}{\sqrt{E \dot u^2 + 2F \dot u \dot v + G \dot v^2} \sqrt{E \dot{\widetilde u}^2 + 2F \dot{\widetilde u} \dot {\widetilde v} + G \dot{\widetilde v}^2}}
+	\]
+	In particular, if \( \sigma \) is conformal, suppose \( \gamma(t) = (t,0) \) and \( \widetilde \gamma(t) = (0,t) \).
+	Then, we have that the curves meet at \( \frac{\pi}{2} \) in \( V \), so they meet at \( \frac{\pi}{2} \) in \( \Sigma \), so we find that \( \cos \theta = 0 \implies F = 0 \).
+	Similarly, if \( \gamma(t) = (t,t) \) and \( \widetilde \gamma(t) = (t,-t) \), we find \( \cos \theta = 0 \implies E = G \).
+
+	Conversely, suppose there exists a parametrisation \( \sigma \) such that \( E = G \) and \( F = 0 \).
+	Then, in this parametrisation, the first fundamental form is of the form \( \rho \qty(\dd{u}^2 + \dd{v}^2) \) for \( \rho = E \colon V \to \mathbb R \).
+	Hence, the first fundamental form is a pointwise rescaling of the Euclidean fundamental form \( \dd{u}^2 + \dd{v}^2 \).
+	Rescaling the plane does not change angles, so \( \sigma \) is conformal as required.
+\end{proof}
+\begin{remark}
+	Conformality in charts is historically important for cartography.
+	The existence of conformal charts is closely connected to Riemann surfaces, which are topological surfaces locally modelled on \( \mathbb C \) instead of \( \mathbb R^2 \).
+\end{remark}
+
+\subsection{Area}
+Recall that a parallelogram spanned by vectors \( v, w \) has area \( \abs{v \times w} = \inner{v,v}\inner{w,w} - \inner{v,w}^2 \), where \( \times \) denotes the cross product.
+Let \( \sigma \colon V \to U \subseteq \Sigma \) be an allowable parametrisation with \( \sigma(0) = p \), and consider \( \sigma_u, \sigma_v \in T_p \Sigma \).
+The square of the area of the infinitesimal parallelogram spanned by \( \sigma_u, \sigma_v \) is given by
+\[
+	\inner{\sigma_u, \sigma_u}\inner{\sigma_v, \sigma_v} - \inner{\sigma_u, \sigma_v}^2 = EG - F^2
+\]
+\begin{definition}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \), and \( \sigma \colon V \to U \subseteq \Sigma \) an allowable parametrisation.
+	Then,
+	\[
+		\mathrm{area}(U) = \int_V \sqrt{EG - F^2} \dd{u}\dd{v}
+	\]
+\end{definition}
+\begin{note}
+	This is independent of parametrisation.
+	Indeed, suppose \( \sigma \colon V \to U \) and \( \widetilde \sigma \colon \widetilde V \to U \) are allowable.
+	Then \( \widetilde \sigma = \sigma \circ \varphi \) for some transition map \( \varphi \colon \widetilde V \to V \).
+	We know then that
+	\[
+		\begin{pmatrix}
+			\widetilde E & \widetilde F \\
+			\widetilde F & \widetilde G
+		\end{pmatrix} = (D\widetilde \sigma)^\top (D\widetilde \sigma) = (D\varphi)^\top \begin{pmatrix}
+			E & F \\
+			F & G
+		\end{pmatrix} (D\varphi)
+	\]
+	Hence,
+	\[
+		\sqrt{\widetilde E \widetilde G - \widetilde F^2} = \abs{\det(D\varphi)} \sqrt{EG - F^2}
+	\]
+	The usual change of variables formula for integration, combined with the fact that \( \varphi \) is a diffeomorphism, gives
+	\[
+		\int_V \sqrt{EG - F^2} \dd{u}\dd{v} = \int_{\widetilde V} \sqrt{\widetilde E \widetilde G - \widetilde F^2} \dd{u}\dd{v}
+	\]
+	Note, we can compute the area of an open set \( U \subseteq \Sigma \), not necessarily lying in a single parametrisation, by covering the set by a finite amount of open subsets which lie in single charts.
+	For instance, if \( \Sigma \) is compact, we can compute the area of \( \Sigma \) itself.
+\end{note}
+\begin{example}
+	Consider the graph \( \Sigma = \qty{(u,v,f(u,v)) \colon (u,v) \in \mathbb R^2} \), where \( f \colon \mathbb R^2 \to \mathbb R \) is a smooth function.
+	This has a global parametrisation \( \sigma(u,v) = (u,v,f(u,v)) \).
+	Here, \( \sigma_u = (1,0,f_u) \) and \( \sigma_v = (0,1,f_v) \), hence
+	\[
+		\sqrt{EG - F^2} = \sqrt{1+f_u^2+f_v^2}
+	\]
+	Let \( U_R \subseteq \Sigma \) be the part of the graph lying inside the disc \( B(0,R) \subseteq \mathbb R^2 \).
+	Then
+	\[
+		\mathrm{area}(U_R) = \int_{B(0,R)} \sqrt{1+f_u^2+f_v^2} \dd{u}\dd{v} \geq \pi R^2
+	\]
+	with equality exactly when \( f_u = f_v = 0 \), so \( f \) is constant and \( U_R \) is contained inside a plane perpendicular to the \( z \) axis.
+	Hence, the projection from \( \Sigma \) to \( \mathbb R^2_{xy} \) is not area-preserving, unless \( \Sigma \) is a plane perpendicular to the \( z \) axis.
+\end{example}
+\begin{example}
+	Consider the sphere enclosed exactly by a cylinder.
+	The cylindrically radial projection from the sphere to the cylinder is area-preserving.
+	This is explored further in the example sheets.
 \end{example}
 
 \end{document}
