@@ -1031,4 +1031,142 @@ where $J$ is the Jacobian, i.e. derivative of $\mathbf{F}$.
 Therefore the theta method is of order 1, except that the trapezoidal rule is of order 2.
 \end{remark}
 
+\section{Multistep methods}
+\subsection{Order of the multistep methods}
+\ \vspace*{-1.5em}
+\begin{definition}[Multistep methods]
+    It is often useful to use several past solution values in computing a new value. Thus, assuming that $\mathbf{y}_n, \mathbf{y}_{n+1}, \ldots, \mathbf{y}_{n+s-1}$ are available, where $s \geq 1$, we say that
+\begin{equation}\label{eqn:7.1}
+    \sum_{m=0}^s a_m \mathbf{y}_{n+m}=h \sum_{m=0}^s b_m \mathbf{f}_{n+m}, \quad n=0,1, \ldots,
+\end{equation}
+where $a_s=1$, and $\mathbf{f}_{n+m}=\mathbf{f}\left(t_{n+m}, \mathbf{y}_{n+m}\right)$, is an \textbf{$s$-step method}. If $b_s=0$, the method is \textbf{explicit}, otherwise it is \textbf{implicit}. If $s \geq 2$, we need to obtain extra \textbf{starting values} $\mathbf{y}_1, \ldots, \mathbf{y}_{s-1}$ by different time-stepping method.
+\end{definition}
+
+\begin{theorem}
+    The multistep method (\ref{eqn:7.1}) is of order $p \geq 1$ if and only if
+\begin{equation}\label{eqn:7.2}
+    \sum_{m=0}^s a_m=0, \quad \sum_{m=0}^s m^k a_m=k \sum_{m=0}^s m^{k-1} b_m, \quad k=\overline{1,p}. 
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+    Substituting the exact solution and expanding into Taylor series about $t_n$, we obtain
+\[
+\begin{aligned}
+&\sum_{m=0}^s a_m \mathbf{y}\left(t_{n+m}\right)-h \sum_{m=0}^s b_m \mathbf{y}^{\prime}\left(t_{n+m}\right)\\ 
+&=\sum_{m=0}^s a_m \sum_{k=0}^{\infty} \frac{(m h)^k}{k !} \mathbf{y}^{(k)}\left(t_n\right)-h \sum_{m=0}^s b_m \sum_{k=1}^{\infty} \frac{(m h)^{k-1}}{(k-1) !} \mathbf{y}^{(k)}\left(t_n\right) \\
+&=\left(\sum_{m=0}^s a_m\right) \mathbf{y}\left(t_n\right)+\sum_{k=1}^{\infty} \frac{h^k}{k !}\left(\sum_{m=0}^s m^k a_m-k \sum_{m=0}^s m^{k-1} b_m\right) \mathbf{y}^{(k)}\left(t_n\right) .
+\end{aligned}
+\]
+Thus, to obtain the local truncation error of order $\mathcal{O}\left(h^{p+1}\right)$ regardless of the choice of $\mathbf{y}$, it is necessary and sufficient that the coefficients at $h^k$ vanish for $k \leq p$, i.e., that (\ref{eqn:7.2}) are satisfied.
+\end{proof}
+
+\begin{remark}
+    Since the Taylor expansion of polynomials of degree $p$ contains only $\mathcal{O}\left(h^k\right)$ terms with $k \leq p$, the multistep method is of order $p$ iff
+\[
+\sum_{m=0}^s a_m Q\left(t_{n+m}\right)=h \sum_{m=0}^s b_m Q^{\prime}\left(t_{n+m}\right), \quad \forall Q \in \mathcal{P}_p .
+\]
+In particular, taking $Q(x)=x^k$ for $k=\overline{0,p}$ and $t_{n+m}=m, h=1$, we obtain (\ref{eqn:7.2}).
+\end{remark}
+Given a multistep method (\ref{eqn:7.1}), we define two polynomials of degree $s$ :
+\[
+\rho(w)=\sum_{m=0}^s a_m w^m, \quad \sigma(w)=\sum_{m=0}^s b_m w^m .
+\]
+
+\begin{theorem}
+    The multistep method (\ref{eqn:7.1}) is of order $p \geq 1$ if and only if
+\begin{equation}\label{eqn:7.3}
+    \rho\left(e^z\right)-z \sigma\left(e^z\right)=\mathcal{O}\left(z^{p+1}\right), \quad z \rightarrow 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+    Expanding again into Taylor series,
+\[
+\begin{aligned}
+\rho\left(e^z\right)-z \sigma\left(e^z\right) & =\sum_{m=0}^s a_m e^{m z}-z \sum_{m=0}^s b_m e^{m z}\\ 
+&=\sum_{m=0}^s a_m \sum_{k=0}^{\infty} \frac{1}{k !} m^k z^k-z \sum_{m=0}^s b_m \sum_{k=0}^{\infty} \frac{1}{k !} m^k z^k \\
+& =\sum_{k=0}^{\infty} \frac{z^k}{k !} \sum_{m=0}^s m^k a_m-\sum_{k=1}^{\infty} \frac{z^k}{(k-1) !} \sum_{m=0}^s m^{k-1} b_m \\
+& =\left(\sum_{m=0}^s a_m\right)+\sum_{k=1}^{\infty} \frac{z^k}{k !}\left(\sum_{m=0}^s m^k a_m-k \sum_{m=0}^s m^{k-1} b_m\right) .
+\end{aligned}
+\]
+The theorem follows from (\ref{eqn:7.2}).
+\end{proof}
+The reason that (\ref{eqn:7.3}) is equivalent to (\ref{eqn:7.2}) (and that their proofs are almost identical) is due to the (informal) relation between the Taylor series and the exponent $e^{h D}$, where $D$ is the operator of differentiation. Namely
+\[
+\mathbf{f}(x+h)=\left(I+h D+\frac{1}{2} h^2 D^2+\cdots\right) \mathbf{f}(x)=e^{h D} \mathbf{f}(x)
+\]
+\begin{example}[Adams-Bashforth method]
+    The 2-step \textbf{Adams-Bashforth method} is
+\begin{equation}\label{eqn:7.4}
+    \mathbf{y}_{n+2}-\mathbf{y}_{n+1}=h\left[\frac{3}{2} \mathbf{f}_{n+1}-\frac{1}{2} \mathbf{f}_n\right] .
+\end{equation}
+Therefore $\rho(w)=w^2-w, \sigma(w)=\frac{3}{2} w-\frac{1}{2}$ and
+\begin{align*}
+    \rho\left(e^z\right)-z \sigma\left(e^z\right)&=\left[1+2 z+2 z^2+\frac{4}{3} z^3\right]-\left[1+z+\frac{1}{2} z^2+\frac{1}{6} z^3\right]-\frac{3}{2} z\left[1+z+\frac{1}{2} z^2\right]+\frac{1}{2} z+\mathcal{O}\left(z^4\right)\\ 
+    &=\frac{5}{12} z^3+\mathcal{O}\left(z^4\right).
+\end{align*}
+Hence the method is of order 2.
+\end{example}
+
+\subsection{Convergence}
+\ \vspace*{-1.5em}
+\begin{definition}[Convergence of a multistep method]
+    Let a multistep method (\ref{eqn:7.1}) be applied to the usual ODE (\ref{eqn:6.1}), and let $\widehat{e}(h)$ and $e(h)$ be the numbers
+\[
+\widehat{e}(h):=\max \left\|\mathbf{y}\left(t_i\right)-\mathbf{y}_i\right\|: i=0 \ldots s-1, \quad e(h):=\max \left\|\mathbf{y}\left(t_i\right)-\mathbf{y}_i\right\|: i=0 \ldots N .
+\]
+The method is defined to be \textbf{convergent} if, for every ODE whose right-hand side satisfies the Lipshitz condition, the limits $h \rightarrow 0$ and $\widehat{e}(h) \rightarrow 0$ imply $e(h) \rightarrow 0$.
+\end{definition}
+
+\begin{example}[Absence of convergence]
+    Consider the 2-step method
+\begin{equation}\label{eqn:7.5}
+    \mathbf{y}_{n+2}+4 \mathbf{y}_{n+1}-5 \mathbf{y}_n=h\left(4 \mathbf{f}_{n+1}+2 \mathbf{f}_n\right)
+\end{equation}
+Now $\rho(w)=w^2+4 w-5, \sigma(w)=4 w+2$ and it is easy to verify that the method is of order 3 . Let us apply it, however, to the trivial ODE $y^{\prime}=0, y(0)=1$. Hence a single step reads $y_{n+2}+4 y_{n+1}-5 y_n=0$ and the general solution of this recursion is $y_n=c_1 1^n+c_2(-5)^n$, where $c_1, c_2$ are arbitrary constants, which are determined by $y_0=1$ and our value of $y_1$. If $y_1 \neq 1$, i.e. if there is a small error in our starting values, then $c_2 \neq 0$, thus $\left|y_n\right| \rightarrow \infty$ and we cannot recover the exact solution $y(t) \equiv 1$.
+
+As a more convincing example, we may consider ODE $y^{\prime}=-y, y(0)=1$, with the exact solution $y(t)=e^{-t}$. Even if we take the exact $y_1=e^{-h}$, the sequence $\left(y_n\right)$ will grow like $h^4(-5)^n$. So, it is not only the order that matters.
+\end{example}
+
+\begin{definition}[Root condition]
+    We say that a polynomial obeys the \textbf{root condition} if all its zeros reside in $|w| \leq 1$ and all zeros of unit modulus are simple, i.e. have multiplicity 1. (If $\rho$ obeys the root condition, the method (\ref{eqn:7.1}) is sometimes said to be \textbf{zero-stable}.)
+\end{definition}
+
+\begin{theorem}[The Dahlquist equivalence theorem]
+    The multistep method (\ref{eqn:7.1}) is convergent if and only if it is of order $p \geq 1$ and the polynomial $\rho$ obeys the root condition.
+\end{theorem}
+
+For the method (\ref{eqn:7.4}) we have $\rho(w)=w(w-1)$, and the root condition is obeyed. However, for (\ref{eqn:7.5}) we obtain $\rho(w)=(w+5)(w-1)$, the root condition fails and we deduce that there is no convergence.
+
+\subsection{Construction}
+A useful procedure to generate multistep methods which are convergent and of high order is as follows.
+\begin{technique}
+    According to (\ref{eqn:7.2}), order $p \geq 1$ implies $\rho(1)=0$. Choose an arbitrary $s$-degree polynomial $\rho$ that obeys the root condition and such that $\rho(1)=0$. To maximize order, we let $\sigma$ be the polynomial of degree $s$ for implicit methods (alternatively, of degree $(s-1)$ for explicit methods) arising from the truncation of the Taylor expansion of $\frac{\rho(w)}{\log w}$ about the point $w=1$. Thus, for example, for an implicit method,
+    \[
+    \sigma(w)=\frac{\rho(w)}{\log w}+\mathcal{O}\left(|w-1|^{s+1}\right) \Leftrightarrow \rho\left(e^z\right)-z \sigma\left(e^z\right)=\mathcal{O}\left(z^{s+2}\right)
+    \]
+    and (\ref{eqn:7.3}) implies order at least $s+1$ (for explicit methods order $s$).
+\end{technique}
+\begin{example}
+    The choice $\rho(w)=w^{s-1}(w-1)$ corresponds to \textbf{Adams methods}:
+\begin{enumerate}[(1)]
+    \item \textbf{Adams-Bashforth methods} if $b_s=0$, hence explicit, with the order $s$ (e.g. (\ref{eqn:7.4}) for $s=2$ ),
+    \item \textbf{Adams-Moulton methods} if $b_s \neq 0$, hence implicit, but with the order $(s+1)$.
+\end{enumerate}
+For example, letting $s=2$ and $\xi=w-1$, we obtain the 3rd-order Adams-Moulton method by expanding
+\[
+\begin{aligned}
+\frac{w(w-1)}{\log w} & =\frac{\xi+\xi^2}{\log (1+\xi)}=\frac{\xi+\xi^2}{\xi-\frac{1}{2} \xi^2+\frac{1}{3} \xi^3-\cdots}=\frac{1+\xi}{1-\frac{1}{2} \xi+\frac{1}{3} \xi^2-\cdots} \\
+& =(1+\xi)\left[1+\left(\frac{1}{2} \xi-\frac{1}{3} \xi^2\right)+\left(\frac{1}{2} \xi-\frac{1}{3} \xi^2\right)^2+\mathcal{O}\left(\xi^3\right)\right]=1+\frac{3}{2} \xi+\frac{5}{12} \xi^2+\mathcal{O}\left(\xi^3\right) \\
+& =1+\frac{3}{2}(w-1)+\frac{5}{12}(w-1)^2+\mathcal{O}|w-1|^3=-\frac{1}{12}+\frac{2}{3} w+\frac{5}{12} w^2+\mathcal{O}\left(|w-1|^3\right) .
+\end{aligned}
+\]
+Therefore the 2-step, 3rd-order Adams-Moulton method is
+\[
+\mathbf{y}_{n+2}-\mathbf{y}_{n+1}=h\left[\frac{5}{12} \mathbf{f}_{n+2}+\frac{2}{3} \mathbf{f}_{n+1}-\frac{1}{12} \bff_n\right] .
+\]
+(If we cut expansion at $1+\frac{3}{2} \xi=1+\frac{3}{2}(w-1)=\frac{3}{2} w-\frac{1}{2}$, we get explicit 2-step 2nd-order method (\ref{eqn:7.4}).)
+\end{example}
+
 \end{document}

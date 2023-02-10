@@ -191,6 +191,22 @@
     % postheadspace={3pt}
 ]{thmexamplebox}
 
+% Technique
+\declaretheoremstyle[
+  headfont=\sffamily\bfseries\color{Black},
+  mdframed={
+    backgroundcolor=Black!7,
+    linecolor=Black,
+    linewidth=1pt,
+    topline=false,
+    rightline=false,
+    bottomline=false,
+    leftline=true
+  },
+  % headpunct={\\[3pt]},
+  % postheadspace={3pt}
+]{thmtechniquebox}
+
 \declaretheorem[style=thmtheorembox,name=Theorem,numberwithin=section]{theorem}
 \declaretheorem[style=thmmethodbox,name=Method,sibling=theorem]{method}
 \declaretheorem[style=thmdefinitionbox,name=Definition,sibling=theorem]{definition}
@@ -203,6 +219,7 @@
 \declaretheorem[style=thmremarkbox,name=Remark,sibling=theorem]{remark}
 \declaretheorem[style=thmnotebox,name=Note,sibling=theorem,numbered=no]{note}
 \declaretheorem[style=thmexamplebox,name=Example,sibling=theorem]{example}
+\declaretheorem[style=thmtechniquebox,name=Technique,sibling=theorem]{technique}
 
 \theoremstyle{mystyle}{
   \newtheorem{problem}[theorem]{Problem}
