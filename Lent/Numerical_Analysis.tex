@@ -1031,7 +1031,7 @@ where $J$ is the Jacobian, i.e. derivative of $\mathbf{F}$.
 Therefore the theta method is of order 1, except that the trapezoidal rule is of order 2.
 \end{remark}
 
-\section{Multistep methods}
+\section{Multistep methods I}
 \subsection{Order of the multistep methods}
 \ \vspace*{-1.5em}
 \begin{definition}[Multistep methods]
@@ -1139,9 +1139,9 @@ As a more convincing example, we may consider ODE $y^{\prime}=-y, y(0)=1$, with 
 
 For the method (\ref{eqn:7.4}) we have $\rho(w)=w(w-1)$, and the root condition is obeyed. However, for (\ref{eqn:7.5}) we obtain $\rho(w)=(w+5)(w-1)$, the root condition fails and we deduce that there is no convergence.
 
-\subsection{Construction}
+\subsection{Construction I}
 A useful procedure to generate multistep methods which are convergent and of high order is as follows.
-\begin{technique}
+\begin{technique}\label{tech:7.10}
     According to (\ref{eqn:7.2}), order $p \geq 1$ implies $\rho(1)=0$. Choose an arbitrary $s$-degree polynomial $\rho$ that obeys the root condition and such that $\rho(1)=0$. To maximize order, we let $\sigma$ be the polynomial of degree $s$ for implicit methods (alternatively, of degree $(s-1)$ for explicit methods) arising from the truncation of the Taylor expansion of $\frac{\rho(w)}{\log w}$ about the point $w=1$. Thus, for example, for an implicit method,
     \[
     \sigma(w)=\frac{\rho(w)}{\log w}+\mathcal{O}\left(|w-1|^{s+1}\right) \Leftrightarrow \rho\left(e^z\right)-z \sigma\left(e^z\right)=\mathcal{O}\left(z^{s+2}\right)
@@ -1168,5 +1168,16 @@ Therefore the 2-step, 3rd-order Adams-Moulton method is
 \]
 (If we cut expansion at $1+\frac{3}{2} \xi=1+\frac{3}{2}(w-1)=\frac{3}{2} w-\frac{1}{2}$, we get explicit 2-step 2nd-order method (\ref{eqn:7.4}).)
 \end{example}
+
+\section{Multistep methods II}
+\subsection{Construction II}
+
+Continue on the last section, 
+\begin{method}[BDF]
+    As another exercise in applying Technique \ref{tech:7.10} (and for future applications) let us construct $s$-step $s$-order methods such that $\sigma(w = b_s w^s )$ for some non-zero $b_s,$ say $b_s=1$. In other words, 
+    \begin{equation}\label{eqn:8.1}
+        \sum_{m=0}^{s}a_m \mathbf{y}_{n+m }= h \mathbf{f}_{n+s},\quad n = 0,1,\dots 
+    \end{equation}
+\end{method}
 
 \end{document}
