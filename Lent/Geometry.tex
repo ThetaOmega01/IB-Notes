@@ -1445,4 +1445,180 @@ The square of the area of the infinitesimal parallelogram spanned by \( \sigma_u
 	This is explored further in the example sheets.
 \end{example}
 
+\subsection{Second fundamental form}
+Let's try to measure how much $ \Sigma \subset \mathbb{R}^{3} $ deviates from its own tangent planes. 
+
+Let \( \sigma \colon V \to U \subseteq \Sigma \) be allowable.
+By using Taylor's theorem, we can write
+\[
+	\sigma(u+h,v+\ell) = \sigma(u,v) + h \sigma_u(u,v) + \ell \sigma_v(u,v) + \frac{1}{2} \qty(h^2 \sigma_{uu}(u,v) + 2h\ell \sigma_{uv}(u,v) + \ell^2 \sigma_{vv}(u,v)) + O(h^3,\ell^3)
+\]
+where \( h,\ell \) are small so that \( (u+h,v+\ell) \in V \).
+Recall that if \( p = \sigma(u,v) \), we have \( T_p \Sigma = \genset{\qty{\sigma_u,\sigma_v}} \).
+Hence, the orthogonal distance from \( \sigma(u+h,v+\ell) \) to the affine tangent plane \( T_p \Sigma + p \) is given by projection to the normal direction.
+\[
+	\inner{n,\sigma(u+h,v+\ell) - \sigma(u,v)} = \frac{1}{2} \qty(\inner{n,\sigma_{uu}} h^2 + 2\inner{n,\sigma_{uv}} h\ell + \inner{n,\sigma_{vv}}\ell^2) + O(h^3,\ell^3)
+\]
+
+\begin{definition}
+	The \textbf{second fundamental form} of \( \Sigma \) in the allowable parametrisation \( \sigma \) is the quadratic form
+	\[
+		L \dd{u}^2 + 2 M \dd{u} \dd{v} + N \dd{v}^2
+	\]
+	where
+	\[
+		L = \inner{n,\sigma_{uu}};\quad M = \inner{n,\sigma_{uv}};\quad N = \inner{n,\sigma_{vv}}
+	\]
+	and
+	\[
+		n = \frac{\sigma_u \times \sigma_v}{\norm{\sigma_u \times \sigma_v}}
+	\]
+	We can write this as the matrix
+	\[
+		\begin{pmatrix}
+			L & M \\
+			M & N
+		\end{pmatrix}
+	\]
+	which defined a quadratic form on \( T_p \Sigma \) which varies smoothly in \( p \).
+\end{definition}
+
+\begin{lemma}
+	Let \( V \) be connected and \( \sigma \colon V \to U \subseteq \Sigma \) be an allowable parametrisation such that the second fundamental form vanishes identically with respect to \( \sigma \).
+	Then \( U \) lies in an affine plane.
+\end{lemma}
+\begin{proof}
+	By definition,
+	\[
+		\inner{n,\sigma_u} = 0 = \inner{n,\sigma_v}
+	\]
+	Hence, by differentiating, we find
+	\[
+		0 = \inner{n_u, \sigma_u} + \inner{n, \sigma_{uu}} = \inner{n_v, \sigma_v} + \inner{n, \sigma_{vv}} = \inner{n_v, \sigma_u} + \inner{n,\sigma_{uv}}
+	\]
+	Some of these terms appear in the definition of the second fundamental form:
+	\[
+		L = \inner{n,\sigma_{uu}} = -\inner{n_u, \sigma_u};\quad M = \inner{n,\sigma_{uv}} = -\inner{n_v, \sigma_u} = -\inner{n_u, \sigma_v};\quad N = \inner{n,\sigma_{vv}} = -\inner{n_v, \sigma_v}
+	\]
+	If the second fundamental form vanishes, then \( n_u \) is orthogonal to \( \sigma_u \), \( \sigma_v \), and \( n \) itself.
+	Since \( \sigma_u, \sigma_v, n \) form a basis for \( \mathbb R^3 \), we have \( n_u = 0 \).
+	Similarly, \( n_v = 0 \), hence \( n \) is constant by the mean value theorem.
+\end{proof}
+
+\begin{remark}
+	The first fundamental form in parametrisation \( \sigma \) can be written \( (D \sigma)^\top (D \sigma) \).
+	We can similarly write the second fundamental form as
+	\[
+		-(Dn)^\top (D\sigma) = \begin{pmatrix}
+			L & M \\
+			M & N
+		\end{pmatrix} = -\begin{pmatrix}
+			n_u \cdot \sigma_u & n_u \cdot \sigma_v \\
+			n_v \cdot \sigma_u & n_v \cdot \sigma_v
+		\end{pmatrix}
+	\]
+	Hence, if \( \sigma \colon V \to \Sigma \) and \( \widetilde \sigma \colon \widetilde V \to \Sigma \) are allowable parametrisations for an open set \( U \subseteq \Sigma \) with transition map \( \varphi \colon \widetilde V \to V \) given by \( \varphi = \sigma^{-1} \circ \widetilde \sigma \), we can use the above expression to find
+	\[
+		\begin{pmatrix}
+			\widetilde L & \widetilde M \\
+			\widetilde M & \widetilde N
+		\end{pmatrix} = \pm (D\varphi)^\top \begin{pmatrix}
+			L & M \\
+			M & N
+		\end{pmatrix} (D\varphi)
+	\]
+	The change in sign depends on whether the transition map preserves or reverses orientation.
+	If the normal vectors agree, there is no negative sign.
+	\[
+		\teval{n_{\sigma \circ \varphi}}{(\widetilde u, \widetilde v)} = \pm \teval{n_\sigma}{\varphi(\widetilde u, \widetilde v)}
+	\]
+	for \( (\widetilde u, \widetilde v) \in \widetilde V \).
+	In particular, if \( \det (D \varphi) < 0 \), we arrive at a negative sign.
+	If we assume that \( V, \widetilde V \) are connected, the determinant \( \det (D \varphi) \) does not change sign.
+\end{remark}
+
+\begin{example}
+	Consider the cylinder with allowable parametrisation
+	\[
+		\sigma(u,v) = (a \cos u, a \sin u, v)
+	\]
+	where \( u \in (0,2\pi), v \in \mathbb R \).
+	Note that \( \sigma_{uv} = \sigma_{vv} = 0 \), hence \( M = N = 0 \).
+	We can show that the second fundamental form is given by
+	\[
+		\begin{pmatrix}
+			-a & 0 \\
+			0  & 0
+		\end{pmatrix};\quad -a \dd{u}^2
+	\]
+\end{example}
+
+\subsection{Gauss maps}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( \Sigma \) be a smooth oriented surface in \( \mathbb R^3 \).
+	The \textbf{Gauss map} \( n \colon \Sigma \to S^2 \) to the unit sphere is the map \( p \mapsto n(p) \), the unit normal vector at $p$ defined by the orientation of $\Sigma$. 
+\end{definition}
+\begin{lemma}
+	The Gauss map $ n: \Sigma\to S^2 $ is smooth.
+\end{lemma}
+\begin{proof}
+	Since smoothness is a local property, it suffices to check the smoothness of the map on an arbitrary parametrised part of \( \Sigma \).
+	Let \( \sigma \colon V \to U \subseteq \Sigma \) be allowable and compatible with a chosen orientation.
+	Then
+	\[
+		n(p) = n(\sigma(u,v))= \frac{\sigma_u \times \sigma_v}{\norm{\sigma_u \times \sigma_v}}
+	\]
+	Since \( \sigma \) is allowable, the denominator is non-vanishing.
+	Hence, \( n(p) \) is smooth as required.
+\end{proof}
+
+If \( \Sigma = F^{-1}(0) \) for some function \( F \colon \mathbb R^3 \to \mathbb R \) with nonzero derivative \( DF \) at all points \( x \in \Sigma \) (which was required for \( \Sigma \) to be a smooth surface in \( \mathbb R^3 \)), then we can explicitly calculate the Gauss map to be
+\[
+	n(p) = \frac{\grad F}{\norm{\grad F}}
+\]
+Note that,
+\[
+	T_p \Sigma = T_{n(p)} S^2 = (n(p))^\perp
+\]
+since the two planes are orthogonal to the same vector.
+More concretely, if \( v \in T_p \Sigma \) is \( \gamma'(0) \) where \( \gamma \colon (-\varepsilon, \varepsilon) \to \Sigma \), \( \gamma(0) = p \) for a smooth curve \( \gamma \), we can apply the Gauss map to \( \gamma \) and find
+\[
+	n \circ \gamma \colon (-\varepsilon, \varepsilon) \to S^2;\quad (n \circ \gamma)(0) = n(p)
+\]
+Then, by the chain rule,
+\[
+	\teval{Dn}{p}(v) = (n \circ \gamma)'(0) \in T_{n(p)} S^2 = T_p \Sigma
+\]
+Thus, the derivative of the Gauss map is \( \eval{Dn}_p \colon T_p \Sigma \to T_p \Sigma \).
+This can be viewed as an endomorphism of a fixed (with respect to parametrisation choice) two-dimensional subspace of \( \mathbb R^3 \).
+
+To summarise, let \( \Sigma \) be an oriented smooth surface in \( \mathbb R^3 \).
+Then,
+\begin{enumerate}
+	\item The first fundamental form is a symmetric bilinear form \( \inner{\cdot,\cdot} = \Iff_p \colon T_p \Sigma \times T_p \Sigma \to \mathbb R \), which is the restriction of the Euclidean inner product to this space \( T_p \Sigma \).
+			We can write \( \Iff_p(v,w) \), where \( v, w \in T_p \Sigma \).
+	\item The second fundamental form is also a symmetric bilinear form (quadratic form) \( \IIff_p \colon T_p \Sigma \times T_p \Sigma \to \mathbb R \), given by
+			\[
+				\IIff_p(v,w) = \Iff_p\qty(-\teval{Dn}{p}(v), w)
+			\]
+			where \( n \) is the Gauss map.
+\end{enumerate}
+If we choose an allowable parametrisation (which for the second fundamental form must be correctly oriented) \( \sigma \colon V \to U \subseteq \Sigma \) near \( p \in \Sigma \), and if
+\[
+	D \teval{\sigma}{0}(\hat v) = v;\quad D \teval{\sigma}{0}(\hat w) = w;\quad \sigma(0) = p
+\]
+Then,
+\[
+	\Iff_p(v,w) = {\hat v}^\top \begin{pmatrix}
+		E & F \\
+		F & G
+	\end{pmatrix} \hat w;\quad \IIff_p(v,w) = {\hat v}^\top \begin{pmatrix}
+		L & M \\
+		M & N
+	\end{pmatrix} \hat w
+\]
+where \( E, F, G, L, M, N \) depend on the choice of \( \sigma \).
+Note that the functions \( \Iff_p \) and \( \IIff_p \) are independent of \( \sigma \).
+
 \end{document}
