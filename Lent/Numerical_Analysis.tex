@@ -908,7 +908,7 @@ e\left(f_\epsilon\right)>\left(\frac{1}{36}-\epsilon\right)\left\|f_\epsilon^{\p
 \begin{equation}\label{eqn:6.1}
     \mathbf{y}^{\prime}=\mathbf{f}(t, \mathbf{y}), \quad 0 \leq t \leq T,
 \end{equation}
-where $y \in \mathbb{R}^d$ and the function $f: \mathbb{R} \times \mathbb{R}^d \rightarrow \mathbb{R}^d$ is sufficiently `smooth'.
+where $y \in \mathbb{R}^d$ and the function $\bff: \mathbb{R} \times \mathbb{R}^d \rightarrow \mathbb{R}^d$ is sufficiently `smooth'.
 \end{problem}
 
 In principle, it is enough for $\mathbf{f}$ satisfy the Lipschitz condition with respect to the second argument to ensure that the solution exists and is unique, namely there exists $\lambda>0$ such that
@@ -1148,7 +1148,7 @@ A useful procedure to generate multistep methods which are convergent and of hig
     \]
     and (\ref{eqn:7.3}) implies order at least $s+1$ (for explicit methods order $s$).
 \end{technique}
-\begin{example}
+\begin{example}\label{eg:7.11}
     The choice $\rho(w)=w^{s-1}(w-1)$ corresponds to \textbf{Adams methods}:
 \begin{enumerate}[(1)]
     \item \textbf{Adams-Bashforth methods} if $b_s=0$, hence explicit, with the order $s$ (e.g. (\ref{eqn:7.4}) for $s=2$ ),
@@ -1174,10 +1174,92 @@ Therefore the 2-step, 3rd-order Adams-Moulton method is
 
 Continue on the last section, 
 \begin{method}[BDF]
-    As another exercise in applying Technique \ref{tech:7.10} (and for future applications) let us construct $s$-step $s$-order methods such that $\sigma(w = b_s w^s )$ for some non-zero $b_s,$ say $b_s=1$. In other words, 
+    As another exercise in applying Technique \ref{tech:7.10} (and for future applications) let us construct $s$-step $s$-order methods such that $\sigma(w) = b_s w^s$ for some non-zero $b_s,$ say $b_s=1$. In other words, 
     \begin{equation}\label{eqn:8.1}
-        \sum_{m=0}^{s}a_m \mathbf{y}_{n+m }= h \mathbf{f}_{n+s},\quad n = 0,1,\dots 
+        \sum_{m=0}^{s}a_m \mathbf{y}_{n+m }= h \mathbf{f}_{n+s},\quad n = 0,1,\dots
     \end{equation}
 \end{method}
+Such methods are called backward differentiation formulae (BDF), and their coefficients $\left(a_m\right)$ can be obtained from the following expression.
+
+\begin{lemma}
+    The polynomial $\rho(w)=\sum_{m=0}^s a_m w^m$ of the s-step s-order BDF method (\ref{eqn:8.1}) has the form
+\begin{equation}\label{eqn:8.2}
+    \rho(w)=\sum_{k=1}^s \frac{1}{k} w^{s-k}(w-1)^k .
+\end{equation}
+\end{lemma}
+\begin{proof}
+    We need to fulfill the $s$-order condition $\rho\left(e^z\right)-z \sigma\left(e^z\right)=\mathcal{O}\left(z^{s+1}\right)$ which, with $w=e^z$ and $\sigma(w)=w^s$, becomes
+    \[
+    \rho(w)=w^s \log w+\mathcal{O}\left(|w-1|^{s+1}\right) .
+    \]
+    But we have $\log w=-\log \left(\frac{1}{w}\right)=-\log \left(1-\frac{w-1}{w}\right)$, and $\log (1-x)=-\sum_{k=1}^{\infty} \frac{1}{k} x^k$, therefore
+    \[
+    w^s \log w=w^s \sum_{k=1}^s \frac{1}{k}\left(\frac{w-1}{w}\right)^k+\mathcal{O}\left(|w-1|^{s+1}\right),
+    \]
+    and the first term is a polynomial of degree $s$, hence the result.
+\end{proof}
+
+\begin{example}
+    For $s=2$, we obtain $\frac{3}{2} \mathbf{y}_{n+2}-2 \mathbf{y}_{n+1}+\frac{1}{2} \mathbf{y}_n=h \mathbf{f}_{n+2}$, or with the standard normalization
+    \[
+    \mathbf{y}_{n+2}-\frac{4}{3} \mathbf{y}_{n+1}+\frac{1}{3} \mathbf{y}_n=\frac{2}{3} h \mathbf{f}_{n+2} .
+    \]
+\end{example}
+\textit{Warning}. We cannot take it for granted that BDF methods are convergent (i.e. that $\rho(w)$ in (\ref{eqn:8.2}) satisfies the root condition). In fact, this is the case if and only if $s \leq 6$, thus they cannot be used outside this range.
+
+\begin{method}
+    Let us look at construction of both Adams methods and BDF formulae from a different (although equivalent) point of view, namely using the polynomial criterion for the $p$-order methods:
+\[
+\sum_{m=0}^s a_m Q(m)=\sum_{m=0}^s b_m Q^{\prime}(m) \quad \forall Q \in \mathcal{P}_p .
+\]
+(1) For Adams methods, the right-hand side is $Q(s)-Q(s-1)=\int_{s-1}^s Q^{\prime}(t) \dd{t}$, therefore letting $q=Q^{\prime}$ we are looking for the quadrature formula (of numerical integration)
+\[
+\int_{s-1}^s q(t) \dd{t}=\sum_{m=0}^s b_m q(m)
+\]
+which should be valid for all polynomials $q$ of degree $s$ (if $b_s \neq 0$) or of degree $s-1$ (if $b_s=0$). By the Lagrange interpolating formula, we can write $q$ as $q(t)=\sum_{m=0}^s \ell_m(t) q(m)$, where $\ell_m$ are the fundamental Lagrange polynomials satisfying $\ell_m(k)=\delta_{m k}$, and it follows that
+\[
+b_m=\int_{s-1}^s \ell_m(t) \dd{t}, \quad \ell_m(t)=\frac{\omega(t)}{(t-m) \omega^{\prime}(m)}, \quad \omega(t)=\prod_{m=0}^s(t-m) .
+\]
+(2) For BDF, we are looking for the formulae of numerical (backward) differentiation instead,
+\[
+\sum_{m=0}^s a_m Q(m)=Q^{\prime}(s),
+\]
+which should be valid for all polynomials of degree $s$. Again, from the Lagrange interpolating formula $Q(t)=\sum_{m=0}^s \ell_m(t) Q(m)$, it follows that $a_m=\ell_m^{\prime}(s)$, and using explicit form of $\ell_m$ given above we derive
+\[
+a_s=\sum_{m=1}^s \frac{1}{m}, \quad a_m=\frac{(-1)^{s-m}}{s-m}\binom{s}{m}
+\]
+\end{method}
+
+\subsection{Higher order and convergence (non-examinable)}
+\ \vspace*{-1.5em}
+\begin{lemma}
+    There is no $s$-step methods of order $2 s+1$. The implicit and explicit methods of order $2 s$ and $2 s-1$, respectively, do exist and are unique.
+\end{lemma}
+
+\begin{example}
+    For $s=1$ and $s=2$ the highest order (implicit) methods have the form
+\begin{IEEEeqnarray*}{LLr}
+    (1)\ \text{one-step order 2:} &\quad \bfy_{n+1}-\bfy_n=h\left(\frac{1}{2} \bff_{n+1}+\frac{1}{2} \bff_n\right) & \text{[trapezoidal rule]},\\
+    (2)\ \text{two-step order 4:} &\quad \bfy_{n+2}-\bfy_n=h\left(\frac{1}{3} \bff_{n+2}+\frac{4}{3} \bff_{n+1}+\frac{1}{3} \bff_n\right) & \text{[Simpson rule]}.
+\end{IEEEeqnarray*}
+Obviously, the root condition for both methods is fulfilled. However, for $s \geq 3$, the $s$-step methods of order $2 s$ do not satisfy the root condition, and that makes them not very useful for numerical implementation. In fact, we should not go very far in our search for the higher order multistep methods because of the following restriction.
+\end{example}
+
+\begin{theorem}[The first Dalquist barrier]
+    If an $s$-step method converges, then it has the order
+\[
+p \leq \begin{cases}
+s & \text { for explicit methods, } \\
+s+1 & \text { if } s \text { is odd, } \\
+s+2 & \text { if } s \text { is even. }
+\end{cases}
+\]
+\end{theorem}
+So, in Example \ref{eg:7.11}, the Adams-Bashforth methods are optimal in the sense that they attain the bound $p=s$ for explicit methods, and the Adams-Moulton methods for odd $s$ are also optimal, with $p=s+1$.
+
+An optimal implicit method with even number of steps $s$ with order $p=s+2$ is given for example by $\rho(w)=w^s-1$. This method corresponds to the quadrature (where $q=Q^{\prime}$, with $Q \in \mathcal{P}_{s+2}$ )
+\[
+\int_0^s q(t) \dd{t}=\sum_{m=0}^s b_m q(m) \quad \forall q \in \mathcal{P}_{s+1} .
+\]
 
 \end{document}
