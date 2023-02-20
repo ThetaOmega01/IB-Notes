@@ -1702,7 +1702,7 @@ We can therefore write the fundamental forms as matrices with respect to this ba
 Let \( A = \Iff_p, B = \IIff_p, S = \eval{Dn}_p \) in this basis.
 In matrix form, we can write \( \IIff_p = \Iff_p(-\eval{Dn}_p(v),w) \) as
 \[
-	B = -S^\top A \implies \kappa(p) = \det(S) = \det(-A^{-1}B) = \frac{LN-M^2}{EG-F^2}
+	B = -AS \implies \kappa(p) = \det(S) = \det(-A^{-1}B) = \frac{LN-M^2}{EG-F^2}
 \]
 If \( \sigma, \widetilde \sigma \) are allowable and \( \varphi = \sigma^{-1} \circ \sigma \) is a transition map, then
 \[
@@ -1884,5 +1884,125 @@ Since the sign vanishes under taking determinants, \( \kappa \) is intrinsic and
 	\]
 	Letting \( i \to \infty \) gives the result as required.
 \end{proof}
+
+\begin{theorem}[Theorema Egregium]
+	The Gauss curvature of a smooth surface in \( \mathbb R^3 \) is isometry invariant.
+	In other words, if \( f \colon \Sigma_1 \to \Sigma_2 \) is a diffeomorphism of surfaces in \( \mathbb R^3 \) which is an isometry, then \( \kappa(p) = \kappa(f(p)) \) for all \( p \).
+\end{theorem}
+\begin{remark}
+	Isometries rely on only the first fundamental form, but Gauss curvature is defined using both fundamental forms.
+	We can do a direct proof by simply differentiating the formula and rearranging until the result follows.
+	This proof is given in Part II.
+
+	Alternatively, we can consider a different question: are some allowable parametrisations of a smooth surface in \( \mathbb R^3 \) `better' than others in some way?
+	If we have a parametrisation \( \sigma \colon V \to U \subseteq \Sigma \), this defines certain distinguished curves, which are the images of \( \sigma(t,0) \) and \( \sigma(0,t) \).
+	In this sense, looking for a `best' parametrisation is equivalent to looking for `best' distinguished curves near a point.
+	This leads to the study of geodesics.
+	We will later show that every smooth surface in \( \mathbb R^3 \) admits local parametrisations such that the first fundamental form has form \( \dd{u}^2 + G \dd{v}^2 \), so \( E = 1 \) and \( F = 0 \).
+	We will also see (on an example sheet) that if such a local parametrisation exists, then \( \kappa \) can be expressed as a function just of \( G \).
+	This allows us to approach the proof of the \textit{theorema egregium} from a more conceptual way, since we have expressed \( \kappa \) in terms of the first fundamental form alone.
+\end{remark}
+\begin{theorem}[Gauss-Bonnet theorem]
+	If \( \Sigma \) is a compact smooth surface in \( \mathbb R^3 \), then
+	\[
+		\int_\Sigma \kappa \dd{A_\Sigma} = 2 \pi \chi(\Sigma)
+	\]
+\end{theorem}
+Again, proof in Part II Differential Geometry.
+
+\section{Geodesics}
+\subsection{Definitions}
+Recall that we defined, for a smooth curve \( \gamma \colon [a,b] \to \mathbb R^3 \),
+\[
+	\mathrm{length}(\gamma) = \int_a^b \norm{\gamma'(t)} \dd{t}
+\]
+\begin{definition}
+	The \textbf{energy} of \( \gamma \) is given by
+	\[
+		E(\gamma) = \int_a^b \norm{\gamma'(t)}^2 \dd{t}
+	\]
+\end{definition}
+\begin{definition}
+	Let \( \gamma \colon [a,b] \to \Sigma \), where \( \Sigma \) is a smooth surface in \( \mathbb R^3 \).
+	A \textbf{one-parameter variation} (with fixed endpoints) of \( \gamma \) is a smooth map \( \Gamma \colon (-\varepsilon, \varepsilon) \times [a,b] \to \Sigma \), such that if \( \gamma_s = \Gamma(s,\cdot) \), then
+	\( \gamma_0(t) = \gamma(t) \), and \( \gamma_s(a) \) and \( \gamma_s(b) \) are independent of \( s \).
+\end{definition}
+\begin{definition}
+	A smooth curve \( \gamma \colon [a,b] \to \Sigma \) is a \textbf{geodesic} if, for every variation \( (\gamma_s) \) of \( \gamma \) with fixed endpoints as above, we have \( \eval{\dv{s}}_{s=0} E(\gamma_s) = 0 \).
+	Alternatively, \( \gamma \) is a critical point of the energy functional on curves from \( \gamma(a) \) to \( \gamma(b) \).
+\end{definition}
+
+\subsection{The geodesic equations}
+Let \( \gamma \) have image contained within the image of an allowable parametrisation \( \sigma \colon V \to U \).
+Then, for sufficiently small \( s \), we can write \( \gamma_s(t) = \sigma(u(s,t), v(s,t)) \).
+Suppose that the first fundamental form, with respect to \( \sigma \), is
+\[
+	E \dd{u}^2 + 2F \dd{u} \dd{v} + G \dd{v}^2
+\]
+Let
+\[
+	R = E \dot u^2 + 2F \dot u \dot v + G \dot v^2
+\]
+By definition,
+\[
+	E(\gamma_s) = \int_a^b R \dd{t}
+\]
+where \( R \) depends on \( s \).
+Hence,
+\begin{align*}
+	\pdv{R}{s} & = \qty(E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2) \pdv{u}{s} + \qty(E_v \dot v^2 + 2F_v \dot u \dot v + G_v \dot v^2) \pdv{v}{s} \\
+	           & \quad + 2 (E \dot u + F \dot v) \pdv{\dot u}{s} + 2(F \dot u + G \dot v) \pdv{\dot v}{s}
+\end{align*}
+This gives
+\[
+	\dv{s} E(\gamma_s) = \int_a^b \pdv{R}{s} \dd{t}
+\]
+We can integrate by parts.
+Note that \( \pdv{u}{s} \) and \( \pdv{v}{s} \) vanish at \( a,b \).
+Hence,
+\[
+	\eval{\dv{s}}_{s=0} E(\gamma_s) = \int_a^b \qty(A \pdv{u}{s} + B \pdv{v}{s}) \dd{t}
+\]
+where
+\begin{align*}
+	A & = E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2 - 2 \pdv{t} \qty(E \dot u + F \dot v) \\
+	B & = E_v \dot u^2 + 2F_v \dot u \dot v + G_v \dot v^2 - 2 \pdv{t} \qty(F \dot u + G \dot v)
+\end{align*}
+which leads to the following
+\begin{corollary}
+	A smooth curve \( \gamma \colon [a,b] \to \Sigma \) with image in \( \Im \sigma \) is a geodesic if and only if it satisfies the \textbf{geodesic equations}:
+	\begin{align*}
+		\dv{t} \qty(E \dot u + F \dot v) & = \frac{1}{2} \qty( E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2 ) \\
+		\dv{t} \qty(F \dot u + G \dot v) & = \frac{1}{2} \qty( E_v \dot u^2 + 2F_v \dot u \dot v + G_v \dot v^2 )
+	\end{align*}
+	Note that these equations are evaluated at \( s = 0 \), so no choice of variation is required.
+\end{corollary}
+\begin{remark}
+	Solving a differential equation is a local procedure.
+	The original definition of the geodesic seems to be a global property.
+	However, we can always consider a sub-curve of \( \gamma \) to also be a geodesic, since its variations are variations of \( \gamma \).
+	So the definition can be thought of as local.
+
+	Energy is sensitive to reparametrisation.
+	If \( f, g \colon [a,b] \to \mathbb R \) are smooth, the Cauchy-Schwarz inequality gives that
+	\[
+		\qty(\int_a^b fg \dd{t})^2 \leq \int_a^b f^2 \dd{t} \cdot \int_a^b g^2 \dd{t}
+	\]
+	Let us apply this to \( f = \sqrt{R} \), \( g = 1 \) to find
+	\[
+		\mathrm{length}(\gamma)^2 \leq E(\gamma)(b-a)
+	\]
+	Since equality holds only when the two functions are proportional, we must have that \( \norm{\gamma'(t)} \) is constant for the equality to hold.
+	In other words, \( \gamma \) must be parametrised proportional to arc length.
+\end{remark}
+\begin{corollary}
+	If \( \gamma \) has constant speed and locally minimises length, then it is a geodesic.
+	Further, if \( \gamma \) globally minimises energy, then it must globally minimise length, and is parametrised with constant speed.
+\end{corollary}
+\begin{remark}
+	We would like geodesics to be a local property, but not necessarily global length minimisers.
+	For example, all arcs of great circles will be shown to be geodesics, even if large arcs are not global length minimisers between fixed endpoints.
+\end{remark}
+
 
 \end{document}
