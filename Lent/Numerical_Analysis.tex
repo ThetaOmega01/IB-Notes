@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,11pt]{article}
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\triposcourse}{Numerical Analysis}
 \input{../header.tex}
@@ -363,7 +363,11 @@ One sees at once that, on $[-1,1]$,
 \end{corollary}
 
 \begin{theorem}
-    For $f \in C^{n+1}[-1,1]$, the best choice of interpolating points is $\Delta_*=\left(x_i^*\right)=\left(\cos \frac{2 i+1}{2 n+2} \pi\right)_{i=0}^n$ and
+    For $f \in C^{n+1}[-1,1]$, the best choice of interpolating points is 
+    \[
+        \Delta_*=\left(x_i^*\right)=\left(\cos \frac{2 i+1}{2 n+2} \pi\right)_{i=0}^n
+    \]
+    and
     \[
     \left\|f-p_{\Delta_*}\right\|_{\infty} \leq \frac{1}{2^n} \frac{1}{(n+1) !}\left\|f^{(n+1)}\right\|_{\infty}
     \]
@@ -668,10 +672,10 @@ T_{n+1}(x)=\cos (n+1) \arccos x, \quad x_i=\cos \frac{2 i+1}{2 n+2} \pi, \quad a
     Simplest quadrature formulae ($w\equiv 1$)
     \begin{center}
         \begin{tabular}{rcl}
-            the rectangle rule: & $\displaystyle  I(f) \approx (b-a) f(a) $ & \parbox{3.5cm}{1-point, non-Gaussian,\\ exact on constants}\\[2em] 
+            the rectangle rule: & $\displaystyle  I(f) \approx (b-a) f(a) $ & \parbox{3.5cm}{1-point,\\ non-Gaussian,\\ exact on constants}\\[2em] 
             the midpoint rule: & $\displaystyle I(f)\approx (b-a)f\qty(\frac{a+b}{2}) $ & \parbox{3.5cm}{1-point, Gaussian,\\ exact on linear fns}\\[2em] 
-            the trapezodial rule: & $\displaystyle I(f) \approx (b-a)\qty[\frac{1}{2}f(a)+\frac{1}{2}f(b)] $ & \parbox{3.5cm}{2-point, non-Gaussian,\\ exact on linear fns}\\[2em] 
-            the Simpson rule: & $\displaystyle I(f) \approx(b-a)\left[\frac{1}{6} f(a)+\frac{2}{3} f\left(\frac{a+b}{2}\right)+\frac{1}{6} f(b)\right]$ & \parbox{3.5cm}{3-point, non-Gaussian,\\ but of higher accuracy \\ (exact on cubics)}
+            the trapezodial rule: & $\displaystyle I(f) \approx (b-a)\qty[\frac{1}{2}f(a)+\frac{1}{2}f(b)] $ & \parbox{3.5cm}{2-point,\\ non-Gaussian,\\ exact on linear fns}\\[2em] 
+            the Simpson rule: & $\displaystyle I(f) \approx(b-a)\left[\frac{1}{6} f(a)+\frac{2}{3} f\left(\frac{a+b}{2}\right)+\frac{1}{6} f(b)\right]$ & \parbox{3.5cm}{3-point,\\ non-Gaussian,\\ but of higher accuracy \\ (exact on cubics)}
         \end{tabular}
     \end{center}
 \end{example}

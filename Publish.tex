@@ -1,5 +1,3 @@
-\usepackage[T1]{fontenc}
-\usepackage{lmodern,mathrsfs}
 \AddToHook{cmd/section/before}{\clearpage}
 
 %%%%%%%boxed enviroment for final layout%%%%%%%%%%%%%
@@ -9,7 +7,7 @@
   {}%
   {}%
   {}%
-  {\bfseries\sffamily}%
+  {\bfseries}%
   {.}%
   { }%
   {}%
@@ -26,7 +24,7 @@
 
 % Definition
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{MidnightBlue},
+    headfont=\bfseries\color{MidnightBlue},
     mdframed={
       backgroundcolor=White!90!Cerulean,
       linecolor=Cerulean,
@@ -42,7 +40,7 @@
 
 % Notation
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{MidnightBlue},
+    headfont=\bfseries\color{MidnightBlue},
     mdframed={
       backgroundcolor=White!90!Cerulean,
       linecolor=Cerulean,
@@ -58,7 +56,7 @@
 
 % Proposition
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Black!30!Goldenrod},
+    headfont=\bfseries\color{Black!30!Goldenrod},
     mdframed={
       backgroundcolor=White!90!Yellow,
       linecolor=Yellow,
@@ -74,7 +72,7 @@
 
 % Theorem
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Bittersweet!40!Dandelion},
+    headfont=\bfseries\color{Bittersweet!40!Dandelion},
     mdframed={
       backgroundcolor=White!90!Dandelion,
       linecolor=Dandelion,
@@ -90,7 +88,7 @@
 
 % Method
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Black!40!TealBlue},
+    headfont=\bfseries\color{Black!40!TealBlue},
     mdframed={
       backgroundcolor=White!90!TealBlue,
       linecolor=TealBlue,
@@ -106,7 +104,7 @@
 
 % Lemma
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Black!50!Red},
+    headfont=\bfseries\color{Black!50!Red},
     mdframed={
       linecolor=Red,
       linewidth=1pt,
@@ -121,7 +119,7 @@
 
 % Corollary
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Black!50!ForestGreen},
+    headfont=\bfseries\color{Black!50!ForestGreen},
     mdframed={
       linecolor=ForestGreen,
       linewidth=1pt,
@@ -149,7 +147,7 @@
 
 % Remark
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Black!30!Green},
+    headfont=\bfseries\color{Black!30!Green},
     mdframed={
       linecolor=Green,
       linewidth=1pt,
@@ -164,7 +162,7 @@
 
 % Note
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries\color{Black!30!PineGreen},
+    headfont=\bfseries\color{Black!30!PineGreen},
     mdframed={
       linecolor=PineGreen,
       linewidth=1pt,
@@ -179,7 +177,7 @@
 
 % Example
 \declaretheoremstyle[
-    headfont=\sffamily\bfseries,
+    headfont=\bfseries,
     mdframed={
       linecolor=Black,
       linewidth=1pt,
@@ -194,7 +192,7 @@
 
 % Technique
 \declaretheoremstyle[
-  headfont=\sffamily\bfseries\color{Black},
+  headfont=\bfseries\color{Black},
   mdframed={
     backgroundcolor=Black!7,
     linecolor=Black,
@@ -240,23 +238,23 @@
 \theoremstyle{definition}{
     \newtheorem*{exercise}{Exercise}}
 
-\sectionfont{\Large\bfseries\sffamily}
-\subsectionfont{\large\bfseries\sffamily}
-\subsubsectionfont{\bfseries\sffamily}
-\paragraphfont{\bfseries\sffamily}
-\makeatletter
-\titleformat{\part}[display]
-  {\centering\Huge\sffamily\bfseries}
-  {\partname~\thepart:}
-  {20pt}
-  {}
-\makeatother
+% \sectionfont{\Large\bfseries}
+% \subsectionfont{\large\bfseries}
+% \subsubsectionfont{\bfseries}
+% \paragraphfont{\bfseries}
+% \makeatletter
+% \titleformat{\part}[display]
+%   {\centering\Huge\bfseries}
+%   {\partname~\thepart:}
+%   {20pt}
+%   {}
+% \makeatother
 
-\let\oldpart\part
-\renewcommand{\part}[1]{\vspace*{\fill}
-\oldpart{#1}
-\vfill}
+% \let\oldpart\part
+% \renewcommand{\part}[1]{\vspace*{\fill}
+% \oldpart{#1}
+% \vfill}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{\textbf{\sffamily\triposcourse{} Notes}}
+\title{\textbf{\triposcourse{} Notes}}
