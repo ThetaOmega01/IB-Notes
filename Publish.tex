@@ -243,17 +243,17 @@
 % \subsubsectionfont{\bfseries}
 % \paragraphfont{\bfseries}
 % \makeatletter
-% \titleformat{\part}[display]
-%   {\centering\Huge\bfseries}
-%   {\partname~\thepart:}
-%   {20pt}
-%   {}
-% \makeatother
+\titleformat{\part}[display]
+  {\centering\Huge\bfseries}
+  {\partname~\thepart:}
+  {20pt}
+  {}
+\makeatother
 
-% \let\oldpart\part
-% \renewcommand{\part}[1]{\vspace*{\fill}
-% \oldpart{#1}
-% \vfill}
+\let\oldpart\part
+\renewcommand{\part}[1]{\vspace*{\fill}
+\oldpart{#1}
+\vfill}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
