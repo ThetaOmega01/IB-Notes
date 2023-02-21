@@ -1961,14 +1961,14 @@ We can integrate by parts.
 Note that \( \pdv{u}{s} \) and \( \pdv{v}{s} \) vanish at \( a,b \).
 Hence,
 \[
-	\eval{\dv{s}}_{s=0} E(\gamma_s) = \int_a^b \qty(A \pdv{u}{s} + B \pdv{v}{s}) \dd{t}
+	\eval{\dv{s}}_{s=0} E(\gamma_s) = \int_a^b \qty(A \pdv{u}{s} + B \pdv{v}{s}) \dd{t} \tag{$*$}
 \]
 where
 \begin{align*}
 	A & = E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2 - 2 \pdv{t} \qty(E \dot u + F \dot v) \\
 	B & = E_v \dot u^2 + 2F_v \dot u \dot v + G_v \dot v^2 - 2 \pdv{t} \qty(F \dot u + G \dot v)
 \end{align*}
-which leads to the following
+Note that we have absolute freedom for choosing the `variational vector field' $ W(t) = \qty( \pdv{u}{s} \qty(0,t), \pdv{v}{s} \qty(0,t) ) $, so in order for ($*$) to vanish we must have (iff) $A=B=0$, which leads to the following.
 \begin{corollary}
 	A smooth curve \( \gamma \colon [a,b] \to \Sigma \) with image in \( \Im \sigma \) is a geodesic if and only if it satisfies the \textbf{geodesic equations}:
 	\begin{align*}
@@ -1978,23 +1978,32 @@ which leads to the following
 	Note that these equations are evaluated at \( s = 0 \), so no choice of variation is required.
 \end{corollary}
 \begin{remark}
-	Solving a differential equation is a local procedure.
-	The original definition of the geodesic seems to be a global property.
-	However, we can always consider a sub-curve of \( \gamma \) to also be a geodesic, since its variations are variations of \( \gamma \).
-	So the definition can be thought of as local.
-
-	Energy is sensitive to reparametrisation.
-	If \( f, g \colon [a,b] \to \mathbb R \) are smooth, the Cauchy-Schwarz inequality gives that
-	\[
-		\qty(\int_a^b fg \dd{t})^2 \leq \int_a^b f^2 \dd{t} \cdot \int_a^b g^2 \dd{t}
-	\]
-	Let us apply this to \( f = \sqrt{R} \), \( g = 1 \) to find
-	\[
-		\mathrm{length}(\gamma)^2 \leq E(\gamma)(b-a)
-	\]
-	Since equality holds only when the two functions are proportional, we must have that \( \norm{\gamma'(t)} \) is constant for the equality to hold.
-	In other words, \( \gamma \) must be parametrised proportional to arc length.
+	\begin{enumerate}[(1)]
+		\item If $W(t)$ with $W(a)=W(b)=0$, then $ \gamma_s(t) = \sigma((u(t),v(t))+sW(t)) $, for $s$ small enough, is a variation of $\gamma$ with fixed end points and variational vector field $W$, justifying that we can choose $W$ arbitrarily in any direction.
+		\item Recall that 
+		\[
+			\int_{a}^{b} f(x)g(x) \,\mathrm{d}x = 0,\ \forall g:[a,b]\to \mathbb{R}, g(a)=g(b) \implies f\equiv 0, 
+		\]
+		justifying that $A,B$ must vanish. 
+		\item Solving a differential equation is a local procedure.
+		The original definition of the geodesic seems to be a global property.
+		However, we can always consider a sub-curve of \( \gamma \) to also be a geodesic, since its variations are variations of \( \gamma \).
+		So the definition can be thought of as local.
+		
+		Energy is sensitive to reparametrisation.
+		If \( f, g \colon [a,b] \to \mathbb R \) are smooth, the Cauchy-Schwarz inequality gives that
+		\[
+			\qty(\int_a^b fg \dd{t})^2 \leq \int_a^b f^2 \dd{t} \cdot \int_a^b g^2 \dd{t}
+		\]
+		Let us apply this to \( f = \sqrt{R} \), \( g = 1 \) to find
+		\[
+			\mathrm{length}(\gamma)^2 \leq E(\gamma)(b-a)
+		\]
+		Since equality holds only when the two functions are proportional, we must have that \( \norm{\gamma'(t)} \) is constant for the equality to hold.
+		In other words, \( \gamma \) must be parametrised proportional to arc length.
+	\end{enumerate}
 \end{remark}
+
 \begin{corollary}
 	If \( \gamma \) has constant speed and locally minimises length, then it is a geodesic.
 	Further, if \( \gamma \) globally minimises energy, then it must globally minimise length, and is parametrised with constant speed.
