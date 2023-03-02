@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper]{article}
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\triposcourse}{Geometry}
 \input{../header.tex}
@@ -2012,6 +2012,18 @@ Note that we have absolute freedom for choosing the `variational vector field' $
 	We would like geodesics to be a local property, but not necessarily global length minimisers.
 	For example, all arcs of great circles will be shown to be geodesics, even if large arcs are not global length minimisers between fixed endpoints.
 \end{remark}
+
+\subsection{Geodesics on the plane}
+The plane \( \mathbb R^2 \) has parametrisation \( \sigma(u,v) = (u,v,0) \) and first fundamental form \( \dd{u}^2 + \dd{v}^2 \).
+The geodesic equations here are
+\[
+	\ddot u = 0;\quad \ddot v = 0
+\]
+In particular, the geodesics on the plane are given by
+\[
+	u(t) = \alpha t + \beta;\quad v(t) = \gamma t + \delta
+\]
+This is a straight line, parametrised at constant speed.
 
 
 \end{document}

@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper]{article}
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\triposcourse}{Numerical Analysis}
 \input{../header.tex}
@@ -662,7 +662,7 @@ P_3(x)=\frac{5}{2}\left(x^3-\frac{3}{5} x\right) & x_0=-\sqrt{\frac{3}{5}}, x_1=
 \]
 \end{example}
 \begin{example}
-    Example $4.9$ For $[a, b]=[-1,1]$ and $w(x)=\left(1-x^2\right)^{-1 / 2}$, the orthogonal polynomials are the Chebyshev polynomials and the qudrature rule is particularly attractive:
+    For $[a, b]=[-1,1]$ and $w(x)=\left(1-x^2\right)^{-1 / 2}$, the orthogonal polynomials are the Chebyshev polynomials and the qudrature rule is particularly attractive:
 \[
 T_{n+1}(x)=\cos (n+1) \arccos x, \quad x_i=\cos \frac{2 i+1}{2 n+2} \pi, \quad a_i=\frac{\pi}{n+1}, \quad i=0, \ldots, n .
 \]
@@ -976,7 +976,11 @@ and the theorem is true.
 \end{proof}
 
 \begin{definition}
-    The \textbf{local truncation error} of a general numerical method $\mathbf{y}_{n+1}=\boldsymbol{\varphi}_h\left(t_n, \mathbf{y}_0, \ldots, \mathbf{y}_n\right)$ for solving (\ref{eqn:6.1}) is the error of the method on the true solution, i.e., the value $\boldsymbol{\eta}_{n+1}$ such that
+    The \textbf{local truncation error} of a general numerical method 
+    \[
+        \mathbf{y}_{n+1}=\boldsymbol{\varphi}_h\left(t_n, \mathbf{y}_0, \ldots, \mathbf{y}_n\right)
+    \]
+    for solving (\ref{eqn:6.1}) is the error of the method on the true solution, i.e., the value $\boldsymbol{\eta}_{n+1}$ such that
 \[
 \mathbf{y}\left(t_{n+1}\right)=\boldsymbol{\varphi}_h\left(t_n, \mathbf{y}\left(t_0\right), \mathbf{y}\left(t_1\right), \ldots, \mathbf{y}\left(t_n\right)\right)+\mathbf{\boldsymbol{\eta}}_{n+1} .
 \]
@@ -1154,10 +1158,11 @@ A useful procedure to generate multistep methods which are convergent and of hig
 \end{technique}
 \begin{example}\label{eg:7.11}
     The choice $\rho(w)=w^{s-1}(w-1)$ corresponds to \textbf{Adams methods}:
-\begin{enumerate}[(1)]
-    \item \textbf{Adams-Bashforth methods} if $b_s=0$, hence explicit, with the order $s$ (e.g. (\ref{eqn:7.4}) for $s=2$ ),
-    \item \textbf{Adams-Moulton methods} if $b_s \neq 0$, hence implicit, but with the order $(s+1)$.
-\end{enumerate}
+
+    \textbf{Adams-Bashforth methods} if $b_s=0$, hence explicit, with the order $s$ (e.g. (\ref{eqn:7.4}) for $s=2$),
+
+    \textbf{Adams-Moulton methods} if $b_s \neq 0$, hence implicit, but with the order $(s+1)$.
+
 For example, letting $s=2$ and $\xi=w-1$, we obtain the 3rd-order Adams-Moulton method by expanding
 \[
 \begin{aligned}

@@ -7,7 +7,7 @@
   {}%
   {}%
   {}%
-  {\bfseries}%
+  {\sffamily\bfseries}%
   {.}%
   { }%
   {}%
@@ -24,7 +24,7 @@
 
 % Definition
 \declaretheoremstyle[
-    headfont=\bfseries\color{MidnightBlue},
+    headfont=\sffamily\bfseries\color{MidnightBlue},
     mdframed={
       backgroundcolor=White!90!Cerulean,
       linecolor=Cerulean,
@@ -40,7 +40,7 @@
 
 % Notation
 \declaretheoremstyle[
-    headfont=\bfseries\color{MidnightBlue},
+    headfont=\sffamily\bfseries\color{MidnightBlue},
     mdframed={
       backgroundcolor=White!90!Cerulean,
       linecolor=Cerulean,
@@ -56,7 +56,7 @@
 
 % Proposition
 \declaretheoremstyle[
-    headfont=\bfseries\color{Black!30!Goldenrod},
+    headfont=\sffamily\bfseries\color{Black!30!Goldenrod},
     mdframed={
       backgroundcolor=White!90!Yellow,
       linecolor=Yellow,
@@ -72,7 +72,7 @@
 
 % Theorem
 \declaretheoremstyle[
-    headfont=\bfseries\color{Bittersweet!40!Dandelion},
+    headfont=\sffamily\bfseries\color{Bittersweet!40!Dandelion},
     mdframed={
       backgroundcolor=White!90!Dandelion,
       linecolor=Dandelion,
@@ -88,7 +88,7 @@
 
 % Method
 \declaretheoremstyle[
-    headfont=\bfseries\color{Black!40!TealBlue},
+    headfont=\sffamily\bfseries\color{Black!40!TealBlue},
     mdframed={
       backgroundcolor=White!90!TealBlue,
       linecolor=TealBlue,
@@ -104,7 +104,7 @@
 
 % Lemma
 \declaretheoremstyle[
-    headfont=\bfseries\color{Black!50!Red},
+    headfont=\sffamily\bfseries\color{Black!50!Red},
     mdframed={
       linecolor=Red,
       linewidth=1pt,
@@ -119,7 +119,7 @@
 
 % Corollary
 \declaretheoremstyle[
-    headfont=\bfseries\color{Black!50!ForestGreen},
+    headfont=\sffamily\bfseries\color{Black!50!ForestGreen},
     mdframed={
       linecolor=ForestGreen,
       linewidth=1pt,
@@ -147,7 +147,7 @@
 
 % Remark
 \declaretheoremstyle[
-    headfont=\bfseries\color{Black!30!Green},
+    headfont=\sffamily\bfseries\color{Black!30!Green},
     mdframed={
       linecolor=Green,
       linewidth=1pt,
@@ -162,7 +162,7 @@
 
 % Note
 \declaretheoremstyle[
-    headfont=\bfseries\color{Black!30!PineGreen},
+    headfont=\sffamily\bfseries\color{Black!30!PineGreen},
     mdframed={
       linecolor=PineGreen,
       linewidth=1pt,
@@ -177,7 +177,7 @@
 
 % Example
 \declaretheoremstyle[
-    headfont=\bfseries,
+    headfont=\sffamily\bfseries,
     mdframed={
       linecolor=Black,
       linewidth=1pt,
@@ -192,7 +192,7 @@
 
 % Technique
 \declaretheoremstyle[
-  headfont=\bfseries\color{Black},
+  headfont=\sffamily\bfseries\color{Black},
   mdframed={
     backgroundcolor=Black!7,
     linecolor=Black,
@@ -238,11 +238,11 @@
 \theoremstyle{definition}{
     \newtheorem*{exercise}{Exercise}}
 
-% \sectionfont{\Large\bfseries}
-% \subsectionfont{\large\bfseries}
-% \subsubsectionfont{\bfseries}
-% \paragraphfont{\bfseries}
-% \makeatletter
+\sectionfont{\Large\sffamily\bfseries}
+\subsectionfont{\large\sffamily\bfseries}
+\subsubsectionfont{\sffamily\bfseries}
+\paragraphfont{\sffamily\bfseries}
+\makeatletter
 \titleformat{\part}[display]
   {\centering\Huge\bfseries}
   {\partname~\thepart:}
