@@ -1975,6 +1975,7 @@ Note that we have absolute freedom for choosing the `variational vector field' $
 		\dv{t} \qty(E \dot u + F \dot v) & = \frac{1}{2} \qty( E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2 ) \\
 		\dv{t} \qty(F \dot u + G \dot v) & = \frac{1}{2} \qty( E_v \dot u^2 + 2F_v \dot u \dot v + G_v \dot v^2 )
 	\end{align*}
+	Compare this to Euler-Lagrange equation in VP. 
 	Note that these equations are evaluated at \( s = 0 \), so no choice of variation is required.
 \end{corollary}
 \begin{remark}
@@ -1989,29 +1990,75 @@ Note that we have absolute freedom for choosing the `variational vector field' $
 		The original definition of the geodesic seems to be a global property.
 		However, we can always consider a sub-curve of \( \gamma \) to also be a geodesic, since its variations are variations of \( \gamma \).
 		So the definition can be thought of as local.
-		
-		Energy is sensitive to reparametrisation.
-		If \( f, g \colon [a,b] \to \mathbb R \) are smooth, the Cauchy-Schwarz inequality gives that
-		\[
-			\qty(\int_a^b fg \dd{t})^2 \leq \int_a^b f^2 \dd{t} \cdot \int_a^b g^2 \dd{t}
-		\]
-		Let us apply this to \( f = \sqrt{R} \), \( g = 1 \) to find
-		\[
-			\mathrm{length}(\gamma)^2 \leq E(\gamma)(b-a)
-		\]
-		Since equality holds only when the two functions are proportional, we must have that \( \norm{\gamma'(t)} \) is constant for the equality to hold.
-		In other words, \( \gamma \) must be parametrised proportional to arc length.
 	\end{enumerate}
 \end{remark}
 
+\begin{proposition}
+	Let $ \Sigma\in \mathbb{R}^{3} $ be a smooth surface. A smooth curve $ \gamma:[a,b]\to \Sigma $ is a geodesic if and only if $ \ddot{\gamma} $ is everywhere normal to $ \Sigma $.
+\end{proposition}
+
+\begin{proof}
+	The statement is purely local so we can work in a parametrisation $ \sigma:V\to U \subset \Sigma $ and as usual $ \gamma(t) = \sigma(u(t),v(t)) $.
+	\[
+		\dot{\gamma} = \sigma_u \dot{u} + \sigma_v \dot{v}
+	\]
+	so $ \ddot{\gamma} $ is normal to $\Sigma$ exactly when it is orthogonal to $ T_{\gamma(t)}\Sigma $ spanned by $ \{\sigma_u,\sigma_v\} $. In other words,
+	\[
+		\inner{\dv{}{t} \qty( \sigma_u \dot{u} + \sigma_v \dot{v}),\sigma_u} = 0,\quad 
+		\inner{\dv{}{t} \qty( \sigma_u \dot{u} + \sigma_v \dot{v}),\sigma_v} = 0.
+	\]
+	The first equation is equivalent to (by product rule)
+	\[
+		\dv{}{t} \inner{\sigma_u \dot{u} + \sigma_v \dot{v},\sigma_u} - \inner{\sigma_u \dot{u} + \sigma_v \dot{v}, \dv{\sigma_u}{t} } = 0
+	\]
+	Noting that $ E = \inner{\sigma_u, \sigma_u} , F = \inner{\sigma_u,\sigma_v}$, this is 
+	\begin{align*}
+		&\frac{\mathrm{d}}{\mathrm{d}t} \left( E\dot{u}+F\dot{v} \right) -\inner{\sigma_u, \dot{u}+\sigma_v \dot{v}, \sigma_{uu}\dot{u}+\sigma_{uv} \dot{v}} = 0\\ 
+		\implies & \frac{\mathrm{d}}{\mathrm{d}t} \left( E\dot{u}+F\dot{v} \right) - (\dot{u}^2 \inner{\sigma_u,\sigma_{uu}} + \dot{u}\dot{v} (\inner{\sigma_u,\sigma_{uv}}+\inner{\sigma_v,\sigma_{uu}})+\dot{v}^2\inner{\sigma_v,\sigma_{uv}})=0
+	\end{align*}
+	But 
+	\begin{align*}
+		& E = \inner{\sigma_u,\sigma_u} \implies E_u = 2\inner{\sigma_u,\sigma_{uu}}\\ 
+		& F = \inner{\sigma_u,\sigma_v} \implies F_u = \inner{\sigma_u,\sigma_{uv}} + \inner{\sigma_v, \sigma_{uu}}\\ 
+		& G = \inner{\sigma_v,\sigma_v} \implies G_u = 2 \inner{\sigma_v,\sigma_{uv}}
+	\end{align*}
+	This implies the first equation becomes 
+	\[
+		\frac{\mathrm{d}}{\mathrm{d}t}(E \dot{u} + F \dot{v}) = \frac{1}{2}(E_u \dot{u}^2 + 2 F_u \dot{u}\dot{v} + G_u \dot{v}^2) . 
+	\]
+	Similar for the other geodesic equation. 
+\end{proof}
+
 \begin{corollary}
-	If \( \gamma \) has constant speed and locally minimises length, then it is a geodesic.
-	Further, if \( \gamma \) globally minimises energy, then it must globally minimise length, and is parametrised with constant speed.
+	If $\gamma$ is a geodesic, then $ \left\| \dot{\gamma} \right\|  $ is constant. 
 \end{corollary}
+\begin{proof}
+	It suffices to show that $ \dv{}{t}\inner{\dot{\gamma},\dot{\gamma}}= 2\inner{\ddot{\gamma},\dot{\gamma}}=0 $, which is true since $ \ddot{\gamma} \perp T_\gamma\Sigma $ and $ \dot{\gamma}\in T_\gamma\Sigma $. 
+\end{proof}
 \begin{remark}
 	We would like geodesics to be a local property, but not necessarily global length minimisers.
 	For example, all arcs of great circles will be shown to be geodesics, even if large arcs are not global length minimisers between fixed endpoints.
 \end{remark}
+
+Thus geodesics are parametrised with \textit{constant speed}, i.e. proportional to arc length. 
+
+Energy is sensitive to reparametrisation.
+If \( f, g \colon [a,b] \to \mathbb R \) are smooth, the Cauchy-Schwarz inequality gives that
+\[
+	\qty(\int_a^b fg \dd{t})^2 \leq \int_a^b f^2 \dd{t} \cdot \int_a^b g^2 \dd{t}
+\]
+Let us apply this to \( f = \sqrt{R} \), \( g = 1 \) to find
+\[
+	\mathrm{length}(\gamma)^2 \leq E(\gamma)(b-a)
+\]
+Since equality holds only when the two functions are proportional, we must have that \( \norm{\gamma'(t)} \) is constant for the equality to hold.
+
+\begin{corollary}
+	If \( \gamma \) has constant speed and locally minimises length, then it is a geodesic.
+\end{corollary}
+\begin{proof}
+	Need to prove $ \gamma $ is a critical point of $E$. Let $ \tau: [a,b]\to \Sigma $
+\end{proof}
 
 \subsection{Geodesics on the plane}
 The plane \( \mathbb R^2 \) has parametrisation \( \sigma(u,v) = (u,v,0) \) and first fundamental form \( \dd{u}^2 + \dd{v}^2 \).
@@ -2024,6 +2071,5 @@ In particular, the geodesics on the plane are given by
 	u(t) = \alpha t + \beta;\quad v(t) = \gamma t + \delta
 \]
 This is a straight line, parametrised at constant speed.
-
 
 \end{document}
