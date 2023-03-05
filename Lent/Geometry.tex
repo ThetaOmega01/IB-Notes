@@ -1321,7 +1321,7 @@ Note that \( E, F, G \) depend only on \( \sigma \) and not on \( \gamma \).
 	Hence the cone and the plane are locally isometric.
 	However, the cone and plane are not globally isometric, since the two topological spaces are not homeomorphic, so no diffeomorphism that preserves lengths can be constructed.
 \end{example}
-\begin{lemma}
+\begin{lemma}\label{lma:transformation_law}
 	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \), and let \( p \in \Sigma \).
 	Suppose we have two allowable parametrisations \( \sigma \colon V \to U \) and \( \sigma' \colon V' \to U \) for the same open neighbourhood of \( p \).
 	The two parametrisations differ by a transition map \( F = {\sigma'}^{-1} \circ \sigma \) which is a diffeomorphism of open subsets of \( \mathbb R^2 \).
@@ -2035,10 +2035,6 @@ Note that we have absolute freedom for choosing the `variational vector field' $
 \begin{proof}
 	It suffices to show that $ \dv{}{t}\inner{\dot{\gamma},\dot{\gamma}}= 2\inner{\ddot{\gamma},\dot{\gamma}}=0 $, which is true since $ \ddot{\gamma} \perp T_\gamma\Sigma $ and $ \dot{\gamma}\in T_\gamma\Sigma $. 
 \end{proof}
-\begin{remark}
-	We would like geodesics to be a local property, but not necessarily global length minimisers.
-	For example, all arcs of great circles will be shown to be geodesics, even if large arcs are not global length minimisers between fixed endpoints.
-\end{remark}
 
 Thus geodesics are parametrised with \textit{constant speed}, i.e. proportional to arc length. 
 
@@ -2057,8 +2053,17 @@ Since equality holds only when the two functions are proportional, we must have 
 	If \( \gamma \) has constant speed and locally minimises length, then it is a geodesic.
 \end{corollary}
 \begin{proof}
-	Need to prove $ \gamma $ is a critical point of $E$. Let $ \tau: [a,b]\to \Sigma $
+	Need to prove $ \gamma $ is a critical point of $E$. Let $ \tau: [a,b]\to \Sigma $ be any other curve connecting $\gamma(a), \gamma(b)$. We have that 
+	\[
+		E(\gamma) = (L(\lambda))^2\le (L(\tau))^2 \le E(\tau)
+	\]
+	This imples that $ \gamma $ is a critical point. 
 \end{proof}
+
+\begin{remark}
+	We would like geodesics to be a local property, but not necessarily global length minimisers.
+	For example, all arcs of great circles will be shown to be geodesics, even if large arcs are not global length minimisers between fixed endpoints.
+\end{remark}
 
 \subsection{Geodesics on the plane}
 The plane \( \mathbb R^2 \) has parametrisation \( \sigma(u,v) = (u,v,0) \) and first fundamental form \( \dd{u}^2 + \dd{v}^2 \).
@@ -2071,5 +2076,684 @@ In particular, the geodesics on the plane are given by
 	u(t) = \alpha t + \beta;\quad v(t) = \gamma t + \delta
 \]
 This is a straight line, parametrised at constant speed.
+
+\subsection{Geodesics on the sphere}
+Consider the unit sphere with parametrisation
+\[
+	\sigma(u,v) = (\cos u \cos v, \cos u \sin v, \sin u),\quad u \in \qty(-\frac{\pi}{2}),\quad v \in \qty(0, 2 \pi)
+\]
+This has first fundamental form
+\[
+	\dd{u}^2 + \cos^2 u \dd{v}^2 \implies E = 1,\; F = 0,\; G = \cos^2 u
+\]
+The geodesic equations give
+\[
+	\dv{t} \qty(\dot u) = \frac{1}{2} 2\cos u \sin u \dot v^2,\quad \dv{t} \qty(\cos^2 u \dot v) = 0
+\]
+This gives
+\[
+	\ddot u + \sin u \cos u \dot v^2 = 0,\quad \ddot v - 2 \tan u \dot u \dot v = 0
+\]
+Since geodesics are parametrised at constant speed, we can assume that it is parametrised at unit speed without loss of generality.
+\[
+	\norm{\gamma'(t)} = 1 \implies \dot u + \cos^2 u \dot v^2 = 1
+\]
+Hence,
+\[
+	\frac{\ddot v}{\dot v} = 2 \tan u \dot u \implies \ln \dot v = -2 \ln \cos u + \text{constant} \implies \dot v = \frac{C}{\cos^2 u}
+\]
+Substituting into the unit speed equation,
+\[
+	\dot u^2 = 1 - \frac{C^2}{\cos^2 u} \implies \dot u = \sqrt{\frac{\cos^2 u - C^2}{\cos^2 u}}
+\]
+Then,
+\[
+	\frac{\dot v}{\dot u} = \dv{v}{u} = \frac{C}{\cos u \sqrt{\cos^2 u - C^2}}
+\]
+Hence,
+\[
+	v = \int \dv{v}{u} \dd{u} = \int \frac{C \sec^2 u}{\sqrt{1-C^2 sec^2 u}} \dd{u}
+\]
+Using the substitution \( w = \frac{C \tan u}{\sqrt{1-C^2}} \), we find
+\[
+	v = \int \frac{w}{1-w^2} \dd{w} = \arcsin w + \text{constant} = \arcsin(\lambda \tan u) + \delta
+\]
+for some constants \( \lambda, \delta \).
+Hence,
+\[
+	\sin (v - \delta) = \lambda \tan u
+\]
+Rewriting using the angle addition formula,
+\[
+	\underbrace{(\sin v \cos u)}_{x}\cos \delta - \underbrace{(\cos v \cos u)}_{y}\sin \delta - \lambda \underbrace{\sin u}_z = 0
+\]
+Hence, the geodesic \( \gamma \) lies on a plane through the origin, since this is a linear equation in \( x, y, z \).
+Such planes intersect the sphere in great circles.
+
+\subsection{Geodesics on the torus}
+Consider the surface of revolution of a circle in the \( xz \)-plane centred at \( (a,0,0) \) about the \( z \) axis, giving a torus.
+An allowable parametrisation for this surface is
+\[
+	\sigma(u,v) = ((a+\cos u)\cos v, (a+\cos u)\sin v, \sin u)
+\]
+The first fundamental form is
+\[
+	\dd{u}^2 + (a+\cos u)^2 \dd{v}^2 \implies E = 1;\;F = 0;\;G = (a+\cos u)^2
+\]
+Note that if we were to take \( a = 0 \), we would arrive at the unit sphere and its first fundamental form.
+We can follow the same procedure as above with the sphere, or formally replace \( \cos u \) with \( a+\cos u \) in the result.
+\[
+	\dv{v}{u} = \frac{C}{(a+\cos u)\sqrt{(a+\cos u)^2 - C^2}}
+\]
+which cannot be integrated using classical functions.
+This leads to the study of elliptic functions.
+
+\subsection{Equivalent characterisation of geodesics}
+We have so far restricted our analysis to the first fundamental form, without considering its embedding in \( \mathbb R^3 \).
+Intuitively, we know that straight lines in \( \mathbb R^2 \) are not just locally shortest but also locally straightest.
+We would expect this to hold for other surfaces as well.
+We can charaterise this notion via stating that the change in the tangent vector to a curve is as small as it could be, subject to the constraint that it lies on the surface.
+
+\begin{proposition}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \).
+	A smooth curve \( \gamma \colon [a,b] \to \Sigma \) is a geodesic if and only if \( \ddot \gamma(t) \) is everywhere normal to the surface \( \Sigma \).
+\end{proposition}
+\begin{remark}
+	This proposition makes use of the tangent plane, a notion that exists only because we have an embedding in \( \mathbb R^3 \).
+	Note that
+	\[
+		\dv{t} \inner{\dot \gamma, \dot \gamma} = 2 \inner{\underbrace{\dot \gamma}_{\text{tangent to } \Sigma}, \underbrace{\ddot \gamma}_{\text{normal to } \Sigma}} = 0
+	\]
+	Hence, \( \inner{\dot \gamma, \dot \gamma} \) is constant, giving that geodesics are parametrised proportional to arc length.
+\end{remark}
+\begin{proof}
+	The property of being a geodesic as we previously defined is a local property, and so is the condition in the proposition.
+	Hence, we may work entirely within an allowable parametrisation \( \sigma \colon V \to U \).
+	Suppose \( \gamma(t) = \sigma(u(t), v(t)) \).
+	Hence,
+	\[
+		\dot \gamma = \sigma_u \dot u + \sigma_v \dot v
+	\]
+	\( \ddot \gamma \) is normal to \( \Sigma \) when it is orthogonal to the tangent plane, which is spanned by \( \sigma_u, \sigma_v \).
+	This is true if and only if
+	\[
+		\inner{ \dv{t} \qty(\sigma_u \dot u + \sigma_v \dot v), \sigma_u } = 0 = \inner{ \dv{t} \qty(\sigma_u \dot u + \sigma_v \dot v), \sigma_v }
+	\]
+	We will prove the first equality.
+	This can be rewritten
+	\[
+		\dv{t} \inner{\sigma_u \dot u + \sigma_v \dot v, \sigma_u} - \inner{\sigma_u \dot u + \sigma_v \dot v, \dv{t} \sigma_u} = 0
+	\]
+	Note that \( \inner{\sigma_u, \sigma_u} = E \) and \( \inner{\sigma_u, \sigma_v} = F \).
+	\[
+		\dv{t} (E \dot u + F \dot v) - \inner{\sigma_u \dot u + \sigma_v \dot v, \sigma_{uu} \dot u + \sigma_{uv} \dot v} = 0
+	\]
+	Hence,
+	\[
+		\dv{t} (E \dot u + F \dot v) - \qty[ \dot u^2 \inner{\sigma_u, \sigma_{uu}} + \dot u \dot v \qty(\inner{\sigma_u, \sigma_{uv}} + \inner{\sigma_v, \sigma_{uu}}) + \dot v^2 \inner{\sigma_v \sigma_{uv}} ] = 0
+	\]
+	Note that \( E_u = 2 \inner{\sigma_u, \sigma_{uu}} \), \( F_u = \inner{\sigma_u, \sigma_{uv}} + \inner{\sigma_v, \sigma_{uu}} \), and \( G_u = 2\inner{\sigma_v, \sigma_{uv}} \).
+	This gives
+	\[
+		\dv{t} (E \dot u + F \dot v) = \frac{1}{2} \qty(E_u \dot u^2 + 2 F_u \dot u \dot v + G_u \dot v^2)
+	\]
+	which is the first of the geodesic equations.
+	By symmetry, we find the second geodesic equation similarly.
+\end{proof}
+
+\subsection{Planes of symmetry}
+Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \) such that there exists a plane \( \Pi \subseteq \mathbb R^3 \) such that \( \Pi \cap \Sigma \) is a smooth embedded curve \( C \subseteq \Sigma \), and \( \Sigma \) is setwise preserved by reflection in the plane \( \Pi \).
+We will show that \( C \) is a geodesic when parametrised at constant speed.
+Consider a point \( p \) on \( C \).
+We can think of \( \mathbb R^3 = \Pi \oplus \Pi^\perp \), where we change coordinates such that \( p \) is the origin.
+We can also write \( \mathbb R^3 = T_p \Sigma \oplus \mathbb R n_p \), where \( \mathbb R n_p \) is the vector subspace of \( \mathbb R^3 \) generated by \( n_p \).
+Clearly, reflection in \( \Pi \) acts on \( \Pi \) by the identity, and on \( \Pi^\perp \) by \( -1 \).
+Since reflection in \( \Pi \) fixes \( \Sigma \) setwise and fixes \( p \), it must also preserve the subspace \( T_p \Sigma \).
+Hence it also preserves \( \mathbb R n_p \), so \( \mathbb R n_p \subseteq \Pi \), since \( \Pi \) is not the identity on \( T_p \Sigma \).
+Now, let us parametrise \( C \) locally near \( p \) using \( t \mapsto \gamma(t) \in C \) at constant speed.
+Since \( \gamma(t) \subseteq \Pi \), we have \( \dot \gamma(t), \ddot \gamma(t) \in \Pi \).
+\( \gamma \) has constant speed, so \( \inner{\dot \gamma, \ddot \gamma} = 0 \).
+Hence \( \dot \gamma \) lies in \( \Pi \cap T_p \Sigma \) and \( \ddot \gamma \) is orthogonal to this and lies in \( \Pi \), so lies in \( \mathbb R n_p \subseteq \Pi \).
+Hence \( \gamma \) is indeed a geodesic.
+
+In particular, arcs of great circles are geodesics, since they lie in planes of symmetry.
+
+\subsection{Surfaces of revolution}
+Consider the surface of revolution given by \( \eta(u) = (f(u), 0, g(u)) \) where \( \eta \) is smooth and injective, $ \eta'\neq 0 $, and \( f(u) > 0 \), rotated about the \( z \) axis.
+\begin{definition}
+	A circle obtained by rotating a point of \( \eta \) is called a \textbf{parallel}.
+	A curve obtained by rotating \( \eta \) itself by a fixed angle about the \( z \) axis is called a \textbf{meridian}.
+\end{definition}
+A plane in \( \mathbb R^3 \) containing the \( z \) axis is a plane of symmetry, hence meridians are geodesics by the previous discussion.
+Not all parallels are geodesics.
+\begin{lemma}
+	A parallel given by \( u = u_0 \) is a geodesic when parametrised at constant speed if and only if \( f'(u_0) = 0 \).
+\end{lemma}
+\begin{proof}
+	Consider the allowable parametrisation
+	\[
+		\sigma(u,v) = (f(u) \cos v, f(u) \sin v, g(u))
+	\]
+	where \( u \in (a,b) \) and \( v \in (0,2\pi) \).
+	The first fundamental form is
+	\[
+		\qty[ (f')^2 + (g')^2 ] \dd{u}^2 + f^2 \dd{v}^2
+	\]
+	If without loss of generality we choose to parametrise \( \eta \) by arc length, this becomes
+	\[
+		\dd{u}^2 + f^2 \dd{v}^2 \implies E = 1;\;F = 0;\;G = f^2
+	\]
+	The geodesic equations are
+	\[
+		\dv{t} \dot u = \ddot u = f f_u \dot v^2;\quad \dv{t} \qty(f^2 \dot v) = 0
+	\]
+	and \( \dot u^2 + f^2 \dot v^2 \) is a nonzero constant.
+	Given that we want to only consider parallels of the surface of revolution, we can impose the constraint that \( u = u_0 \) is constant.
+	Hence, the constant speed condition gives that
+	\[
+		\dot v = \frac{\text{constant}}{f(u_0)} = \text{constant}
+	\]
+	The second equation holds automatically.
+	The first equation is
+	\[
+		0 = f(u_0) f_u(u_0) \cdot \text{constant}
+	\]
+	So this holds exactly when \( f_u(u_0) = 0 \).
+\end{proof}
+Consider a curve \( \gamma(t) \) on \( \Sigma \), making angle \( \theta \) with the parallel of radius \( \rho = f \).
+\begin{proposition}[Clairaut's relation]
+	If \( \gamma \) is a geodesic, then \( \rho \cos \theta \) is constant along \( \gamma \).
+\end{proposition}
+\begin{proof}
+	Let \( \gamma(t) = \sigma(u(t),v(t)) \), so \( \dot\gamma = \sigma_u \dot u + \sigma_v \dot v \).
+	The tangent vector to the parallel is \( \sigma_v \).
+	By the earlier discussion on angles in terms of the first fundamental form,
+	\[
+		\cos \theta = \frac{\inner{\sigma_v, \sigma_u \dot u + \sigma_v \dot v}}{\norm{\sigma_v} \cdot \norm{\sigma_u \dot u + \sigma_v \dot v}}
+	\]
+	If \( \gamma \) is parametrised by arc length, \( \norm{\dot \gamma} = 1 \), so \( \norm{\sigma_u \dot u + \sigma_v \dot v} = 1 \).
+	So, using our values for \( F, G \) above,
+	\[
+		\cos \theta = \abs{f(u) \dot v} = \rho \dot v
+	\]
+	The second geodesic equation is exactly
+	\[
+		\rho \cos \theta = \text{constant}\qedhere
+	\]
+\end{proof}
+\begin{example}
+	Usually, for a surface of revolution, we take the assumption that \( \eta \) never intersects the \( z \)-axis, or that \( f \) is positive.
+	This ensures that all points on the surface are locally smooth.
+	However, we can allow \( \eta \) to meet the \( z \)-axis orthogonally, as in the ellipsoid or sphere.
+
+	Consider an ellipsoid of revolution.
+	\( \rho \cos \theta \) is constant along a geodesic \( \gamma \).
+	Suppose that at some point \( \gamma \) intersects a parallel of radius \( \rho_0 \) at angle \( \theta_0 \), and that \( \gamma \) is not a meridian (so \( \cos \theta \neq 0 \)).
+	Hence \( \theta_0 \in \left[0, \frac{\pi}{2}\right) \).
+	In particular, for \( \rho \cos \theta \) to be constant, we must have that \( \rho \) is bounded below.
+	A geodesic which is not a meridian is therefore `trapped' between parallels corresponding to the bound on the size of \( \rho \).
+	In particular, any geodesic through a pole is a meridian.
+\end{example}
+
+\subsection{Local existence of geodesics}
+It is difficult to solve the geodesic equations globally.
+We can often intead prove local results about any geodesics that may arise.
+
+Recall Lindel\"of-Picard's theorem from Analysis and Topology:
+Let \( I = [t_0 - a, t_0 + a] \subseteq \mathbb R \), \( B = \qty{x \colon \norm{x-x_0} \leq b} \subseteq \mathbb R^n \), and \( f \colon I \times B \to \mathbb R^n \) that is continuous, and Lipschitz in the second variable.
+\[
+	\norm{f(t,x_1) - f(t,x_2)} \leq K \norm{x_1-x_2}
+\]
+Then the differential equation \( \dv{x}{t} = f(t,x) \) with \( x(t_0) = x_0 \) has a unique solution for some time interval \( \abs{t-t_0} < h \), where \( h = \min\qty{a,\frac{b}{s}} \) where \( s = \sup \norm{f} \).
+
+Further, if \( f \) is smooth in all parameters, then the solution to the differential equation is smooth and depends smoothly on the initial condition.
+
+Recall the geodesic equations:
+\begin{align*}
+	\dv{t} \qty(E \dot u + F \dot v) & = \frac{1}{2} \qty( E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2 ) \\
+	\dv{t} \qty(F \dot u + G \dot v) & = \frac{1}{2} \qty( E_v \dot u^2 + 2F_v \dot u \dot v + G_v \dot v^2 )
+\end{align*}
+We can write this as
+\[
+	\begin{pmatrix}
+		E & F \\
+		F & G
+	\end{pmatrix} \begin{pmatrix}
+		\ddot u \\
+		\ddot v
+	\end{pmatrix}= R
+\]
+where \( R \) is composed of smooth functions of \( u,v \).
+The matrix on the left hand side is invertible, and the inverse map \( A \mapsto A^{-1} \) on matrices is smooth.
+Hence, we can write the geodesic equations in the form
+\[
+	\ddot u = A(u, v, \dot u, \dot v);\quad \ddot v = B(u, v, \dot u, \dot v)
+\]
+In the usual way we can turn second-order equations into first-order equations by introducing \( p = \dot u, q = \dot v \), and we find
+\[
+	\dot u = p;\quad \dot v = q;\quad \dot p = A(u,v,p,q);\quad \dot q = B(u,v,p,q)
+\]
+This is a system of first-order ordinary differential equations as governed by Picard's theorem.
+Since \( A, B \) are smooth, a local bound on \( \norm{DA} \) and \( \norm{DB} \) will give the required Lipschitz condition.
+\begin{corollary}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \).
+	For \( p \in \Sigma \) and \( v \in T_p \Sigma \) nonzero, then there exists \( \varepsilon > 0 \) and a geodesic \( \gamma \colon [0,\varepsilon) \to \Sigma \) such that
+	\[
+		\gamma(0) = p;\quad \dot \gamma(0) = v
+	\]
+	Moreover, this geodesic depends smoothly on \( p,v \).
+\end{corollary}
+The local existence of geodesics gives rise to allowable parametrisations of \( \Sigma \) with `nice' properties in terms of the first fundamental form.
+Let \( p \in \Sigma \), and consider a geodesic arc \( \gamma \) starting at \( p \) and parametrised by arc length.
+At each point \( \gamma(t) \) for small \( t > 0 \), we can consider a geodesic arc \( \gamma_t \) starting at \( \gamma(t) \), and \( \gamma_t'(0) \) is orthogonal to \( \gamma'(t) \), and also parametrised by arc length.
+Now, we define \( \sigma(u,v) = \gamma_v(u) \), which is defined for \( u \in (-\epsilon,\varepsilon) \) and \( v \in (-\delta,\delta) \).
+\begin{lemma}
+	For \( \varepsilon, \delta \) sufficiently small, \( \sigma \colon (u,v) \mapsto \gamma_v(u) \) defines an allowable parametrisation of an open set in \( \Sigma \), taking the interior of the domain.
+\end{lemma}
+\begin{proof}
+	Smoothness follows from the addendum to Picard's theorem above.
+	At the origin \( (0,0) \), by construction we have \( \sigma_u, \sigma_v \) orthogonal.
+	Hence, they stay linearly independent for sufficiently small \( \varepsilon, \delta \).
+	So \( D\sigma \) has full rank, and (on a smaller set if necessary) \( \sigma \) is injective.
+	So \( \sigma \) is allowable.
+\end{proof}
+\begin{proposition}
+	Any smooth surface \( \Sigma \) in \( \mathbb R^3 \) admits local parametrisations for which the first fundamental form has form \( \dd{u}^2 + G(u,v) \dd{v}^2 \), so \( E = 1 \) and \( F = 0 \).
+\end{proposition}
+\begin{proof}
+	Consider the parametrisation \( \sigma(u,v) = \gamma_v(u) \).
+	For \( v_0 \) fixed, the curve \( u \mapsto \gamma_{v_0}(u) \) is a geodesic parametrised at unit speed, so \( E = 1 \).
+	One of the geodesic equations is
+	\[
+		\dv{t} \qty(F \dot u + G \dot v) = \frac{1}{2} \qty(E_v \dot u^2 + 2F_v \dot u \dot v + G_v \dot v^2)
+	\]
+	and consider \( v(t) = v_0 \), \( u(t) = t \).
+	\( E_v = \dot v = 0 \) and \( \dot u = 1 \), so
+	\[
+		\dv{t} F = 0 \implies F_u \dot u = 0 \implies F_u = 0
+	\]
+	So \( F \) is independent of \( u \).
+	At \( u = 0 \), then by construction of \( \gamma_v \) as being orthogonal to \( \gamma \) at \( \gamma(v) \), we see \( F = 0 \).
+\end{proof}
+These coordinates are called \textbf{geodesic normal coordinates} or \textbf{Fermi coordinates}.
+Note that by fixing \( u \) and letting \( v \) vary, the curve obtained is typically not a geodesic, except for \( u = 0 \) which is \( \gamma \) itself.
+In these coordinates, we can also find
+\[
+	G(0,v) = 1;\quad G_u(0,v) = 0
+\]
+The first result holds since \( \sigma_v \) has unit length at \( u = 0 \).
+The second result holds because \( u = 0 \) yields a geodesic with arc length parametrisation, and then we can use one of the geodesic equations to find
+\[
+	\dv{t} \qty(E \dot u + F \dot v) = \frac{1}{2}\qty(E_u \dot u^2 + 2F_u \dot u \dot v + G_u \dot v^2) \implies 0 = \frac{1}{2} G_u(0,v)
+\]
+One can show that if $E=1,F=0$, then the Gauss curvature is given by 
+\[
+	\kappa = -\frac{(\sqrt{G})_{uu}}{\sqrt{G}}. 
+\]
+See e.g. Theorem 8.1 in Wilson's book. This actually proves Theorema Egregium!
+
+\subsection{Surfaces of constant curvature}
+If \( a \colon \mathbb R^3 \to \mathbb R^3 \) is a dilation \( a(x,y,z) = (ax,ay,az) \), then
+\[
+	\kappa_{a(\Sigma)} = \frac{1}{a^2} \kappa_\Sigma
+\]
+since \( E, F, G \) rescale by \( a^2 \), and \( L, N, M \) rescale by \( a \).
+This matches the results previously found for spheres of varying radii.
+
+What do constant curvature surfaces look like?
+By dilating, to understand surfaces of constant curvature it suffices to consider surfaces with constant curvature \( \pm 1 \) or 0.
+\begin{proposition}
+	Let \( \Sigma \) be a smooth surface in \( \mathbb R^3 \).
+	Then,
+	\begin{enumerate}[(a)]
+		\item if \( \kappa \equiv 0 \), then \( \Sigma \) is locally isometric to \( (\mathbb R^2, \dd{u^2} + \dd{v}^2) \),
+		\item if \( \kappa \equiv 1 \), then \( \Sigma \) is locally isometric to \( (S^2, \dd{u}^2 + \cos^2 u \dd{v}^2) \).
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	\( \Sigma \) admits an allowable parametrisation with \( E = 1 \) and \( F = 0 \) by using Fermi coordinates, so
+	\[
+		\kappa = \frac{-\sqrt{G}_{uu}}{\sqrt{G}};\quad G(0,v) = 1;\quad G_u(0,v) = 0
+	\]
+	If \( \kappa \equiv 0 \), we have \( \sqrt{G}_{uu} = 0 \), so \( \sqrt{G} = A(v) u + B(v) \), and the boundary conditions give \( A \equiv 0, B \equiv 1 \).
+	In particular, \( G \equiv 1 \).
+	The fundamental form then is \( \dd{u}^2 + \dd{v}^2 \), which is that of \( \mathbb R^2 \).
+
+	If \( \kappa \equiv 1 \), we find \( (\sqrt{G})_{uu} + \sqrt{G} = 0 \) so \( \sqrt{G} = A(v) \sin u + B(v) \cos u \).
+	The boundary conditions then imply that \( A \equiv 0, B \equiv 1 \) and hence the fundamental form is \( \dd{u}^2 + \cos^2 u \dd{v}^2 \).
+	This matches the first fundamental form of a sphere with parametrisation
+	\[
+		\sigma(u,v) = (\cos u \cos v, \cos u \sin v, \sin u)\qedhere
+	\]
+\end{proof}
+If \( \kappa \equiv -1 \), we will find the first fundamental form \( \dd{u}^2 + \cosh^2 u \dd{v}^2 \).
+There exists an object known as the \textbf{tractroid}, which is a smooth surface in \( \mathbb R^3 \), and has this first fundamental form.
+We could alternatively choose not to embed this surface in \( \mathbb R^3 \).
+
+In fact, the change of variables \( v = e^v \tanh u, w = e^v \sech u \) turns the fundamental form \( \dd{u}^2 + \cosh^2 u \dd{v}^2 \) into \( \frac{\dd{V}^2 + \dd{W}^2}{W^2} \), which is a `standard' presentation of the first fundamental form of the hyperbolic plane, which we will see more of later.
+
+\section{Riemannian metrics}
+\subsection{Definitions}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( V \subset \mathbb R^2 \) be an open set.
+	An \textbf{(abstract) Riemannian metric} is a smooth map from \( V \) to the set of positive definite symmetric bilinear forms, given by
+	\[
+		p \mapsto \begin{pmatrix}
+			E(p) & F(p) \\
+			F(p) & G(p)
+		\end{pmatrix} = g(p)
+	\]
+	such that \( E > 0 \), \( G > 0 \), \( EG - F^2 > 0 \).
+	The image of this map can be viewed as an open subset of \( \mathbb R^4 \).
+\end{definition}
+
+If \( v \) is a vector at \( p \in V \), we can compute its infinitesimal length by
+\[
+	\norm{v}^2_g = v^\top \begin{pmatrix}
+		E(p) & F(p) \\
+		F(p) & G(p)
+	\end{pmatrix} v
+\]
+Thus, if \( \gamma \colon [a,b] \to V \) is smooth,
+\[
+	\mathrm{length}(\gamma) = \int_{a}^{b} \norm{\dot{\gamma}(t)}_g \dd{t} = \int_a^b \qty( E \dot u^2 + 2F \dot u \dot v + G \dot v^2 )^{\frac{1}{2}} \dd{t}
+\]
+where \( \gamma(t) = (u(t),v(t)) \).
+
+\begin{definition}
+	Given $ (V,g),(\widetilde{V},\widetilde{g}) $, we say that they are \textbf{isometric} if there exists a diffeomorphism	$f:V\to \widetilde{V}$ such that $ \norm{\eval{D f}_p (v)}_{\widetilde{g}} = \norm{v}_g $ for all $ v\in T_pV = \mathbb{R}^{2} $ and for all $ p\in V $. This is equivalent to saying that it preserves the length curves. 
+\end{definition}
+
+\begin{note}
+	$ \eval{D f}_p : T_p V \to T_{f(p)}\widetilde{V} $. 
+\end{note}
+
+\begin{example}
+	If \( (\Sigma_2, g_2) \) is given, and \( f \colon \Sigma_1 \to \Sigma_2 \) is a diffeomorphism, we can equip \( \Sigma_1 \) with a metric known as the \textit{pullback} metric \( g_1 = f^\star g_2 \) that gives that \( f \) is an isometry.
+\end{example}
+
+Let's spell out this condition using $g$ and $ \widetilde{g} $. 
+\begin{align*}
+	\norm{\teval{D f}{p} (v)}_{\widetilde{g}}^2 &= (\teval{Df}{p}v)^\top \widetilde{g}_{f(p)} \teval{Df}{p}v \\ 
+	&= v^\top(\teval{Df}{p})^\top\widetilde{g}_{f(p)}\teval{Df}{p}v\\ 
+	&= \norm{v}_g^2 = v ^\top g v. 
+\end{align*}
+This holds for all $v$ if and only if 
+\[
+	(\teval{Df}{p})^\top\widetilde{g}_{f(p)}\teval{Df}{p} = g. 
+\]
+Recall that it is exactly the transformation law, Lemma \ref{lma:transformation_law}. 
+
+\begin{definition}
+	Let \( \Sigma \) be an abstract smooth surface, so \( \Sigma = \bigcup_{i \in I} U_i \) for open sets \( U_i \), with charts \( \varphi_i \colon U_i \to V_i \subseteq \mathbb R^2 \) which are homeomorphisms, and with smooth transition maps \( \varphi_i \varphi_j^{-1} \colon \varphi_j(U_i \cap U_j) \to \varphi_i(U_i \cap U_j) \).
+
+	A \textbf{Riemannian metric} on \( \Sigma \), usually called \( g \) or \( \dd{s}^2 \), is a choice of Riemannian metric $g_i$ in the above sense on each \( V_i \), which are compatible in the following sense: $ \forall i,j $, $ \phi_i\phi_j^{-1} $ is an isometry between $ \phi_j(U_i\cap U_j) $ and $ \phi_i (U_i\cap U_j) $, i.e. if we let $ f = \phi_i \phi_j^{-1} $, then 
+	\[
+		(\teval{Df}{p})^\top \begin{pmatrix}
+			E_i  &  F_i \\
+			F_i &  G_i \\
+		\end{pmatrix}_{f(p)} \teval{Df }{p} = \begin{pmatrix}
+			E_j &  F_j \\
+			F_j &  G_j \\
+		\end{pmatrix}_p,\quad \forall p\in \phi_j(U_i\cap U_j). 
+	\]
+\end{definition}
+This compatibility condition is the transition law for first fundamental forms for smooth surfaces in \( \mathbb R^3 \).
+\begin{example}
+	Recall the torus \( T^2 = \faktor{\mathbb R^2}{\mathbb Z^2} \).
+
+	We have an atlas of charts for which the transition maps are the restrictions of translations of open subsets of \( \mathbb R^2 \).
+	For each \( V_i \subseteq \mathbb R^2 \), we associate the natural Euclidean metric \( \dd{u}^2 + \dd{v}^2 \), i.e. $ V_i\to \mathrm{id}_{2\times 2} $. 
+
+	If \( f \) is a translation, \( Df \) is the identity, and so
+	\[
+		(Df)^\top I (Df) = I
+	\]
+	holds trivially.
+	So this gives a global Riemannian metric on \( T^2 \).
+	This metric is flat, since it is locally isometric to \( \mathbb R^2 \) at all points.
+
+	Since geodesics are well-defined for abstract Riemannian metrics (energy only depends on g), they are also well-defined on $T^2$ and they are just projections of straight lines in $ \mathbb{R}^{2} $. 
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->-=0.55] (0,0) -- (0,3);
+			\draw[->-=0.55] (3,0) -- (3,3);
+			\draw[->-=0.55] (0,0) -- (3,0);
+			\draw[->-=0.55] (0,3) -- (3,3);
+			\draw[->-=0.55,dashed] (1,0) -- (1,3);
+			\draw[->-=0.55,dashed] (2,0) -- (2,3);
+			\draw[->-=0.55,dashed] (0,2) -- (3,2);
+			\draw[->-=0.55,dashed] (0,1) -- (3,1);
+			\begin{scope}[shift={(5,0)}]
+			\draw[->-=0.55] (0,0) -- (0,3);
+			\draw[->-=0.55] (3,0) -- (3,3);
+			\draw[->-=0.55] (0,0) -- (3,0);
+			\draw[->-=0.55] (0,3) -- (3,3);
+			\draw[->-=0.55,dashed,blue] (0,2) -- (1,3);
+			\draw[->-=0.55,dashed,red] (0,1) -- (2,3);
+			\draw[->-=0.55,dashed] (0,0) -- (3,3);
+			\draw[->-=0.55,dashed,blue] (1,0) -- (3,2);
+			\draw[->-=0.55,dashed,red] (2,0) -- (3,1);
+			\draw (0.5,0) arc [start angle=0, end angle=45, radius=0.5];
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	There are infinitely many closed geodesics (LHS) and infinitely many non-closed geodesics (RHS). The non-closed part can be proved by considering lines with rational and irrational slopes.
+
+	Conversely, consider the torus of revolution embedded in \( \mathbb R^3 \).
+	As a compact smooth surface in \( \mathbb R^3 \), it must contain an elliptic point.
+	Hence, the flat Riemannian metric described above is not the same (up to isometry) as the metric obtained by any possible embedding of the torus in \( \mathbb R^3 \).
+\end{example}
+
+\begin{example}
+	The real projective plane \( \mathbb R \mathbb P^2 \) admits a Riemannian metric with constant curvature \( +1 \).
+
+	We have constructed a smooth atlas for \( \mathbb R \mathbb P^2 \) where the charts were of the form \( (U, \varphi) \), with \( U = q \hat U \) and \( q \colon S^2 \to \mathbb R \mathbb P^2 \) the quotient map, \( \hat U \subseteq S^2 \) open and contained within an open hemisphere, and \( \varphi \colon U \colon U \to V \subseteq \mathbb R^2 \) is given by \( \hat \varphi \circ \eval{q^{-1}}_U \) and \( \hat \varphi \colon \hat U \to V \) a chart on \( S^2 \).
+	The transition maps for this atlas were found to be locally the identity, or induced from the antipodal map.
+	The antipodal map from \( S^2 \) to \( S^2 \) is an isometry, so both types of transition maps preserve the usual round metric on \( S^2 \).
+\end{example}
+
+\begin{example}
+	In the first example sheet, we consider the Klein bottle.
+	This has an atlas such that all transition maps are either translations or translations composed with a reflection.
+	These preserve the flat metric in \( \mathbb R^2 \), so the Klein bottle inherits a flat Riemannian metric.
+	The Klein bottle and \( \mathbb R \mathbb P^2 \) are not embedded in \( \mathbb R^3 \), so we could not construct a `non-abstract' Riemannian metric.
+\end{example}
+
+\subsection{The length metric}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let \( (\Sigma, g) \) be a connected abstract smooth surface with an abstract Riemannian metric.
+	The \textbf{length metric} is defined by
+	\[
+		d_g(p,q) = \inf_\gamma L(\gamma)
+	\]
+	where \( \gamma \) varies over piecewise smooth paths in \( \Sigma \) from \( p \) to \( q \), and \( L \) is length computed using \( g \).
+\end{definition}
+\begin{proposition}
+	Let \( (\Sigma, g) \) be a connected abstract smooth surface with an abstract Riemannian metric.
+	Then \( d_g \) is indeed a metric, and \( d_g \) induces a topology on \( \Sigma \) that agrees with the given topology.
+\end{proposition}
+\begin{remark}
+	\begin{enumerate}
+		\item Given $p,q\in V$, there is always a piecewise smooth path connecting $p$ and $q$. 
+		\item $ d_g(p,q)\ge 0$. Also $ d_g(p,q) = d_g(q,p) $ and $ d_g(p,r)\le d_g(p,q) + d_g(q,r) $. The only non-trivial claim is $ d_g(p,q) = 0 \implies p=q.  $
+		\item All this works on any abstract smooth \textit{connected} surface equipped with a Riemannian metric $g$. 
+	\end{enumerate}
+\end{remark}
+
+\begin{proof}
+	Let \( p, q \in \Sigma \).
+	We will show that there exists some piecewise smooth path \( \gamma \) from \( p \) to \( q \), so \( d_g(p,q) \) is well-defined and finite.
+	Connected surfaces are path-connected.
+	There exists a continuous path \( \gamma \) and a finite set of charts \( (U_i, \varphi_i) \) with associated parametrisations \( \sigma_i = \varphi_i^{-1} \colon V_i \to U_i \subset \Sigma \) such that \( \Im \gamma \subseteq \bigcup_{i=1}^N U_i \).
+	Consider points
+	\[
+		p = x_0 \in U_1, x_1 \in U_1 \cap U_2, x_2 \in U_2 \in U_3, \dots, q = x_N \in U_N
+	\]
+	Smooth paths in \( V_i \) from \( \varphi_i(x_i) \) to \( \varphi_{i+1}(x_{i+1}) \) exist, since smooth paths between two points in \( \mathbb R^2 \) exist.
+	Since the atlas is smooth, being a smooth path in some \( U_i \) is the same as being smooth in \( U_{i+1} \) whenever \( U_i \) and \( U_{i+1} \) intersect, since the transition maps are smooth.
+	So \( p,q \in \Sigma \) are joined by some piecewise smooth path.
+
+	For any piecewise smooth path from \( p \) to \( q \) there exists the inverse path parametrised in the opposite direction, which has the same length.
+	We can also concatenate paths from \( p \) to \( q \) and from \( q \) to \( r \), with length equal to the sum of the lengths.
+	In both cases, the new paths are piecewise smooth.
+	This then implies that \( d_g \) is symmetric, and satisfies the triangle inequality.
+
+	To show \( d_g \) is a metric, it now suffices to show that \( d_g(p,q) > 0 \) for \( p \neq q \). We recall that a $2 \times 2$ real symmetric matrix $\left(a_{i j}\right)$ is positive definite if and only if $a_{11}>0$ and $a_{11} a_{22}>a_{12}^2$. Since the matrix
+	\[
+	\begin{pmatrix}
+		E(p) & F(p) \\
+	F(p) & G(p)
+	\end{pmatrix}
+	\]
+	is positive definite, the same will therefore be true for the matrix
+	\[
+	\begin{pmatrix}
+		E(p)-\varepsilon^2 & F(p) \\
+		F(p) & G(p)-\varepsilon^2
+	\end{pmatrix}
+	\]
+	for some sufficiently small $\varepsilon>0$. Moreover, the matrix
+	\[
+	\begin{pmatrix}
+		E\left(p^{\prime}\right)-\varepsilon^2 & F\left(p^{\prime}\right) \\
+	F\left(p^{\prime}\right) & G\left(p^{\prime}\right)-\varepsilon^2
+	\end{pmatrix}
+	\]
+	will remain positive definite for all $p^{\prime}$ in some Euclidean ball $B(p, \delta) \subset V$, of Euclidean radius $\delta$. Thus for any $p^{\prime} \in B(p, \delta)$ and any $ x=\left(x_1, x_2\right)^\top \in \mathbb{R}^2$, we have
+	\[
+	\langle x,  x\rangle_{p^{\prime}}:=E\left(p^{\prime}\right) x_1^2+2 F\left(p^{\prime}\right) x_1 x_2+G\left(p^{\prime}\right) x_2^2 \geq \varepsilon^2\left(x_1^2+x_2^2\right)
+	\]
+	For any piecewise smooth curve $\gamma$ in $B(p, \delta)$, it follows therefore from the definition of lengths that the length of $\gamma$ with respect to the Riemannian metric is at least $\varepsilon$ times the length of $\gamma$ in the Euclidean metric.
+
+	Given now $p \neq q \in V$, consider any piecewise smooth curve $\gamma:[a, b] \rightarrow V$ joining the two points. Suppose that $\gamma$ is not contained in the ball $B(p, \delta)$. There exists $\xi \in[a, b]$ such that $\teval{\gamma}{[a,\xi)}$ is contained in $B(p, \delta)$ but $\gamma(\xi)$ lies on the boundary of the ball. The above argument then gives that
+	\[
+	\operatorname{length} \gamma \geq \operatorname{length}\teval{\gamma}{[a,\xi)} \geq \varepsilon \delta,
+	\]
+	since the Euclidean length of $\teval{\gamma}{[a,\xi)}$ is at least $\delta$. If however $\gamma$ is contained in the ball, then the above argument gives length $\gamma \geq \varepsilon d(p, q)$. Therefore, taking the infimum over all such $\gamma$,
+	\[
+	d_g(p, q) \geq \varepsilon \min \{\delta, d(p, q)\}>0.\qedhere
+	\]
+\end{proof}
+
+\begin{remark}
+	\( d_g \) induces a topology on \( \Sigma \) that agrees with the given topology, which is given by local homeomorphisms to \( \mathbb R^2 \) everywhere.
+\end{remark}
+
+\section{Hyperbolic Geometry}
+\subsection{Poincar\'{e} models}
+\ \vspace*{-1.5em}
+\begin{definition}
+	Let
+	\[
+		D = B(0,1) = \qty{z \in \mathbb C \colon \abs{z} < 1}
+	\]
+	The abstract Riemannian metric \( g_{\mathrm{hyp}} \) on \( D \) is given by
+	\[
+		\frac{4(\dd{u}^2 + \dd{v}^2)}{(1-u^2-v^2)^2} = \frac{4 \abs{\dd{z}}^2}{\qty(1 - \abs{z}^2)^2}
+	\]
+	Since there is only one chart, this holds for all of \( D \).
+	In particular, if \( \gamma \colon [0,1] \to D \) is smooth, then
+	\[
+		L_{g_{\mathrm{hyp}}}(\gamma) = 2 \int_0^1 \frac{\abs{\dot\gamma(t)}}{1 - \abs{\gamma(t)}^2} \dd{t}
+	\]
+	If \( \gamma(t) = (u(t), v(t)) \), we can write
+	\[
+		L(\gamma) = 2 \int_0^1 \frac{\qty(\dot u^2 + \dot v^2)^{\frac{1}{2}}}{1 - u^2 - v^2} \dd{t}
+	\]
+\end{definition}
+This is very similar to a first fundamental form with \( E = G = \frac{4}{(1-u^2-v^2)^2} \) and \( F = 0 \), but we do not claim that this fundamental form arises from an embedding in \( \mathbb R^3 \).
+
+Note that the flat metric on \( \mathbb R^2 \) and the usual round metric on \( S^2 \) have large and transitive isometry groups.
+We will show that this metric also induces a large symmetry group, which is induced by the M\"obius group.
+Recall that
+\[
+	\Mob = \qty{z \mapsto \frac{az+b}{cz+d} \colon \begin{pmatrix}
+			a & b \\
+			c & d
+		\end{pmatrix} \in GL(2,\mathbb C)} \curvearrowright \mathbb C \cup \qty{\infty}
+\]
+\begin{lemma}
+	The subgroup of the M\"obius group that preserves \( D \),
+	\[
+		\Mob(D) = \qty{T \in \Mob \colon T(D) = D}
+	\]
+	is also given by
+	\[
+		\Mob(D) = \qty{z \mapsto e^{i\theta} \frac{z-a}{1-\overline a z} \colon \abs{a} < 1} = \qty{\begin{pmatrix}
+				a           & b           \\
+				\overline b & \overline a
+			\end{pmatrix} \in \Mob \colon \abs{a}^2 - \abs{b}^2 = 1}
+	\]
+\end{lemma}
+\begin{proof}
+	Note that
+	\begin{align*}
+		\abs{\frac{z-a}{1-\overline a z}} = 1 & \iff (z-a)(\overline z - \overline a) = (1 - \overline a z)(1 - a \overline z)                                                     \\
+		                                      & \iff z\overline z - a\overline z - \overline a z + a \overline a = 1 - \overline a z - a \overline z + a \overline a z \overline z \\
+		                                      & \iff \abs{z}^2\qty(1 - \abs{a}^2) = 1 - \abs{a}^2                                                                                  \\
+		                                      & \iff \abs{z} = 1
+	\end{align*}
+	So these maps of the form
+	\[
+		z \mapsto e^{i\theta} \frac{z-a}{1-\overline a z}
+	\]
+	do indeed preserve the unit circle, and \( a \in D \) is mapped to \( 0 \in D \).
+	Hence, it preserves the entire disc.
+
+	To show that they are all of this form, pick $T\in \Mob(D)$. If $ a = T^{-1}(0) $ and $Q(z) = \frac{z-a}{1-\overline{a}z}\in \Mob(D)$, then $ TQ^{-1}(0) = 0 $ and preserves $|z|=1$ and hence it must be of the form $z \mapsto e^{i \theta}z$.  
+\end{proof}
+
+\begin{lemma}
+	The Riemannian metric \( g_{\text{hyp}} \) is invariant under \( \Mob(D) \).
+	In other words, the M\"obius group \( \Mob(D) \) acts by isometries on \( D \).
+\end{lemma}
+\begin{proof}
+	\( \Mob(D) \) is generated by \( z \mapsto e^{i\theta} \) and \( z \mapsto \frac{z-a}{1-\overline a z} \).
+	The rotations preserve \( g_{\text{hyp}} \), since it depends only on \( \abs{z} \) and not \( z \) itself.
+	For the second type of transformation, let \( w = \frac{z-a}{1-\overline a z} \).
+	Here,
+	\[
+		\dd{w} = \frac{\dd{z}}{1-\overline a z} + \frac{z-a}{(1-\overline a z)^2} \overline a \dd{z} = \frac{\dd{z}}{(1-\overline a z)^2} \qty(1 - \abs{a}^2)
+	\]
+	Then,
+	\[
+		\frac{\abs{\dd{w}}}{1-\abs{w}^2} = \frac{\abs{\dd{z}}}{\abs{1-\overline a z}^2} \cdot \frac{1 - \abs{a}^2}{1-\abs{\frac{z-a}{1-\overline a z}}^2} = \frac{\abs{\dd{z}} \qty(1-\abs{a}^2)}{\abs{1-\overline a z}^2 - \abs{z-a}^2} = \frac{\abs{\dd{z}}}{1-\abs{z}^2}
+	\]
+	Hence the hyperbolic metric, which is a function of this \( \frac{\abs{\dd{z}}}{1-\abs{z}^2} \), is also invariant under this change of variables.
+\end{proof}
+
+\begin{lemma}
+	On \( (D, g_{\text{hyp}}) \),
+	\begin{enumerate}
+		\item every pair of points in \( (D, g_{\text{hyp}}) \) is joined by a unique geodesic up to reparametrisation;
+		\item the geodesics are diameters of the disc and circular arcs orthogonal to the boundary \( \partial D \).
+	\end{enumerate}
+	The \textbf{whole} geodesics (ones that are defined on \( \mathbb R \)) are called \textbf{hyperbolic lines}.
+\end{lemma}
+\begin{proof}
+	Let \( a \in \mathbb R_+ \cap D \) and \( \gamma \) a smooth path from the origin to \( a \).
+	Let \( \gamma(t) = (u(t),v(t)) \).
+	Note that \( \Re(\gamma)(t) = (u(t),0) \) is also a smooth path from the origin to \( a \).
+	By definition of the hyperbolic metric,
+	\[
+		\mathrm{length}(\gamma) = \int_0^1 \frac{2\abs{\dot \gamma}}{1 - \abs{\gamma}^2} \dd{t} = \int_0^1 \frac{2\sqrt{\dot u^2 + \dot v^2}}{1-u^2 - v^2} \dd{t} \geq \int_0^1 \frac{2 \abs{\dot u}}{1-u^2} \dd{t}
+	\]
+	where equality holds if and only if \( \dot v \equiv 0 \), and so \( v \equiv 0 \).
+	\[
+		\mathrm{length}(\gamma) \geq \int_0^1 \frac{2 \dot u}{1-u^2} \dd{t}
+	\]
+	where equality holds in this expression if and only if \( u \) is monotonic.
+	Hence, the arc of the diameter, parametrised monotonically, is a globally length-minimising path, and hence a geodesic.
+	We can compute this integral to be
+	\[
+		\mathrm{length}(\gamma) = 2 \operatorname{artanh} a
+	\]
+	Now, \( 0 \) and \( a \) in \( \mathbb R_+ \cap D \) are joined by a unique geodesic, and \( \Mob(D) \) acts transitively and by isometries, and can be used to send any two points \( p,q \in D \) to \( 0,a \in \mathbb R_+ \cap D \).
+	So every pair of points must be joined by a unique geodesic.
+	Since M\"obius maps send circles to circles, and they preserve angles and hence orthogonality to the boundary, we must have that all geodesics are diameters or circular arcs orthogonal to \( \partial D \).
+\end{proof}
 
 \end{document}
