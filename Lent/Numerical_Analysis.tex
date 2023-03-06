@@ -999,7 +999,7 @@ for all $h>0, n \geq 0$ and all sufficiently smooth functions $f$ in (\ref{eqn:6
 and we deduce that Euler's method is of order 1 (which is justified by (\ref{eqn:6.4}))
 \end{remark}
 
-\begin{definition}[Theta methods]
+\begin{definition}[Theta methods]\label{def:theta_methods}
     For $\theta \in[0,1]$, we consider methods of the form
 \begin{equation}\label{eqn:6.6}
     \mathbf{y}_{n+1}=\mathbf{y}_n+h\left[\theta \mathbf{f}\left(t_n, \mathbf{y}_n\right)+(1-\theta) \mathbf{f}\left(t_{n+1}, \mathbf{y}_{n+1}\right)\right], \quad n=0,1, \ldots
@@ -1026,7 +1026,7 @@ Modified N-R:& $\quad \mathbf{y}^{[k+1]}=\mathbf{y}^{[k]}-[J_{\mathbf{F}}(\mathb
 \end{center}
 where $J$ is the Jacobian, i.e. derivative of $\mathbf{F}$.
 
-\begin{remark}[The order of the theta method]
+\begin{remark}[The order of the theta method]\label{rmk:6.9}
     It follows from (\ref{eqn:6.6}) and Taylor's theorem that the local truncation error of the theta method is
 \[
 \begin{aligned}
@@ -1104,7 +1104,7 @@ The reason that (\ref{eqn:7.3}) is equivalent to (\ref{eqn:7.2}) (and that their
 \[
 \mathbf{f}(x+h)=\left(I+h D+\frac{1}{2} h^2 D^2+\cdots\right) \mathbf{f}(x)=e^{h D} \mathbf{f}(x)
 \]
-\begin{example}[Adams-Bashforth method]
+\begin{example}[Adams-Bashforth method]\label{eg:7.5}
     The 2-step \textbf{Adams-Bashforth method} is
 \begin{equation}\label{eqn:7.4}
     \mathbf{y}_{n+2}-\mathbf{y}_{n+1}=h\left[\frac{3}{2} \mathbf{f}_{n+1}-\frac{1}{2} \mathbf{f}_n\right] .
@@ -1270,5 +1270,407 @@ An optimal implicit method with even number of steps $s$ with order $p=s+2$ is g
 \[
 \int_0^s q(t) \dd{t}=\sum_{m=0}^s b_m q(m) \quad \forall q \in \mathcal{P}_{s+1} .
 \]
+
+\section{Runge-Kutta methods}
+
+Recall the quadrature formulae of approximating the integral by 
+\begin{equation}
+    \int_{0}^{1} f(t) \dd{t} \approx \sum_{i=1}^{s}b_i f(c_i),
+\end{equation}
+where for given knots $c_i$, the weights $b_i$ are chosen to make this quadrature exact for all polynomials of degree $s-1$, that is, $ b_i = \int_{0}^{1} \ell_i (t) \dd{t} $ where $\ell_i$ are fundamental Lagrange polynomials such that $ \ell_i(c_j) = \delta_{ij} $. 
+If $ \omega(t) = \prod_{i=1}^{s}(t-c_i) $ is orthogonalto all polynomials of degree $s-1$ on $[0,1]$ then we obtain the Gaussian quadrature: the formula that is exact for all polynomials of degree $2s-1$. 
+
+Suppose that we wish to solve the ODE $ y' = f(t) $ with $y(0) = y_0$. The exact solution is 
+\[
+    y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t) \dd{t}
+\]
+and we can approximate it by the quadrature, scaling from $[0,1]$ to $[t_n,t_{n+1}]$. In that way, we obtain the time-stepping scheme 
+\[
+    y_{n+1}=y_n+h \sum_{i=1}^s b_i f(t_n+c_i h), \quad h=t_{n+1}-t_n .
+\]
+We aim to generalise this to genuine ODEs of the form $ \mathbf{y}' = \mathbf{f}(t,\mathbf{y}) $. Formally,
+\[
+    \mathbf{y}(t_{n+1}) = \mathbf{y}(t_n) + \int_{t_n}^{t_{n+1}} \mathbf{f}(t,\mathbf{y}(t)) \dd{t},
+\]a
+and this can be approximated as before by 
+\begin{equation}\label{eqn:9.2}
+    \mathbf{y}_{n+1} = \mathbf{y}_n + h \sum_{i=1}^{s} b_i \mathbf{f}(t_n + c_i h, \mathbf{y}(t_n+c_i h)),
+\end{equation}
+except that the vectors $ \mathbf{y}(t_n+c_i h) $ are unknown. But they can be approximated by another quadrature using approximate values of $\mathbf{y}(t_n+c_j h)$ obtained earlier:
+\[
+    \mathbf{y}\left(t_n+c_i h\right)=\mathbf{y}\left(t_n\right)+\int_{t_n}^{t_n+c_i h} \mathbf{f}(t, \mathbf{y}(t)) \dd{t} \approx \mathbf{y}\left(t_n\right)+h \sum_{j=1}^{i-1} a_{i j} \mathbf{f}\left(t_n+c_j h, \mathbf{y}\left(t_n+c_j h\right)\right),
+\]
+
+so that applying $f$ to both sides of this formula we obtain
+\begin{equation}\label{eqn:9.3}
+    \mathbf{f}\left(t_n+c_i h, \mathbf{y}\left(t_n+c_i h\right)\right) \approx \mathbf{f}\left(t_n+c_i h, \mathbf{y}\left(t_n\right)+h \sum_{j=1}^{i-1} a_{i j} \mathbf{f}\left(t_n+c_j h, \mathbf{y}\left(t_n+c_j h\right)\right)\right)
+\end{equation}
+
+\begin{method}[Explicit Runge-Kutta methods]
+    From (\ref{eqn:9.2}) and (\ref{eqn:9.3}), letting $ \mathbf{k}_i \approx \mathbf{f}(t_n+c_i h, \mathbf{y}(t_n+c_i h)) $, we arrive at the general form of an $s$-stage \textbf{explicit Runge-Kutta method} (RK):
+    \[
+        \mathbf{k}_i = \mathbf{f}\left( t_n + c_i h, \mathbf{y}_n + h \sum_{j=1}^{i-1}a_{ij}\mathbf{k}_j \right),\ i = 1, \dots, s,\quad 
+        \mathbf{y}_{n+1} = \mathbf{y}_n + h \sum_{i=1}^{s} b_i \mathbf{k}_i.
+    \]
+\end{method}
+
+Here are the same formulas with more details:
+\begin{IEEEeqnarray*}{rClrCl}
+    \mathbf{k}_1 &=& \mathbf{f}(t_n,\mathbf{y}_n) & c_1 &=& 0\\ 
+    \mathbf{k}_2 &=& \mathbf{f}(t_n + c_2h, \mathbf{y}_n+ h a_{21} \mathbf{k}_1) & c_2 &=& a_{21}\\ 
+    \mathbf{k}_3 &=& \bff(t_n+c_3 h, \mathbf{y}_n+h(a_{31} \mathbf{k}_1+a_{32} \mathbf{k}_2)) &\quad c_3&=&a_{31}+a_{32}\\ 
+    &\vdots& &  &\vdots & \\ 
+    \mathbf{k}_s &=& \mathbf{f}\left( t_n + c_s h, \mathbf{y}_n + h \sum_{j=1}^{s-1}a_{sj}\mathbf{k}_j \right) & c_s &=& \sum_{j=1}^{s-1}a_{sj}\\
+    \mathbf{y}_{n+1} &=& \mathbf{y}_n + h \sum_{i=1}^{s} b_i \mathbf{k}_i & \sum b_i &=& 1
+\end{IEEEeqnarray*}
+Here, equalities $c_i=\sum_{j=1}^{i-1} a_{ij}$ (as well as $\sum b_i=1$ ) simply say that quadratures are exact on constants: a reasonable (although not necessary for $a_{i j}$) requirement. A more sophisticated choice of the RK coefficients $a_{i j}$ is motivated at the first instance by order considerations.
+
+\subsection{Order of Runge-Kutta methods}
+\ \vspace*{-1.5em}
+\begin{example}[Two-stage methods of order 2]
+    Consider the following two-stage methods
+    \begin{align*}
+        \mathbf{k}_1 &= \mathbf{f}(t_n,\mathbf{y}_n)\\ 
+        \mathbf{k}_2 &= \mathbf{f}(t_n+c_2h, \mathbf{y}_n+c_2h \mathbf{k}_1)\\ 
+        \mathbf{y}_{n+1} &= \mathbf{y}_n + h (b_1\mathbf{k}_1 + b_2\mathbf{k}_2)
+    \end{align*}
+    Taylor expand $\mathbf{k}_2$ about $(t_n,\mathbf{y}_n)$ and using $\mathbf{k}_1=\mathbf{f}$, we obtain
+    \[
+        \mathbf{k}_2 = \mathbf{f}(t_n+c_2h, \mathbf{y}_n + c_2h \mathbf{f}) = \mathbf{f} + c_2h(\mathbf{f}_t+\mathbf{f}_y \mathbf{f}) + \mathcal{O}(h^2). 
+    \]
+    But $ \mathbf{y}'(t) = \mathbf{f}(t,\mathbf{y}) $, so $ \mathbf{y}'' = \mathbf{f}_t + \mathbf{f}_y \mathbf{y}' = \mathbf{f}_t + \mathbf{f}_y \mathbf{f} $. Therefore, substituing the exact solution $ \mathbf{y}_n = \mathbf{y}(t_n) $ into the scheme, we obtain $ \mathbf{k}_1 = \mathbf{y}', \mathbf{k}_2 = \mathbf{y}' + c_2h \mathbf{y}'' + \mathcal{O}(h^2) $. Consequently, the RK method produces 
+    \[
+        \mathbf{y}(t_{n+1}) = \mathbf{y} + (b_1+b_2) h \mathbf{y}' + b_2c_2 h^2 \mathbf{y}'' + \mathcal{O}(h^3)
+    \]
+    and we deduce that it is of order 2 if 
+    \[
+        b_1+b_2 = 1, \quad b_2 c_2 = \frac{1}{2}.
+    \]
+    It is easy to demonstrate that no such method may be of order $ \ge 3 $, e.g. by applying it to $ y' = y $. 
+\end{example}
+
+\begin{method}[General RK method]
+    A general $s$-stage RK method is 
+    \[
+        \mathbf{k}_i = \mathbf{f}\qty(t_n + c_i h, \mathbf{y}_n + h \sum_{j=1}^{s}a_{ij}\mathbf{k}_j),\ i = 1, \dots, s,\quad \mathbf{y}_{n+1} = \mathbf{y}_n + h \sum_{i=1}^{s}b_i \mathbf{k}_i. 
+    \]
+\end{method}
+\begin{example}\label{eg:9.5}
+Consider the 2-stage implicit method
+\[
+\begin{aligned}
+\bfk_1 & =\bff\left(t_n, \mathbf{y}_n+\frac{1}{4} h\left(\mathbf{k}_1-\mathbf{k}_2\right)\right), \\
+\mathbf{k}_2 & =\bff\left(t_n+\frac{2}{3} h, \mathbf{y}_n+\frac{1}{12} h\left(3 \mathbf{k}_1+5 \mathbf{k}_2\right)\right), \\
+\mathbf{y}_{n+1} & =\mathbf{y}_n+\frac{1}{4} h\left(\mathbf{k}_1+3 \mathbf{k}_2\right) .
+\end{aligned}
+\]
+We analyse its order with respect to scalar \textbf{autonomous} equations of the form $y^{\prime}=f(y)$. For brevity, we use the convention that all functions are evaluated at $y=y\left(t_n\right)$. Thus,
+\[
+\begin{aligned}
+& k_1=f+\frac{1}{4} h f_y\left(k_1-k_2\right)+\frac{1}{32} h^2 f_{y y}\left(k_1-k_2\right)^2+\mathcal{O}\left(h^3\right) \\
+& k_2=f+\frac{1}{12} h f_y\left(3 k_1+5 k_2\right)+\frac{1}{288} h^2 f_{y y}\left(3 k_1+5 k_2\right)^2+\mathcal{O}\left(h^3\right) .
+\end{aligned}
+\]
+Substitution $k_1=f+\mathcal{O}(h), k_2=f+\mathcal{O}(h)$ in the above equations ($h$-terms) yields
+\[
+\begin{aligned}
+& k_1=f+\mathcal{O}\left(h^2\right), \\
+& k_2=f+\frac{2}{3} h f_y f+\mathcal{O}\left(h^2\right) .
+\end{aligned}
+\]
+Substituting again, we obtain
+\[
+\begin{aligned}
+k_1 & =f-\frac{1}{6} h^2 f_y^2 f+\mathcal{O}\left(h^3\right), \\
+k_2 & =f+\frac{2}{3} h f_y f+h^2\left(\frac{5}{18} f_y^2 f+\frac{2}{9} f_{y y} f^2\right)+\mathcal{O}\left(h^3\right), \\
+y\left(t_{n+1}\right) & =y+h f+\frac{1}{2} h^2 f_y f+\frac{1}{6} h^3\left(f_y^2 f+f_{y y} f^2\right)+\mathcal{O}\left(h^4\right) .
+\end{aligned}
+\]
+But $y^{\prime}=f$ implies $y^{\prime \prime}=f_y f$ and $y^{\prime \prime \prime}=f_y^2 f+f_{y y} f^2$ and we deduce from Taylor's theorem that the method is at least of order 3. (It is easy to verify that it isn't of order 4 , for example applying it to the equation $y^{\prime}=y$.)
+\end{example}
+
+\begin{theorem}[High-order RK methods]
+    Let $\omega(t)=\prod_{i=1}^s\left(t-c_i\right)$ be orthogonal on the interval $[0,1]$ to all polynomials of degree $r-1 \leq s-1$, let $\ell_i$ be the fundamental Lagrange polynomials of degree $s-1$ for the knots $c_i$, and let
+\begin{equation}\label{eqn:9.4}
+    a_{i j}=\int_0^{c_i} \ell_j(t) \dd{t}, \quad b_i=\int_0^1 \ell_j(t) \dd{t}
+\end{equation}
+Then the (highly implicit) $s$-stage RK method with parameters (\ref{eqn:9.4}) is of order $s+r$. 
+\end{theorem}
+Thus, the highest order of an $s$-stage implicit RK method is $2 s$, it corresponds to collocation at zeros of Legendre polynomial (Gauss-Legendre RK method). Construction of explicit methods with high order is a kind of art.
+
+\section{Stiff ODEs: linear stability and A-stability}
+
+Consider the linear scalar ODE
+\[
+y^{\prime}=\lambda y, \quad y(0)=1, \quad \text { where } \lambda<0 .
+\]
+The exact solution is $y(t)=e^{\lambda t}$ which decays to zero as $t \rightarrow \infty$, so we would like from a numerical method to maintain the same property for the sequence $\left(y_n\right)$. However, if we solve this ODE with forward Euler's method, then $y_{n+1}=y_n+\lambda h y_n=(1+\lambda h)^{n+1}$, and in order to have $y_n \rightarrow 0$, we should require
+\[
+y_n \rightarrow 0 \Leftrightarrow|1+\lambda h|<1 \Leftrightarrow h<\frac{2}{|\lambda|} .
+\]
+For large $\lambda<0$, say $\lambda=-100$, this could be a severe restriction on $h$.
+
+It is important to realise that this restriction, necessary to recovery of correct asymptotic behaviour, has nothing to do with local accuracy, since, for large $n$, the genuine solution $y\left(t_n\right)$ is exceedingly small. So, this restriction is solely to prevent an unbounded growth in the numerical solution.
+
+\begin{definition}[Stiff ODEs]
+    We say that the ODE $\mathbf{y}^{\prime}=\mathbf{f}(t, \mathbf{y})$ is \textbf{stiff} if (for some methods) we need to depress $h$ to maintain \textbf{stability} well beyond requirements of accuracy.
+\end{definition}
+
+\begin{definition}[Linear stability domain]
+    Suppose that a numerical method, applied to $y^{\prime}=\lambda y$, $y(0)=1$, with constant $h$, produces the solution sequence $\left\{y_n\right\}$. We call the set
+\[
+\mathcal{D}=\left\{z:=\lambda h \in \mathbb{C}: \lim _{n \rightarrow \infty} y_n=0\right\}
+\]
+the \textbf{linear stability domain} of the method.
+
+Noting that the set of $\lambda \in \mathbb{C}$ for which $y(t)=e^{\lambda t} \rightarrow 0$ as $t \rightarrow \infty$ is the left half-plane $\mathbb{C}^{-}=\{z \in$ $\mathbb{C}: \operatorname{Re} z<0\}$, we say that the method is \textbf{A-stable} if $\mathbb{C}^{-} \subseteq \mathcal{D}$.
+\end{definition}
+
+\begin{example}
+    (1) For Euler's method, as we have already seen $y_n \rightarrow 0$ iff $|1+\lambda h|<1$, therefore its linear stability domain is $\mathcal{D}=\{z \in \mathbb{C}:|1+z|<1\}$.
+
+(2) Solving $y^{\prime}=\lambda y$ with the trapezoidal rule: $y_{n+1}=y_n+h\left(\frac{1}{2} f_n+\frac{1}{2} f_{n+1}\right)$, we obtain
+\[
+    y_{n+1}=\left[\left(1+\frac{1}{2} \lambda h\right) \bigg/\left(1-\frac{1}{2} \lambda h\right)\right] y_n
+\]
+thus, by induction, $y_n=\left[\left(1+\frac{1}{2} \lambda h\right) /\left(1-\frac{1}{2} \lambda h\right)\right]^n y_0$. Therefore
+\[
+z \in \mathcal{D}  \iff \left|\frac{1+\frac{1}{2} z}{1-\frac{1}{2} z}\right|<1  \iff  \operatorname{Re} z<0,
+\]
+and we deduce that $\mathcal{D}=\mathbb{C}^{-}$. Hence, the method is A-stable.
+
+(3) For backward Euler: $y_{n+1}=y_n+\lambda h y_{n+1}$, we get $y_{n+1}=(1-\lambda h)^{-1} y_n$, whence $\mathcal{D}=\{z \in \mathbb{C}$ : $|1-z|>1\}$, and the method is also A-stable.
+\end{example}
+Note that A-stability does not mean that any step size will do. We need to choose $h$ small enough to ensure the right accuracy, but we don't want to depress it much further to prevent instability.
+
+\subsection{Stability of multistep methods}
+By definition, the number $z=\lambda h$ is in the linear stability domain $\mathcal{D}$ of a multistep method
+\begin{equation}
+    \sum_{m=0}^s a_m y_{n+m}=h \sum_{m=0}^s b_m f_{n+m}
+\end{equation}
+if the sequence $\left(y_n\right)$ which is a solution to the recurrence relation arising from (10.1) with $f_n=\lambda y_n$ satisfies $y_n \rightarrow 0$. Plugging in back, the latter is true if and only if the roots of the (characteristic) equation
+\begin{equation}
+    p(x):=\rho(x)-z \sigma(x)=\sum_{m=0}^s a_m x^m-z \sum_{m=0}^s b_m x^m=0
+\end{equation}
+are less than one in absolute values. (Recall the solution of difference equations)
+
+If $z=\lambda h$ is on the boundary of the linear stability domain $\mathcal{D}$, then the characteristic polynomial $p$ has a root $x$ of modulus 1, i.e. $x=e^{i t}$. Substituting such an $x$ into (10.2), we get that the boundary of $\mathcal{D}$ is the curve $z(t)=\frac{\rho\left(e^{i t}\right)}{\sigma\left(e^{i t}\right)}$.
+
+If we need to determine the \textit{real} stability interval $I=\mathcal{D} \cap \mathbb{R}$, then it is highly likely that $z_1=\frac{\rho(1)}{\sigma(1)}$ and $z_2=\frac{\rho(-1)}{\sigma(-1)}$ are the end-points of $I$. Further, since $\rho(1)=0$, this interval for many methods is $I=\left(\frac{\rho(-1)}{\sigma(-1)}, 0\right)$. Still some further work is needed to prove that this is indeed the case.
+
+\begin{example}
+    Consider the 3-step 3-rd-order Adams-Bashforth method
+\[
+y_{n+3}-y_{n+2}=h\left(\frac{23}{12} f_{n+2}-\frac{4}{3} f_{n+1}+\frac{5}{12} f_n\right) .
+\]
+With $f=\lambda y$, the characteristic polynomial is
+\[
+p(x)=\left(x^3-x^2\right)-z\left(\frac{23}{12} x^2-\frac{4}{3} x+\frac{5}{12}\right) .
+\]
+We have then
+\[
+p(1)=-z, \quad p(-1)=-2-\frac{11}{3} z
+\]
+so we guess that $\left(-\frac{6}{11}, 0\right)$ is the stability interval $I=\mathcal{D} \cap \mathbb{R}$.
+
+(1) If $z>0$, then
+\[
+p(1)=-z<0, \quad p(+\infty)=+\infty
+\]
+hence $p$ has a root $x_*>1$, thus no stability.
+
+(2) If $z<-\frac{6}{11}$, then
+\[
+p(-1)=-2-\frac{11}{3} z>0, \quad p(-\infty)=-\infty
+\]
+
+hence $p$ has a root $x_*<-1$, and there is no stability either.
+
+(3) For $z \in\left(-\frac{6}{11}, 0\right)$, we have
+\[
+p(-1)=-2-\frac{11}{3} z<0, \quad p(0)=-\frac{5}{12} z>0, \quad p\left(\frac{1}{2}\right)=-\frac{1}{8}-\frac{11}{48} z<0, \quad p(1)=-z>0,
+\]
+hence all three roots of $p$ are real and reside within $(-1,1)$, therefore the method is stable for $z=\lambda h \in\left(-\frac{6}{11}, 0\right)$.
+\end{example}
+
+\begin{theorem}[The second Dahlquist barrier]
+    No multistep method of order $p \geq 3$ may be A-stable. (The $p=2$ barrier for A-stability is attained by the trapezoidal rule.)
+\end{theorem}
+
+However, some high-order multistep methods are still of good use. Stability properties of BDF, say, are satisfactory for most stiff equations. The point is that, in many stiff linear systems in applications, the eigenvalues are not just in $\mathbb{C}^{-}$but also well away from $i \mathbb{R}$. All BDF methods of order $p \leq 6$ (i.e., all convergent BDF methods) share the feature that their linear stability domain $\mathcal{D}$ includes a wedge about $(-\infty, 0)$ : such methods are said to be \textbf{$\text{A}_0$-stable}.
+
+\subsection{Stability of Runge-Kutta methods}
+\ \vspace*{-1.5em}
+\begin{lemma}
+    No explicit Runge-Kutta method may be A-stable (or even $\text{A}_0$-stable).
+\end{lemma}
+
+\begin{proof}
+    See ES2Q6. 
+\end{proof}
+
+Unlike multistep or explicit Runge-Kutta methods, implicit high-order RK may be A-stable. For an $s$-stage method, its linear stability domain $\mathcal{D}$ is determined from the relation
+\[
+y_{n+1}=r(z) y_n, \quad r(z)=\frac{p(z)}{q(z)}, \quad p, q \in \mathcal{P}_s,
+\]
+where $r(z)$ is a rational function of degree $s$, and the inequality $|r(z)|<1$ for $z \in \mathbb{C}^{-}$is possible.
+
+\begin{example}
+    Consider the 2-stage 3rd-order method from Example \ref{eg:9.5}
+\[
+\begin{aligned}
+\mathbf{k}_1 & =\mathbf{f}\left(t_n, \mathbf{y}_n+\frac{1}{4} h\left(\mathbf{k}_1-\mathbf{k}_2\right)\right) \\
+\mathbf{k}_2 & =\mathbf{f}\left(t_n+\frac{2}{3} h, \mathbf{y}_n+\frac{1}{12} h\left(3 \mathbf{k}_1+5 \mathbf{k}_2\right)\right), \\
+\mathbf{y}_{n+1} & =\mathbf{y}_n+\frac{1}{4} h\left(\mathbf{k}_1+3 \mathbf{k}_2\right) .
+\end{aligned}
+\]
+Applying it to $y^{\prime}=\lambda y$, we have
+\[
+\begin{aligned}
+& h k_1=h \lambda\left(y_n+\frac{1}{4} h k_1-\frac{1}{4} h k_2\right), \\
+& h k_2=h \lambda\left(y_n+\frac{1}{4} h k_1+\frac{5}{12} h k_2\right) .
+\end{aligned}
+\]
+This is a linear system, whose solution (with $z=\lambda h$ ) is
+\[
+\begin{pmatrix}
+    h k_1 \\
+h k_2
+\end{pmatrix}=
+\begin{pmatrix}
+    1-\frac{1}{4} z & \frac{1}{4} z \\
+-\frac{1}{4} z & 1-\frac{5}{12} z
+\end{pmatrix}^{-1}
+\begin{pmatrix}
+    z y_n \\
+z y_n
+\end{pmatrix}=\frac{1}{\det(A)}
+\begin{pmatrix}
+    1-\frac{5}{12} z & -\frac{1}{4} z \\
+\frac{1}{4} z & 1-\frac{1}{4} z
+\end{pmatrix}
+\begin{pmatrix}
+    z y_n \\
+z y_n
+\end{pmatrix}.
+\]
+We need $\frac{1}{4}\left(h k_1+3 h k_2\right)=\frac{z\left(1-\frac{1}{6} z\right)}{\det(A)} y_n$, therefore
+\[
+y_{n+1}=y_n+\frac{1}{4} h\left(k_1+3 k_2\right)=\left(1+\frac{z\left(1-\frac{1}{6} z\right)}{1-\frac{2}{3} z+\frac{1}{6} z^2}\right) y_n=\frac{1+\frac{1}{3} z}{1-\frac{2}{3} z+\frac{1}{6} z^2} y_n .
+\]
+Let
+\[
+r(z)=\frac{1+\frac{1}{3} z}{1-\frac{2}{3} z+\frac{1}{6} z^2} .
+\]
+Then $y_{n+1}=r(z) y_n$, therefore, by induction, $y_n=r(z)^n y_0$ and we deduce that
+\[
+\mathcal{D}=\{z \in \mathbb{C}:|r(z)|<1\}
+\]
+We wish to prove that $|r(z)|<1$ for every $z \in \mathbb{C}^{-}$, since this is equivalent to A-stability. This will be done by a technique that can be applied to other RK methods. According to the \textbf{maximum modulus principle} from Complex Methods, if $g$ is analytic in a complex domain $\Omega$ then $|g|$ attains its maximum on $\partial \Omega$. We let $g=r$. This is a rational function, hence its only singularities are the poles $2 \pm i \sqrt{2}$ and $g$ is analytic in $\Omega=\mathbb{C}^{-}=\{z \in \mathbb{C}: \operatorname{Re} z<0\}$. Therefore, it attains its maximum modulus either at $z=\infty$ or on $\partial \Omega=i \mathbb{R}$. Clearly, $r(z) \rightarrow 0$ as $z \rightarrow \infty$, and
+\[
+\text {A-stability} \iff |r(z)|<1, \quad z \in \mathbb{C}^{-}  \iff  |r(i t)| \leq 1, \quad t \in \mathbb{R} .
+\]
+In turn,
+\[
+|r(i t)|^2 \leq 1  \iff  \left|1-\frac{2}{3} i t-\frac{1}{6} t^2\right|^2-\left|1+\frac{1}{3} i t\right|^2 \geq 0 .
+\]
+But the last expression is $\left(1-\frac{1}{6} t^2\right)^2+\frac{4}{9} t^2-\left(1+\frac{1}{9} t^2\right)=\frac{1}{36} t^4 \geq 0$, and it follows that the method is A-stable.
+\end{example}
+
+\section{Numerical implementation}
+\begin{problem}
+    The step size $h$ is not some preordained quantity: it is a parameter of the method (in reality, many parameters, since we may vary it from step to step). The basic input of a well-written computer package for ODEs is not the step size but the \textbf{error tolerance}: the level of precision, as required by the user. The choice of $h>0$ is an important tool at our disposal to keep a local estimate of the error beneath the required tolerance in the solution interval. In other words, we need not just a \textbf{time-stepping algorithm}, but also mechanisms for \textbf{error control} and for amending the step size.
+\end{problem}
+
+\begin{technique}[The Milne device]
+    Suppose that we wish to monitor the error of the trapezoidal rule (TR),
+\[
+\mathbf{y}_{n+1}=\mathbf{y}_n+h\left[\frac{1}{2} \mathbf{f}\left(t_n, \mathbf{y}_n\right)+\frac{1}{2} \mathbf{f}\left(t_n, \mathbf{y}_{n+1}\right)\right]
+\]
+We already know that the order is 2, more precisely (see Remark \ref{rmk:6.9}) the truncation error satisfies
+\begin{equation}\label{eqn:11.1}
+    \mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{\mathrm{TR}}=c_{\mathrm{TR}} h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right)+\mathcal{O}\left(h^4\right), \quad c_{\mathrm{TR}}=-\frac{1}{12}
+\end{equation}
+where the number $c_{\mathrm{TR}}=-\frac{1}{12}$ is called the \textbf{error constant} of TR. Unfortunately, this error estimate does not help much because the value $\mathbf{y}^{\prime \prime \prime}\left(t_n\right)$ is unknown. However, each multistep method (but not RK!) has its own error constant. For example, the 2-nd order 2-step Adams-Bashforth method $(\mathrm{AB})$
+\[
+\mathbf{y}_{n+1}-\mathbf{y}_n=h\left[\frac{3}{2} \mathbf{f}\left(t_n, \mathbf{y}_n\right)-\frac{1}{2} \mathbf{f}\left(t_{n-1}, \mathbf{y}_{n-1}\right)\right]
+\]
+has the error constant $c_{\mathrm{AB}}=\frac{5}{12}$ (see Example \ref{eg:7.5}), i.e.,
+\begin{equation}\label{eqn:11.2}
+    \mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{\mathrm{AB}}=c_{\mathrm{AB}} h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right)+\mathcal{O}\left(h^4\right), \quad c_{\mathrm{AB}}=\frac{5}{12} .
+\end{equation}
+The idea behind the Milne device is to use two multistep methods of the same order, one explicit and the second implicit (e.g., two methods just mentioned), to estimate the local error of the implicit method. Subtracting (\ref{eqn:11.2}) from (\ref{eqn:11.1}), we obtain the estimate $h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right) \approx-\frac{\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}}{c_{\mathrm{AB}}-c_{\mathrm{TR}}}$, therefore
+\begin{equation}\label{eqn:11.3}
+    \mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{\mathrm{TR}} \approx-\frac{c_{\mathrm{TR}}}{c_{\mathrm{AB}}-c_{\mathrm{TR}}}\left(\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}\right)=\frac{1}{6}\left(\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}\right)
+\end{equation}
+and we use the right hand side as an estimate of the local error.
+\end{technique}
+
+Note that TR is a far better method than AB: it is A-stable, hence its global behaviour is superior. We employ $\mathrm{AB}$ solely to estimate the local error (well, and for some other things). This adds very little to the overall cost of TR, since AB is an explicit method.
+
+\begin{implementation}
+    To implement the Milne device, we work with a pair of multistep methods of the same order, one explicit (predictor) and the other implicit (corrector), e.g.
+    \begin{align}
+        \text {Predictor: }\quad & \bfy_{n+2}^{\mathrm{P}}=\mathbf{y}_{n+1}+h\left[\frac{5}{12} \bff_{n-1}-\frac{4}{3} \bff_n+\frac{23}{12} \bff_{n+1}\right], \nonumber\\
+    \text {Corrector: }\quad & \bfy_{n+2}^{\mathrm{C}}=\mathbf{y}_{n+1}+h\left[-\frac{1}{12} \bff_n+\frac{2}{3} \bff_{n+1}+\frac{5}{12} \bff_{n+2}\right],\label{eqn:11.4}
+    \end{align}
+    the third-order Adams-Bashforth and Adams-Moulton methods respectively. Depending on whether the error tolerance $\epsilon$ has been achieved (from the estimate similar to (\ref{eqn:11.3})) we amend the step size $h$ (this can be done with polynomial interpolation).
+\end{implementation}
+
+The predictor is employed not just to estimate the error of the corrector, but also to provide \textit{an initial guess in the solution of the implicit corrector equations}, which then can be solved, say, by simple (direct) iteration (see p. \pageref{def:theta_methods}). In the latter case, the formulas are as follows
+\begin{align}
+    \mathbf{y}_{n+2}^{(1)} & =\mathbf{y}_{n+1}+h\left[\frac{5}{12} \bff_{n-1}-\frac{4}{3} \bff_n+\frac{23}{12} \bff_{n+1}\right] \label{eqn:11.5} \\
+    \mathbf{y}_{n+2}^{(\ell+1)} &=\mathbf{y}_{n+1}+h\left[-\frac{1}{12} \bff_n+\frac{2}{3} \bff_{n+1}+\frac{5}{12} \bff\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell)}\right)\right], \quad \ell=1,2, \ldots \label{eqn:11.6}
+\end{align}
+Usually, one stops the iteration when $\left\|\mathbf{y}_{n+2}^{(\ell+1)}-\mathbf{y}_{n+2}^{(\ell)}\right\|<\epsilon$ is achieved.
+
+\begin{lemma}[A condition for convergence]
+    Given an implicit multistep method, say (\ref{eqn:11.4}), let a simple iteration method (\ref{eqn:11.5})-(\ref{eqn:11.6}) be applied to determine $\mathbf{y}_{n+2}$. Further, let $\mathbf{f}$ satisfy a Lipschitz condition with a constant $L$, and let $h$ satisfy $h L\left|b_2\right|<1$. Then the sequence $(\mathbf{y}_{n+2}^{(\ell)})$ converges to a solution $\mathbf{y}_{n+2}$ of (\ref{eqn:11.4}).
+\end{lemma}
+\begin{proof}
+    The simple iteration provides the relation
+\[
+\begin{aligned}
+\left\|\mathbf{y}_{n+2}^{(\ell+2)}-\mathbf{y}_{n+2}^{(\ell+1)}\right\| & =h\left|b_2\right|\left\|\mathbf{f}\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell+1)}\right)-\mathbf{f}\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell)}\right)\right\| \leq h L\left|b_2\right|\left\|\mathbf{y}_{n+2}^{(\ell+1)}-\mathbf{y}_{n+2}^{(\ell)}\right\| \\
+& \leq\left(h L\left|b_2\right|\right)^{\ell}\left\|\mathbf{y}_{n+2}^{(1)}-\mathbf{y}_{n+2}^{(0)}\right\|
+\end{aligned}
+\]
+Thus, $h L\left|b_2\right|<1$ implies that $(\mathbf{y}_{n+2}^{(\ell)})$ is a Cauchy sequence, so it converges to a limit, $\mathbf{y}_{n+2}$ say. Further, $\mathbf{y}_{n+2}^{(\ell+1)} \rightarrow \mathbf{y}_{n+2}$ and $\mathbf{y}_{n+2}^{(\ell)} \rightarrow \mathbf{y}_{n+2}$ in (\ref{eqn:11.6}) show that $\mathbf{y}_{n+2}$ satisfies (\ref{eqn:11.4}).
+\end{proof}
+
+\begin{technique}[Embedded Runge-Kutta methods]
+    The situation is more complicated with RK, since no single error constant determines local growth of the error. The approach of \textbf{embedded RK} requires, again, two (typically explicit) methods: an RK method of $s$ stages and order $p$, say, and another method, of $s+m$ stages, $m \geq 1$, and order $p+1$, such that \textit{the first $s$ stages of both methods are identical}. (This means that the cost of implementing the higher-order method is marginal, once we have computed the lower-order approximation.) For example, consider
+    \[
+        \begin{rcases}
+            \begin{rcases}
+            \begin{aligned}
+                \mathbf{k}_1 &= \mathbf{f}(t_n, \mathbf{y}_n)\\ 
+                \mathbf{k}_2 &= \mathbf{f}( t_n + \tfrac{1}{2}h, \mathbf{y} + \tfrac{1}{2} h \mathbf{k}_1),\hspace*{3em}\\ 
+                \mathbf{y}^{[2]}_{n+1} &= \mathbf{y}_n + h \mathbf{k}_2;
+            \end{aligned}
+            \end{rcases} \text{ order }2\hspace*{1em}\\
+            \hspace{1.1pt}
+            \begin{aligned}
+                \mathbf{k}_3 &= \mathbf{f}(t_n + h, \mathbf{y}_n - h \mathbf{k}_1 + 2h \mathbf{k}_2),\\ 
+                \mathbf{y}^{[2]}_{n+1} &= \mathbf{y}_n + \tfrac{1}{6} h (\mathbf{k}_1 + 4 \mathbf{k}_2 + \mathbf{k}_3).
+            \end{aligned}
+        \end{rcases}\text{ order }3
+    \]
+    We thus estimate $\mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{[1]} \approx \mathbf{y}_{n+1}^{[2]}-\mathbf{y}_{n+1}^{[1]}$. (It might look paradoxical, at least at first glance, but the only purpose of the higher-order method is to provide error control for the lower-order one!)
+\end{technique}
+
+\begin{technique}[The Zadunaisky device]
+    Suppose that the ODE $\mathbf{y}^{\prime}=\mathbf{f}(t, \mathbf{y}), \mathbf{y}(0)=\mathbf{y}_0$, is solved by an arbitrary numerical method of order $p$ and that we have stored (not necessarily equidistant) past solution values $\mathbf{y}_n, \mathbf{y}_{n-1}, \ldots, \mathbf{y}_{n-p}$. We form an interpolating $p$ th degree polynomial (with vector coefficients) $\mathbf{q}$ such that $\mathbf{q}\left(t_{n-i}\right)=\mathbf{y}_{n-i}, i=0,1, \ldots, p$, and consider the differential equation
+    \begin{equation}\label{eqn:11.7}
+        \mathbf{z}^{\prime}=\mathbf{f}(t, \mathbf{z})+\mathbf{q}^{\prime}(t)-\mathbf{f}(t, \mathbf{q}), \quad \mathbf{z}\left(t_n\right)=\mathbf{y}_n
+    \end{equation}
+    There are two important observations with regard to (\ref{eqn:11.7})
+
+    \begin{enumerate}[(1)]
+        \item Since $\mathbf{q}(t)-\mathbf{y}(t)=\mathcal{O}\left(h^{p+1}\right)$, the term $\mathbf{q}^{\prime}(t)-\mathbf{f}(t, \mathbf{q})$ is usually small (because $\mathbf{y}^{\prime}(t)$ $\mathbf{f}(t, \mathbf{y}(t)) \equiv 0$). Therefore, (\ref{eqn:11.7}) is a small perturbation of the original ODE.
+    
+        \item The exact solution of (\ref{eqn:11.7}) is known: $\mathbf{z}(t)=\mathbf{q}(t)$. Now, having produced $\mathbf{y}_{n+1}$ with our numerical method, we proceed to evaluate $z_{n+1}$ as well, \textit{using exactly the same method and implementation detail}s. We then evaluate the error in $\mathbf{z}_{n+1}$, namely $\mathbf{z}_{n+1}-\mathbf{q}\left(t_{n+1}\right)$, and use it as an estimate of the error in $\mathbf{y}_{n+1}$.
+    \end{enumerate}
+\end{technique}
 
 \end{document}
