@@ -1278,7 +1278,7 @@ Recall the quadrature formulae of approximating the integral by
     \int_{0}^{1} f(t) \dd{t} \approx \sum_{i=1}^{s}b_i f(c_i),
 \end{equation}
 where for given knots $c_i$, the weights $b_i$ are chosen to make this quadrature exact for all polynomials of degree $s-1$, that is, $ b_i = \int_{0}^{1} \ell_i (t) \dd{t} $ where $\ell_i$ are fundamental Lagrange polynomials such that $ \ell_i(c_j) = \delta_{ij} $. 
-If $ \omega(t) = \prod_{i=1}^{s}(t-c_i) $ is orthogonalto all polynomials of degree $s-1$ on $[0,1]$ then we obtain the Gaussian quadrature: the formula that is exact for all polynomials of degree $2s-1$. 
+If $ \omega(t) = \prod_{i=1}^{s}(t-c_i) $ is orthogonal to all polynomials of degree $s-1$ on $[0,1]$ then we obtain the Gaussian quadrature: the formula that is exact for all polynomials of degree $2s-1$. 
 
 Suppose that we wish to solve the ODE $ y' = f(t) $ with $y(0) = y_0$. The exact solution is 
 \[
@@ -1533,26 +1533,26 @@ Applying it to $y^{\prime}=\lambda y$, we have
 \]
 This is a linear system, whose solution (with $z=\lambda h$ ) is
 \[
-\begin{pmatrix}
+\begin{bmatrix}
     h k_1 \\
 h k_2
-\end{pmatrix}=
-\begin{pmatrix}
+\end{bmatrix}=
+\begin{bmatrix}
     1-\frac{1}{4} z & \frac{1}{4} z \\
 -\frac{1}{4} z & 1-\frac{5}{12} z
-\end{pmatrix}^{-1}
-\begin{pmatrix}
+\end{bmatrix}^{-1}
+\begin{bmatrix}
     z y_n \\
 z y_n
-\end{pmatrix}=\frac{1}{\det(A)}
-\begin{pmatrix}
+\end{bmatrix}=\frac{1}{\det(A)}
+\begin{bmatrix}
     1-\frac{5}{12} z & -\frac{1}{4} z \\
 \frac{1}{4} z & 1-\frac{1}{4} z
-\end{pmatrix}
-\begin{pmatrix}
+\end{bmatrix}
+\begin{bmatrix}
     z y_n \\
 z y_n
-\end{pmatrix}.
+\end{bmatrix}.
 \]
 We need $\frac{1}{4}\left(h k_1+3 h k_2\right)=\frac{z\left(1-\frac{1}{6} z\right)}{\det(A)} y_n$, therefore
 \[
@@ -1579,7 +1579,11 @@ But the last expression is $\left(1-\frac{1}{6} t^2\right)^2+\frac{4}{9} t^2-\le
 
 \section{Numerical implementation}
 \begin{problem}
-    The step size $h$ is not some preordained quantity: it is a parameter of the method (in reality, many parameters, since we may vary it from step to step). The basic input of a well-written computer package for ODEs is not the step size but the \textbf{error tolerance}: the level of precision, as required by the user. The choice of $h>0$ is an important tool at our disposal to keep a local estimate of the error beneath the required tolerance in the solution interval. In other words, we need not just a \textbf{time-stepping algorithm}, but also mechanisms for \textbf{error control} and for amending the step size.
+    The step size $h$ is not some preordained quantity: it is a parameter of the method (in reality, many parameters, since we may vary it from step to step). 
+    
+    The basic input of a well-written computer package for ODEs is not the step size but the \textbf{error tolerance}: the level of precision, as required by the user. The choice of $h>0$ is an important tool at our disposal to keep a local estimate of the error beneath the required tolerance in the solution interval. 
+    
+    In other words, we need not just a \textbf{time-stepping algorithm}, but also mechanisms for \textbf{error control} and for amending the step size.
 \end{problem}
 
 \begin{technique}[The Milne device]
@@ -1599,7 +1603,7 @@ has the error constant $c_{\mathrm{AB}}=\frac{5}{12}$ (see Example \ref{eg:7.5})
 \begin{equation}\label{eqn:11.2}
     \mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{\mathrm{AB}}=c_{\mathrm{AB}} h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right)+\mathcal{O}\left(h^4\right), \quad c_{\mathrm{AB}}=\frac{5}{12} .
 \end{equation}
-The idea behind the Milne device is to use two multistep methods of the same order, one explicit and the second implicit (e.g., two methods just mentioned), to estimate the local error of the implicit method. Subtracting (\ref{eqn:11.2}) from (\ref{eqn:11.1}), we obtain the estimate $h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right) \approx-\frac{\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}}{c_{\mathrm{AB}}-c_{\mathrm{TR}}}$, therefore
+The idea behind the \textbf{Milne device} is to use two multistep methods of the same order, one explicit and the second implicit (e.g., two methods just mentioned), to estimate the local error of the implicit method. Subtracting (\ref{eqn:11.2}) from (\ref{eqn:11.1}), we obtain the estimate $h^3 \mathbf{y}^{\prime \prime \prime}\left(t_n\right) \approx-\frac{\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}}{c_{\mathrm{AB}}-c_{\mathrm{TR}}}$, therefore
 \begin{equation}\label{eqn:11.3}
     \mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{\mathrm{TR}} \approx-\frac{c_{\mathrm{TR}}}{c_{\mathrm{AB}}-c_{\mathrm{TR}}}\left(\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}\right)=\frac{1}{6}\left(\mathbf{y}_{n+1}^{\mathrm{AB}}-\mathbf{y}_{n+1}^{\mathrm{TR}}\right)
 \end{equation}
@@ -1631,7 +1635,8 @@ Usually, one stops the iteration when $\left\|\mathbf{y}_{n+2}^{(\ell+1)}-\mathb
     The simple iteration provides the relation
 \[
 \begin{aligned}
-\left\|\mathbf{y}_{n+2}^{(\ell+2)}-\mathbf{y}_{n+2}^{(\ell+1)}\right\| & =h\left|b_2\right|\left\|\mathbf{f}\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell+1)}\right)-\mathbf{f}\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell)}\right)\right\| \leq h L\left|b_2\right|\left\|\mathbf{y}_{n+2}^{(\ell+1)}-\mathbf{y}_{n+2}^{(\ell)}\right\| \\
+\left\|\mathbf{y}_{n+2}^{(\ell+2)}-\mathbf{y}_{n+2}^{(\ell+1)}\right\| & =h\left|b_2\right|\left\|\mathbf{f}\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell+1)}\right)-\mathbf{f}\left(t_{n+2}, \mathbf{y}_{n+2}^{(\ell)}\right)\right\| \\ 
+&\leq h L\left|b_2\right|\left\|\mathbf{y}_{n+2}^{(\ell+1)}-\mathbf{y}_{n+2}^{(\ell)}\right\| \\
 & \leq\left(h L\left|b_2\right|\right)^{\ell}\left\|\mathbf{y}_{n+2}^{(1)}-\mathbf{y}_{n+2}^{(0)}\right\|
 \end{aligned}
 \]
@@ -1639,25 +1644,27 @@ Thus, $h L\left|b_2\right|<1$ implies that $(\mathbf{y}_{n+2}^{(\ell)})$ is a Ca
 \end{proof}
 
 \begin{technique}[Embedded Runge-Kutta methods]
-    The situation is more complicated with RK, since no single error constant determines local growth of the error. The approach of \textbf{embedded RK} requires, again, two (typically explicit) methods: an RK method of $s$ stages and order $p$, say, and another method, of $s+m$ stages, $m \geq 1$, and order $p+1$, such that \textit{the first $s$ stages of both methods are identical}. (This means that the cost of implementing the higher-order method is marginal, once we have computed the lower-order approximation.) For example, consider
-    \[
-        \begin{rcases}
-            \begin{rcases}
-            \begin{aligned}
-                \mathbf{k}_1 &= \mathbf{f}(t_n, \mathbf{y}_n)\\ 
-                \mathbf{k}_2 &= \mathbf{f}( t_n + \tfrac{1}{2}h, \mathbf{y} + \tfrac{1}{2} h \mathbf{k}_1),\hspace*{3em}\\ 
-                \mathbf{y}^{[2]}_{n+1} &= \mathbf{y}_n + h \mathbf{k}_2;
-            \end{aligned}
-            \end{rcases} \text{ order }2\hspace*{1em}\\
-            \hspace{1.1pt}
-            \begin{aligned}
-                \mathbf{k}_3 &= \mathbf{f}(t_n + h, \mathbf{y}_n - h \mathbf{k}_1 + 2h \mathbf{k}_2),\\ 
-                \mathbf{y}^{[2]}_{n+1} &= \mathbf{y}_n + \tfrac{1}{6} h (\mathbf{k}_1 + 4 \mathbf{k}_2 + \mathbf{k}_3).
-            \end{aligned}
-        \end{rcases}\text{ order }3
-    \]
-    We thus estimate $\mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{[1]} \approx \mathbf{y}_{n+1}^{[2]}-\mathbf{y}_{n+1}^{[1]}$. (It might look paradoxical, at least at first glance, but the only purpose of the higher-order method is to provide error control for the lower-order one!)
+    The situation is more complicated with RK, since no single error constant determines local growth of the error. The approach of \textbf{embedded RK} requires, again, two (typically explicit) methods: an RK method of $s$ stages and order $p$, say, and another method, of $s+m$ stages, $m \geq 1$, and order $p+1$, such that \textit{the first $s$ stages of both methods are identical}. (This means that the cost of implementing the higher-order method is marginal, once we have computed the lower-order approximation.) 
 \end{technique}
+
+For example, consider
+\[
+    \begin{rcases}
+        \begin{rcases}
+        \begin{aligned}
+            \mathbf{k}_1 &= \mathbf{f}(t_n, \mathbf{y}_n)\\ 
+            \mathbf{k}_2 &= \mathbf{f}( t_n + \tfrac{1}{2}h, \mathbf{y} + \tfrac{1}{2} h \mathbf{k}_1),\hspace*{3em}\\ 
+            \mathbf{y}^{[1]}_{n+1} &= \mathbf{y}_n + h \mathbf{k}_2;
+        \end{aligned}
+        \end{rcases} \text{ order }2\hspace*{1em}\\
+        \hspace{1.1pt}
+        \begin{aligned}
+            \mathbf{k}_3 &= \mathbf{f}(t_n + h, \mathbf{y}_n - h \mathbf{k}_1 + 2h \mathbf{k}_2),\\ 
+            \mathbf{y}^{[2]}_{n+1} &= \mathbf{y}_n + \tfrac{1}{6} h (\mathbf{k}_1 + 4 \mathbf{k}_2 + \mathbf{k}_3).
+        \end{aligned}
+    \end{rcases}\text{ order }3
+\]
+We thus estimate $\mathbf{y}\left(t_{n+1}\right)-\mathbf{y}_{n+1}^{[1]} \approx \mathbf{y}_{n+1}^{[2]}-\mathbf{y}_{n+1}^{[1]}$. (It might look paradoxical, at least at first glance, but the only purpose of the higher-order method is to provide error control for the lower-order one!)
 
 \begin{technique}[The Zadunaisky device]
     Suppose that the ODE $\mathbf{y}^{\prime}=\mathbf{f}(t, \mathbf{y}), \mathbf{y}(0)=\mathbf{y}_0$, is solved by an arbitrary numerical method of order $p$ and that we have stored (not necessarily equidistant) past solution values $\mathbf{y}_n, \mathbf{y}_{n-1}, \ldots, \mathbf{y}_{n-p}$. We form an interpolating $p$ th degree polynomial (with vector coefficients) $\mathbf{q}$ such that $\mathbf{q}\left(t_{n-i}\right)=\mathbf{y}_{n-i}, i=0,1, \ldots, p$, and consider the differential equation
@@ -1669,7 +1676,7 @@ Thus, $h L\left|b_2\right|<1$ implies that $(\mathbf{y}_{n+2}^{(\ell)})$ is a Ca
     \begin{enumerate}[(1)]
         \item Since $\mathbf{q}(t)-\mathbf{y}(t)=\mathcal{O}\left(h^{p+1}\right)$, the term $\mathbf{q}^{\prime}(t)-\mathbf{f}(t, \mathbf{q})$ is usually small (because $\mathbf{y}^{\prime}(t)$ $\mathbf{f}(t, \mathbf{y}(t)) \equiv 0$). Therefore, (\ref{eqn:11.7}) is a small perturbation of the original ODE.
     
-        \item The exact solution of (\ref{eqn:11.7}) is known: $\mathbf{z}(t)=\mathbf{q}(t)$. Now, having produced $\mathbf{y}_{n+1}$ with our numerical method, we proceed to evaluate $z_{n+1}$ as well, \textit{using exactly the same method and implementation detail}s. We then evaluate the error in $\mathbf{z}_{n+1}$, namely $\mathbf{z}_{n+1}-\mathbf{q}\left(t_{n+1}\right)$, and use it as an estimate of the error in $\mathbf{y}_{n+1}$.
+        \item The exact solution of (\ref{eqn:11.7}) is known: $\mathbf{z}(t)=\mathbf{q}(t)$. Now, having produced $\mathbf{y}_{n+1}$ with our numerical method, we proceed to evaluate $\bfz_{n+1}$ as well, \textit{using exactly the same method and implementation detail}s. We then evaluate the error in $\mathbf{z}_{n+1}$, namely $\mathbf{z}_{n+1}-\mathbf{q}\left(t_{n+1}\right)$, and use it as an estimate of the error in $\mathbf{y}_{n+1}$.
     \end{enumerate}
 \end{technique}
 
